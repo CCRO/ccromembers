@@ -1,0 +1,14 @@
+<ul class="breadcrumb">
+  <li><a href="#">Directory</a> <span class="divider">/</span></li>
+  <li><a href="/companies">Companies</a> <span class="divider">/</span></li>
+  <li class="active"><%= link_to @company.name, @company %></li>
+</ul>
+
+  <h2><%= @company.name %></h2><span class="label label-important"><%= @company.role %></span>
+  <hr />
+
+<%= render :partial => 'people/list', :object => @people %>
+
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>

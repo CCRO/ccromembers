@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ccromembers</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% if current_user %>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <!-- Be sure to leave the brand out there if you want it shown -->
+        <a class="brand" href="#">CCRO</a>
+
+        <!-- Everything you want hidden at 940px or less, place within here -->
+        <div class="nav-collapse">
+            <ul class="nav">
+              <!-- Research Center Dropdown -->
+              <li class="dropdown active" id="navbar_research">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#navbar_research">
+                  <i class="icon-book icon-white"></i> Resource Center
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">News Articles</a></li>
+                  <li><a href="#">Discussions</a></li>
+                  <li><a href="#">Document Library</a></li>
+                  <li><a href="#">Working Groups</a></li>
+                  <li class="divider"></li>
+                  <li><a href="dashboard">Dashboard</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon-calendar icon-white"></i> Events</a></li>
+              <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="/people"><i class="icon-user icon-white"></i> Directory</a></li>
+            </ul>
+         </div>
+        <div class="navbar-text pull-right">
+          Logged in as <a data-toggle="modal" href="#modal-current_user"><%= current_user.email %></a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="subnav subnav-fixed">
+      <ul class="nav nav-pills">
+        <% if params[:controller] == 'people' || params[:controller] == 'companies' %>
+        <div class="navbar-text pull-left">
+          Directory: 
+        </div>
+        <li class="divider-vertical"></li>
+        <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
+          <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
+        <% end %>
+        <form class="subnav-search pull-right">
+          <input type="text" class="search-query" placeholder="Search">
+        </form>
+      </ul>
+    </div>
+  <% end %>
+	<div class="container">
+		<% flash.each do |key, msg| %>
+    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+          <a class="close" data-dismiss="alert">×</a>
+          <strong><%= key %>!</strong> <%= msg %>
+        </div>
+		    <%= content_tag :script, :type => "text/javascript" do -%>
+		        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+		    <% end %>
+		<% end %>
+<!--Body content (BEGIN)-->
+<%= yield %>
+<!--Body content (END)-->
+  </div>
+  <div class="modal hide fade" id="modal-window">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>Loading...</h3>
+    </div>
+    <div class="modal-body center">
+        <%= image_tag "loading.gif" %>
+    </div>
+    <div class="modal-footer">&nbsp;</div>
+  </div>
+  <% if current_user %>
+  <div class="modal hide fade" id="modal-current_user">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3><%= current_user.name %></h3>
+    </div>
+    <div class="modal-body center">
+      <ul class="thumbnails">
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <%= gravatar_for current_user %>
+          </a>
+        </li>
+      </ul>
+      Company: <%= current_user.company.name if current_user.company %><br />
+      Role: <%= current_user.role.capitalize if current_user.role %><br />
+      Email: <%= mail_to current_user.email %>
+    </div>
+    <div class="modal-footer">
+      <%= button_to 'Logout', logout_path, :class => 'btn-danger' %>
+      <%= button_to 'View Company', current_user.company if current_user.company %>
+      <%= button_to 'View Profile', current_user %>
+    </div>
+  </div>
+  <% end %>
+</body>
+</html>

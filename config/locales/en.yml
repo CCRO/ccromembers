@@ -1,0 +1,19 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  login_invalid: "Email or password is invalid."
+  login_flash: "Logged In!"
+  logout_flash: "Logged out!"
+  no_user_flash: "You are not logged in."
+  helpers:
+    label:
+      person:
+        name: 'Name'
+        email: 'Email Address'
+        password: 'Password'
+        password_confirmation: 'Confirm Password'
+      session:
+        email: 'Username or Email'
+        password: 'Password'
