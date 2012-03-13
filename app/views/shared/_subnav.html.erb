@@ -1,0 +1,27 @@
+<div class="subnav subnav-fixed">
+    <ul class="nav nav-pills">
+      <% if params[:controller] == 'people' || params[:controller] == 'companies' %>
+      <div class="navbar-text pull-left">
+        Directory: 
+      </div>
+      <li class="divider-vertical"></li>
+      <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
+        <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
+      <% end %>
+      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>
+      <div class="navbar-text pull-left">
+        Resource Center: 
+      </div>
+      <li class="divider-vertical"></li>
+        <li <%= 'class=active' if params[:controller] == 'reports' && params[:action] == 'dashboard' %>><a href="/reports/dashboard">Dashboard</a></li>
+      <li class="divider-vertical"></li>
+        <li <%= 'class=active' if params[:controller] == 'articles' %>><a href="/articles">Articles</a></li>
+        <li <%= 'class=active' if params[:controller] == 'discussions' %>><a href="/dicussions">Discussions</a></li>
+        <li <%= 'class=active' if params[:controller] == 'working_groups' %>><a href="/working_groups">Working Groups</a></li>
+        <li <%= 'class=active' if params[:controller] == 'documents' %>><a href="/documents">Documents</a></li>
+      <% end %>
+      <form class="subnav-search pull-right">
+        <input type="text" class="search-query" placeholder="Search">
+      </form>
+    </ul>
+  </div>
