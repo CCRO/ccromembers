@@ -7,6 +7,12 @@ body {
   background-color: #fff;
 }
 
+footer {
+margin-top: 17px;
+padding-top: 17px;
+border-top: 1px solid #EEE;
+}
+
 /* Subnav */
 .subnav {
   width: 100%;
