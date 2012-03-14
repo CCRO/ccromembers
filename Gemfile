@@ -8,6 +8,8 @@ gem 'rails', '3.2.1'
 gem 'mysql2'
 gem 'paper_trail'
 gem 'redcarpet'
+gem 'wiky', :git => 'git://github.com/tanin47/wiky.git'
+gem 'wikitext'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -3,7 +3,7 @@
   By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
 </p>
 
-<%= markdown @document.body %>
+<%= render_body @document %>
 
 
 

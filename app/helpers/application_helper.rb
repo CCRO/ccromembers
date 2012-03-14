@@ -1,8 +1,15 @@
 module ApplicationHelper
-  def markdown(text)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
-            :autolink => true, :space_after_headers => true)
-    markdown.render(text).html_safe
+  def render_body(obj)
+    case obj.format
+    when "markdown"
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+              :autolink => true, :space_after_headers => true)
+      markdown.render(obj.body).html_safe
+    when "wikitext"
+      Wiky.process(obj.body).html_safe
+    else
+      obj.body
+    end
   end
   
   def gravatar_for user, options = {}
