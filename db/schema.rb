@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301192240) do
+ActiveRecord::Schema.define(:version => 20120313171157) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(:version => 20120301192240) do
     t.string   "freshbooks_id"
   end
 
+  create_table "documents", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "published_at"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -33,5 +43,16 @@ ActiveRecord::Schema.define(:version => 20120301192240) do
     t.integer  "company_id"
     t.string   "highrise_id"
   end
+
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",  :null => false
+    t.integer  "item_id",    :null => false
+    t.string   "event",      :null => false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
 end

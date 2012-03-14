@@ -1,4 +1,6 @@
 Ccromembers::Application.routes.draw do
+  resources :documents
+
   resources :companies
 
   match 'login' => 'sessions#new', :as => :login

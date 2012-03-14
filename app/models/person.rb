@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
-  belongs_to :company  
+  belongs_to :company 
+  has_many :documents, :as => :owner 
   has_secure_password
   attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation
   validates_uniqueness_of :email

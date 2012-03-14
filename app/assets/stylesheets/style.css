@@ -209,7 +209,11 @@ border-top: 1px solid #EEE;
             border-radius: 0;
   }
 }
-
+@media (min-width: 1200px) {
+	.subnav .nav {
+		width: 1170px;
+	}
+}
 .navbar-fixed-top .brand {
   padding-right: 0;
   padding-left: 0;
