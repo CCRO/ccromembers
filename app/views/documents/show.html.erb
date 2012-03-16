@@ -1,14 +1,35 @@
-<h1><%= @document.title %></h1>
-<p>
-  By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
-</p>
+<div id="document_header">
+  <ul class="nav nav-tabs">
+    <li class="active">
+    <a href="news-show.html">View</a>
+    </li>
+    <li>  
+      <%= link_to 'Edit', edit_document_path(@document) %>
+    </li>
+    <li><a href="news-permissions.html">Permissions</a></li>
+  </ul>
+  <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
+  <h1><%= @document.title %></h1>
+  <p>
+    By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
+  </p>
+</div>
+<div id="document_content">
+  <%= render_body @document %>
+</div>
 
-<%= render_body @document %>
-
-
-
-<div class="form-actions">
-  <%= link_to 'Back', documents_path, :class => 'btn'  %>
-  <%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
-  <%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+<div class="modal hide fade" id="modal-add_comment">
+  <div class="modal-header">
+    <a href="#" class="close">×</a>
+    <h3>Add Comment</h3>
+  </div>
+  <div class="modal-body center">
+    <b>Quoted Text:</b><br /> <span id="add_comment_quote"></span><br /><br />
+    <b>Comments:</b><br />
+    <%= text_area(:comment, :body, :cols => 60, :rows => 6, :class => 'span6') %>
+  </div>
+  <div class="modal-footer">
+    <%= button_to 'Submit Comment', '#', :class => 'btn-primary' %>
+    <%= button_to 'Cancel', '#' %>
+  </div>
 </div>

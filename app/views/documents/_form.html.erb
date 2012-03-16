@@ -17,7 +17,9 @@
     </div>
     <div class="control-group">
       <%= f.label :format , :class => 'control-label' %><br />
-      <%= f.select :format, options_for_select(FORMATS, @document.format) %>
+      <div class="controls">
+        <%= f.select :format, options_for_select(FORMATS, @document.format), :include_blank => true %>
+      </div>
     </div>
 
     <div class="control-group">
