@@ -16,3 +16,9 @@
 #document_content {
     margin-top: 150px;
 }
+
+@media (min-width: 1200px) {
+	#document_header {
+		width: 1170px;
+	}
+}
