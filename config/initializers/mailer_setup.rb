@@ -5,7 +5,7 @@ if Rails.env.production?
     :authentication => :plain,
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'ccro.org'
+    :domain         => 'heroku.com'
   }
   ActionMailer::Base.delivery_method = :smtp
 else
