@@ -5,7 +5,14 @@ gem 'rails', '3.2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
+group :development do
+  gem 'mysql2'
+  gem 'hirb'
+end
+
+group :production do
+  gem 'pg'
+end
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/tanin47/wiky.git'
