@@ -1,4 +1,4 @@
-<%= form_for(@person) do |f| %>
+<%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
@@ -11,31 +11,49 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :company_id %><br />
-    <%= f.select :company_id, options_from_collection_for_select(Company.all, "id", "name", @person.company_id), :include_blank => true %>
-  </div>
-  <div class="field">
-    <%= f.label :highrise_id %><br />
-    <%= f.text_field :highrise_id %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.text_field :password_confirmation %>
-  </div>
+  <fieldset>
+    <legend>User Information</legend>
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :email, :class => 'control-label' %>
+      <div class="controls">
+      <%= f.text_field :email %>
+      <p class="help-block">This will be your login username.</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :password, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password %><br /><br />
+        <%= f.password_field :password_confirmation %>
+        <p class="help-block">Enter password and confirm by entering again.</p>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Directory Link</legend>
+    <div class="control-group">
+      <%= f.label :highrise_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :highrise_id %>
+        <p class="help-block">Links to the CCRO Highrise Directory</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :company_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.select :company_id, options_from_collection_for_select(Company.all, "id", "name", @person.company_id), :include_blank => true %>
+        <p class="help-block">Contact support if you can't find your company listed.</p>
+      </div>
+    </div>
+  </fieldset>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>
   </div>
+  
 <% end %>

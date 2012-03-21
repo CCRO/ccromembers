@@ -7,4 +7,5 @@ jQuery ->
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').show()
     else
+      document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').hide()

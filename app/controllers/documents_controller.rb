@@ -7,6 +7,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }
+      format.xml { render xml: @documents }
     end
   end
 
@@ -18,6 +19,8 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
+      format.xml { render xml: @document }
+      
     end
   end
 
