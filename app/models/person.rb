@@ -18,6 +18,16 @@ class Person < ActiveRecord::Base
     self.company.role if self.company
   end
   
+  def to_xml(options={})
+    options.merge!(:except => [:password_digest, :created_at, :updated_at])
+    super(options)
+  end
+
+  def as_json(options={})
+    options.merge!(:except => [:password_digest, :created_at, :updated_at])
+    super(options)
+  end
+  
   private
     
   def check_contacts
