@@ -28,7 +28,7 @@ class Person < ActiveRecord::Base
   end
   
   def to_xml(options={})
-    options.merge!(:only => [:name], :except => [:password_digest, :access_token, :created_at, :updated_at], :include => [:company => {:only => [:name]}])
+    options.merge!(:except => [:password_digest, :access_token, :created_at, :updated_at], :include => [:company => {:only => [:name]}])
     super(options)
   end
 

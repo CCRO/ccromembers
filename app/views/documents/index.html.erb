@@ -13,7 +13,7 @@
       <tr>
         <td><%= link_to document.title, document_path(document) %> <em>v<%= document.versions.length %></em></td>
         <td><%= document.owner.name %>
-        <td>about <%= time_ago_in_words document.updated_at %> ago <%= "by" + Person.find(document.versions.last.whodunnit.to_i).name if document.versions.last.whodunnit %></td>
+			<td>about <%= time_ago_in_words document.updated_at %> ago <%= "by " + Person.find(document.versions.last.whodunnit.to_i).name if document.versions.last.whodunnit %></td>
         <td>
           <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-mini' %>
           <%= link_to 'Destroy', document_path(document), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>

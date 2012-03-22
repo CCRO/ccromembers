@@ -19,8 +19,8 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @document }
-      format.xml { render xml: @document }
+      format.json { render json: @document, :options => {:except => [:body], :methods => [:preview]} }
+      format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} }
       
     end
   end

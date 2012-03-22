@@ -6,7 +6,9 @@
     <li>  
       <%= link_to 'Edit', edit_document_path(@document) %>
     </li>
-    <li><a href="news-permissions.html">Permissions</a></li>
+    <li><a href="#">Permissions</a></li>
+    <li><a href="#">Revisions <span class="label"><%= @document.versions.length %></span></a></li>
+    <li><a href="#">Comments <span class="label">0</span></a></li>
   </ul>
   <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
   <h1><%= @document.title %></h1>

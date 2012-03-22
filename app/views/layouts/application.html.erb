@@ -26,7 +26,7 @@
         <div class="nav-collapse">
             <ul class="nav">
               <!-- Research Center Dropdown -->
-              <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/reports/dashboard"><i class="icon-book icon-white"></i> Resource Center</a></li>
+              <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/documents"><i class="icon-book icon-white"></i> Resource Center</a></li>
               <li><a href="#"><i class="icon-calendar icon-white"></i> Events</a></li>
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="/people"><i class="icon-user icon-white"></i> Directory</a></li>
             </ul>
@@ -86,6 +86,9 @@
       <h3><%= current_user.name %></h3>
     </div>
     <div class="modal-body center">
+	<table cellpadding="10">
+		<tr>
+			<td>
       <ul class="thumbnails">
         <li class="span2">
           <a href="#" class="thumbnail">
@@ -93,10 +96,15 @@
           </a>
         </li>
       </ul>
-      Company: <%= current_user.company.name if current_user.company %><br />
+	  </td>
+	  <td valign="top">
+      <p>Company: <%= current_user.company.name if current_user.company %><br />
       Role: <%= current_user.role.capitalize if current_user.role %><br />
       Email: <%= mail_to current_user.email %><br />
-      Access Token: <%= current_user.access_token %>
+      Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
+	  </td>
+	  </tr>
+	  </table>
     </div>
     <div class="modal-footer">
       <%= button_to 'Logout', logout_path, :class => 'btn-danger' %>

@@ -5,16 +5,24 @@
 #document_header {
     position: fixed;
     height: 100px;
-    width: 958px;
-    background-color: white;
+    width: 940px;
+    background-color: #efefef;
     padding-top: 50px;
     margin-top: -50px;
     padding-bottom: 5px;
-    box-shadow: 0 10px 20px 10px white;
+    box-shadow: 0 10px 20px 10px #efefef;
     z-index: 999;
 }
 #document_content {
     margin-top: 150px;
+	padding: 20px;
+	background-color: white;
+	border-bottom-image: url('images/leaftshadow.png');
+    -moz-border-bottom-image: url('images/leaftshadow.png') 27 27 27 27 stretch stretch;
+	-webkit-border-image:url('images/leaftshadow.png') 30 30 stretch;
+    -webkit-border-bottom-image: url('images/leaftshadow.png') 27 27 27 27 stretch stretch;
+    -o-borderbottom-image: url('images/leaftshadow.png') 27 27 27 27 stretch stretch;
+	
 }
 
 @media (min-width: 1200px) {

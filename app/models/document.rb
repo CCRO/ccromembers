@@ -19,13 +19,17 @@ class Document < ActiveRecord::Base
     document_url(self)
   end
   
+  def author
+    self.owner.name
+  end
+  
   def to_xml(options={})
-    options.merge!(:except => [:body, :created_at, :updated_at], :include => [:owner], :methods => [:preview, :url])
+    options.merge!(:except => [:body, :created_at, :updated_at], :methods => [:preview, :url, :author])
     super(options)
   end
   
   def as_json(options={})
-    options.merge!(:except => [:body, :created_at, :updated_at], :include => [:owner], :methods => [:preview, :url])
+    options.merge!(:except => [:body, :created_at, :updated_at], :methods => [:preview, :url, :author])
     super(options)
   end
   
