@@ -95,7 +95,8 @@
       </ul>
       Company: <%= current_user.company.name if current_user.company %><br />
       Role: <%= current_user.role.capitalize if current_user.role %><br />
-      Email: <%= mail_to current_user.email %>
+      Email: <%= mail_to current_user.email %><br />
+      Access Token: <%= current_user.access_token %>
     </div>
     <div class="modal-footer">
       <%= button_to 'Logout', logout_path, :class => 'btn-danger' %>

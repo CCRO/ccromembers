@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_filter :store_location
 
   before_filter :set_mailer_host
+  
+  before_filter :http_basic_authentication
 
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
@@ -40,5 +42,15 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     redirect_to login_url, alert: "Not authorized" if current_user.nil?
+  end
+  
+  protected
+
+  def http_basic_authentication
+    if !current_user && (request.format == Mime::XML || request.format == Mime::JSON)
+      authenticate_or_request_with_http_basic do |username, password|
+        session[:user_id] ||= Person.find_by_access_token(username).id if Person.find_by_access_token(username)
+      end
+    end
   end
 end

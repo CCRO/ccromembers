@@ -1,10 +1,19 @@
 class Person < ActiveRecord::Base
   belongs_to :company 
   has_many :documents, :as => :owner 
+
   has_secure_password
-  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation
-  validates_uniqueness_of :email
+
   before_save :check_contacts
+  before_validation :create_access_token
+
+  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token
+
+  validates_uniqueness_of :email
+  
+  validates_presence_of :access_token
+  validates_uniqueness_of :access_token
+
   
   def primary_contact?
     (self.company && self.company.primary_contact == self)
@@ -19,12 +28,12 @@ class Person < ActiveRecord::Base
   end
   
   def to_xml(options={})
-    options.merge!(:except => [:password_digest, :created_at, :updated_at])
+    options.merge!(:only => [:name], :except => [:password_digest, :access_token, :created_at, :updated_at], :include => [:company => {:only => [:name]}])
     super(options)
   end
 
   def as_json(options={})
-    options.merge!(:except => [:password_digest, :created_at, :updated_at])
+    options.merge!(:except => [:password_digest, :access_token, :created_at, :updated_at])
     super(options)
   end
   
@@ -41,4 +50,9 @@ class Person < ActiveRecord::Base
       true
     end
   end
+
+  def create_access_token
+    self.access_token = rand(36**8).to_s(36) if self.access_token.nil?
+  end 
+  
 end

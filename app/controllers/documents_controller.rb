@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  before_filter :require_user
   # GET /documents
   # GET /documents.json
   def index
