@@ -2,13 +2,13 @@ module ApplicationHelper
   def render_body(obj)
     case obj.format
     when "markdown"
-      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+      markdown = Redcarpet::Markdown.new(DocumentHTML,
               :autolink => true, :space_after_headers => true)
       markdown.render(obj.body).html_safe
     when "wikitext"
       Wiky.process(obj.body).html_safe
     else
-      obj.body
+      obj.body.html_safe
     end
   end
   

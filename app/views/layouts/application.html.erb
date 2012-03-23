@@ -43,9 +43,9 @@
 <% end %>
 	<div class="container">
 		<% flash.each do |key, msg| %>
-    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>" style="position: fixed; z-index: 1000; top: 200px; margin-left: 300px;">
           <a class="close" data-dismiss="alert">×</a>
-          <strong><%= key %>!</strong> <%= msg %>
+          <strong><%=  key.to_s.capitalize %>!</strong> <%= msg %>
         </div>
 		    <%= content_tag :script, :type => "text/javascript" do -%>
 		        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);

@@ -1,21 +1,42 @@
 <div id="document_header_wrapper">
   <div id="document_header">
-    <ul class="nav nav-tabs">
-      <li class="active">
-      <a href="news-show.html">View</a>
-      </li>
-      <li>  
-        <%= link_to 'Edit', edit_document_path(@document) %>
-      </li>
-      <li><a href="#">Permissions</a></li>
-      <li><a href="#">Revisions <span class="label"><%= @document.versions.length %></span></a></li>
-      <li><a href="#">Comments <span class="label">0</span></a></li>
-    </ul>
     <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
     <h1><%= @document.title %></h1>
     <p>
       By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
     </p>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="news-show.html">Full Document</a></li>
+	  <li class="dropdown">
+	      <a class="dropdown-toggle"
+	         data-toggle="dropdown"
+	         href="#">
+	          Sections <span class="label"><%= @document.sections.length %></span>
+	          <b class="caret"></b>
+	        </a>
+	      <ul class="dropdown-menu">
+	        <%  @document.sections.each do |section| %>
+			<li><a href="#<%= section[:title].parameterize %>"><%= section[:title] %></a></li>
+			<% end %>
+	      </ul>
+	    </li>
+      <li><%= link_to 'Edit', edit_document_path(@document) %></li>
+      <li><a href="#">Permissions</a></li>
+	  <li class="dropdown">
+	      <a class="dropdown-toggle"
+	         data-toggle="dropdown"
+	         href="#">
+	          Revisions <span class="label"><%= @document.versions.length %></span>
+	          <b class="caret"></b>
+	        </a>
+	      <ul class="dropdown-menu">
+	        <%  @document.versions.reverse.each do |version| %>
+			<li><a href="#"><%= version.event.capitalize + " by " + Person.find(version.whodunnit).name + " (" + time_ago_in_words(version.created_at) + ")" %></a></li>
+			<% end %>
+	      </ul>
+	    </li>
+      <li><a href="#">Comments <span class="label">0</span></a></li>
+    </ul>
   </div>
 </div>
 <div id="document_content_border">

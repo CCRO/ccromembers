@@ -19,6 +19,7 @@ gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/tanin47/wiky.git'
 gem 'wikitext'
+gem 'nokogiri'
 
 # Gems used only for assets and not required
 # in production environments by default.

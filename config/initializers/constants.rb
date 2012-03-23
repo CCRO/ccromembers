@@ -2,4 +2,4 @@ ROLES = {'Administrator' => 'administrator', 'Board Member' => 'board', 'Editor'
         'Full Member' => 'full-member', 'Participating Member' => 'participating-member', 'Member Emeritus' => 'member-emeritus',
         'Subscriber' => 'subscriber', 'Guest' => 'guest'}
         
-FORMATS = {'Wikitext' => 'wikitext','Markdown' => 'markdown'}
+FORMATS = {'Wikitext' => 'wikitext','Markdown' => 'markdown', 'Simple' => 'simple'}

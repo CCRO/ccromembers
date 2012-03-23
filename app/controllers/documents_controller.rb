@@ -49,7 +49,7 @@ class DocumentsController < ApplicationController
     @document.owner = current_user
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to @document, :flash => { :success => 'Document was successfully created.'} }
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }
@@ -65,7 +65,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.update_attributes(params[:document])
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to @document, :flash => { :success => 'Document was successfully updated.' } }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

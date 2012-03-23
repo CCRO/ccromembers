@@ -23,6 +23,31 @@ class Document < ActiveRecord::Base
     self.owner.name
   end
   
+  def sections
+    case self.format
+    when "markdown"
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+              :autolink => true, :space_after_headers => true)
+      html_body = markdown.render(self.body).html_safe
+    when "wikitext"
+      html_body = Wiky.process(self.body).html_safe
+    else
+      html_body = self.body.html_safe
+    end
+    
+    body = Nokogiri::HTML(html_body)
+    @sections = body.xpath('//body').children.inject([]) do |sections_hash, child|
+      if child.name == 'h2'
+        title = child.inner_text
+        sections_hash << { :title => title, :contents => ''}
+      end
+
+      next sections_hash if sections_hash.empty?
+      sections_hash.last[:contents] << child.to_xhtml
+      sections_hash
+    end
+  end
+  
   def to_xml(options={})
     options.merge!(:except => [:body, :created_at, :updated_at], :methods => [:preview, :url, :author])
     super(options)
