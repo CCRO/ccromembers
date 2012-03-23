@@ -9,3 +9,8 @@ jQuery ->
     else
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').hide()
+  $(document).scroll ->
+    if $(document).scrollTop() < 36
+      $('#document_header_wrapper').removeClass("bottom-shadow")
+    else
+      $('#document_header_wrapper').addClass("bottom-shadow")

@@ -1,23 +1,27 @@
-<div id="document_header">
-  <ul class="nav nav-tabs">
-    <li class="active">
-    <a href="news-show.html">View</a>
-    </li>
-    <li>  
-      <%= link_to 'Edit', edit_document_path(@document) %>
-    </li>
-    <li><a href="#">Permissions</a></li>
-    <li><a href="#">Revisions <span class="label"><%= @document.versions.length %></span></a></li>
-    <li><a href="#">Comments <span class="label">0</span></a></li>
-  </ul>
-  <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
-  <h1><%= @document.title %></h1>
-  <p>
-    By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
-  </p>
+<div id="document_header_wrapper">
+  <div id="document_header">
+    <ul class="nav nav-tabs">
+      <li class="active">
+      <a href="news-show.html">View</a>
+      </li>
+      <li>  
+        <%= link_to 'Edit', edit_document_path(@document) %>
+      </li>
+      <li><a href="#">Permissions</a></li>
+      <li><a href="#">Revisions <span class="label"><%= @document.versions.length %></span></a></li>
+      <li><a href="#">Comments <span class="label">0</span></a></li>
+    </ul>
+    <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
+    <h1><%= @document.title %></h1>
+    <p>
+      By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
+    </p>
+  </div>
 </div>
+<div id="document_content_border">
 <div id="document_content">
   <%= render_body @document %>
+</div>
 </div>
 
 <div class="modal hide fade" id="modal-add_comment">
