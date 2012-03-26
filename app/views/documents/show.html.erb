@@ -31,7 +31,7 @@
 	        </a>
 	      <ul class="dropdown-menu">
 	        <%  @document.versions.reverse.each do |version| %>
-			<li><a href="#"><%= version.event.capitalize + " by " + Person.find(version.whodunnit).name + " (" + time_ago_in_words(version.created_at) + ")" %></a></li>
+			<li><a href="#"><%= version.event.capitalize %> <%= " by " + Person.find(version.whodunnit).name if version.whodunnit %> (<%= time_ago_in_words(version.created_at) %>)</a></li>
 			<% end %>
 	      </ul>
 	    </li>

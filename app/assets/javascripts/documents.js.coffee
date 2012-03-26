@@ -10,7 +10,11 @@ jQuery ->
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').hide()
   $(document).scroll ->
-    if $(document).scrollTop() < 36
+    if $(document).scrollTop() < 28
       $('#document_header_wrapper').removeClass("bottom-shadow")
     else
       $('#document_header_wrapper').addClass("bottom-shadow")
+    if $(document).scrollTop() < 45
+      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', $(document).scrollTop() + 75 )
+    else
+      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', 45 + 75 )
