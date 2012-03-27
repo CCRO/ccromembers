@@ -6,7 +6,8 @@ module ApplicationHelper
               :autolink => true, :space_after_headers => true)
       markdown.render(obj.body).html_safe
     when "wikitext"
-      Wiky.process(obj.body).html_safe
+      wikitext = Wiky::Wikitext.new(CCROHTML)
+      wikitext.process(obj.body).html_safe
     else
       obj.body.html_safe
     end

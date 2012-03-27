@@ -17,7 +17,7 @@ end
 
 gem 'paper_trail'
 gem 'redcarpet'
-gem 'wiky', :git => 'git://github.com/tanin47/wiky.git'
+gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
 gem 'wikitext'
 gem 'nokogiri'
 

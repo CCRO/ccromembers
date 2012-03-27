@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/tanin47/wiky.git
-  revision: d36f4fe123a4f3a51b41b8d3b3359dc2ff0e019b
+  remote: git://github.com/crjones/wiky.git
+  revision: e55aab81ef5476e2aec4bc3a50050cf4c5a7b254
   specs:
     wiky (0.0.1)
 
