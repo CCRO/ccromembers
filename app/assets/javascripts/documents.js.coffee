@@ -4,9 +4,11 @@
 jQuery ->
   $('#document_content').bind 'textselect', (evt, string, element) ->
     if string != ""
+      document.getElementById('comment_quote').value = string
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').show()
     else
+      document.getElementById('comment_quote').value = string
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').hide()
   $(document).scroll ->
@@ -15,6 +17,6 @@ jQuery ->
     else
       $('#document_header_wrapper').addClass("bottom-shadow")
     if $(document).scrollTop() < 45
-      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', $(document).scrollTop() + 75 )
+      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', $(document).scrollTop() + 85 )
     else
-      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', 45 + 75 )
+      $('#document_header_wrapper.bottom-shadow').css('padding-bottom', 45 + 85 )

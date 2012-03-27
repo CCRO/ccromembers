@@ -2,10 +2,8 @@
   <div id="document_header">
     <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
     <h1><%= @document.title %></h1>
-    <p>
-      By <b><%= @document.owner.name %></b> (about <%= time_ago_in_words @document.published_at %> ago)
-    </p>
-    <ul class="nav nav-tabs">
+    
+    <ul class="nav nav-pills">
       <li class="active"><a href="news-show.html">Full Document</a></li>
 	  <li class="dropdown">
 	      <a class="dropdown-toggle"
@@ -35,13 +33,13 @@
 			<% end %>
 	      </ul>
 	    </li>
-      <li><a href="#">Comments <span class="label">0</span></a></li>
+      <li><a href="#">Comments <span class="label"><%= @document.comments.count %></span></a></li>
     </ul>
   </div>
 </div>
 <div id="document_content_border">
 <div id="document_content">
-  <%= render_body @document %>
+	 <%= render_body @document %>  
 </div>
 </div>
 
@@ -50,13 +48,19 @@
     <a href="#" class="close">×</a>
     <h3>Add Comment</h3>
   </div>
+  <%= form_for Comment.new(:commentable => @document, :version => @document.versions.last) do |f| %>
+  	<%= f.hidden_field :commentable_id %>
+  	<%= f.hidden_field :commentable_type %>
+  	<%= f.hidden_field :version_id %>
+  	<%= f.hidden_field :quote %>
   <div class="modal-body center">
     <b>Quoted Text:</b><br /> <span id="add_comment_quote"></span><br /><br />
     <b>Comments:</b><br />
-    <%= text_area(:comment, :body, :cols => 60, :rows => 6, :class => 'span6') %>
+    <%= f.text_area :content, :cols => 60, :rows => 6, :class => 'span6' %>
   </div>
   <div class="modal-footer">
-    <%= button_to 'Submit Comment', '#', :class => 'btn-primary' %>
+    <%= f.submit nil, :class => 'btn-primary' %>
     <%= button_to 'Cancel', '#' %>
   </div>
+  <% end %>
 </div>

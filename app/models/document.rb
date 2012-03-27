@@ -31,7 +31,7 @@ class Document < ActiveRecord::Base
               :autolink => true, :space_after_headers => true)
       html_body = markdown.render(self.body).html_safe
     when "wikitext"
-      wikitext = Wiky::Wikitext.new(CCROHTML)
+      wikitext = Wiky::Wikitext.new()
       html_body = wikitext.process(self.body).html_safe
     else
       html_body = self.body.html_safe
@@ -39,7 +39,7 @@ class Document < ActiveRecord::Base
     
     body = Nokogiri::HTML(html_body)
     @sections = body.xpath('//body').children.inject([]) do |sections_hash, child|
-      if child.name == 'h2' || child.name == 'h3'
+      if child.name == 'h2'
         title = child.inner_text
         sections_hash << { :title => title, :contents => ''}
       end
