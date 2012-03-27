@@ -3,6 +3,7 @@ class Document < ActiveRecord::Base
   default_url_options[:host] = 'ccromembers.dev'
   
   belongs_to :owner, :polymorphic => true
+  has_many :comments, :as => :commentable
   
   has_paper_trail
   
