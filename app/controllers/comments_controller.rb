@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+  
+  before_filter :require_user
+  before_filter :require_admin, :except => [:index, :show, :new, :create]
   # GET /comments
   # GET /comments.json
   def index
@@ -41,7 +44,8 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(params[:comment])
-
+    @comment.author = current_user
+    
     respond_to do |format|
       if @comment.save
         format.html { redirect_to :back, :flash => { :success => 'Comment was successfully sent.'} }
@@ -57,7 +61,8 @@ class CommentsController < ApplicationController
   # PUT /comments/1.json
   def update
     @comment = Comment.find(params[:id])
-
+    @comment.author = current_user
+    
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
