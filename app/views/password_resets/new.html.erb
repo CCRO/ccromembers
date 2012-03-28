@@ -1,0 +1,6 @@
+<h1>Reset Password</h1>
+<br />
+<%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
+   <%= text_field_tag :email, params[:email], :placeholder => 'User Account Email' %>
+  <%= submit_tag "Reset Password", :class => 'btn' %>
+<% end %>
