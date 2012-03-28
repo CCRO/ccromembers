@@ -1,5 +1,0 @@
-<% if session[:user_id] %>
-  <%= Person.find(session[:user_id]).name %>
-<% else %>
-  Hello, Stranger!
-<% end %>

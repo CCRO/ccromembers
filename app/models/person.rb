@@ -11,6 +11,7 @@ class Person < ActiveRecord::Base
 
   validates_uniqueness_of :email
   
+  validates_presence_of :password, :on => :create
   validates_presence_of :access_token
   validates_uniqueness_of :access_token
 
@@ -37,6 +38,13 @@ class Person < ActiveRecord::Base
     super(options)
   end
   
+  def send_password_reset
+    generate_perishable_token
+    self.perishable_token_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+  
   private
     
   def check_contacts
@@ -54,5 +62,11 @@ class Person < ActiveRecord::Base
   def create_access_token
     self.access_token = rand(36**8).to_s(36) if self.access_token.nil?
   end 
+  
+  def generate_perishable_token
+    begin
+      self.perishable_token = SecureRandom.urlsafe_base64
+    end while Person.exists?(:perishable_token => self.perishable_token)
+  end
   
 end

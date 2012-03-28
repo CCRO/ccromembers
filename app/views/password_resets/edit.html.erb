@@ -1,0 +1,17 @@
+<h1>Reset Password</h1>
+<br />
+<%= form_for @person, :url => reset_password_path(params[:parishable_token]), :html => {:class => 'form-inline'} do |f| %>
+  <% if @person.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @person.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <%= f.password_field :password, :placeholder => 'Password' %>
+    <%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
+	<%= f.submit "Update Password", :class => 'btn' %>
+<% end %>
