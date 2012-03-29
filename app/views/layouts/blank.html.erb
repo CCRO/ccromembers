@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= params[:controller].capitalize %></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="blank">
+	<div class="container">
+<!--Body content (BEGIN)-->
+<%= yield %>
+<!--Body content (END)-->
+<div id="notices">
+	<% flash.each do |key, msg| %>
+	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+      <a class="close" data-dismiss="alert">×</a>
+      <strong><%=  key.to_s.capitalize %>!</strong> <%= msg %>
+    </div>
+	<% end %>
+</div>
+
+</body>
+</html>

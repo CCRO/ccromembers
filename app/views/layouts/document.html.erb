@@ -9,7 +9,7 @@
 <body>
   <%= render 'shared/nav' %>
 	<div class="container">
-		<div id="notices">
+		<div id="notices" style="position: fixed; z-index: 999; top: 210px; margin-left: 300px;">
 			<% flash.each do |key, msg| %>
 	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
 	          <a class="close" data-dismiss="alert">×</a>

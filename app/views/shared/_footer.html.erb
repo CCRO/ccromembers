@@ -1,0 +1,59 @@
+<% if current_user %>
+	<div class="clearfix"></div>
+    <footer>
+        <div class="row">
+            <div class="span6">
+                <div style="text-align: center; padding: 10px;" class="well">
+                    Committee of Chief Risk Officers (CCRO) is an independent non-profit corporation of member companies.&nbsp;
+                </div>
+            </div>
+            <div class="span6" style="text-align: right;">
+                <a href="/application/jobs"><b>We're Hiring!</b></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">About</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="#">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Terms</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Privacy</a>
+            </div>
+        </div>
+    </footer>  
+    </div>
+
+  <div class="modal hide fade" id="modal-window">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>Loading...</h3>
+    </div>
+    <div class="modal-body center">
+        <%= image_tag "loading.gif" %>
+    </div>
+    <div class="modal-footer">&nbsp;</div>
+  </div>
+  <div class="modal hide fade" id="modal-current_user">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3><%= current_user.name %></h3>
+    </div>
+    <div class="modal-body center">
+	<table cellpadding="10">
+		<tr>
+			<td>
+      <ul class="thumbnails">
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <%= gravatar_for current_user %>
+          </a>
+        </li>
+      </ul>
+	  </td>
+	  <td valign="top">
+      <p>Company: <%= current_user.company.name if current_user.company %><br />
+      Role: <%= current_user.role.capitalize if current_user.role %><br />
+      Email: <%= mail_to current_user.email %><br />
+      Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
+	  </td>
+	  </tr>
+	  </table>
+    </div>
+    <div class="modal-footer">
+      <%= button_to 'Logout', logout_path, :class => 'btn-danger' %>
+      <%= button_to 'View Company', current_user.company if current_user.company %>
+      <%= button_to 'View Profile', current_user %>
+    </div>
+  </div>
+  <% end %>
