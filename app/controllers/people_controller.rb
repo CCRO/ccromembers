@@ -30,7 +30,7 @@ class PeopleController < ApplicationController
   # GET /people/new.json
   def new
     @person = Person.new
-
+    @companies = Company.pluck(:name)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @person }
@@ -45,6 +45,7 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.json
   def create
+    params[:person][:company] = Company.find_or_create_by_name(params[:person][:company]) if params[:person][:company]
     @person = Person.new(params[:person])
     
     respond_to do |format|
