@@ -49,7 +49,7 @@
     <div class="control-group">
       <%= f.label :company_id, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :company, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off' %>
+        <%= f.text_field :company, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
         <p class="help-block">Contact support if you can't find your company listed.</p>
       </div>
     </div>
@@ -61,15 +61,19 @@
 <% end %>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        $('#person_company').typeahead({source: companies});
+        $('.typeahead').typeahead({source: companies});
 		console.log(companies);
-		$('#person_company').bind('keyup', function() {
-			if(jQuery.inArray($('#person_company').val(), companies) != -1) {
+		$('.typeahead').bind('keyup', function() {
+			if(jQuery.inArray($(this).val(), companies) != -1) {
 				$(this).closest('.control-group').addClass('success').removeClass('error')
-				$(this).siblings('p').text("Company found.")
+				$(this).siblings('p.help-block').text("Company found.")
 			} else {
 				$(this).closest('.control-group').addClass('error').removeClass('success')
-				$(this).siblings('p').text("Company will be created.")
+				$(this).siblings('p.help-block').text("Company will be created.")
+			}
+			if($(this).val() == "") {
+				$(this).closest('.control-group').removeClass('error').removeClass('success')
+				$(this).siblings('p.help-block').text("Contact support if you can't find your company listed.")
 			}
 		});
     });
