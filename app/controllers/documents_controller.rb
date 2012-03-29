@@ -50,6 +50,8 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])
     @document.owner = current_user
+    @document.author = current_user
+
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, :flash => { :success => 'Document was successfully created.'} }

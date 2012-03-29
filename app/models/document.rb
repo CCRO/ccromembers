@@ -2,6 +2,7 @@ class Document < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   default_url_options[:host] = 'ccromembers.dev'
   
+  belongs_to :author, :class_name => 'Person'
   belongs_to :owner, :polymorphic => true
   has_many :comments, :as => :commentable
   
