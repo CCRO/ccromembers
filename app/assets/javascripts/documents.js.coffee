@@ -11,12 +11,26 @@ jQuery ->
       document.getElementById('comment_quote').value = string
       document.getElementById('add_comment_quote').innerHTML = string
       $('#btn-add_comment').hide()
-  $(document).scroll ->
+
+  $('#notices').data('fade', 'show')
+  $(document).on 'scroll', (evt, string, element) ->
     if $(document).scrollTop() < 28
       $('#document_header_wrapper').removeClass("bottom-shadow")
+      if $('#notices').data('fade') == 'hide'
+        $('#notices').fadeTo(250, 1.0 )
+        $('#notices').data('fade', 'show')
     else
       $('#document_header_wrapper').addClass("bottom-shadow")
+      if $('#notices').data('fade') == 'show'
+        $('#notices').fadeTo(250, 0.50 )
+        $('#notices').data('fade', 'hide')
     if $(document).scrollTop() < 45
       $('#document_header_wrapper.bottom-shadow').css('padding-bottom', $(document).scrollTop() + 85 )
     else
       $('#document_header_wrapper.bottom-shadow').css('padding-bottom', 45 + 85 )
+
+  $('#notices, #notices > *').mouseenter ->
+    if $('#notices').data('fade') == 'hide'
+      $(this).closest('div').fadeTo(250, 1.0 )
+      $('#notices').data('fade', 'show')
+    
