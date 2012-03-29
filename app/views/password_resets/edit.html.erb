@@ -1,17 +1,26 @@
-<h1>Reset Password</h1>
-<br />
-<%= form_for @person, :url => reset_password_path(params[:parishable_token]), :html => {:class => 'form-inline'} do |f| %>
-  <% if @person.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @person.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-    <%= f.password_field :password, :placeholder => 'Password' %>
-    <%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
-	<%= f.submit "Update Password", :class => 'btn' %>
-<% end %>
+<div id="password-reset" class="edit">
+	<div id="reset-form" class="span6 offset3">
+	  <center><%= image_tag "ccro_long.png" %></center><br />
+		<%= form_for @person, :url => reset_password_path(params[:parishable_token]), :html => {:class => 'well'} do |f| %>
+			<h2>Reset Password</h2>
+			<br />
+	    <div class="control-group">
+	      <%= f.label :password %>
+	    	<div class="controls">
+					<%= f.password_field :password, :placeholder => 'Password' %>
+				</div>
+	    </div>
+	    <div class="control-group">
+	      <%= f.label :password_confirmation %>
+	    	<div class="controls">
+					<%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
+					<p class="help-block"></p>
+				</div>
+	    </div>
+
+	    <div class="actions"><%= submit_tag "Reset Password", :class => "btn" %></div>
+	  <% end%>
+	</div>
+</div>
+
+

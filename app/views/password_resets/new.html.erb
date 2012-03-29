@@ -1,6 +1,17 @@
-<h1>Reset Password</h1>
-<br />
-<%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
-   <%= text_field_tag :email, params[:email], :placeholder => 'User Account Email' %>
-  <%= submit_tag "Reset Password", :class => 'btn' %>
-<% end %>
+<div id="password-reset" class="new">
+	<div class="offset1">
+		<table>
+			<tr>
+        <td><%= image_tag "ccro_short.png", :width => 250, :id => 'logo_short' %></td>
+				<td class="span5">
+      		<h2>Forgot Password</h2>
+      		<br />
+      		<%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
+      		   <%= text_field_tag :email, params[:email], :placeholder => 'User Account Email' %>
+      		  <%= submit_tag "Reset Password", :class => 'btn' %>
+      		<% end %>
+        </td>
+      </tr>
+    </table>
+	</div>
+</div>
