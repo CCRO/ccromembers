@@ -1,4 +1,7 @@
 class DocumentsController < ApplicationController
+  
+  layout 'document'
+  
   before_filter :require_user
   # GET /documents
   # GET /documents.json

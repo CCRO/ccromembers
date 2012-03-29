@@ -54,6 +54,10 @@
   border-bottom: 1px solid #ddd;
 }
 
+#document_content > h2:target { 
+	padding-top: 225px; 
+}
+
 #document_content_border {
   background: url('../images/leaftshadow-900.png') no-repeat bottom;
   padding-bottom: 20px;

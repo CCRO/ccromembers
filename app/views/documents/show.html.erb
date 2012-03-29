@@ -33,7 +33,7 @@
 			<% end %>
 	      </ul>
 	    </li>
-      <li><a href="#">Comments <span class="label"><%= @document.comments.count %></span></a></li>
+      <li><a href="<%= document_comments_path(@document) %>">Comments <span class="label"><%= @document.comments.count %></span></a></li>
     </ul>
   </div>
 </div>
@@ -48,9 +48,7 @@
     <a href="#" class="close">×</a>
     <h3>Add Comment</h3>
   </div>
-  <%= form_for Comment.new(:commentable => @document, :version => @document.versions.last) do |f| %>
-  	<%= f.hidden_field :commentable_id %>
-  	<%= f.hidden_field :commentable_type %>
+  <%= form_for [@document, Comment.new( :version => @document.versions.last)] do |f| %>
   	<%= f.hidden_field :version_id %>
   	<%= f.hidden_field :quote %>
   <div class="modal-body center">

@@ -1,5 +1,7 @@
 Ccromembers::Application.routes.draw do
 
+  resources :messages
+
   match 'login' => 'sessions#new', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'register' => 'people#new', :as => :register
