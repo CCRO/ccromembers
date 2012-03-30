@@ -1,7 +1,5 @@
 Ccromembers::Application.routes.draw do
 
-  resources :messages
-
   match 'login' => 'sessions#new', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'register' => 'people#new', :as => :register
@@ -16,11 +14,14 @@ Ccromembers::Application.routes.draw do
   resources :people
   resources :companies
   resources :comments
+  resources :messages do
+    resources :comments
+  end
   resources :documents do
     resources :comments
   end
 
-  root :to => 'static#index'
+  root :to => 'sessions#new'
 
   match ':controller(/:action(/:id))(.:format)'
 end

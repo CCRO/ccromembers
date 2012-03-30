@@ -37,11 +37,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_no_user
-    redirect_to root_url, alert: "Not authorized" if current_user
+    redirect_to dashboard_path, :flash => {warning: "This action is not avialable to already logged in users."} if current_user
   end
 
   def require_admin
-    redirect_to login_url, alert: "Not authorized" if current_user.nil?
+    redirect_to :back,:flash => {error: "Not authorized." } unless current_user.role == 'administrator'
   end
   
   protected

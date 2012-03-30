@@ -13,7 +13,7 @@
 			<% flash.each do |key, msg| %>
 	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
 	          <a class="close" data-dismiss="alert">×</a>
-	          <strong><%=  key.to_s.capitalize %>!</strong> <%= msg %>
+	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
 	        </div>
 			<% end %>
 		</div>
