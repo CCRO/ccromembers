@@ -41,7 +41,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to :back,:flash => {error: "Not authorized." } unless current_user.role == 'administrator'
+    redirect_to :back,:flash => {error: "Not authorized." } unless current_user.admin?
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to :back,:flash => {error: exception.message }
   end
   
   protected

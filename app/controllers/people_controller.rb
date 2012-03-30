@@ -3,10 +3,11 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.joins(:company).order('companies.name') + Person.where('company_id IS NULL') if params[:sort] == 'company'
-    @people = Person.order(params[:sort]) if params[:sort] && !@people
+    @people = Person.joins(:company).order('companies.name') + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
+    @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
 
-    @people = Person.all unless @people
+    @people = Person.accessible_by(current_ability) unless @people
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @people }
@@ -19,6 +20,8 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
 
+    authorize! :read, @person
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @person }
@@ -31,6 +34,9 @@ class PeopleController < ApplicationController
   def new
     @person = Person.new
     @companies = Company.pluck(:name)
+
+    authorize! :create, Person
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @person }
@@ -40,6 +46,9 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
+
+    authorize! :edit, @person
+    
   end
 
   # POST /people
@@ -47,7 +56,9 @@ class PeopleController < ApplicationController
   def create
     params[:person][:company] = Company.find_or_create_by_name(params[:person][:company]) if params[:person][:company]
     @person = Person.new(params[:person])
-    
+
+    authorize! :create, @person
+        
     respond_to do |format|
       if @person.save
         format.html { redirect_to @person, notice: 'Person was successfully created.' }
@@ -64,6 +75,8 @@ class PeopleController < ApplicationController
   def update
     @person = Person.find(params[:id])
 
+    authorize! :edit, @person
+    
     respond_to do |format|
       if @person.update_attributes(params[:person])
         format.html { redirect_to @person, notice: 'Person was successfully updated.' }
@@ -81,6 +94,8 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @person.destroy
 
+    authorize! :destroy, @person
+    
     respond_to do |format|
       format.html { redirect_to people_url }
       format.json { head :no_content }

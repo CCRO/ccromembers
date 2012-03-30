@@ -28,6 +28,14 @@ class Person < ActiveRecord::Base
     self.company.role if self.company
   end
   
+  def member?
+    ['full-member', 'participating-member', 'member-emeritus', 'board'].include? self.role
+  end
+  
+  def admin?
+    self.role == 'administrator'
+  end
+  
   def to_xml(options={})
     options.merge!(:except => [:password_digest, :access_token, :created_at, :updated_at], :include => [:company => {:only => [:name]}])
     super(options)

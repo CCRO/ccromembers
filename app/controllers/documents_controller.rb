@@ -6,7 +6,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    @documents = Document.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb
