@@ -88,6 +88,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.1.0)
     mysql2 (0.3.11)
+    newrelic_rpm (3.3.3)
     nokogiri (1.5.2)
     paper_trail (2.6.2)
       rails (~> 3)
@@ -162,6 +163,7 @@ DEPENDENCIES
   hirb
   jquery-rails
   mysql2
+  newrelic_rpm
   nokogiri
   paper_trail
   pg
