@@ -7,7 +7,8 @@ class Person < ActiveRecord::Base
   before_save :check_contacts
   before_validation :create_access_token
 
-  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token
+  attr_accessor :company_name, :send_welcome
+  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome
 
   validates_uniqueness_of :email
   

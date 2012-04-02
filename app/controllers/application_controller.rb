@@ -6,7 +6,21 @@ class ApplicationController < ActionController::Base
   before_filter :set_mailer_host
   
   before_filter :http_basic_authentication
-
+  
+  # Collect additional debug details for New Relic RPM is available
+  # Do this after all other before filters so details are present
+  before_filter :set_new_relic_custom_parameters
+  def set_new_relic_custom_parameters
+    return unless defined?(NewRelic)
+    NewRelic::Agent.add_custom_parameters(
+      :locale => (I18n.locale if I18n.locale),
+      :account => (current_user ? current_user.email : 'guest'),
+      :return_to => (session[:url_return_to] if session[:url_return_to],
+      :return_to => (session[:url_after_login] if session[:url_after_login])
+    )
+  end
+  private :set_new_relic_custom_parameters
+  
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
