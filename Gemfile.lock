@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/bcurren/freshbooks.rb.git
+  revision: a6d97ffda3e940e143aee862bae5fa280aa8ca94
+  specs:
+    bcurren-freshbooks.rb (3.0.23)
+      activesupport
+
+GIT
   remote: git://github.com/crjones/wiky.git
   revision: e55aab81ef5476e2aec4bc3a50050cf4c5a7b254
   specs:
@@ -140,6 +147,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
+  bcurren-freshbooks.rb!
   cancan
   coffee-rails (~> 3.2.1)
   hirb

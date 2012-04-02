@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+
+APP_CONFIG = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))
+
+
 module Ccromembers
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

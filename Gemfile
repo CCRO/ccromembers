@@ -21,6 +21,7 @@ gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
 gem 'wikitext'
 gem 'nokogiri'
 gem 'cancan'
+gem "bcurren-freshbooks.rb", :git => 'git://github.com/bcurren/freshbooks.rb.git'
 
 # Gems used only for assets and not required
 # in production environments by default.
