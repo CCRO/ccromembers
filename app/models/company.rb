@@ -5,12 +5,14 @@ class Company < ActiveRecord::Base
   
   before_save :check_contacts
   
-  def update_current_balance
+  def update_balance!
     if self.freshbooks_id.present?
        @fbc = Freshbooks.new
-       self.balance = @fbc.get_client_amount_outstanding(self.freshbooks_id) 
+       self.balance = @fbc.get_client_amount_outstanding(self.freshbooks_id)
+       self.save 
     end
   end
+  handle_asynchronously :update_balance!
 
   private
     

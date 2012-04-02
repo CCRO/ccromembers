@@ -8,11 +8,11 @@ gem 'rails', '3.2.1'
 group :development do
   gem 'mysql2'
   gem 'hirb'
+  gem 'foreman'
 end
 
 group :production do
   gem 'pg'
-  gem 'thin'
 end
 
 gem 'paper_trail'
@@ -22,6 +22,9 @@ gem 'wikitext'
 gem 'nokogiri'
 gem 'cancan'
 gem "bcurren-freshbooks.rb", :git => 'git://github.com/bcurren/freshbooks.rb.git'
+
+gem 'delayed_job_active_record'
+gem 'thin'
 
 # Gems used only for assets and not required
 # in production environments by default.
