@@ -31,3 +31,32 @@ table.messages a {
 	color: black;
 	font-size: 1.1em;
 }
+
+#message_content {
+    position: relative;
+}
+
+.ribbon-left {
+    position: absolute;
+    top: 15px;
+    left: -10px;
+    padding: 4px 8px;
+    background: #000;
+    color: #fff;
+    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+.ribbon-left:after {
+    content: '';
+    display: block;
+    height: 20px;
+    width: 8px;
+    position: absolute;
+    top: 44px;
+    left: 0px;
+    background: transparent;
+    z-index: -1;
+    border-top: 45px solid #696969;
+    border-left: 45px solid transparent;
+}
