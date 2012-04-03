@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
+    @companies = Company.pluck(:name)
 
     authorize! :edit, @person
     
@@ -54,7 +55,10 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.json
   def create
-    params[:person][:company] = Company.find_or_create_by_name(params[:person][:company]) if params[:person][:company]
+    if params[:person][:company_name]
+      params[:person][:company] = Company.find_or_create_by_name(params[:person][:company_name])
+      params[:person].delete(:company_name)
+    end
     @person = Person.new(params[:person])
 
     authorize! :create, @person
@@ -73,6 +77,10 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.json
   def update
+    if params[:person][:company_name]
+      params[:person][:company] = Company.find_or_create_by_name(params[:person][:company_name])
+      params[:person].delete(:company_name)
+    end
     @person = Person.find(params[:id])
 
     authorize! :edit, @person

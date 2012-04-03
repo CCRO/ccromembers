@@ -49,7 +49,7 @@
     <div class="control-group">
       <%= f.label :company_id, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :company, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
+        <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
         <p class="help-block">Contact support if you can't find your company listed.</p>
       </div>
     </div>
@@ -63,7 +63,7 @@
     jQuery(document).ready(function() {
         $('.typeahead').typeahead({source: companies});
 		console.log(companies);
-		$('.typeahead').bind('keyup', function() {
+		$('.typeahead, ul.typeahead.dropdown > a').bind('keyup change focus blur mouseup', function() {
 			if(jQuery.inArray($(this).val(), companies) != -1) {
 				$(this).closest('.control-group').addClass('success').removeClass('error')
 				$(this).siblings('p.help-block').text("Company found.")
