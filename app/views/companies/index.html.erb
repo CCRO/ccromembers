@@ -31,9 +31,11 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><%= link_to 'View in Highrise', highrise_url(company) if company.highrise_id %></li>
-                <li><%= link_to 'View in Freshbooks', freshbooks_url(company) if company.freshbooks_id %></li>
-                <li class="divider"></li>
+                <li><%= link_to 'View in Highrise', highrise_url(company) unless company.highrise_id.blank? %></li>
+                <li><%= link_to 'View in Freshbooks', freshbooks_url(company) unless company.freshbooks_id.blank? %></li>
+                <% unless company.highrise_id.blank? && company.freshbooks_id.blank? %>
+					<li class="divider"></li>
+				<% end %>
                 <li><%= link_to 'Edit', edit_company_path(company) %></li>
                 <li><%= link_to 'Delete', company, confirm: 'Are you sure?', method: :delete %></li>
               </ul>

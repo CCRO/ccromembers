@@ -26,3 +26,8 @@ blockquote > a.close {
 blockquote:hover > a.close {
 	display: block;
 }
+
+table.messages a {
+	color: black;
+	font-size: 1.1em;
+}
