@@ -49,7 +49,7 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(params[:document])
-    @document.owner = current_user
+    @document.owner = Company.first
     @document.author = current_user
 
     respond_to do |format|
