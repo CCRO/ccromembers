@@ -27,6 +27,13 @@
           <textarea id="editor" name="document[body]"><%= @document.body %></textarea>
         </div>
       </div>
+      <div class="control-group">
+        <%= f.label :format , :class => 'control-label' %><br />
+        <div class="controls">
+          <%= f.select :format, options_for_select(FORMATS, @document.format), :include_blank => true %>
+        </div>
+      </div>
+	  
     </div>
     <div class="tab-pane" id="preview">
       <div id="preview"></div>

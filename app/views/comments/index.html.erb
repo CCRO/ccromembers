@@ -1,13 +1,28 @@
-<h1>Comments</h1>  
-  
-<ul id="comments">  
-  <% @comments.each do |comment| %>  
-    <li><%= comment.content %></li>  
-  <% end %>  
-</ul>  
-  
-<h2>New Comment</h2>  
-<%= form_for [@commentable, Comment.new] do |form| %>  
-      <%= form.text_area :content, :rows => 5, :class => 'span6' %><br />
-    <%= submit_tag "Add comment", :class => 'btn' %>
-<% end %>  
+	<ul class="pager">
+	  <li class="previous">
+	    <%= link_to raw("&larr; Back to #{@commentable.class}"), @commentable %>
+	  </li>
+	</ul>
+<div id="message_content_border">
+  <div id="message_content">
+  	<h1><%= @commentable.class.to_s + ": " + @commentable.title %></h1>
+    <hr />
+    <div class="hidden_form">
+    <a href="#" class="toggle_form">Add a comment to the discussion</a>
+    <%= form_for [@commentable, Comment.new], :html => {:class => 'hide'} do |f| %>
+    <h2>Add a comment</h2>
+    <%= f.text_area :content, :rows => '5', :class => 'span11 simple_editor' %>
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
+    <% end %>
+    </div>
+    <hr />
+    <% @commentable.comments.reverse.each do |comment| %>
+    <blockquote>
+      <%= link_to raw('&times'), document_comment_path(@commentable.id, comment.id), :class => 'close hide pull-right', :method => :delete, :confirm => "Are you sure?" if can? :manage, comment %>
+      <p><em><%= raw comment.quote %></em></p><br />
+	  <p><strong><%= raw comment.content %></strong></p>
+      <small><%= comment.author.name %>, <%= comment.author.company.name %></small>
+    </blockquote>
+    <% end %>
+  </div>
+</div>

@@ -1,25 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Subject:</b>
-  <%= @message.subject %>
-</p>
-
-<p>
-  <b>Content:</b>
-  <%= @message.content %>
-</p>
-
-<p>
-  <b>Author:</b>
-  <%= @message.author_id %>
-</p>
-
-<p>
-  <b>Published at:</b>
-  <%= @message.published_at %>
-</p>
-
-
-<%= link_to 'Edit', edit_message_path(@message) %> |
-<%= link_to 'Back', messages_path %>
+<div id="message_content_border">
+  <div id="message_content">
+  	<h1 class="pull-right" style="color: grey">
+  	  <%= @message.published_at.to_date.to_s(:short) %>
+  	</h1>
+  	<h1><%= @message.subject %></h1>
+    <hr />
+  	<h3><%= raw @message.content %></h3>
+    <hr />
+    <div class="hidden_form">
+    <a href="#" class="toggle_form">Add a comment to the discussion</a>
+    <%= form_for [@message, Comment.new], :html => {:class => 'hide'} do |f| %>
+    <h2>Add a comment</h2>
+    <%= f.text_area :content, :rows => '5', :class => 'span11 simple_editor' %>
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
+    <% end %>
+    </div>
+    <hr />
+    <% @message.comments.reverse.each do |comment| %>
+    <blockquote>
+      <%= link_to raw('&times'), message_comment_path(@message.id, comment.id), :class => 'close hide pull-right', :method => :delete, :confirm => "Are you sure?" if can? :manage, comment %>
+      <p><%= raw comment.content %></p>
+      <small><%= comment.author.name %>, <%= comment.author.company.name %></small>
+    </blockquote>
+    <% end %>
+  </div>
+</div>

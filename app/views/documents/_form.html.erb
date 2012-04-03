@@ -5,30 +5,22 @@
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :title, :class => 'text_field' %>
+        <%= f.text_field :title, :placeholder => 'Title', :class => 'span8 text_field' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :published_at, :class => 'control-label' %>
+      <div class="controls">
+        <%= date_picker :document, :published_at %>
       </div>
     </div>
 
     <div class="control-group">
       <%= f.label :body, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_area :body, :class => 'text_area' %>
+        <%= f.text_area :body, :placeholder => 'Type your message here...', :class => 'span8 text_area simple_editor' %>
       </div>
     </div>
-    <div class="control-group">
-      <%= f.label :format , :class => 'control-label' %><br />
-      <div class="controls">
-        <%= f.select :format, options_for_select(FORMATS, @document.format), :include_blank => true %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :published_at, :class => 'control-label' %>
-      <div class="controls">
-        <%= date_picker :document, :published_at, :class => 'datetime_select' %>
-      </div>
-    </div>
-
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel', documents_path, :class => 'btn' %>

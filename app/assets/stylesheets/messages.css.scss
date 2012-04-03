@@ -1,0 +1,28 @@
+// Place all the styles related to the documents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#message_content {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #dddddd;
+}
+
+#message_content_border {
+  background: url('../images/leaftshadow-900.png') no-repeat bottom;
+  padding-bottom: 20px;
+}
+
+blockquote {
+	border-left: 5px solid #BBB;
+}
+
+blockquote > a.close {
+	display: none;
+}
+
+blockquote:hover > a.close {
+	display: block;
+}

@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
   # GET /comments/1
   # GET /comments/1.json
   def show
+    @commentable = find_commentable  
     @comment = Comment.find(params[:id])
 
     respond_to do |format|
@@ -38,6 +39,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    @commentable = find_commentable  
     @comment = Comment.find(params[:id])
   end
 
@@ -50,7 +52,7 @@ class CommentsController < ApplicationController
   
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to :back, :flash => { :success => 'Comment was successfully sent.'} }
+        format.html { redirect_to @commentable, :flash => { :success => 'Comment was successfully sent.'} }
         format.json { render json: @comment, status: :created, location: @comment }
       else
         format.html { render action: "new" }
@@ -79,11 +81,12 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    @commentable = find_commentable  
     @comment = Comment.find(params[:id])
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html { redirect_to @commentable }
       format.json { head :no_content }
     end
   end
