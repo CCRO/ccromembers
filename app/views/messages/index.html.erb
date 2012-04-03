@@ -1,29 +1,19 @@
-<h1>Listing messages</h1>
+<h1>Discussions</h1>
 
-<table>
-  <tr>
-    <th>Subject</th>
-    <th>Content</th>
-    <th>Author</th>
-    <th>Published at</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<table class="table">
 <% @messages.each do |message| %>
   <tr>
-    <td><%= message.subject %></td>
-    <td><%= message.content %></td>
-    <td><%= message.author_id %></td>
-    <td><%= message.published_at %></td>
-    <td><%= link_to 'Show', message %></td>
-    <td><%= link_to 'Edit', edit_message_path(message) %></td>
-    <td><%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+  		<strong><%= link_to message.subject, message %></strong> - 
+  		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...') %>
+	  </td>
+    <td class="span2"><strong><%= message.owner.name %></strong></td>
+    <td class="span1"><%= message.published_at.to_date.to_s(:short) %></td>
+    <td class="span1"><span class="badge badge-inverse"><%= message.comments.count %></span></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Message', new_message_path %>
+<%= link_to 'New Message', new_message_path, :class => 'btn' %>

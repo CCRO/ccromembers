@@ -41,7 +41,10 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
-
+    @message.owner ||= Company.first
+    @message.author = current_user
+    @message.published_at ||= Time.now
+    
     respond_to do |format|
       if @message.save
         format.html { redirect_to @message, notice: 'Message was successfully created.' }

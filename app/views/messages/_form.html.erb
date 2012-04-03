@@ -1,33 +1,7 @@
 <%= form_for(@message) do |f| %>
-  <% if @message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
-
-      <ul>
-      <% @message.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :subject %><br />
-    <%= f.text_field :subject %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_field :content %>
-  </div>
-  <div class="field">
-    <%= f.label :author_id %><br />
-    <%= f.number_field :author_id %>
-  </div>
-  <div class="field">
-    <%= f.label :published_at %><br />
-    <%= f.datetime_select :published_at %>
-  </div>
+<%= f.text_field :subject, :placeholder => 'Subject', :class => 'span6' %><br />
+    <%= f.text_area :content, :placeholder => 'Type your message here...', :class => 'span6' %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, :class => 'btn' %>
   </div>
 <% end %>
