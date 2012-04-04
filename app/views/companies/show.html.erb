@@ -18,6 +18,7 @@
   <% else %>
   <span class="badge badge-error"><%= @company.billing_status %></span>
   <% end %>
+  <span class="badge badge-inverse"><%= number_to_currency @company.balance %></span>
   <hr />
 
 <%= render :partial => 'people/list', :object => @people %>
