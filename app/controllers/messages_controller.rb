@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     @messages = Message.all
+    @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
     respond_to do |format|
       format.html # index.html.erb

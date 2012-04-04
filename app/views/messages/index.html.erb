@@ -15,7 +15,9 @@
 			  </td>
 		    <td class="span2"><strong><%= message.owner.name %></strong></td>
 		    <td class="span2">
+				<% if message.comments.count > 0 %>
 				<span class="badge badge-inverse pull-right"><%= message.comments.count %></span>
+				<% end %>
 				<h5 style="color: grey;">
 				<% if message.last_activity_time.to_date == Time.now.to_date %>
 					<%= l message.last_activity_time, :format => :time %>
