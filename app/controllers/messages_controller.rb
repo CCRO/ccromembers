@@ -42,7 +42,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
-    @message.owner ||= Company.first
+    @message.owner ||= Company.find(1)
     @message.author = current_user
     @message.published_at ||= Time.now
     
