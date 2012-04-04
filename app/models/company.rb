@@ -20,7 +20,7 @@ class Company < ActiveRecord::Base
     
   def check_contacts
     unless self.new_record?
-      (self.primary_contact.nil? || self.primary_contact.company == self) && (self.billing_contact.nil? || self.billing_contact.company == self )
+      (self.primary_contact.blank? || self.primary_contact.company == self) && (self.billing_contact.blank? || self.billing_contact.company == self )
     else
       true
     end

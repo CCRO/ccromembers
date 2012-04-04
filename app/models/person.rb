@@ -57,7 +57,7 @@ class Person < ActiveRecord::Base
   private
     
   def check_contacts
-    if !self.new_record? && self.company_id_changed? && self.company_id_was
+    if !self.new_record? && self.company_id_changed? && self.company_id_was && Company.exists?(self.company_id_was)
       previous_company = Company.find(self.company_id_was)
       previous_company.primary_contact = nil if previous_company.primary_contact == self
       previous_company.billing_contact = nil if previous_company.billing_contact == self
