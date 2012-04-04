@@ -17,6 +17,9 @@ en:
       session:
         email: 'Username or Email'
         password: 'Password'
-  date:
-    formats:
-      default: "%m-%d-%Y"
+  time:
+      formats:
+        default: "%A, %B %e, %Y %l:%M %p"
+        long: "whatever..."
+        short: "%b %d"
+        time: "%I:%M %p"

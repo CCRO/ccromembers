@@ -1,5 +1,9 @@
 <div id="message_content_border">
-  <div id="message_content" style="padding-top: 75px;">
+  <div id="message_content" style="padding-top: 25px;">
+	  	<% if can? :create, Message %>
+			<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
+			<br /><br /><br />
+		<% end %>
 		<h1 class="ribbon-left">Discussions</h1>
 
 		<table class="table messages">
@@ -10,15 +14,22 @@
 		  		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...') %>
 			  </td>
 		    <td class="span2"><strong><%= message.owner.name %></strong></td>
-		    <td class="span1"><%= message.last_activity_time.to_date.to_s(:short) %></td>
-		    <td class="span1"><span class="badge badge-inverse"><%= message.comments.count %></span></td>
+		    <td class="span2">
+				<span class="badge badge-inverse pull-right"><%= message.comments.count %></span>
+				<h5 style="color: grey;">
+				<% if message.last_activity_time.to_date == Time.now.to_date %>
+					<%= l message.last_activity_time, :format => :time %>
+				<% else %>
+					<%= l message.last_activity_time.to_date, :format => :short %>
+				<% end %>
+				</h5>
+			</td>
 		  </tr>
 		<% end %>
 		</table>
 
 		<br />
 
-		<%= link_to 'New Message', new_message_path, :class => 'btn' %>
 	</div>
 </div>
 	
