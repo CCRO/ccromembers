@@ -1,7 +1,7 @@
-<%= form_for(@message) do |f| %>
-	<%= f.text_field :subject, :placeholder => 'Subject', :class => 'span6' %><br />
-  <%= f.text_area :content, :placeholder => 'Type your message here...', :class => 'span6 simple_editor' %>
-  <div class="actions">
-    <%= f.submit nil, :class => 'btn' %>
-  </div>
-<% end %>
+<div>
+    <%= form_for @message do |f| %>
+    <%= f.text_field :subject, :placeholder => 'Subject', :class => 'span11 input-xlarge' %><br />
+    <%= f.text_area :content, :rows => '5', :class => 'span11 simple_editor' %>
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
+    <% end %>
+</div>

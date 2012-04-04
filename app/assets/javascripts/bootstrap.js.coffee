@@ -11,11 +11,3 @@ jQuery ->
     $modal.modal('show')
   $('.datepicker').datepicker()
   $('textarea.simple_editor').wysihtml5()
-  simple_editor = window.wysihtml5.Editor
-  simple_editor.bind 'focus', (evt, string, element) ->
-    $('#message_content-wysihtml5-toolbar').show(250)
-    console.log 'focus'
-  simple_editor.bind 'blur', (evt, string, element) ->
-    $('#message_content-wysihtml5-toolbar').hide(250)
-    console.log 'blur'
-    

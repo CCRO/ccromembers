@@ -11,3 +11,4 @@ jQuery ->
     event.preventDefault()
     $(this).closest('div.hidden_form').children('a.toggle_form').show()
     $(this).closest('form').hide()
+  $(".ribbon-left").after('<br /><br /><br />')  

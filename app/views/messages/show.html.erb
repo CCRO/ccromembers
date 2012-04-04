@@ -4,7 +4,8 @@
 	  </li>
 	</ul>
 <div id="message_content_border">
-  <div id="message_content">
+  <div id="message_content_box">
+	 <h1 class="ribbon-left">Discussion Topic:</h1>
   	<h1 class="pull-right" style="color: grey">
   	  <%= @message.published_at.to_date.to_s(:short) %>
   	</h1>
@@ -17,6 +18,8 @@
 		</div>
 	<% end %>
 	<h3><%= raw @message.content %></h3>
+	<br />
+	 <h1 class="ribbon-left">Comments:</h1>
     <hr />
     <div class="hidden_form">
     <a href="#" class="toggle_form">Add a comment to the discussion</a>

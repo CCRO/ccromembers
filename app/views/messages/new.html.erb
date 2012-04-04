@@ -1,5 +1,12 @@
-<h1>New message</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', messages_path %>
+<ul class="pager">
+  <li class="previous">
+    <%= link_to raw("&larr; Back to Messages"), messages_url %>
+  </li>
+</ul>
+<div id="message_content_border">
+  <div id="message_content_box">
+		<h1 class="ribbon-left">New Discussion Topic</h1>
+			<%= render 'form' %>			
+		<br />
+	</div>
+</div>

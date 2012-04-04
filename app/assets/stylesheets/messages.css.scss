@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-#message_content {
+#message_content_box {
   margin-top: 25px;
   padding: 20px;
   background-color: white;
@@ -32,13 +32,12 @@ table.messages a {
 	font-size: 1.1em;
 }
 
-#message_content {
+#message_content_box {
     position: relative;
 }
 
 .ribbon-left {
     position: absolute;
-    top: 15px;
     left: -10px;
     padding: 4px 8px;
     background: #000;
