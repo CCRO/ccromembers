@@ -17,6 +17,18 @@
   
 }
 
+#document_content ol li {
+	margin-top: 5px;
+}
+
+#document_content ol ol {
+	list-style-type: lower-alpha;
+}
+
+#document_content ol ol ol {
+	list-style-type: lower-roman;
+}
+
 #document_header > h1 {
   margin-bottom: 10px;
 }
@@ -26,6 +38,11 @@
   position: fixed;
   z-index: 999;
   
+}
+
+.blur{
+    color: transparent;   
+    text-shadow: 0px 0px 1px #FF33FF;
 }
 
 .section-anchor {
