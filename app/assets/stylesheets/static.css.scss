@@ -1,3 +1,24 @@
 // Place all the styles related to the static controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+div.page {
+  position: relative;
+  margin-top: 25px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #dddddd;
+}
+
+div.page-shadow {
+  background: url('../images/leaftshadow-900.png') no-repeat bottom;
+  padding-bottom: 20px;
+}
+
+div.page > h2 {
+  color: #32609e;
+  border-bottom: 1px dotted #32609e;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}

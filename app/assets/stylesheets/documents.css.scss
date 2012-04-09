@@ -65,6 +65,25 @@
 
 @media (min-width: 1200px) {
   #document_header {
-    width: 1170px;
+    width: 1130px;
   }
+}
+
+@media (max-width: 979px) {
+    #document_header {
+		display: none;
+    }
+    #document_header_wrapper {
+		display: none;
+    }
+	
+	#document_header ul.nav {
+		display: none;
+	}
+	div.subnav {
+		display: none;
+	}
+	div#document_content {
+		margin-top: 25px;
+	}
 }

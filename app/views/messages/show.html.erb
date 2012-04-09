@@ -8,7 +8,7 @@
   	<h1 class="pull-right" style="color: grey">
   	  <%= @message.published_at.to_date.to_s(:short) %>
   	</h1>
-  	<h1><%= @message.subject %></h1>
+  	<h1 id="comments"><%= @message.subject %></h1>
     <hr />
 	<% if can? :manage, @message %>
 		<div class="btn-group pull-right">
@@ -17,24 +17,9 @@
 		</div>
 	<% end %>
 	<%= raw @message.content %>
-	<br />
+	<br /><br />
 	 <h1 class="ribbon-left">Comments:</h1>
-    <hr />
-    <div class="hidden_form">
-    <a href="#" class="toggle_form">Add a comment to the discussion</a>
-    <%= form_for [@message, Comment.new], :html => {:class => 'hide'} do |f| %>
-    <h2>Add a comment</h2>
-    <%= f.text_area :content, :rows => '5', :class => 'span11 simple_editor' %>
-    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
-    <% end %>
-    </div>
-    <hr />
-    <% @message.comments.reverse.each do |comment| %>
-    <blockquote>
-      <%= link_to raw('&times'), message_comment_path(@message.id, comment.id), :class => 'close hide pull-right', :method => :delete, :confirm => "Are you sure?" if can? :manage, comment %>
-      <p><%= raw comment.content %></p>
-      <small><%= comment.author.name %>, <%= comment.author.company.name %></small>
-    </blockquote>
-    <% end %>
+	<%= render :partial => 'shared/comment_hidden_form' %>
+    <%= render :partial => 'shared/comment', :collection => @message.comments.reverse %>
   </div>
 </div>

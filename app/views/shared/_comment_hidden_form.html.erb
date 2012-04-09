@@ -1,0 +1,10 @@
+<hr />
+<div class="hidden_form">
+<a href="#" class="toggle_form">Add a comment to the discussion</a>
+<%= form_for [@message, Comment.new], :html => {:class => 'hide'} do |f| %>
+<h2>Add a comment</h2>
+<%= f.text_area :content, :rows => '5', :class => 'span11 simple_editor' %>
+<%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
+<% end %>
+</div>
+<hr />

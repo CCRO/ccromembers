@@ -4,6 +4,15 @@ body {
   background-color: #efefef;
 }
 
+@media (max-width: 979px) {
+  body {
+    margin-top: 0px;
+  }
+  div.navbar-text {
+	  display: none;
+  }
+}
+
 /*body#blank #notices {
 	width: 400px;
 	margin-left: 400px;

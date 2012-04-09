@@ -1,0 +1,20 @@
+<tr>
+	<td>
+		<strong><%= link_to message.subject, message %></strong> - 
+		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...') %>
+	  </td>
+	<td class="span2"><strong><%= message.owner.name %></strong></td>
+	<td class="span2">
+		<% if message.comments.count > 0 %>
+		<span class="badge badge-inverse pull-right"><%= link_to message.comments.count, message_path(message) + '#comments', :style => 'color:white;' %></span>
+		<% end %>
+		<h5 style="color: grey;">
+		<% if message.last_activity_time.to_date == Time.now.to_date %>
+			<%= l message.last_activity_time, :format => :time %>
+		<% else %>
+			<%= l message.last_activity_time.to_date, :format => :short %>
+		<% end %>
+		</h5>
+	</td>
+</tr>
+	

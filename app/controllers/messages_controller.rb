@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = Message.accessible_by(current_ability)
     @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
     respond_to do |format|
@@ -15,7 +15,9 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @message = Message.find(params[:id])
-
+    
+    authorize! :read, @message
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @message }
@@ -27,6 +29,8 @@ class MessagesController < ApplicationController
   def new
     @message = Message.new
 
+    authorize! :read, Message
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @message }
@@ -36,6 +40,9 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     @message = Message.find(params[:id])
+
+    authorize! :edit, @message
+    
   end
 
   # POST /messages
@@ -45,6 +52,8 @@ class MessagesController < ApplicationController
     @message.owner ||= Company.find(1)
     @message.author = current_user
     @message.published_at ||= Time.now
+    
+    authorize! :create, @message
     
     respond_to do |format|
       if @message.save
@@ -62,6 +71,8 @@ class MessagesController < ApplicationController
   def update
     @message = Message.find(params[:id])
 
+    authorize! :edit, @message
+    
     respond_to do |format|
       if @message.update_attributes(params[:message])
         format.html { redirect_to @message, notice: 'Message was successfully updated.' }
@@ -79,6 +90,8 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     @message.destroy
 
+    authorize! :destory, @message
+    
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :no_content }

@@ -1,0 +1,5 @@
+    <blockquote>
+      <%= link_to raw('&times'), message_comment_path(comment.commentable.id, comment.id), :class => 'close hide pull-right', :method => :delete, :confirm => "Are you sure?" if can? :manage, comment %>
+      <p><%= raw comment.content %></p>
+      <small><%= comment.author.name %>, <%= comment.author.company.name %></small>
+    </blockquote>
