@@ -22,3 +22,44 @@ div.page > h2 {
   margin-top: 10px;
   margin-bottom: 5px;
 }
+
+.ribbon-right {
+    position: absolute;
+    right: -10px;
+    padding: 4px 8px;
+    background: #000;
+    color: #fff;
+    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+.ribbon-right:after {
+    content: '';
+    display: block;
+    height: 20px;
+    width: 8px;
+    position: absolute;
+    top: 26px;
+    right: 0px;
+    background: transparent;
+    z-index: -1;
+    border-top: 45px solid #696969;
+    border-right: 45px solid transparent;
+}
+
+.ribbon-important {
+  background: darkred;
+}
+
+.ribbon-important:after {
+  border-top: 45px solid #bb6969;
+}
+
+.ribbon-success {
+  background: green;
+}
+
+.ribbon-success:after {
+  border-top: 45px solid #69bb69;
+}
+
