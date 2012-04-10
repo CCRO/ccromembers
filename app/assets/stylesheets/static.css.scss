@@ -23,24 +23,45 @@ div.page h2 {
   margin-bottom: 5px;
 }
 
+div.page h3 {
+  border-bottom: 1px dotted #333;
+}
+
+div.page h3 span.pull-right {
+  font-weight: normal;
+  font-style: italic;
+  font-size: .8em;
+}
+
+div.page {
+  font-size: 1.1em;
+}
+
+div.page p {
+  font-size: 1.1em;
+}
+
+div.page blockquote {
+  margin: 0px 150px 0px 100px;
+}
+
 div.page h1 {
 	counter-reset:section;
 }
 
-div.page h2 {
+div.page h2:not(.numbering_exclude) {
 	counter-reset:subsection;
 }
 
-div.page h2:before {
+div.page h2:not(.numbering_exclude):before {
 	counter-increment:section;
 	content:counter(section) ". ";
 }
 
-div.page h3:before {
+div.page h3:not(.numbering_exclude):before {
 	counter-increment:subsection;
 	content:counter(section) "." counter(subsection) " ";
 }
-
 
 p.redacted, ol.redacted  {
 	overflow: hidden;
