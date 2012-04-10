@@ -42,7 +42,7 @@ div.page h3:before {
 }
 
 
-p.redacted  {
+p.redacted, ol.redacted  {
 	overflow: hidden;
 	height: 0px;
 }
@@ -66,6 +66,10 @@ h2.redacted {
 
 li.redacted {
 	opacity: 0.3;
+}
+
+ol~li.redacted, ol~li~ol~li.redacted  {
+	border: 1px solid magenta;
 }
 
 .ribbon-right.redacted {
