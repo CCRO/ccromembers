@@ -8,7 +8,7 @@
     <div class="thumbnail">
       <img src="<%= asset_path('cover.png') %>" alt="">
       <div class="caption">
-        <h5 style="min-height: 40px;"><%= document.title %> <em><%= 'v' + document.versions.length.to_s if can? :manage, document %></em></h5>
+        <h5 style="min-height: 80px;"><%= document.title %> <em><%= 'v' + document.versions.length.to_s if can? :manage, document %></em></h5>
         <p style="min-height: 60px;">Updated: <%= document.updated_at.to_date.to_s() %><%= "<br /> by ".html_safe + Person.find(document.versions.last.whodunnit.to_i).name if document.versions.last.whodunnit && can?(:manage, document) %><br />
 			-- pages</p>
  			<div class="btn-toolbar">
