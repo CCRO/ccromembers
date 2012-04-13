@@ -12,4 +12,8 @@ module DocumentsHelper
       obj.body.html_safe
     end
   end
+  
+  def amazon_path(document)
+    "http://www.amazon.com/gp/product/#{document.asin}/ref=sc_pgp__m_A3OWOTQ4UZUTOZ?ie=UTF8&m=A3OWOTQ4UZUTOZ&n=&s=&v=glance"
+  end
 end

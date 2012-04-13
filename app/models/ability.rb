@@ -6,15 +6,16 @@ class Ability
     #
     user ||= Person.new # guest user (not logged in)
     
-    if user.member? || user.admin?
-      can :read, Document
+    if user.member?
+      can :read, [Document, Comment, Message]
     end
     
     if user.primary_contact? || user.billing_contact?
-      can :manage, Person, :company_id => user.company_id
+      can :edit, Person, :company_id => user.company_id
+      can :edit, Company, :id => user.company_id
     end
     
-    can :manage, [Document, Comment, Message], :author_id => user.id, :owner_id => user.id
+    can :edit, [Document, Comment, Message], :author_id => user.id, :owner_id => user.id
     
     can :manage, Person, :id => user.id
     

@@ -1,5 +1,9 @@
 module ApplicationHelper
   
+  def icon_tag(html_class)
+    "<i class=\"#{html_class}\"></i>".html_safe
+  end
+  
   def gravatar_for user, options = {}
       email = user.email
       options = {:alt => 'avatar', :class => 'avatar', :size => 160}.merge! options
