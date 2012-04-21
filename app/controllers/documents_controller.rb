@@ -6,7 +6,11 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.accessible_by(current_ability)
+    if current_user.admin?
+      @documents = Document.accessible_by(current_ability)
+    else
+      @documents = Document.published.accessible_by(current_ability)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

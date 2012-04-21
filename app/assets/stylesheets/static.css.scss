@@ -11,6 +11,14 @@ div.page {
   border: 1px solid #dddddd;
 }
 
+div.index {
+  position: relative;
+  margin-top: 25px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #dddddd;
+}
+
 div.page-shadow {
   background: url('../images/leaftshadow-900.png') no-repeat bottom;
   padding-bottom: 20px;
@@ -63,9 +71,11 @@ div.page h3:not(.numbering_exclude):before {
 	content:counter(section) "." counter(subsection) " ";
 }
 
-p.redacted, ol.redacted  {
+p.redacted, ol.redacted, ul.redacted:not(.nav), blockquote.redacted  {
 	overflow: hidden;
 	height: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 /*p.redacted+:not(.redacted), p.redacted~:not(.redacted) {
@@ -79,18 +89,14 @@ p.redacted, ol.redacted  {
 }
 */
 
-h2.redacted {
+h2.redacted, h3.redacted {
 	overflow: hidden;
 	height: 0px;
 	border-bottom: none !important;
 }
 
-li.redacted {
+li.redacted:not(.nav) {
 	opacity: 0.3;
-}
-
-ol~li.redacted, ol~li~ol~li.redacted  {
-	border: 1px solid magenta;
 }
 
 .ribbon-right.redacted {

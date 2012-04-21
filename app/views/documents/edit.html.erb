@@ -33,6 +33,12 @@
           <%= f.select :format, options_for_select(FORMATS, @document.format), :include_blank => true %>
         </div>
       </div>
+      <div class="control-group">
+        <%= f.label :published , :class => 'control-label' %><br />
+        <div class="controls">
+          <%= f.check_box :published %>
+        </div>
+      </div>
 	  
     </div>
     <div class="tab-pane" id="preview">
