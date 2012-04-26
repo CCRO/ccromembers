@@ -40,7 +40,7 @@ class Document < ActiveRecord::Base
     
     body = Nokogiri::HTML(html_body)
     @sections = body.xpath('//body').children.inject([]) do |sections_hash, child|
-      if child.name == 'h2' || child.name == 'h3'
+      if child.name == 'h2'
         title = child.inner_text
         sections_hash << { :title => title, :contents => ''}
       end

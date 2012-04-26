@@ -13,4 +13,5 @@ window.clear_redact = (selector) ->
   return true
 
 jQuery ->
-  $('div.page').wrap('<div class="page-shadow">')
+  $('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
+  $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')

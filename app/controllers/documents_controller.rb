@@ -1,6 +1,7 @@
 class DocumentsController < ApplicationController
   
-  layout 'document'
+  layout 'document', :except => 'show'
+  layout 'ccro', :only => 'show'
   
   before_filter :require_user
   # GET /documents
@@ -31,7 +32,7 @@ class DocumentsController < ApplicationController
       
     end
   end
-
+  
   # GET /documents/new
   # GET /documents/new.json
   def new

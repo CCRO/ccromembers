@@ -1,0 +1,107 @@
+<div id="document_header_wrapper">
+  <div id="document_header">
+    <a id="btn-add_comment" class="btn btn-primary hide pull-right" data-toggle="modal" href="#modal-add_comment">Add Comment</a>
+    <h1><%= @document.title %></h1>
+    <% if can? :manage, @document %>
+    <ul class="nav nav-pills">
+      <li class="active"><a href="news-show.html">Full Document</a></li>
+	  <li class="dropdown">
+	      <a class="dropdown-toggle"
+	         data-toggle="dropdown"
+	         href="#">
+	          Sections <span class="label"><%= @document.sections.length %></span>
+	          <b class="caret"></b>
+	        </a>
+	      <ul class="dropdown-menu">
+	        <%  @document.sections.each do |section| %>
+			<li><a href="#<%= section[:title].parameterize %>"><%= section[:title] %></a></li>
+			<% end %>
+	      </ul>
+	    </li>
+      <li><%= link_to 'Edit', edit_document_path(@document) %></li>
+      <li><a href="#">Permissions</a></li>
+	  <li class="dropdown">
+	      <a class="dropdown-toggle"
+	         data-toggle="dropdown"
+	         href="#">
+	          Revisions <span class="label"><%= @document.versions.length %></span>
+	          <b class="caret"></b>
+	        </a>
+	      <ul class="dropdown-menu">
+	        <%  @document.versions.reverse.each do |version| %>
+			<li><a href="#"><%= version.event.capitalize %> <%= " by " + Person.find(version.whodunnit).name if version.whodunnit %> (<%= time_ago_in_words(version.created_at) %>)</a></li>
+			<% end %>
+	      </ul>
+	    </li>
+      <li><a href="<%= document_comments_path(@document) %>">Comments <span class="label"><%= @document.comments.count %></span></a></li>
+    </ul>
+	<% end %>
+  </div>
+</div>
+<div id="document_content" class="page">
+	 <%= render_body @document %>  
+</div>
+
+<div class="modal hide fade" id="modal-add_comment">
+  <div class="modal-header">
+    <a href="#" class="close">×</a>
+    <h3>Add Comment</h3>
+  </div>
+  <%= form_for [@document, Comment.new( :version => @document.versions.last)] do |f| %>
+  	<%= f.hidden_field :version_id %>
+  	<%= f.hidden_field :quote %>
+  <div class="modal-body center">
+    <b>Quoted Text:</b><br /> <span id="add_comment_quote"></span><br /><br />
+    <b>Comments:</b><br />
+    <%= f.text_area :content, :cols => 60, :rows => 6, :class => 'span6' %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit nil, :class => 'btn-primary' %>
+    <%= button_to 'Cancel', '#' %>
+  </div>
+  <% end %>
+</div>
+	<script>
+		$('div.page ol.standard').before('<h4 class="ribbon-right ribbon-info"><i class="icon-info-sign icon-white" style="margin-top: 2px;"></i><span class="ribbon-collapse"> Risk Management Standard</span></h4>')
+		<% if params[:view] == 'principal_1' %>
+			redact('#standard_1_a,#standard_1_b,#standard_2_b,#standard_3_a,#standard_3_b,#standard_4_a,#standard_4_b,#standard_6_a,#standard_7_a,#standard_7_b,#standard_7_h,#standard_7_h_i,#standard_7_h_ii,#standard_7_m,#standard_13_a,#standard_13_b,#standard_14_a,#standard_15,#standard_17,#standard_18,#standard_19,#standard_20,#standard_22,#standard_22_a,#standard_22_b,#standard_22_c');
+	    	$('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 1');
+	    	$('div.page h1').after('<blockquote style="margin-top: 50px">The risk management framework is documented in a risk policy addressing market, credit and liquidity risks.<small>Principal 1, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_2' %>
+			redact(', #standard_2_a, #standard_2_i, #standard_6_b, #standard_6_c, #standard_6_d, #standard_6_e, #standard_6_f, #standard_6_g, #standard_7_b, #standard_7_d, #standard_7_e, #standard_7_i, #standard_7_j, #standard_8_b, #standard_8_c, #standard_12, #standard_12_a, #standard_12_b, #standard_12_c, #standard_12_d, #standard_16, #standard_16_a, #standard_16_b, #standard_17, #standard_18, #standard_21, #standard_21_a, #standard_21_b, #standard_21_c, #standard_21_d, #standard_21_e, #standard_21_f, #standard_22, #standard_22_a, #standard_22_b, #standard_22_c, #standard_24, #standard_24_a, #standard_24_b, #standard_25, #standard_25_a, #standard_25_b, #standard_26_a, #standard_26_b, #standard_26_c');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 2');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">The Participant maintains an organizational structure with clearly defined roles and responsibilities that clearly segregates trading and risk management functions.<small>Principal 2, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_3' %>
+			redact('#standard_1_a, #standard_2_d, #standard_7_g, #standard_27');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 3');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">There is clarity of authority specifying the types of transactions into which traders are allowed to enter.<small>Principal 3, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_4' %>
+			redact('#standard_23, #standard_23_a, #standard_23_b, #standard_23_c,#standard_24, #standard_24_a, #standard_24_b');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 4');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">The Participant has requirements that traders have adequate training relative to their authority in the systems and PJM markets in which they transact.<small>Principal 4, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_5' %>
+			redact('#standard_2_d,#standard_2_h,#standard_4_b,#standard_4_b_i,#standard_4_b_ii,#standard_5_h,#standard_7_c,#standard_7_h,#standard_7_h_i,#standard_7_h_ii');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 5');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">As appropriate, risk limits are in place to control risk exposures.<small>Principal 5, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_6' %>
+			redact('#standard_2_e,#standard_2_f,#standard_2_i,#standard_2_j,#standard_5_g,#standard_5_i,#standard_5_j,#standard_7_l,#standard_7_m,#standard_13_c,#standard_19,#standard_20,#standard_27');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 6');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">Reporting is in place to ensure that risks and exceptions are adequately communicated throughout the organization.<small>Principal 6, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_7' %>
+			redact('#standard_2_b,#standard_2_c,#standard_2_j,#standard_5_a,#standard_7_f,#standard_8_a,#standard_10,#standard_11,#standard_12_d,#standard_17,#standard_21,#standard_21_a,#standard_21_b,#standard_21_c,#standard_21_d,#standard_21_e,#standard_21_f,#standard_22,#standard_22_a,#standard_22_b,#standard_22_c');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 7');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">Processes are in place for qualified independent review of trading activities.<small>Principal 7, PJM Open Access</blockquote>');
+		<% end %>
+		<% if params[:view] == 'principal_8' %>
+			redact('#standard_2_g,#standard_5_a,#standard_5_b,#standard_5_c,#standard_5_d,#standard_5_e,#standard_5_f,#standard_7_k,#standard_9,#standard_10,#standard_11,#standard_13_a,#standard_13_b,#standard_13_d,#standard_14,#standard_14_a,#standard_14_b,#standard_14_b_i,#standard_14_b_ii,#standard_14_b_iii,#standard_14_b_iv,#standard_14_b_v,#standard_15,#standard_16_b,#standard_16_b_i,#standard_16_b_ii,#standard_16_b_iii,#standard_16_b_iv,#standard_21,#standard_21_a,#standard_21_b,#standard_21_c,#standard_21_d,#standard_21_e,#standard_21_f,#standard_25,#standard_25_a,#standard_25_b,#standard_26_d');
+		    $('div.page h1').html('Comparison: Risk Management Standards &amp; Principal 8');
+		    $('div.page h1').after('<blockquote style="margin-top: 50px">As appropriate, there is periodic valuation or mark-to-market of risk positions.<small>Principal 8, PJM Open Access</blockquote>');
+		<% end %>
+		
+	</script>

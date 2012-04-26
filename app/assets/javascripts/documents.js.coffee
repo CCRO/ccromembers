@@ -33,4 +33,33 @@ jQuery ->
     if $('#notices').data('fade') == 'hide'
       $(this).closest('div').fadeTo(250, 1.0 )
       $('#notices').data('fade', 'show')
+  $('a#toggle-toc').click ->
+    $('#sections-nav li:not(#control)').toggleClass('hide')
+    $(this).children('i').toggleClass('icon-chevron-down')
+    $(this).children('i').toggleClass('icon-chevron-up')
+    $.cookie("doc-toggle-toc", $('ul#sections-nav li:not(#control):first').hasClass('hide'))
+  $('a#toggle-views').click ->
+    $('#doc-views-nav li:not(#control)').toggleClass('hide')
+    $(this).children('i').toggleClass('icon-chevron-down')
+    $(this).children('i').toggleClass('icon-chevron-up')
+    $.cookie("doc-toggle-views", $('ul#doc-views-nav li:not(#control):first').hasClass('hide'))
+  if $.cookie("doc-toggle-views") != 'true'
+    $('#doc-views-nav li:not(#control)').toggleClass('hide')
+    $('ul#doc-views-nav li#control a').children('i').toggleClass('icon-chevron-down')
+    $('ul#doc-views-nav li#control a').children('i').toggleClass('icon-chevron-up')
+    $.cookie("doc-toggle-views", $('ul#doc-views-nav li:not(#control):first').hasClass('hide'))
+  if $.cookie("doc-toggle-toc") == 'true'
+    $('#sections-nav li:not(#control)').toggleClass('hide')
+    $('ul#sections-nav li#control a').children('i').toggleClass('icon-chevron-down')
+    $('ul#sections-nav li#control a').children('i').toggleClass('icon-chevron-up')
+    $.cookie("doc-toggle-views", $('ul#sections-nav li:not(#control):first').hasClass('hide'))
+  $('#doc-toggle-pub').click (event) ->
+    event.preventDefault()
+    $(this).toggleClass('btn-danger').toggleClass('btn-success')
+    if $(this).hasClass('btn-success')
+      $(this).html('<i class="icon-ok icon-white"></i> Published')
+    else
+      $(this).html('<i class="icon-remove icon-white"></i> Not Published')
+
+    
     

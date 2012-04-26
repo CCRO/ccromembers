@@ -1,10 +1,17 @@
-<div class="index" style="padding-left: 125px;">
 <% if can? :create, Document %>
 <%= link_to 'New Document', new_document_path, :class => 'btn pull-right' %>
 <% end %>
+<br />
+<div class="index" style="padding-left: 125px;">
 <ul class="thumbnails">
   <% @documents.each do |document| %>
   <li class="span3">
+	<% if can? :manage, document %>  		
+		<div class="doc-index-btns btn-group pull-right">        
+			<%= link_to icon_tag('icon-pencil'), edit_document_path(document), :class => 'btn' %>
+	        <%= link_to icon_tag('icon-remove'), document_path(document), :method => :delete, :confirm => 'Are you sure?', :class => 'btn' %>
+	<% end %>
+	</div>
     <div class="thumbnail">
       <img src="/images/cover.png" alt="">
       <div class="caption">
@@ -20,12 +27,6 @@
 					<a class="btn disabled">Order Print</a>
 				<% end %>	
 				</div> 
-				<% if can? :manage, document %>  
-				<div class="btn-group pull-right">        
-					<%= link_to icon_tag('icon-pencil'), edit_document_path(document), :class => 'btn' %>
-			        <%= link_to icon_tag('icon-remove'), document_path(document), :method => :delete, :confirm => 'Are you sure?', :class => 'btn' %>
-				</div>
-				<% end %>
 			</div>
       </div>
     </div>

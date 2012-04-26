@@ -15,3 +15,12 @@
 //= require twitter/bootstrap
 //= require bootstrap-wysihtml5-all
 //= require_tree .
+
+
+window.addEventListener("load",function() {
+	// Set a timeout...
+	setTimeout(function(){
+		// Hide the address bar!
+		window.scrollTo(0, 1);
+	}, 0);
+});
