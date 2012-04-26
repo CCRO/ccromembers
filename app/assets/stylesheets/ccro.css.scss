@@ -336,6 +336,7 @@ ul.thumbnails li {
 
 #corner-banner {
   position: absolute;
+  z-index: 100;
   left: -40px;
   top: 30px;
   display: block;
@@ -382,4 +383,20 @@ ul.thumbnails li {
 	text-transform:uppercase;
 	line-height:16px;
 	display:block;
+}
+
+
+ul.thumbnails li h5#title {
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  line-height: 24px;
+  text-align: center;
+  left: 0px;
+  padding: 0px 20px;
+  color: white;
+  z-index: 10;
+  display: block !important;
+  margin-top: -25%;
+  width: 80%;
 }
