@@ -10,8 +10,17 @@
 		<div class="doc-index-btns btn-group pull-right">        
 			<%= link_to icon_tag('icon-pencil'), edit_document_path(document), :class => 'btn' %>
 	        <%= link_to icon_tag('icon-remove'), document_path(document), :method => :delete, :confirm => 'Are you sure?', :class => 'btn' %>
+		</div>
 	<% end %>
-	</div>
+	<% if document.published %>
+	<span id="corner-banner" class="banner-success"> 
+	   <strong>Published</strong> 
+	</span>
+	<% else %>
+	<span id="corner-banner" class="banner-danger"> 
+	   <strong>Draft</strong> 
+	</span>
+	<% end %>
     <div class="thumbnail">
       <img src="/images/cover.png" alt="">
       <div class="caption">
