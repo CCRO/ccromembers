@@ -22,7 +22,12 @@
 	</span>
 	<% end %>
     <div class="thumbnail">
-      <img src="/images/cover.png" alt="">
+		  <% if document.owner && document.owner_type == 'Company' && document.owner != Company.find(1) %>
+      	<img src="http://placehold.it/300x391/888/888" alt="" />
+      <% else %>
+        <img src="/images/cover.png" alt="" />
+      <% end %>
+	  
       <div class="caption">
         <h5 id="title"><%= document.title %> <em><%= 'v' + document.versions.length.to_s if can? :manage, document %></em></h5>
         <p style="min-height: 60px;">Updated: <%= document.updated_at.to_date.to_s() %><%= "<br /> by ".html_safe + Person.find(document.versions.last.whodunnit.to_i).name if document.versions.last.whodunnit && can?(:manage, document) %><br />
