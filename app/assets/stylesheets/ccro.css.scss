@@ -54,7 +54,7 @@ ol.toc a::after {
 
 @media print {
 	h2 {
-		page-break-before:always;
+/*    page-break-before:always;*/
 	}
 	
 	.print-footer {
@@ -397,6 +397,6 @@ ul.thumbnails li h5#title {
   color: white;
   z-index: 10;
   display: block !important;
-  margin-top: -25%;
+  margin-top: -35%;
   width: 80%;
 }
