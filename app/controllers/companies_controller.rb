@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_filter :require_user
+  before_filter :require_admin :only => ['index']
 
   def index
     @companies = Company.order(params[:sort]) if params[:sort] && !@companies
