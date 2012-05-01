@@ -6,6 +6,7 @@ class Company < ActiveRecord::Base
   belongs_to :billing_contact, :class_name => 'Person', :foreign_key => 'billing_person_id'
   
   before_save :check_contacts
+  after_initialize :first_is_admin
   
   def update_balance!
     if self.freshbooks_id.present?
@@ -24,5 +25,9 @@ class Company < ActiveRecord::Base
     else
       true
     end
+  end
+  
+  def first_is_admin
+    self.role = 'administrator' if Company.count == 0
   end
 end
