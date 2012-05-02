@@ -1,0 +1,80 @@
+<%= javascript_tag "var companies = #{ @companies.to_json };" %>
+
+<%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend>User Information</legend>
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :email, :class => 'control-label' %>
+      <div class="controls">
+      <%= f.text_field :email %>
+      <p class="help-block">This will be your login username.</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :password, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password %><br /><br />
+        <%= f.password_field :password_confirmation %>
+        <p class="help-block">Enter password and confirm by entering again.</p>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Directory Link</legend>
+    <div class="control-group">
+      <%= f.label :highrise_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :highrise_id %>
+        <p class="help-block">Links to the CCRO Highrise Directory</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :company_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
+        <p class="help-block">Contact support if you can't find your company listed.</p>
+      </div>
+    </div>
+  </fieldset>
+  <div class="actions">
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>
+  </div>
+  
+<% end %>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $('.typeahead').typeahead({source: companies});
+		console.log(companies);
+		$('.typeahead, ul.typeahead.dropdown > a').bind('keyup change focus blur mouseup', function() {
+			if(jQuery.inArray($(this).val(), companies) != -1) {
+				$(this).closest('.control-group').addClass('success').removeClass('error')
+				$(this).siblings('p.help-block').text("Company found.")
+			} else {
+				$(this).closest('.control-group').addClass('error').removeClass('success')
+				$(this).siblings('p.help-block').text("Company will be created.")
+			}
+			if($(this).val() == "") {
+				$(this).closest('.control-group').removeClass('error').removeClass('success')
+				$(this).siblings('p.help-block').text("Contact support if you can't find your company listed.")
+			}
+		});
+    });
+</script>
