@@ -22,7 +22,7 @@
 	</span>
 	<% end %>
     <div class="thumbnail">
-		  <% if document.owner && document.owner_type == 'Company' && document.owner != Company.find(1) %>
+		  <% if document.owner && document.owner_type == 'Company' && document.owner != default_company %>
       	<img src="http://placehold.it/300x391/888/888" alt="" />
       <% else %>
         <img src="/images/cover.png" alt="" />
