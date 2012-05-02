@@ -15,6 +15,8 @@ Ccromembers::Application.routes.draw do
     resources :people
     resources :companies
   end
+  resources :people
+  resources :companies
   resources :comments
   resources :messages, :path => 'discussions' do
     resources :comments
