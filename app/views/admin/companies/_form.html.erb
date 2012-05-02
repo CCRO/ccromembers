@@ -1,0 +1,55 @@
+<%= form_for(@company, :html => {:class => 'form-horizontal'}) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @company.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <hr />
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+  		<%= f.text_field :name %>
+  	</div>
+    </div>
+    <div class="control-group">
+      <%= f.label :role, :class => 'control-label' %>
+      <div class="controls">
+  		<%= f.select :role, options_for_select(ROLES, @company.role) %>
+  	</div>
+    </div>
+    <div class="control-group">
+      <%= f.label :billing_status, :class => 'control-label' %>
+      <div class="controls">
+  		<%= f.select :billing_status, options_for_select(STATUSES, @company.billing_status) %>
+  	</div>
+    </div>
+    <div class="control-group">
+      <%= f.label :expires_on, :class => 'control-label' %>
+      <div class="controls">
+  		<%= date_picker :company, :expires_on %>
+  	</div>
+    </div>
+    <div class="control-group">
+      <%= f.label :highrise_id, :class => 'control-label' %>
+      <div class="controls">
+  		<%= f.text_field :highrise_id %>
+  	</div>
+    </div>
+    <div class="control-group">
+      <%= f.label :freshbooks_id, :class => 'control-label' %>
+      <div class="controls">
+  		<%= f.text_field :freshbooks_id %>
+  	</div>
+  </div>
+  </fieldset>
+  <div class="control-group">
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', @company %>
+  </div>
+<% end %>

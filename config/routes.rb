@@ -11,8 +11,10 @@ Ccromembers::Application.routes.draw do
   put 'reset_password/:perishable_token' => 'password_resets#update', :as => :reset_password
 
   resource :sessions
-  resources :people
-  resources :companies
+  namespace :admin do
+    resources :people
+    resources :companies
+  end
   resources :comments
   resources :messages, :path => 'discussions' do
     resources :comments

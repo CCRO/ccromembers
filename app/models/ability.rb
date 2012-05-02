@@ -10,9 +10,12 @@ class Ability
     
     if user.primary_contact? || user.billing_contact?
       can :edit, Person, :company_id => user.company_id
-      can :edit, Company, :id => user.company_id
+      can :manage, Company, :id => user.company_id
+      cannot :destroy, Company
     end
     
+    can :read, Company, :id => user.company_id
+
     can :edit, [Document, Comment, Message], :author_id => user.id, :owner_id => user.id
     
     can :manage, Person, :id => user.id
