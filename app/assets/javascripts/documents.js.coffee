@@ -59,7 +59,7 @@ jQuery ->
     if $(this).hasClass('btn-success')
       $(this).html('<i class="icon-ok icon-white"></i> Published')
     else
-      $(this).html('<i class="icon-remove icon-white"></i> Not Published')
+      $(this).html('<i class="icon-remove icon-white"></i> Draft')
 
     
     

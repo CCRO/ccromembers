@@ -15,7 +15,7 @@
 				</div>
 			</div>
 	      <ul class="nav nav-tabs nav-stacked">
-	        <li class="active"><a href="#">Author <span class="pull-right"><%= @document.owner.name if @document.owner %></span></a></li>
+	        <li class="active"><a href="#">Author <span class="pull-right"><%= truncate(@document.owner.name,:length => 25, :omission =>"...") if @document.owner %></span></a></li>
 	        <li class="active"><a href="#">Updated Date <span class="pull-right"><%= @document.updated_at.to_date.to_s(:rfc822) %></span></a></li>
 	        <li class="active"><a href="">Published 				<span class="btn-group pull-right" style="margin-top: -5px; margin-right: -5px;"> 
 					<% if @document.published %>
@@ -24,7 +24,7 @@
 						</button>
 					<% else %>
 						<button id="doc-toggle-pub" href="#" class="btn btn-danger" rel="tooltip" title="Toggle Published">
-							<i class="icon-remove icon-white"></i> Not Published
+							<i class="icon-remove icon-white"></i> Draft
 						</button>
 					<% end %>
 					<button href="#" class="btn" rel="tooltip" title="Set permissions">
