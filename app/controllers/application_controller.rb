@@ -46,6 +46,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def default_company
+    Company.find_by_role('administrator')
+  end
+  helper_method :default_company
+  
   def require_user
     redirect_to login_url, :flash => {:error => t(:no_user_flash)} if current_user.nil?
   end
@@ -55,11 +60,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to :back,:flash => {error: "Not authorized." } unless current_user.admin?
+    redirect_to dashboard_path,:flash => {error: "Not authorized." } unless current_user.admin?
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to :back,:flash => {error: exception.message }
+    redirect_to dashboard_path,:flash => {error: exception.message }
   end
   
   protected
