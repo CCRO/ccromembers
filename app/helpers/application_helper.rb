@@ -13,6 +13,14 @@ module ApplicationHelper
       image_tag url, options
   end
   
+  def avatar_for user, options = {}
+    if user.avatar
+      image_tag user.avatar.thumb.url, options
+    else
+      gravatar_for user
+    end
+  end
+  
   def button_to(*args, &block)
     if args[2] && args[2][:class]
       args[2][:class] = 'btn ' + args[2][:class]

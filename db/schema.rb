@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413211425) do
+ActiveRecord::Schema.define(:version => 20120503145230) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20120413211425) do
     t.string   "access_token"
     t.string   "perishable_token"
     t.datetime "perishable_token_sent_at"
+    t.string   "avatar"
   end
 
   create_table "versions", :force => true do |t|

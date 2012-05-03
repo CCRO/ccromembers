@@ -1,6 +1,6 @@
 <%= javascript_tag "var companies = #{ @companies.to_json };" %>
 
-<%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
+<%= form_for(@person, :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
@@ -51,6 +51,13 @@
       <div class="controls">
         <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
         <p class="help-block">Contact support if you can't find your company listed.</p>
+      </div>
+    <div class="control-group">
+      <%= f.label :avatar, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.file_field :avatar %>
+	    <%= f.hidden_field :avatar_cache %>	    
+        <p class="help-block">Upload a profile picture as a *.jpg, *.gif, or *.png.</p>
       </div>
     </div>
   </fieldset>
