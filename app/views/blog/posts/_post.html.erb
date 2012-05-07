@@ -12,6 +12,18 @@
   			<%= l post.created_at.to_date, :format => :short %>
   		<% end %>
 		</span>
+		<% if params[:action] == 'show' %>
+  		<% if can? :edit, post %>
+    		<%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Post', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
+        	<i class="icon-pencil"></i> Edit Post
+      	<% end %>
+      <% end %>
+  		<% if can? :destroy, post %>
+      	<%= link_to blog_post_path(post), :method => 'delete', :class => 'btn btn-danger', :confirm => "Are you sure?" do %>
+      	  <i class="icon-remove icon-white"></i> Delete Post
+      	<% end %>
+      <% end %>
+  	<% end %>
 	</h2>
   <% if post.author %><p><strong>by <%= post.author.name %></strong></p><% end %>
   <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe %></div></p>

@@ -12,7 +12,11 @@ class SessionsController < ApplicationController
     user = Person.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to documents_url
+      if request.domain == "ccro.dev"
+        redirect_to root_url
+      else
+        redirect_to documents_url
+      end
     else
       flash.now.alert = t(:login_invalid)
       render "new"

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<br>
 <head>
   <title>CCRO - <%= "CCRO Blog" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -10,7 +11,20 @@
 <!--Body content (BEGIN)-->
 <div class="container">
 	<header>
-    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), blog_posts_path %>
+    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), root_path %>
+    <div class="pull-right">
+        <%= link_to "Home", blog_posts_path %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if current_user %>
+          <%= link_to "Create a new blog post", new_blog_post_path %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <% end %>
+        <a href="#">About the CCRO</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if current_user %>
+          <%= link_to "Logout " + current_user.name, logout_path %>
+        <% else %>
+          <%= link_to "Join/Register", register_path %>&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= link_to "Login", login_path %>
+        <% end %>
+    </div>
   </header>
   <div class="row">
   	<section class="span9">
