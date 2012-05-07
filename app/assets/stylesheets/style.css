@@ -1,4 +1,4 @@
-body {
+body:not(#blog) {
 /*  background-color: #eee;*/
   margin-top: 100px;
   background-color: #efefef;

@@ -84,6 +84,14 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def mercury_update
+    document = Document.find(params[:id])
+    document.title = params[:content][:document_title][:value]
+    document.body = params[:content][:document_body][:value]
+    document.save!
+    render text: ""
+  end
+  
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy

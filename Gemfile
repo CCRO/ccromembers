@@ -28,6 +28,7 @@ gem "fog", "~> 1.3.1"
 gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
+gem 'mercury-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

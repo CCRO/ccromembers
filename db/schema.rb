@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503145230) do
+ActiveRecord::Schema.define(:version => 20120507170546) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -71,6 +71,21 @@ ActiveRecord::Schema.define(:version => 20120503145230) do
     t.boolean  "published"
   end
 
+  create_table "images", :force => true do |t|
+    t.string   "image"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "mercury_images", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "messages", :force => true do |t|
     t.string   "subject"
     t.text     "content"
@@ -94,6 +109,16 @@ ActiveRecord::Schema.define(:version => 20120503145230) do
     t.string   "perishable_token"
     t.datetime "perishable_token_sent_at"
     t.string   "avatar"
+  end
+
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "versions", :force => true do |t|

@@ -1,0 +1,5 @@
+<%= render @post %>
+
+  <%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Post', id: "edit_link", data: {save_url: mercury_update_blog_post_path(@post)} do %>
+  	<i class="icon-pencil"></i>
+	<% end %> 

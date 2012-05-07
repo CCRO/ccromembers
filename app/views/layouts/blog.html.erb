@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= "CCRO Blog" %></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="blog">
+<!--Body content (BEGIN)-->
+<div class="container">
+	<header>
+    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), blog_posts_path %>
+  </header>
+  <div class="row">
+  	<section class="span9">
+      <%= yield %>
+    </section>
+  	<aside class="span3">
+  	  
+    </aside>
+  </div>
+  <footer>
+    &copy; 2012 CCRO
+  </footer>
+</div>
+<!--Body content (END)-->
+</body>
+</html>

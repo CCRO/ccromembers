@@ -1,0 +1,2 @@
+module Mercury::ImageHelper
+end
