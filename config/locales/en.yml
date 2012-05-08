@@ -14,6 +14,7 @@ en:
         email: 'Email Address'
         password: 'Password'
         password_confirmation: 'Confirm Password'
+        avatar: 'Profile Picture'
       session:
         email: 'Username or Email'
         password: 'Password'

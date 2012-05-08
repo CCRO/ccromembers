@@ -40,13 +40,6 @@
   <fieldset>
     <legend>Directory Link</legend>
     <div class="control-group">
-      <%= f.label :highrise_id, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :highrise_id %>
-        <p class="help-block">Links to the CCRO Highrise Directory</p>
-      </div>
-    </div>
-    <div class="control-group">
       <%= f.label :company_id, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
