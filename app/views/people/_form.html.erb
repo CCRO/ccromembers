@@ -53,6 +53,13 @@
         <p class="help-block">Upload a profile picture as a *.jpg, *.gif, or *.png.</p>
       </div>
     </div>
+    <div class="control-group">
+      <%= f.label :bio, :class => 'control-label' %>
+      <div class="controls">
+      <%= f.text_area :bio, :class => 'span6', :rows => '8' %>
+      <p class="help-block">Your bio will show on your profile page and as the boilerplate on blog postings.</p>
+      </div>
+    </div>
   </fieldset>
   <div class="actions">
     <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>

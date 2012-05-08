@@ -36,3 +36,6 @@ Ccromembers::Application.configure do
   config.assets.debug = false
   config.assets.logger = nil
 end
+
+BLOG_DOMAIN = 'ccro.dev'
+PORTAL_DOMAIN = 'ccromembers.dev'

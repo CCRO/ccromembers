@@ -2,7 +2,7 @@ Ccromembers::Application.routes.draw do
 
   Mercury::Engine.routes
 
-  constraints(:domain => 'ccro.dev') do
+  constraints(:domain => BLOG_DOMAIN) do
     namespace :blog, :path => '/' do
       resources :posts do
         member { post :mercury_update }
@@ -12,7 +12,7 @@ Ccromembers::Application.routes.draw do
     root :to => 'blog/posts#index'
   end
   
-  constraints(:domain => 'ccromembers.dev') do
+  constraints(:domain => PORTAL_DOMAIN) do
   
     namespace :admin do
       resources :people
