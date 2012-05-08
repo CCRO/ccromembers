@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to dashboard_path,:flash => {error: "Not authorized." } unless current_user.admin?
+    redirect_to dashboard_path,:flash => {error: "Not authorized." } unless current_user && current_user.admin?
   end
   
   rescue_from CanCan::AccessDenied do |exception|
