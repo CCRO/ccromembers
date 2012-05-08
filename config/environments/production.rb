@@ -67,5 +67,5 @@ Ccromembers::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
-BLOG_DOMAIN = 'blog.ccro.org'
+BLOG_DOMAIN = 'ccro.org'
 PORTAL_DOMAIN = 'ccromembers.org'
