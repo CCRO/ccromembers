@@ -1,4 +1,4 @@
-<article id="post-<%= post.id %>">
+<article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
   <h2 class="post_title">
     <% if params[:action] == 'show' %>
       <span id="post_title" class="mercury-region" data-type="editable"><%= post.title.html_safe %></span>
@@ -25,9 +25,14 @@
       <% end %>
   	<% end %>
 	</h2>
-  <% if post.author %><p><strong>by <%= post.author.name %></strong></p><% end %>
-  <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe %></div></p>
+  <% if post.author %><h3>by <%= post.author.name %></h3><% end %>
+  <% if params[:action] == 'index' && post_counter > 0 %>
+  <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
+  <% else %>
+    <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe %></div></p>
+  <% end %>
   <br><br>
+  <div style="clear: both"></div>
   <% if params[:action] == 'show' && post.author && post.author.bio %>
     <div class="well">
       <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">

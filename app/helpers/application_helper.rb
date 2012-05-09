@@ -14,7 +14,7 @@ module ApplicationHelper
   end
   
   def avatar_for user, options = {}
-    if user.avatar
+    if user.avatar.present?
       image_tag user.avatar.thumb.url, options
     else
       gravatar_for user

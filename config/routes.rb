@@ -27,9 +27,8 @@ Ccromembers::Application.routes.draw do
       resources :comments
     end
 
-    root :to => 'sessions#new'
+    root :to => 'documents#index'
 
-    match ':controller(/:action(/:id))(.:format)'
   end
   
   match 'login' => 'sessions#new', :as => :login
@@ -46,5 +45,5 @@ Ccromembers::Application.routes.draw do
   resources :people
   resources :companies
   
-  
+  match ':controller(/:action(/:id))(.:format)'
 end
