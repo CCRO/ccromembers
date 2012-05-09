@@ -9,30 +9,60 @@
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
-<div = class="content">
-  <div class="span12">
-    <div class="row">
-      <header class="span3">
+<div class="container">
+  <div class="row">
+      <header class="span12">
+        <div class="pull-right">
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <% if current_user %>
+                  <%= link_to new_blog_post_path, :class => 'btn' do %>
+                    <i class="icon-plus"></i> Create new post
+                  <% end %>
+                <% end %>
+            </div>
+            <div class="btn-group">
+               <% if current_user %>
+                <%= link_to current_user.name, current_user, :class => 'btn' %>
+                <%= link_to logout_path, :class => 'btn' do %>
+                  <i class="icon-off"></i>
+                <% end %>
+              <% end %>
+           </div>
+          </div>
+        </div>
+        <% unless current_user %>
+          <div class="pull-right">
+          <%= form_tag  :sessions, :class => "form-inline" do %>
+            <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+            <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+            <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+          <% end %>
+          <%= link_to "I don't have an account, but ...", register_path, :class => 'pull-right' %>
+          </div>
+        <% end %>
         <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), root_path %>
       </header>
-    </div>
-    	<div class="row">
+  </div>
+     	<div class="row">
     	  <aside class="span3">
           <ul class="nav nav-tabs nav-stacked">
               <li><%= link_to "Home", blog_posts_path %></li>
-              <% if current_user %>
-                <li><%= link_to "Create a new blog post", new_blog_post_path %></li>
-              <% end %>
               <li><a href="#">About the CCRO</a></li>
-              <% if current_user %>
-                <li><%= link_to "Logout " + current_user.name, logout_path %></li>
-              <% else %>
-                <li><%= link_to "Join/Register", register_path %></li>
-                <li><%= link_to "Login", login_path %></li>
-              <% end %>
           </ul>
+          <ul class="nav nav-tabs nav-stacked">
+              <li><a href="#">Credit Risk</a></li>
+              <li><a href="#">Compliance</a></li>
+              <li><a href="#">FERC Order No. 741</a></li>
+              <li><a href="#">Blah Blah</a></li>
+              <li><a href="#">Avatar Postings</a></li>
+          </ul>
+          <form class="form-search">
+            <input type="text" class="input-medium search-query">
+            <button type="submit" class="btn">Search</button>
+          </form>
         </aside>
-        <section class="span8">
+        <section class="span9">
               <%= yield %>
         </section>
       </div>  
