@@ -9,34 +9,38 @@
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
-<div class="container">
-	<header>
-    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), root_path %>
-    <div class="pull-right">
-        <%= link_to "Home", blog_posts_path %>&nbsp;&nbsp;&nbsp;&nbsp;
-        <% if current_user %>
-          <%= link_to "Create a new blog post", new_blog_post_path %>&nbsp;&nbsp;&nbsp;&nbsp;
-        <% end %>
-        <a href="#">About the CCRO</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <% if current_user %>
-          <%= link_to "Logout " + current_user.name, logout_path %>
-        <% else %>
-          <%= link_to "Join/Register", register_path %>&nbsp;&nbsp;&nbsp;&nbsp;
-          <%= link_to "Login", login_path %>
-        <% end %>
+<div = class="content">
+  <div class="span12">
+    <div class="row">
+      <header class="span3">
+        <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), root_path %>
+      </header>
     </div>
-  </header>
-  <div class="row">
-  	<section class="span9">
-      <%= yield %>
-    </section>
-  	<aside class="span3">
-  	  
-    </aside>
+    	<div class="row">
+    	  <aside class="span3">
+          <ul class="nav nav-tabs nav-stacked">
+              <li><%= link_to "Home", blog_posts_path %></li>
+              <% if current_user %>
+                <li><%= link_to "Create a new blog post", new_blog_post_path %></li>
+              <% end %>
+              <li><a href="#">About the CCRO</a></li>
+              <% if current_user %>
+                <li><%= link_to "Logout " + current_user.name, logout_path %></li>
+              <% else %>
+                <li><%= link_to "Join/Register", register_path %></li>
+                <li><%= link_to "Login", login_path %></li>
+              <% end %>
+          </ul>
+        </aside>
+        <section class="span8">
+              <%= yield %>
+        </section>
+      </div>  
+      <footer>
+        &copy; 2012 CCRO
+      </footer>
+    </div>
   </div>
-  <footer>
-    &copy; 2012 CCRO
-  </footer>
 </div>
 <!--Body content (END)-->
 </body>
