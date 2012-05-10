@@ -17,6 +17,10 @@ body#blog .page-shadow {
   max-width: 100%;
 }
 
+img {
+  max-width: 100%;
+}
+
 .post_date {
   color: #696969;
   font-size: smaller;
@@ -65,8 +69,4 @@ article img[align=right] {
 .index_post_partial img {
   max-height: 200px;
   max-width: 200px;
-}
-
-img {
-  max-width: 100%;
 }
