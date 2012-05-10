@@ -46,7 +46,7 @@
   </div>
 <% end %>
 
-<% if params[:action] == 'show' && post.author && post.author.bio %>
+<% if params[:action] == 'show' && post.author && post.author.bio.present? %>
   <div class="">
     <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
       <%= avatar_for post.author %>
