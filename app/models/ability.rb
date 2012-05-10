@@ -10,6 +10,12 @@ class Ability
       can :read, [Document, Comment, Message]
     end
     
+    if user.role == 'editor'
+      can :create, [Post, Document, Message]
+    end
+    
+    can :create, Comment
+    
     if user.primary_contact? || user.billing_contact?
       can :edit, Person, :company_id => user.company_id
       can :manage, Company, :id => user.company_id
@@ -18,7 +24,7 @@ class Ability
     
     can :read, Company, :id => user.company_id
 
-    can :edit, [Document, Comment, Message], :author_id => user.id, :owner_id => user.id
+    can :edit, [Post, Document, Comment, Message], :author_id => user.id, :owner_id => user.id
     
     can :manage, Person, :id => user.id
     

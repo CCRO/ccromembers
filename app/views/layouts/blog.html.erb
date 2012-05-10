@@ -15,7 +15,7 @@
         <div class="pull-right">
           <div class="btn-toolbar">
             <div class="btn-group">
-              <% if current_user %>
+              <% if can? :create, Post %>
                   <%= link_to new_blog_post_path, :class => 'btn' do %>
                     <i class="icon-plus"></i> Create new post
                   <% end %>
