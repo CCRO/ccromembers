@@ -12,6 +12,11 @@ body#blog .page-shadow {
   margin-bottom: 20px;
 }
 
+#post_body img{
+  max-height: 100%;
+  max-width: 100%;
+}
+
 .post_date {
   color: #696969;
   font-size: smaller;
@@ -60,4 +65,8 @@ article img[align=right] {
 .index_post_partial img {
   max-height: 200px;
   max-width: 200px;
+}
+
+img {
+  max-width: 100%;
 }
