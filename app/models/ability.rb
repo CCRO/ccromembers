@@ -24,7 +24,7 @@ class Ability
     
     can :read, Company, :id => user.company_id
 
-    can :edit, [Post, Document, Comment, Message], :author_id => user.id, :owner_id => user.id
+    can :edit, [Post, Document, Comment, Message], :author_id => user.id
     
     can :manage, Person, :id => user.id
     

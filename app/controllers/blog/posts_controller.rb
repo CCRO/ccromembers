@@ -3,7 +3,7 @@ class Blog::PostsController < ApplicationController
   layout 'blog'
   
   def index
-    @posts = Post.all.sort.reverse
+    @posts = Post.all
   end
   
   def show
