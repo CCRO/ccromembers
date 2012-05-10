@@ -34,6 +34,32 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
+  version :thumb_sm_bw do
+    process :resize_to_fill => [100, 100]
+    process :remove_color
+  end
+
+  version :thumb_med_bw do
+    process :resize_to_fill => [200, 200]
+    process :remove_color
+  end
+
+  version :thumb_lrg_bw do
+    process :resize_to_fill => [400, 400]
+    process :remove_color
+  end
+
+  version :thumb_sm do
+    process :resize_to_fill => [100, 100]
+  end
+
+  version :thumb_med do
+    process :resize_to_fill => [200, 200]
+  end
+
+  version :thumb_lrg do
+    process :resize_to_fill => [400, 400]
+  end
 
   # Create different versions of your uploaded files:
   # version :thumb do
@@ -51,5 +77,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  def remove_color
+    manipulate! do |img|
+      img.quantize(256, Magick::GRAYColorspace)
+    end
+  end
 
 end
