@@ -21,6 +21,7 @@ class Blog::PostsController < ApplicationController
     
     @post.body = "This is the content of your new blog post."
     @post.author = current_user
+    @post.published = false
     
     authorize! :create, @post
     if @post.save!
@@ -38,8 +39,15 @@ class Blog::PostsController < ApplicationController
     post.title = params[:content][:post_title][:value]
     post.body = params[:content][:post_body][:value]
     post.author ||= current_user
-    post.save!
+    post.save! 
     render text: ""
+  end
+  
+  def publish
+    @post = Post.find(params[:id])
+    @post.published = params[:published]
+    @post.save #this isnt working - I cant even save in the console
+    redirect_to blog_post_path(@post)
   end
   
   def destroy

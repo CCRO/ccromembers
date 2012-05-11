@@ -6,6 +6,7 @@ Ccromembers::Application.routes.draw do
     namespace :blog, :path => '/' do
       resources :posts do
         member { post :mercury_update }
+        member { get :publish }
       end
     end
     

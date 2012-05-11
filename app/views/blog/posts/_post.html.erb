@@ -25,6 +25,17 @@
       	<%= link_to blog_post_path(post), :method => 'delete', :class => 'btn btn-danger', :confirm => "Are you sure?" do %>
       	  <i class="icon-remove icon-white"></i> Delete Post
       	<% end %>
+      	
+      	<% if @post.published == true %>
+        	<%= link_to publish_blog_post_path(@post, :published=> false ), {:class =>'btn btn-warning'} do %>
+        	  <i class="icon-edit icon-white"></i> Draft Post
+        	<% end %>
+        <% else %>
+    			<%= link_to publish_blog_post_path(@post, :published=> true ), {:class =>'btn btn-success'} do %>
+        	  <i class="icon-share icon-white"></i> Publish Post
+        	<% end %>
+    		<% end %>	
+        	
       <% end %>
   	<% end %>
 	</h1>

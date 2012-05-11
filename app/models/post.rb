@@ -10,5 +10,6 @@ class Post < ActiveRecord::Base
   
   def set_published_date
     self.published_at == Time.now if self.published_changed?
+    true
   end
 end
