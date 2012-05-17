@@ -14,7 +14,11 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-wysihtml5-all
-//= require_tree .
+//= require_tree ./bootstrap
+//= require_tree ./jquery_ext
+//= require documents
+//= require messages
+//= require password_resets
 
 
 window.addEventListener("load",function() {
@@ -23,4 +27,6 @@ window.addEventListener("load",function() {
 		// Hide the address bar!
 		window.scrollTo(0, 1);
 	}, 0);
+	$('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
+  $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
 });

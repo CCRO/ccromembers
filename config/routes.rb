@@ -5,10 +5,19 @@ Ccromembers::Application.routes.draw do
   constraints(:domain => BLOG_DOMAIN) do
     namespace :blog, :path => '/' do
       resources :posts do
-        member { post :mercury_update }
-        member { get :publish }
+        collection do
+          get :draft
+        end
+        
+        member do 
+          post :mercury_update
+          get :publish
+          get :claim
+        end
       end
     end
+    
+    resources :posts
     
     root :to => 'blog/posts#index'
   end

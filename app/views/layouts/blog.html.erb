@@ -5,7 +5,10 @@
   <title>CCRO - <%= "CCRO Blog" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "mercury" %>
   <%= csrf_meta_tags %>
+  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss") %>
+  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
@@ -16,10 +19,10 @@
           <div class="btn-toolbar">
             <div class="btn-group">
               <% if can? :create, Post %>
-                  <%= link_to new_blog_post_path, :class => 'btn' do %>
-                    <i class="icon-plus"></i> Create new post
-                  <% end %>
+                <%= link_to draft_blog_posts_path, :class => 'btn' do %>  
+                  <i class="icon-list-alt"></i> Manage drafts
                 <% end %>
+              <% end %>
             </div>
             <div class="btn-group">
                <% if current_user %>
@@ -50,6 +53,7 @@
               <li><%= link_to "Home", blog_posts_path %></li>
               <li><a href="#">About the CCRO</a></li>
           </ul>
+          <!--
           <ul class="nav nav-tabs nav-stacked">
               <li><a href="#">Credit Risk</a></li>
               <li><a href="#">Compliance</a></li>
@@ -61,6 +65,8 @@
             <input type="text" class="input-medium search-query">
             <button type="submit" class="btn">Search</button>
           </form>
+          -->
+          <center><%= image_tag "http://placehold.it/200x150&text=Future%20Ad" %><br><br><%= image_tag "http://placehold.it/200x450&text=Future%20Ad" %></center>
         </aside>
         <section class="span9">
               <%= yield %>

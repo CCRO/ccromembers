@@ -1,4 +1,4 @@
-<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) %>
+<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) ||  params[:action] == 'draft' %>
   <div class="page">
 <% end %>
 <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
@@ -16,48 +16,51 @@
   		<% end %>
 		</span>
 		<% if params[:action] == 'show' %>
-  		<% if can? :edit, post %>
-    		<%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Post', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
-        	<i class="icon-pencil"></i> Edit Post
-      	<% end %>
-      <% end %>
-  		<% if can? :destroy, post %>
-      	<%= link_to blog_post_path(post), :method => 'delete', :class => 'btn btn-danger', :confirm => "Are you sure?" do %>
-      	  <i class="icon-remove icon-white"></i> Delete Post
-      	<% end %>
-      	
-      	<% if @post.published == true %>
-        	<%= link_to publish_blog_post_path(@post, :published=> false ), {:class =>'btn btn-warning'} do %>
-        	  <i class="icon-edit icon-white"></i> Draft Post
-        	<% end %>
-        <% else %>
-    			<%= link_to publish_blog_post_path(@post, :published=> true ), {:class =>'btn btn-success'} do %>
-        	  <i class="icon-share icon-white"></i> Publish Post
-        	<% end %>
-    		<% end %>	
-        	
-      <% end %>
+	  <div class="btn-toolbar pull-right">
+		<% if can? :edit, post %>
+	  <div class="btn-group">
+  		<%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Post', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
+      	<i class="icon-pencil"></i> Edit Post
+    	<% end %>
+    </div>
+    <% end %>
+      <%= publish_toggle(post) if can? :manage, post %>
+    </div>
   	<% end %>
 	</h1>
+	<br>
+	<% unless post.published? %>
+  <div class="alert alert-error">
+   <strong>Notice!</strong> This post is a draft and will not be visible on the blog.
+  </div>
+  <% end %>
+  
   <% if post.author %><h3>by <%= post.author.name %></h3><% end %>
   <% if params[:action] == 'index' && post_counter > 0 %>
   <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
   <% else %>
-    <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe %></div></p>
+    <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe unless params[:action] == 'draft' %></div></p>
   <% end %>
   <br><br>
   <div style="clear: both"></div>
   <div class="post-footer">
   <hr class="hr-small-margin">
-  <p class="pull-right"><span class="post-footer-heading">Published: </span><strong><%= t post.created_at.to_s(:long) %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
+  <p class="pull-right"><span class="post-footer-heading">Published: </span><strong><%= t post.published_at.to_s(:long) if post.published_at.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
   <hr class="hr-small-margin hr-dark">
-  </div>
+</div>
+<br />
+<% if can? :manage, post %>
+  <div class="pull-right">
+	<%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+	</div>
+<% end %>
+
 </article>
-<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) %>
+<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) || params[:action] == 'draft' %>
   </div>
 <% end %>
 
-<% if params[:action] == 'show' && post.author && post.author.bio.present? %>
+<% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
   <div class="">
     <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
       <%= avatar_for post.author %>

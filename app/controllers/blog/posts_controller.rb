@@ -3,7 +3,17 @@ class Blog::PostsController < ApplicationController
   layout 'blog'
   
   def index
-    @posts = Post.all
+    @posts = Post.where(:published => true)
+    
+    respond_to do |format|
+      format.html
+      format.rss { render :layout => false }
+      format.atom { render :layout => false }
+    end
+  end
+  
+  def draft
+    @posts = Post.where(:published => false)
   end
   
   def show
@@ -20,15 +30,28 @@ class Blog::PostsController < ApplicationController
     @post = Post.new(params[:post])
     
     @post.body = "This is the content of your new blog post."
-    @post.author = current_user
+    @post.owner = current_user
     @post.published = false
     
     authorize! :create, @post
-    if @post.save!
+    
+    if @post.save
       redirect_to blog_post_path(@post)
     else
-      render 'new'
+      flash[:notice] = "Please give your new draft a title."
+      redirect_to draft_blog_posts_path
     end
+  end
+  
+  def claim
+    post = Post.find(params[:id])
+    
+    authorize! :edit, post
+    
+    post.author = current_user
+    post.save
+    
+    redirect_to post
   end
   
   def mercury_update
@@ -46,7 +69,7 @@ class Blog::PostsController < ApplicationController
   def publish
     @post = Post.find(params[:id])
     @post.published = params[:published]
-    @post.save #this isnt working - I cant even save in the console
+    @post.save 
     redirect_to blog_post_path(@post)
   end
   

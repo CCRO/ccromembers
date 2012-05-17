@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510200234) do
+ActiveRecord::Schema.define(:version => 20120516154228) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -115,9 +115,9 @@ ActiveRecord::Schema.define(:version => 20120510200234) do
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "owner_id"
-    t.string   "owner_type"
     t.integer  "author_id"
+    t.string   "author_type"
+    t.integer  "owner_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.boolean  "published"
