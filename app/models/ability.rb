@@ -12,6 +12,7 @@ class Ability
     
     if user.role == 'editor'
       can :create, [Post, Document, Message]
+      can :manage, Post
     end
     
     can :create, Comment
@@ -27,6 +28,7 @@ class Ability
     can :edit, [Post, Document, Comment, Message], :author_id => user.id
     
     can :manage, Person, :id => user.id
+    can :read, Company, :id => user.company.id
     
     can :manage, :all if user.admin?
     
