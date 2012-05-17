@@ -6,6 +6,8 @@ class Ability
     
     can :read, Post
     
+    # can :edit, [Post, Document, Comment, Message], :author_id => user.id
+    
     if user.member?
       can :read, [Document, Comment, Message]
     end
@@ -25,10 +27,7 @@ class Ability
     
     can :read, Company, :id => user.company_id
 
-    can :edit, [Post, Document, Comment, Message], :author_id => user.id
-    
     can :manage, Person, :id => user.id
-    can :read, Company, :id => user.company.id
     
     can :manage, :all if user.admin?
     
