@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516154228) do
+ActiveRecord::Schema.define(:version => 20120521153238) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -122,6 +122,41 @@ ActiveRecord::Schema.define(:version => 20120516154228) do
     t.datetime "updated_at",   :null => false
     t.boolean  "published"
     t.datetime "published_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "survey_id"
+    t.text     "prompt"
+    t.text     "possible_responses"
+    t.string   "type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"
+
+  create_table "responses", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "question_id"
+    t.integer  "selected_response"
+    t.text     "text_response"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "responses", ["person_id"], :name => "index_responses_on_person_id"
+  add_index "responses", ["question_id"], :name => "index_responses_on_question_id"
+
+  create_table "surveys", :force => true do |t|
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.integer  "owner_id"
+    t.string   "title"
+    t.text     "discription"
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "versions", :force => true do |t|

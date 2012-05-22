@@ -58,7 +58,7 @@
 		  <% end %>
 	    </div>
     <div class="page">
-      <h1 class="ribbon-left"><span id="document_title" class="mercury-region" data-type="editable"><%= @document.title %></span></h1>
+      <h1 class="ribbon-left"><span id="document_title" class="mercury-region" data-type="editable"><%= @document.title.html_safe %></span></h1>
 	  <div id="document_body" class="mercury-region" data-type="editable">
 		<%= @document.body.html_safe %>
 	  </div>

@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
+  has_many :responses
   
   belongs_to :company 
   has_many :documents, :as => :owner 

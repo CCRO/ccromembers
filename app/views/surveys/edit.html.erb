@@ -1,0 +1,19 @@
+<h1><%= @survey.title %></h1>
+
+<br><br>
+
+<% @survey.questions.each do |question| %>
+  <h3><%= question.prompt %></h3>
+  <%= question.possible_responses.count if question.possible_responses.present? %>
+  
+  
+<br>
+<% end %> 
+
+<%= form_for [@survey, Question.new] do |f| %>
+  <%= f.text_field :prompt %><br>
+  <%= f.submit %>
+<% end %>
+<%= link_to "Back to Surveys", surveys_path %>
+
+

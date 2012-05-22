@@ -1,4 +1,6 @@
 Ccromembers::Application.routes.draw do
+  
+  
 
   Mercury::Engine.routes
 
@@ -54,6 +56,14 @@ Ccromembers::Application.routes.draw do
   resource :sessions
   resources :people
   resources :companies
+
+  resources :surveys do
+    resources :questions
+    
+    member do 
+      get :report
+    end
+  end
   
   match ':controller(/:action(/:id))(.:format)'
 end

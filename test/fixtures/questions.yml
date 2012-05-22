@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  survey: 
+  prompt: MyText
+  possible_responses: MyText
+  type: 
+
+two:
+  survey: 
+  prompt: MyText
+  possible_responses: MyText
+  type: 
