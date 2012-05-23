@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   
   before_save :set_published_date
   
-  validates_presence_of :title
+  validate :title, :presence => true
   
   private 
   

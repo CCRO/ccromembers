@@ -1,5 +1,4 @@
 class Survey < ActiveRecord::Base
-  serialize :possible_responses
 
   has_many :questions, :dependent => :destroy
   

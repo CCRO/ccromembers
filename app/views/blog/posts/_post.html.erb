@@ -4,10 +4,10 @@
 <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
   <h1 class="post_title">
     <% if params[:action] == 'show' %>
-      <span id="post_title" class="mercury-region" data-type="editable"><%= post.title.html_safe %></span>
+      <div id="post_title" class="pull-left mercury-region" data-type="editable" style="min-width: 100px; margin-right: 10px;"><%= post.title.html_safe %></div>
     <% else %>
       <%= link_to post.title.html_safe, blog_post_path(post)  %>
-    <% end %>
+    <% end %> 
     <span class="post_date">
       <% if post.created_at.to_date == Time.now.to_date %>
   			<%= l post.created_at, :format => :time %>

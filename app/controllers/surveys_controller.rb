@@ -5,6 +5,7 @@ class SurveysController < ApplicationController
 
   def show
     @survey = Survey.find(params[:id])
+    @questions = @survey.questions.all
   end
 
   def new

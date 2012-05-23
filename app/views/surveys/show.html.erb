@@ -1,2 +1,5 @@
-<h1>Surveys#show</h1>
-<p>Find me in app/views/surveys/show.html.erb</p>
+<h1><%= @survey.title %></h1>
+<div class="well">
+  <% for @survey.questions.each do |q| %>
+  <% end %>
+</div>
