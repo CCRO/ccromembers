@@ -60,7 +60,7 @@ class Blog::PostsController < ApplicationController
     authorize! :edit, post
     
     post.title = params[:content][:post_title][:value]
-    post.title = "Untitled" if post.title.blank?
+    post.title = "Untitled" if post.title == "<br>" || post.title.blank?
     post.body = params[:content][:post_body][:value]
     post.author ||= current_user
     post.save! 
