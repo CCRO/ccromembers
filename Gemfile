@@ -19,7 +19,6 @@ end
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
-gem 'wikitext'
 gem 'nokogiri'
 gem 'htmlentities'
 gem 'truncate_html'
