@@ -1,62 +1,84 @@
-<h1><%= @survey.title %></h1>
 
-<br><br>
-<div class="well" style="background-color: white;">
+<%= form_for [@survey, Question.new] do |f| %>
+  <table class="table table-striped table-bordered hide">
+    <thead>
+      <tr>
+        <td>
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <%= f.submit "Save Question", :class => 'btn btn-large' %>
+            </div>
+            <div id="space" class="pull-right">
+              &nbsp&nbsp&nbsp&nbsp
+            </div>
+            <div class="btn-group pull-right">
+              <a href="#" class="btn btn-large btn-primary"><i class="icon-remove-circle"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-check"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-text-height"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-align-left"></i></a>
+            </div>
+          </div>
+          <h3><%= f.text_field :prompt, :class => 'input-xlarge focused pull-left' %></h3>
+        </td>
+      </tr>
+    </thead>
+    <!--
+    <tbody>
+      <tr>
+        <td></td>
+      </tr>
+    </tbody>
+    -->
+  </table>
+<% end %>
+
+
+<div class="page" style="background-color: white;">
+  <div class="pull-right"> Add Question: <a href="javascript:$('.add_question_form').hide();$('#add_radiobutton_question').show();">Radio Buttons</a> | <a href="javascript:$('.add_question_form').hide();$('#add_checkbox_question').show();">Checkboxes</a> | <a href="javascript:$('.add_question_form').hide();$('#add_singleline_question').show();">Single-line Text</a> | <a href="javascript:$('.add_question_form').hide();$('#add_multiline_question').show();">Multi-line Text</a></div>
+  <h1 class="ribbon-left"><%= @survey.title %></h1><br><br><br>
+
 <% @survey.questions.each_with_index do |question, index| %>
-<table class="table">
-  <thead>
-    <tr>
-      <td>
-        <h3><%= (index + 1).to_s + ". " + question.prompt %></h3> 
-    </td>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>
+
+  <h2><%= question.response_type if question.response_type.present? %>: <%= question.prompt %> <%= link_to "delete", survey_question_path(question.survey,question), :method => 'delete', :confirm => 'There is no go backs. Ok?' %></h2> 
+  <ol>
+
   <% if question.possible_responses.present? %>
-    <% question.possible_responses.each_with_index do |response, index| %>
-        <h4><%= (index + 1).to_s + ". " + response %></h4>
-    <% end %>
+      <% question.possible_responses.each_with_index do |response, index| %>
+          <li><%= response %> <%= link_to "delete", destroy_response_survey_question_path(question.survey,question, :response_id => index )%></li>
+      <% end %>
   <% end %>
-  </td>
-  </tr>
-  </tbody>
-</table>
+ <li><form id="question_<%= index %>" class="form-inline" action="<%= new_response_survey_question_path(question.survey,question) %>" method="post"><input type="text" name="response_text" class="adjinput" placeholder="Add new response"><input type="submit" class="btn" value="Save"></form></li>
+ </ol>
   
 <br>
 <% end %> 
-</div>
-<%= form_for [@survey, Question.new] do |f| %>
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <td>
-        <div class="btn-toolbar pull-right">
-          <div class="btn-group">
-            <a href="#" class="btn btn-primary"><i class="icon-remove-circle icon-white"></i></a>
-            <a href="#" class="btn"><i class="icon-check"></i></a>
-            <a href="#" class="btn"><i class="icon-text-height"></i></a>
-            <a href="#" class="btn"><i class="icon-align-left"></i></a>
-          </div>
-          <div class="btn-group">
-            <%= f.submit "Save Question", :class => 'btn' %>
-          </div>
-        </div>
-        <h3><%= f.text_field :prompt %><br>
-        </h3> 
-    </td>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>
-  </td>
-  </tr>
-  </tbody>
-</table>
-<% end %>
 
-<%= link_to "Back to Surveys", surveys_path %>
+<div id="add_checkbox_question" class="add_question_form hide">
+  <h2><form id="new_blah_question" class="form-inline" action="<%= survey_questions_path(@survey) %>" method="post" style="margin-top: -40px; margin-left: 30px;"><input type="text" name="question[prompt]" class="span8 adjinput" placeholder="Prompt for question with checkboxes">  <input type="hidden" name="question[response_type]" value="checkbox"><input type="submit" class="btn" value="Save"> or <%= link_to "cancel", "javascript:$('#add_checkbox_question').hide();" %></form></h2> 
+</div>
+<div id="add_radiobutton_question" class="add_question_form hide">
+  <h2><form id="new_blah_question" class="form-inline" action="<%= survey_questions_path(@survey) %>" method="post" style="margin-top: -40px; margin-left: 30px;"><input type="text" name="question[prompt]" class="span8 adjinput" placeholder="Prompt for question with radio buttons">  <input type="hidden" name="question[response_type]" value="radiobutton"><input type="submit" class="btn" value="Save"> or <%= link_to "cancel", "javascript:$('#add_radiobutton_question').hide();" %></form></h2> 
+</div>
+<div id="add_singleline_question" class="add_question_form hide">
+  <h2><form id="new_blah_question" class="form-inline" action="<%= survey_questions_path(@survey) %>" method="post" style="margin-top: -40px; margin-left: 30px;"><input type="text" name="question[prompt]" class="span8 adjinput" placeholder="Prompt for question with single line answers">  <input type="hidden" name="question[response_type]" value="singleline"><input type="submit" class="btn" value="Save"> or <%= link_to "cancel", "javascript:$('#add_singleline_question').hide();" %></form></h2> 
+</div>
+<div id="add_multiline_question" class="add_question_form hide">
+  <h2><form id="new_blah_question" class="form-inline" action="<%= survey_questions_path(@survey) %>" method="post" style="margin-top: -40px; margin-left: 30px;"><input type="text" name="question[prompt]" class="span8 adjinput" placeholder="Prompt for question with multiple line answers">  <input type="hidden" name="question[response_type]" value="multiline"><input type="submit" class="btn" value="Save"> or <%= link_to "cancel", "javascript:$('#add_multiline_question').hide();" %></form></h2> 
+</div>
+<br>
+<hr>
+<div class="btn-toolbar span4 offset4" style="margin-top: -35px">
+  <div class="btn-group">
+    <a href="javascript:$('.add_question_form').hide();$('#add_radiobutton_question').show();" class="btn btn-large"><i class="icon-remove-circle"></i></a>
+    <a href="javascript:$('.add_question_form').hide();$('#add_checkbox_question').show();" class="btn btn-large"><i class="icon-check"></i></a>
+    <a href="javascript:$('.add_question_form').hide();$('#add_singleline_question').show();" class="btn btn-large"><i class="icon-text-height"></i></a>
+    <a href="javascript:$('.add_question_form').hide();$('#add_multiline_question').show();" class="btn btn-large"><i class="icon-align-left"></i></a>
+  </div>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+
+<%= link_to "Back to surveys", surveys_path, :class => 'btn btn-large' %>
 
 

@@ -1,5 +1,19 @@
 <h1><%= @survey.title %></h1>
+<br><br>
 <div class="well">
-  <% for @survey.questions.each do |q| %>
+  <% @survey.questions.each do |q| %>
+    <div>
+      <h3><%= q.prompt %></h3>
+        <% if q.possible_responses %>
+         <ul>
+            <% q.possible_responses.each do |pr| %>
+              <li><%= pr %></li>
+            <% end %>
+          </ul>  
+        <% end %>  
+    </div>
+    <br>    
   <% end %>
 </div>
+<%= link_to "Finished with survey", surveys_path, :class => 'btn btn-large' %>
+

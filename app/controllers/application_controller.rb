@@ -31,14 +31,20 @@ class ApplicationController < ActionController::Base
     unless params[:controller] == "sessions"
       session[:url_after_login] = request.url unless current_user || request.url == new_sessions_url
       session[:url_return_to] = request.url if !request.xhr? && request.path != "/login"
-      logger.info session
+      logger.info 'Session: ' + session.to_s
     end
   end
 
-  def redirect_back_or_default(default, key = :url_return_to, *options)
-    redirect_to(session[key] || default, *options)
-    logger.info "Redirecting back to: " + session[key] || default
-    session[key] = nil
+  def redirect_back_or_default(default, *options)
+    if session[:url_return_to].present?
+      logger.info "Redirecting back to url_return_to: " + session[:url_return_to]
+      redirect_to(session[:url_return_to], *options)
+    else
+      logger.info "Redirecting back to default: " +  default
+      redirect_to(default, *options)
+    end
+    #logger.info "Redirecting back to: " + session[key] || default
+    #session[key] = nil
   end
      
   def current_user
@@ -64,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to dashboard_path,:flash => {error: exception.message }
+    redirect_back_or_default dashboard_path,:flash => {error: exception.message }
   end
   
   protected

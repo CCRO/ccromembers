@@ -9,11 +9,11 @@ class Ability
     # can :edit, [Post, Document, Comment, Message], :author_id => user.id
     
     if user.member?
-      can :read, [Document, Comment, Message]
+      can :read, [Document, Comment, Message, Survey]
     end
     
     if user.role == 'editor'
-      can :create, [Post, Document, Message]
+      can :create, [Post, Document, Message, Survey]
       can :manage, Post
     end
     

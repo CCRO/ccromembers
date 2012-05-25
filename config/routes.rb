@@ -58,12 +58,18 @@ Ccromembers::Application.routes.draw do
   resources :companies
 
   resources :surveys do
-    resources :questions
+    resources :questions do
+      member do
+        post :new_response
+        get :destroy_response
+      end
+    end
     
     member do 
       get :report
     end
   end
+  
   
   match ':controller(/:action(/:id))(.:format)'
 end

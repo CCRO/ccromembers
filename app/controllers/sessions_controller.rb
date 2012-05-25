@@ -12,11 +12,7 @@ class SessionsController < ApplicationController
     user = Person.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      if request.domain == BLOG_DOMAIN
-        redirect_to root_url
-      else
-        redirect_to documents_url
-      end
+      redirect_back_or_default root_url
     else
       flash.now.alert = t(:login_invalid)
       render "new"
@@ -25,6 +21,6 @@ class SessionsController < ApplicationController
   
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, :flash => {:success => t(:logout_flash)}
+    redirect_back_or_default root_url, :flash => {:success => t(:logout_flash)}
   end
 end
