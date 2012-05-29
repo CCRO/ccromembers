@@ -239,7 +239,7 @@ div#sidebar ul.nav a > small {
 	font-size: smaller;
 }
 
-div.page h2 {
+body#doc_viewer div.page h2 {
   color: #32609e;
   border-bottom: 1px dotted #32609e;
   margin-top: 10px;
@@ -266,20 +266,20 @@ div.page p {
 }
 
 /* Section numbering */
-div.page h1 {
+body#doc_viewer div.page h1 {
 	counter-reset:section;
 }
 
-div.page h2:not(.numbering_exclude) {
+body#doc_viewer div.page h2:not(.numbering_exclude) {
 	counter-reset:subsection;
 }
 
-div.page h2:not(.numbering_exclude):before {
+body#doc_viewer div.page h2:not(.numbering_exclude):before {
 	counter-increment:section;
 	content:counter(section) ". ";
 }
 
-div.page h3:not(.numbering_exclude):before {
+body#doc_viewer div.page h3:not(.numbering_exclude):before {
 	counter-increment:subsection;
 	content:counter(section) "." counter(subsection) " ";
 }
