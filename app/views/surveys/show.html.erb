@@ -1,11 +1,11 @@
-<h1><%= @survey.title %></h1>
-<br><br>
-<div class="well">
+
+<div class="page">
+  <h1 class="ribbon-left"><%= @survey.title %></h1>
   <% @survey.questions.each do |q| %>
     <div>
-      <h3><%= q.prompt %></h3>
+      <h2><%= q.prompt %></h2>
         <% if q.possible_responses %>
-         <ul>
+          <ul>
             <% q.possible_responses.each do |pr| %>
               <li><%= pr %></li>
             <% end %>

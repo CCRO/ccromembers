@@ -14,7 +14,8 @@ class Ability
     
     if user.role == 'editor'
       can :create, [Post, Document, Message, Survey]
-      can :manage, Post
+      can [:edit,:destroy], Post
+      cannot :publish, Post
     end
     
     can :create, Comment

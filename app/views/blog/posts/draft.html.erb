@@ -16,6 +16,7 @@
   <% @posts.each do |post| %>
   <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
     <h3 class="post_title">
+        <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
         <%= link_to post.title.html_safe, blog_post_path(post)  %>
   	</h3>
     <div style="clear: both"></div>
