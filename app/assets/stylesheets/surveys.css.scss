@@ -1,4 +1,21 @@
+.radio, .checkbox, li {
+  margin-left:30px;
+  padding:5px;
+}
 
+textarea{
+  height:120px;
+}
+
+.delete_selector{
+  margin-left:10px;
+  opacity:0.05; 
+}
+
+.delete_selector:hover{
+  margin-left:10px;
+  opacity:1; 
+}
 
 li:hover i {
   display: inline-block;

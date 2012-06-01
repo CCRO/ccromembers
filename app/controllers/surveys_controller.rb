@@ -38,6 +38,7 @@ class SurveysController < ApplicationController
 
   def update
     @survey = Survey.find(params[:id])
+    @survey.update_attributes(params[:blurb])
   end
 
   def destroy

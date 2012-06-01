@@ -36,16 +36,21 @@
 
 <div class="page" style="background-color: white;">
   <div class="pull-right"> Add Question: <a href="javascript:$('.add_question_form').hide();$('#add_radiobutton_question').show();">Radio Buttons</a> | <a href="javascript:$('.add_question_form').hide();$('#add_checkbox_question').show();">Checkboxes</a> | <a href="javascript:$('.add_question_form').hide();$('#add_singleline_question').show();">Single-line Text</a> | <a href="javascript:$('.add_question_form').hide();$('#add_multiline_question').show();">Multi-line Text</a></div>
-  <h1 class="ribbon-left"><%= @survey.title %></h1><br><br><br>
+  <h1 class="ribbon-left"><%= @survey.title %></h1><br><br>
+  
+     <%= form_for @survey, :remote => true do |f| %>
+       <%= f.label :blurb do %><h2>Relevant survey information</h2><% end %>
+       <%= f.text_area :blurb , :class => 'submittable span8' %>
+     <% end %>
 
 <% @survey.questions.each_with_index do |question, index| %>  
-  <h2><%= question.prompt %><%= link_to "delete", survey_question_path(question.survey,question), :method => 'delete', :confirm => 'There is no go backs. Ok?' %></h2>
+  <h2><%= question.prompt %><span class="delete_selector"><%= link_to "Delete question", survey_question_path(question.survey,question), :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %></span></h2>
         
         <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
         <ul id="question_responses_<%= question.id %>" style="list-style: none;">
           <% if question.possible_responses.present? %>
             <% question.possible_responses.each_with_index do |response, index| %>
-              <li><input type="<%= question.response_type %>"> <%= response %> <%= link_to "delete", destroy_response_survey_question_path(question.survey,question, :response_id => index )%></li>
+              <li><input type="<%= question.response_type %>"> <%= response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => index )%></li></span>
             <% end %>
           <% end %>
     
@@ -54,11 +59,11 @@
           </ul>
         <% end %>
         <% if question.response_type == 'multiline' %>
-          <textarea></textarea>
+          <textarea class="span8"></textarea>
         <% end %>
 
         <% if question.response_type == 'singleline' %>
-          <input type="text">
+          <input type="text" class="span8">
         <% end %>
         
         <br>
