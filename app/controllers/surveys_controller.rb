@@ -1,6 +1,8 @@
 class SurveysController < ApplicationController
   
   layout 'survey'#, :except => :show
+  #before_filter :require_user
+  
   
   def index
     @surveys = Survey.all.sort.reverse
@@ -8,6 +10,7 @@ class SurveysController < ApplicationController
 
   def show
     @survey = Survey.find(params[:id])
+    @response = Response.new
   end
 
   def new

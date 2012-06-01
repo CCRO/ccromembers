@@ -59,11 +59,13 @@ Ccromembers::Application.routes.draw do
 
   resources :surveys do
     resources :questions do
+      resources :responses
       member do
         post :new_response
         get :destroy_response
       end
-    end
+     end
+     
     
     member do 
       get :report

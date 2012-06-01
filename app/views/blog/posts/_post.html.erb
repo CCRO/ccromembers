@@ -44,7 +44,7 @@
   <hr class="hr-small-margin hr-dark">
 </div>
 <br />
-<% if can? :manage, post %>
+<% if can? :edit, post %>
   <div class="pull-right">
 	<%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
 	</div>

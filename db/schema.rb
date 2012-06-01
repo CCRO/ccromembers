@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525160756) do
+ActiveRecord::Schema.define(:version => 20120531194511) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -140,8 +140,9 @@ ActiveRecord::Schema.define(:version => 20120525160756) do
     t.integer  "question_id"
     t.integer  "selected_response"
     t.text     "text_response"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.text     "selected_responses"
   end
 
   add_index "responses", ["person_id"], :name => "index_responses_on_person_id"

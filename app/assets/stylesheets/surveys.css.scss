@@ -9,3 +9,8 @@ li:hover i {
     max-width:600px !important;
     min-width:40px;
 }
+
+label.save_error:after {
+  content: "Error saving!";
+  color: red;
+}

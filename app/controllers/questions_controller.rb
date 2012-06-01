@@ -19,16 +19,23 @@ class QuestionsController < ApplicationController
   end
   
   def new_response
-    question = Question.find(params[:id])
-    if question.possible_responses
-      question.possible_responses.push(params[:response_text]) if params[:response_text] && params[:response_text] != ""
+    @question = Question.find(params[:id])
+    @response = params[:response_text]
+    @index = @question.possible_responses.index(@response)
+    if @question.possible_responses
+      @question.possible_responses.push(params[:response_text]) if params[:response_text] && params[:response_text] != ""
     else
-      question.possible_responses = [params[:response_text]]
+      @question.possible_responses = [params[:response_text]]
     end
     
-    question.save
+    respond_to do |format|
+      if @question.save
+        format.js { render }
+      else
+        format.js { render :status => 400, :nothing => true}
+      end
+    end
     
-    redirect_to edit_survey_path question.survey
   end
   
   def destroy_response

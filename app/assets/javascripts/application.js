@@ -30,3 +30,7 @@ window.addEventListener("load",function() {
 	$('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
   $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
 });
+
+$('.submittable').live('change', function() {
+  $(this).parents('form:first').submit();
+});

@@ -42,14 +42,14 @@
   <h2><%= question.prompt %><%= link_to "delete", survey_question_path(question.survey,question), :method => 'delete', :confirm => 'There is no go backs. Ok?' %></h2>
         
         <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
-        <ul style="list-style: none;">
+        <ul id="question_responses_<%= question.id %>" style="list-style: none;">
           <% if question.possible_responses.present? %>
             <% question.possible_responses.each_with_index do |response, index| %>
               <li><input type="<%= question.response_type %>"> <%= response %> <%= link_to "delete", destroy_response_survey_question_path(question.survey,question, :response_id => index )%></li>
             <% end %>
           <% end %>
     
-          <li><form id="question_<%= index %>" class="form-inline" action="<%= new_response_survey_question_path(question.survey,question) %>"
+          <li><form id="question_<%= question.id %>" class="form-inline" action="<%= new_response_survey_question_path(question.survey,question) %>" data-remote="true"
             method="post"><input type="text" name="response_text" class="adjinput" placeholder="Add new response"><input type="submit" class="btn" value="Save"></form></li>
           </ul>
         <% end %>

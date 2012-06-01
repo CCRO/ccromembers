@@ -1,0 +1,3 @@
+console.log("Clearing Form: <%= @response.question.id %>");
+$('#question_response_<%= @response.question.id %> input[type="radio"]').prop('checked', false).parent('label').removeClass('save_error');
+$('#question_response_<%= @response.question.id %> input#response_selected_response_<%= @response.selected_response %>').parent('label').addClass('save_error');
