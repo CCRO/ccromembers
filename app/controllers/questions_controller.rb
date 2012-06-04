@@ -12,12 +12,36 @@ class QuestionsController < ApplicationController
   end
   
   def destroy
-    question = Question.find(params[:id])
-    survey = question.survey
+    @question = Question.find(params[:id])
+    survey = @question.survey
     
-    question.destroy
+    respond_to do |format|
+      if @question.destroy
+        format.js { render }
+      else
+        format.js { render :status => 400, :nothing => true}
+      end
+    end
     
-    redirect_to edit_survey_path survey
+    #redirect_to edit_survey_path survey
+  end
+  
+  def destroy_response
+    @question = Question.find(params[:id])
+    
+    @question.possible_responses.delete_at(params[:response_id].to_i)
+    
+    @question.save
+    
+    @response_id = params[:response_id].to_i
+    
+    respond_to do |format|
+      if @question.save
+        format.js { render }
+      else
+        format.js { render :status => 400, :nothing => true}
+      end
+    end
   end
   
   def new_response
@@ -40,24 +64,6 @@ class QuestionsController < ApplicationController
       end
     end
     
-  end
-  
-  def destroy_response
-    @question = Question.find(params[:id])
-    
-    @question.possible_responses.delete_at(params[:response_id].to_i)
-    
-    @question.save
-    
-    @response_id = params[:response_id].to_i
-    
-    respond_to do |format|
-      if @question.save
-        format.js { render }
-      else
-        format.js { render :status => 400, :nothing => true}
-      end
-    end
   end
      
 end
