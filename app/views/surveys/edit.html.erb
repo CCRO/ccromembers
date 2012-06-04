@@ -50,7 +50,7 @@
         <ul id="question_responses_<%= question.id %>" style="list-style: none;">
           <% if question.possible_responses.present? %>
             <% question.possible_responses.each_with_index do |response, index| %>
-              <li><input type="<%= question.response_type %>"> <%= response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => index )%></li></span>
+              <li id="question_<%= question.id %>_response_<%= index %>"><input type="<%= question.response_type %>"> <%= response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => index), :remote => true %></span></li>
             <% end %>
           <% end %>
     

@@ -5,7 +5,7 @@ class SurveysController < ApplicationController
   
   
   def index
-    @surveys = Survey.all.sort.reverse
+    @surveys = Survey.all
   end
 
   def show
@@ -38,7 +38,7 @@ class SurveysController < ApplicationController
 
   def update
     @survey = Survey.find(params[:id])
-    @survey.update_attributes(params[:blurb])
+    @survey.update_attributes(params[:survey])
   end
 
   def destroy

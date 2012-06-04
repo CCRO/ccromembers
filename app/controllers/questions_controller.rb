@@ -21,12 +21,14 @@ class QuestionsController < ApplicationController
   def new_response
     @question = Question.find(params[:id])
     @response = params[:response_text]
-    @index = @question.possible_responses.index(@response)
+    
     if @question.possible_responses
       @question.possible_responses.push(params[:response_text]) if params[:response_text] && params[:response_text] != ""
     else
       @question.possible_responses = [params[:response_text]]
     end
+    
+    @index = @question.possible_responses.index(@response)
     
     respond_to do |format|
       if @question.save
@@ -39,13 +41,21 @@ class QuestionsController < ApplicationController
   end
   
   def destroy_response
-    question = Question.find(params[:id])
+    @question = Question.find(params[:id])
     
-    question.possible_responses.delete_at(params[:response_id].to_i)
+    @question.possible_responses.delete_at(params[:response_id].to_i)
     
-    question.save
+    @question.save
     
-    redirect_to edit_survey_path question.survey
+    @response_id = params[:response_id].to_i
+    
+    respond_to do |format|
+      if @question.save
+        format.js { render }
+      else
+        format.js { render :status => 400, :nothing => true}
+      end
+    end
   end
      
 end
