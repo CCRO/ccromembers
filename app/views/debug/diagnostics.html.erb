@@ -1,0 +1,23 @@
+<table class="table table-bordered span4 offset4">
+  <thead>
+    <tr>
+      <td>Variable</td>
+      <td>Contents</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>session</td>
+      <td><%= debug @session %></td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td><%= debug @current_user %></td>
+    </tr>
+    <tr>
+      <td>params</td>
+      <td><%= debug @params %><br><%=  @params.to_s %></td>
+    </tr>
+    
+  </tbody>
+</table>

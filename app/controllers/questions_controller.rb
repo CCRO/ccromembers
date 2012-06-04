@@ -2,10 +2,12 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.create(params[:question])
     @question.survey = Survey.find(params[:survey_id])
+    @question.update_attributes(params[:question])
+    
     if @question.save
-      redirect_to edit_survey_path(@question.survey)
+      render 'create', :locals => {question: @question}
     else
-      render 'new'
+      render status: 400, nothing: true
     end
   end
   
