@@ -45,6 +45,7 @@
         <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
         <p class="help-block">Contact support if you can't find your company listed.</p>
       </div>
+    </div>
     <div class="control-group">
       <%= f.label :avatar, :class => 'control-label' %>
       <div class="controls">
@@ -72,15 +73,12 @@
 		console.log(companies);
 		$('.typeahead, ul.typeahead.dropdown > a').bind('keyup change focus blur mouseup', function() {
 			if(jQuery.inArray($(this).val(), companies) != -1) {
-				$(this).closest('.control-group').addClass('success').removeClass('error')
-				$(this).siblings('p.help-block').text("Company found.")
+				$(this).closest('.control-group').addClass('success').removeClass('error').children('p.help-block').text("Company found.")
 			} else {
-				$(this).closest('.control-group').addClass('error').removeClass('success')
-				$(this).siblings('p.help-block').text("Company will be created.")
+				$(this).closest('.control-group').addClass('error').removeClass('success').children('p.help-block').text("Company will be created.")
 			}
 			if($(this).val() == "") {
-				$(this).closest('.control-group').removeClass('error').removeClass('success')
-				$(this).siblings('p.help-block').text("Contact support if you can't find your company listed.")
+				$(this).closest('.control-group').removeClass('error').removeClass('success').children('p.help-block').text("Contact support if you can't find your company listed.")
 			}
 		});
     });

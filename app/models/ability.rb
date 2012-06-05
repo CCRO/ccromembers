@@ -5,6 +5,7 @@ class Ability
     user ||= Person.new # guest user (not logged in)
     
     can :read, Post
+    can :read, Survey if user.id
     
     # can :edit, [Post, Document, Comment, Message], :author_id => user.id
     

@@ -1,7 +1,8 @@
 class SurveysController < ApplicationController
   
+  
   layout 'survey'#, :except => :show
-  #before_filter :require_user
+  before_filter :require_user
   
   
   def index
@@ -11,10 +12,13 @@ class SurveysController < ApplicationController
   def show
     @survey = Survey.find(params[:id])
     @response = Response.new
+    
+    authorize! :read, @survey
   end
 
   def new
     @survey = Survey.new
+    authorize! :create, @survey
   end
 
   def create
@@ -34,10 +38,12 @@ class SurveysController < ApplicationController
 
   def edit
     @survey = Survey.find(params[:id])
+    authorize! :edit, @survey
   end
 
   def update
     @survey = Survey.find(params[:id])
+    authorize! :edit, @survey
     @survey.update_attributes(params[:survey])
   end
 
