@@ -17,4 +17,5 @@ $("a[rel='new_question_type']").live('click', function(event) {
   $('.add_question_form input#question_response_type').prop('value', $(this).data('qtype'));
   $('.add_question_form input#question_prompt').prop('placeholder', 'Prompt for ' +$(this).data('qtype')  + ' question');
   $('.add_question_form').show();
+  $("div#add_question #question_prompt").focus();
 });
