@@ -79,5 +79,6 @@
   </div>
 </div>
 <!--Body content (END)-->
+<%= render :partial => ‘blog/ga’ if RAILS_ENV == ‘production’ %>
 </body>
 </html>
