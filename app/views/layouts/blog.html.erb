@@ -79,6 +79,6 @@
   </div>
 </div>
 <!--Body content (END)-->
-<%= render :partial => ‘blog/ga’ if RAILS_ENV == ‘production’ %>
+<%= render :partial => ‘blog/ga’ if Rails.env.production? %>
 </body>
 </html>
