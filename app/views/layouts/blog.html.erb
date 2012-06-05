@@ -3,7 +3,8 @@
 <br>
 <head>
   <title>CCRO - <%= "CCRO Blog" %></title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "blog", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "mercury" %>
   <%= csrf_meta_tags %>
@@ -44,7 +45,7 @@
           <%= link_to "I don't have an account, but ...", register_path, :class => 'pull-right' %>
           </div>
         <% end %>
-        <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), root_path %>
+        <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %>
       </header>
   </div>
      	<div class="row">

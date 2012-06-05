@@ -28,15 +28,14 @@
     </div>
   	<% end %>
 	</h1>
-	<br>
   
-  <% if post.author %><h3>by <%= post.author.name %></h3><% end %>
+  <% if post.author %><h3 id="post_author">by <%= post.author.name %></h3><% end %>
   <% if params[:action] == 'index' && post_counter > 0 %>
   <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
   <% else %>
     <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe unless params[:action] == 'draft' %></div></p>
   <% end %>
-  <br><br>
+  <br>
   <div style="clear: both"></div>
   <div class="post-footer">
   <hr class="hr-small-margin">
@@ -45,7 +44,7 @@
 </div>
 <br />
 <% if can? :edit, post %>
-  <div class="pull-right">
+  <div id="post_management_controls" class="pull-right">
 	<%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
 	</div>
 <% end %>
@@ -56,7 +55,7 @@
 <% end %>
 
 <% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
-  <div class="">
+  <div id="about_author" class="">
     <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
       <%= avatar_for post.author %>
         <h5><%= post.author.name %></h5>
