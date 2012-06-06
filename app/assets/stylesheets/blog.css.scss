@@ -169,3 +169,36 @@
   .watermark-draft {
     background: url('../images/watermark-draft-light.png');
   }
+  
+  .emphasized {
+    font-size: 120%;
+    font-weight: bold;
+  }
+  
+  .callout {
+    border: 1px solid lightGrey;
+    background-color: white;
+    width: 200px;
+    padding: 10px;
+    margin: 0px 10px 10px 10px;
+    box-shadow: 1px 1px 3px grey;
+    font-weight: bold;
+    font-size: 110%;
+  }
+  
+  .callout-small {
+    width: 100px !important;
+    padding: 5px !important;
+  }
+  
+  .callout-large {
+    width: 450px !important;
+    padding: 10px !important;
+  }
+
+    
+  .callout img {
+     margin-bottom: 10px;
+   }
+   
+

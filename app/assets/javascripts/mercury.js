@@ -117,11 +117,11 @@ window.Mercury = {
         save:                  ['Save', 'Save this page'],
         preview:               ['Preview', 'Preview this page', { toggle: true, mode: true }],
         sep1:                  ' ',
-        // undoredo:              {
-        //   undo:                ['Undo', 'Undo your last action'],
+         undoredo:              {
+           undo:                ['Undo', 'Undo your last action'],
         //   redo:                ['Redo', 'Redo your last action'],
-        //   sep:                 ' '
-        //   },
+           sep:                 ' '
+           },
         insertLink:            ['Link', 'Insert Link', { modal: '/mercury/modals/link.html', regions: ['editable', 'markupable'] }],
         insertMedia:           ['Media', 'Insert Media (images and videos)', { modal: '/mercury/modals/media.html', regions: ['editable', 'markupable'] }],
         // insertTable:           ['Table', 'Insert Table', { modal: '/mercury/modals/table.html', regions: ['editable', 'markupable'] }],
