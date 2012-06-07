@@ -8,6 +8,14 @@ class Post < ActiveRecord::Base
   
   validate :title, :presence => true
   
+  def to_param
+    permalink
+  end
+
+  def permalink
+    "#{id}-#{title.parameterize}"
+  end
+  
   private 
   
   def set_published_date
