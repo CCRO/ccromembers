@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= Person.new # guest user (not logged in)
     
-    can :read, Post
+    can :read, Post, :published => true
     can :read, Survey if user.id
     
     # can :edit, [Post, Document, Comment, Message], :author_id => user.id
@@ -15,6 +15,7 @@ class Ability
     
     if user.role == 'editor'
       can :create, [Post, Document, Message, Survey]
+      #can :read, Post, :published => false
       can [:edit,:destroy], Post
       cannot :publish, Post
     end

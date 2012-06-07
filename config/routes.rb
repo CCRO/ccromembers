@@ -53,6 +53,8 @@ Ccromembers::Application.routes.draw do
   get 'reset_password/:perishable_token' => 'password_resets#edit', :as => :reset_password
   put 'reset_password/:perishable_token' => 'password_resets#update', :as => :reset_password
 
+  match 'forbidden' => 'static#403', :as => :forbidden
+  
   resource :sessions
   resources :people
   resources :companies

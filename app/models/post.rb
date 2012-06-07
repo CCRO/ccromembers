@@ -1,4 +1,7 @@
 class Post < ActiveRecord::Base
+  
+  include ActionView::Helpers::SanitizeHelper
+  
   belongs_to :author, :polymorphic => true
   belongs_to :owner, :class_name => 'Person'
   
@@ -13,7 +16,7 @@ class Post < ActiveRecord::Base
   end
 
   def permalink
-    "#{id}-#{title.parameterize}"
+    "#{id}-#{strip_tags(title).strip.parameterize}"
   end
   
   private 

@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
       redirect_to(default, *options)
     end
     #logger.info "Redirecting back to: " + session[key] || default
-    #session[key] = nil
+    session[:url_return_to] = nil
   end
      
   def current_user
@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_back_or_default dashboard_path,:flash => {error: exception.message }
+    redirect_to forbidden_path(), :flash => {error: exception.message }
   end
   
   protected
