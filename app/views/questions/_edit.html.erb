@@ -10,7 +10,7 @@
         <% end %>
   
         <li><form id="question_<%= question.id %>" class="form-inline" action="<%= new_response_survey_question_path(question.survey,question) %>" data-remote="true"
-          method="post"><input type="text" name="response_text" class="adjinput" placeholder="Add new response"><input type="submit" class="btn" value="Save"></form></li>
+          method="post"><input type="text" name="response_text" class="adjinput" placeholder="Add new response"><input type="submit" class="btn btn-primary delete_selector" value="Save response"></form></li>
         </ul>
       <% end %>
       <% if question.response_type == 'multiline' %>

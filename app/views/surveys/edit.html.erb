@@ -61,7 +61,7 @@
 <%= form_for [@survey, Question.new], :html => { :class =>"form-inline"}, :remote => true do |f| %>
   <%= f.hidden_field :response_type, :value => 'radio' %>
   <%= f.text_field :prompt, :class =>"span8 adjinput", :placeholder =>"Prompt for question with radio buttons" %>
-  <%= f.submit 'Save', :class => 'btn' %> or <%= link_to "cancel", "javascript:$('.add_question_form').hide();" %>
+  <%= f.submit 'Save question', :class => 'btn btn-primary' %> or <%= link_to "cancel", "javascript:$('.add_question_form').hide();" %>
 <% end %>
 </div>
 <br>
