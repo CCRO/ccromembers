@@ -21,6 +21,7 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+              <li><%= link_to 'Report', report_survey_path(survey) %></li>
               <li><%= link_to 'Delete', survey, :method => "delete", :confirm => "Are you sure?" %></li>
             </ul>
           </div>

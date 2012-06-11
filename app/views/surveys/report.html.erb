@@ -1,2 +1,6 @@
-<h1>Surveys#report</h1>
-<p>Find me in app/views/surveys/report.html.erb</p>
+<h1><%= @survey.title %></h1>
+
+<% @chart.each_with_index do |chart,index| %>
+  <div id='chart_<%= index %>' class="page"></div>
+  <%= render_chart(chart, 'chart_' + index.to_s) %>
+<% end %>

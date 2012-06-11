@@ -59,5 +59,26 @@ class SurveysController < ApplicationController
 
   def report
     @survey = Survey.find(params[:id])
+    @chart = Array.new
+    @survey.questions.each do |q|
+      if q.results
+        data_table = GoogleVisualr::DataTable.new
+
+        # Add Column Headers 
+        data_table.new_column('string', 'Prompt' ) 
+        data_table.new_column('number', 'Responses') 
+
+        # Add Rows and Values 
+        data_table.add_rows(q.results)
+    
+        option = { width: 800, height: 480, title: q.prompt, :is3D => true }
+        case q.response_type
+        when 'radio'
+          @chart.push(GoogleVisualr::Interactive::PieChart.new(data_table, option))
+        when 'checkbox'
+          @chart.push(GoogleVisualr::Interactive::BarChart.new(data_table, option))
+        end
+      end
+    end
   end
 end

@@ -30,6 +30,7 @@ gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
 gem 'mercury-rails'
+gem "google_visualr"
 
 # Gems used only for assets and not required
 # in production environments by default.
