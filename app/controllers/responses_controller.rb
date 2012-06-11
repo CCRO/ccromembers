@@ -25,9 +25,10 @@ class ResponsesController < ApplicationController
     
     
     respond_to do |format|
-      if @response.person_id.present? && @response.save
+      if @response.person_id.present? && @response.save!
+        logger.info "Response: " + @response.to_json.to_s
         format.html { redirect_to @response.question.survey, :flash => { :success => 'Response was successfully created.'} }
-        format.js { render status: 200, nothing: true }
+        format.js { render }
       else
         format.html { redirect_to :back }
         format.js { render }

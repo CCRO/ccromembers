@@ -1,3 +1,8 @@
-console.log("Clearing Form: <%= @response.question.id %>");
-$('#question_response_<%= @response.question.id %> input[type="radio"]').prop('checked', false).parent('label').removeClass('save_error');
-$('#question_response_<%= @response.question.id %> input#response_selected_response_<%= @response.selected_response %>').parent('label').addClass('save_error');
+<% if @response.id %>
+  $('#question_response_<%= @response.question.id %>').prop('action', "/surveys/<%= @response.question.survey.id %>/questions/<%= @response.question.id %>/responses/<%= @response.id %>");
+  $('#question_response_<%= @response.question.id %> div:first-child').append('<input name="_method" type="hidden" value="put">')
+<% else %>
+  console.log("Clearing Form: <%= @response.question.id %>");
+  $('#question_response_<%= @response.question.id %> input[type="radio"]').prop('checked', false).parent('label').removeClass('save_error');
+  $('#question_response_<%= @response.question.id %> input#response_selected_response_<%= @response.selected_response %>').parent('label').addClass('save_error');
+<% end %>
