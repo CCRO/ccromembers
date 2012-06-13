@@ -23,14 +23,15 @@ gem 'nokogiri'
 gem 'htmlentities'
 gem 'truncate_html'
 gem 'cancan'
-gem "bcurren-freshbooks.rb", :git => 'git://github.com/bcurren/freshbooks.rb.git'
+gem 'bcurren-freshbooks.rb', :git => 'git://github.com/bcurren/freshbooks.rb.git'
 gem 'carrierwave'
-gem "fog", "~> 1.3.1"
+gem 'fog', "~> 1.3.1"
 gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
 gem 'mercury-rails'
-gem "google_visualr"
+gem 'google_visualr'
+gem 'jqcloud-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -4,3 +4,29 @@
   <div id='chart_<%= index %>' class="page"></div>
   <%= render_chart(chart, 'chart_' + index.to_s) %>
 <% end %>
+
+<% @cloud.each_with_index do |cloud,index| %>
+  <div class="page">
+    <h1></h1>
+    <div id="cloud_<%= index %>" class="jqcloud" ></div>
+  </div>
+  <script type="text/javascript">
+    /*!
+     * Create an array of word objects, each representing a word in the cloud
+     */
+    var word_array_<%= index %> = [
+        <% cloud.each do |key, value| %>
+          {text: "<%= key %>", weight: <%= value %>},
+        <% end %>
+        // ...as many words as you want
+    ];
+
+    $(function() {
+      // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+      $("#cloud_<%= index %>").jQCloud(word_array_<%= index %>, {
+        width: 800,
+        height: 600
+      });
+    });
+  </script>
+<% end %>

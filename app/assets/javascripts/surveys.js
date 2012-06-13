@@ -1,3 +1,5 @@
+//= require jqcloud
+
 var jqThis = $('#adjinput'), //object of the input field in jQuery
     fontSize = parseInt( jqThis.css('font-size') ) / 2, //its font-size
     //its min Width (the box won't become smaller than this

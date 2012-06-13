@@ -10,6 +10,9 @@ class Question < ActiveRecord::Base
       self.possible_responses.zip(self.possible_responses.map { |r| Response.where(question_id: self.id, selected_response: self.possible_responses.index(r)).count })
     when 'checkbox'
       self.possible_responses.zip(self.responses.pluck(:selected_responses).transpose.map {|x| x.reduce(:+)})
+    when 'singleline', 'multiline'
+      ignored_words = ["the", "of", "this", "it", "is", "by", "a", "for", "when", "how", "and", "in", "from"]
+      (self.responses.pluck(:text_response).compact.map { |r| r.downcase.gsub(/[^a-z ]/, '').split(" ") }.flatten - ignored_words).reduce(Hash.new(0)) { |total, e| total[e] += 1; total }.delete_if { |key, value| value <= 1 || key.length < 3}
     end
   end
 end
