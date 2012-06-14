@@ -19,15 +19,15 @@
           <div class="btn-toolbar">
             <div class="btn-group">
               <% if can? :create, Post %>
-                <%= link_to draft_blog_posts_path, :class => 'btn' do %>  
+                <%= link_to draft_blog_posts_path, :class => 'btn btn-large' do %>  
                   <i class="icon-list-alt"></i> Manage drafts
                 <% end %>
               <% end %>
             </div>
             <div class="btn-group">
                <% if current_user %>
-                <%= link_to current_user.name, current_user, :class => 'btn' %>
-                <%= link_to logout_path, :class => 'btn' do %>
+                <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
+                <%= link_to logout_path, :class => 'btn btn-large' do %>
                   <i class="icon-off"></i>
                 <% end %>
               <% end %>
@@ -52,24 +52,13 @@
           <ul class="nav nav-tabs nav-stacked">
               <li><%= link_to "Home", blog_posts_path %></li>
               <li><a href="http://ccro.org/about/237">About the CCRO</a></li>
+          </ul>
+          
+          <ul class="nav nav-tabs nav-stacked" style="padding-top: 15px;">
               <% if can? :create, Post %>
-                <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to use the blog</a></li>
+                <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How create new blog posts</a></li>
               <% end %>
           </ul>
-          <!--
-          <ul class="nav nav-tabs nav-stacked">
-              <li><a href="#">Credit Risk</a></li>
-              <li><a href="#">Compliance</a></li>
-              <li><a href="#">FERC Order No. 741</a></li>
-              <li><a href="#">Blah Blah</a></li>
-              <li><a href="#">Avatar Postings</a></li>
-          </ul>
-          <form class="form-search">
-            <input type="text" class="input-medium search-query">
-            <button type="submit" class="btn">Search</button>
-          </form>
-          
-          <center><%= image_tag "http://placehold.it/200x150&text=Future%20Ad" %><br><br><%= image_tag "http://placehold.it/200x450&text=Future%20Ad" %></center>-->
         </aside>
         <section class="span9">
               <%= yield %>

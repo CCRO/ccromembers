@@ -17,8 +17,8 @@
           <div class="btn-toolbar">
             <div class="btn-group">
                <% if current_user %>
-                <%= link_to current_user.name, current_user, :class => 'btn' %>
-                <%= link_to logout_path, :class => 'btn' do %>
+                <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
+                <%= link_to logout_path, :class => 'btn btn-large' do %>
                   <i class="icon-off"></i>
                 <% end %>
               <% end %>
@@ -39,7 +39,7 @@
       </header>
   </div>
      	<div class="row">
-        <div class="container center">
+        <div class="container" style="padding-left: 30px;">
           <div id="notices">
       			<% flash.each do |key, msg| %>
       	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">

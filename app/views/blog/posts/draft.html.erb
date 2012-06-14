@@ -1,7 +1,7 @@
   <div class="well">
     <%= form_for [:blog, Post.new] do |f| %>
-      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "Draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <%= f.submit "Create new draft", :class => "btn pull-right" %>
+      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
     <% end %>
     <div style="clear: both;"></div>
     <% if flash[:notice] %>
