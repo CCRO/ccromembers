@@ -72,6 +72,9 @@ Ccromembers::Application.routes.draw do
     member do 
       get :report
     end
+    
+    collection { post :sort }
+    
   end
   
   match ':controller(/:action(/:id))(.:format)'

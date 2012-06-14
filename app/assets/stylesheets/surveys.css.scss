@@ -1,3 +1,13 @@
+body#surveys {
+  margin-top: 20px;
+  background-color: #f6f6f6;
+}
+
+header {
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
 .radio, .checkbox, li {
   margin-left:30px;
   padding:5px;
@@ -16,6 +26,37 @@ textarea{
   margin-left:10px;
   opacity:1; 
 }
+
+ul {
+  list-style-type: none;
+}
+
+
+li.question:active  {
+  background: white;
+  width: 900px;
+  border: 1px solid lightGrey;
+  box-shadow: 1px 1px 3px gray;
+  font-weight: bold;
+  font-size: 110%;
+}
+
+li:hover .handle {
+  margin-left: -20px;
+  margin-top: 20px;
+  float: left;
+  display: inline-block;
+}
+
+li .handle {
+  display: none;
+}
+
+li.question {
+  margin-left: -30px;
+  padding-left: 30px;
+}
+
 
 li:hover i {
   display: inline-block;

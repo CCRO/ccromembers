@@ -1,5 +1,5 @@
 
-body:not(#blog) {
+body:not(#blog, #surveys) {
 /*  background-color: #eee;*/
   margin-top: 100px;
   background-color: #efefef;

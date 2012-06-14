@@ -52,11 +52,12 @@
        <%= f.text_area :blurb , :class => 'submittable span8' %>
      <% end %>
      
-<div id="questions">
-<% @survey.questions.each do |question| %> 
+<ul id="questions" data-update-url="<%= sort_surveys_url %>">
+<% @survey.questions.order("position").each do |question| %> 
  <%= render :partial => 'questions/edit', :locals => {:question => question} %> 
 <% end %> 
-</div>     
+</ul>  
+   
 <div id="add_question" class="add_question_form hide">
 <%= form_for [@survey, Question.new], :html => { :class =>"form-inline"}, :remote => true do |f| %>
   <%= f.hidden_field :response_type, :value => 'radio' %>

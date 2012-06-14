@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<br>
 <head>
   <title>CCRO - <%= "CCRO Blog" %></title>
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
@@ -53,6 +52,9 @@
           <ul class="nav nav-tabs nav-stacked">
               <li><%= link_to "Home", blog_posts_path %></li>
               <li><a href="http://ccro.org/about/237">About the CCRO</a></li>
+              <% if can? :create, Post %>
+                <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to use the blog</a></li>
+              <% end %>
           </ul>
           <!--
           <ul class="nav nav-tabs nav-stacked">

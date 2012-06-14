@@ -32,6 +32,7 @@ gem 'thin'
 gem 'mercury-rails'
 gem 'google_visualr'
 gem 'jqcloud-rails'
+gem 'acts_as_list'
 
 # Gems used only for assets and not required
 # in production environments by default.

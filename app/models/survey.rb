@@ -1,6 +1,6 @@
 class Survey < ActiveRecord::Base
 
-  has_many :questions, :dependent => :destroy
+  has_many :questions, :dependent => :destroy, order: "position"
   
   belongs_to :author, :polymorphic => true
   belongs_to :owner, :class_name => 'Person'

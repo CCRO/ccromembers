@@ -21,3 +21,11 @@ $("a[rel='new_question_type']").live('click', function(event) {
   $('.add_question_form').show();
   $("div#add_question #question_prompt").focus();
 });
+
+jQuery(function($) {
+  $('#questions').sortable( {
+    axis: 'y',
+    update: function() {
+      $.post($(this).data('update-url'), $(this).sortable('serialize'));
+  }});
+});

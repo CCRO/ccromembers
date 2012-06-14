@@ -40,7 +40,15 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     authorize! :edit, @survey
   end
-
+  
+  def sort
+    params[:question].each_with_index do |id, index|
+      Question.update_all({position: index+1}, {id: id})
+    end
+    render nothing: true
+    
+  end
+  
   def update
     @survey = Survey.find(params[:id])
     authorize! :edit, @survey
@@ -63,7 +71,7 @@ class SurveysController < ApplicationController
     @cloud = Array.new
     @survey.questions.each do |q|
       if q.results.present?
-        if q.response_type == 'radio' || q.response_type == 'checkbox'
+        if q.response_type == 'radio' || q.response_type == 'checkbox' || q.response_type == 'multiline' || q.response_type == 'singleline' 
           data_table = GoogleVisualr::DataTable.new
 
           # Add Column Headers 
@@ -81,7 +89,8 @@ class SurveysController < ApplicationController
         when 'checkbox'
           @chart.push(GoogleVisualr::Interactive::BarChart.new(data_table, option))
         when 'singleline', 'multiline'
-          @cloud.push(q.results)
+          @chart.push(GoogleVisualr::Interactive::PieChart.new(data_table, option))
+          #@cloud.push(q.results)
         end
       end
     end

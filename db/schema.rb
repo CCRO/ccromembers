@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601172221) do
+ActiveRecord::Schema.define(:version => 20120613165018) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120601172221) do
     t.string   "response_type"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.integer  "position"
   end
 
   add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"

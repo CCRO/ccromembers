@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require_tree ./jquery-plugins
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-wysihtml5-all
