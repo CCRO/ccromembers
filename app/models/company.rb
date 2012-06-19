@@ -1,4 +1,7 @@
 class Company < ActiveRecord::Base
+
+  has_many :subscriptions, :as => :owner
+
   has_many :people
   has_many :documents, :as => :owner 
 

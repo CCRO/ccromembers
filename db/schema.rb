@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613165018) do
+ActiveRecord::Schema.define(:version => 20120619193745) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -71,6 +71,12 @@ ActiveRecord::Schema.define(:version => 20120613165018) do
     t.boolean  "published"
   end
 
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "images", :force => true do |t|
     t.string   "image"
     t.datetime "created_at", :null => false
@@ -110,18 +116,20 @@ ActiveRecord::Schema.define(:version => 20120613165018) do
     t.datetime "perishable_token_sent_at"
     t.string   "avatar"
     t.text     "bio"
+    t.string   "role"
   end
 
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "author_id"
-    t.string   "author_type"
     t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "author_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.boolean  "published"
     t.datetime "published_at"
+    t.string   "level"
   end
 
   create_table "questions", :force => true do |t|
@@ -148,6 +156,17 @@ ActiveRecord::Schema.define(:version => 20120613165018) do
 
   add_index "responses", ["person_id"], :name => "index_responses_on_person_id"
   add_index "responses", ["question_id"], :name => "index_responses_on_question_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "product"
+    t.string   "payment_method"
+    t.string   "payment_id"
+    t.boolean  "active"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "surveys", :force => true do |t|
     t.integer  "author_id"

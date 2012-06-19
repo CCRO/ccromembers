@@ -1,5 +1,11 @@
 class Person < ActiveRecord::Base
+
+  has_many :subscriptions, :as => :owner
+  # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
+  # has_many :closed_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => false }
+
   mount_uploader :avatar, AvatarUploader
+
   has_many :responses
   
   belongs_to :company 
@@ -27,17 +33,33 @@ class Person < ActiveRecord::Base
   def billing_contact?
     (self.company && self.company.billing_contact == self)
   end
+  
+  def committee?
+    self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership'])
+  end
 
-  def role
-    self.company.role if self.company
+  def pro?
+    self.subscriptions.active.pluck(:product).include? 'pro'
   end
   
-  def member?
-    ['full-member', 'participating-member', 'member-emeritus', 'board'].include? self.role
+  def basic?
+    self.id.present?
+  end
+
+  def super_admin?
+    self.role == 'super_admin'
   end
   
   def admin?
-    self.role == 'administrator'
+    ['admin', 'super_admin'].include? self.role
+  end
+  
+  def editor?
+    self.role == 'editor'
+  end
+  
+  def moderator?
+    self.role == 'moderator'
   end
   
   def to_xml(options={})

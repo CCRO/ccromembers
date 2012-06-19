@@ -2,6 +2,10 @@ Ccromembers::Application.routes.draw do
   
   
 
+  resources :subscriptions
+
+  resources :groups
+
     namespace :mercury do
       resources :images
     end

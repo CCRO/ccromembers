@@ -3,35 +3,46 @@ class Ability
 
   def initialize(user)
     user ||= Person.new # guest user (not logged in)
-    
-    can :read, Post, :published => true
-    can :read, Survey if user.id
-    
-    # can :edit, [Post, Document, Comment, Message], :author_id => user.id
-    
-    if user.member?
-      can :read, [Document, Comment, Message, Survey]
+        
+    if user.basic?
+      can :read, Survey if user.id
+      can :read, Post, {level: 'basic', published: true}
+      can :create, Comment
+      can [:edit, :destroy], [Post, Document, Comment, Message], :author_id => user.id
+      can :manage, Person, :id => user.id
+      
     end
     
-    if user.role == 'editor'
-      can :create, [Post, Document, Message, Survey]
+    if user.pro?
+      can :read, Post, {level: 'basic', :published => true}
+      can :read, Post, {level: 'pro', :published => true}  
+    end
+    
+    if user.committee?
+      can :read, Post, {level: 'basic', :published => true}
+      can :read, Post, {level: 'pro', :published => true}  
+      can :read, Post, {level: 'committee', :published => true}  
+      can :read, [Document, Comment, Message, Survey]
+      can :read, Post, :published => true
+      can :read, Company, :id => user.company_id
+      
+      if user.primary_contact? || user.billing_contact?
+        can :edit, Person, :company_id => user.company_id
+        can :manage, Company, :id => user.company_id
+        cannot :destroy, Company
+      end
+    end
+    
+    if user.editor?
+      can :read, Post, {level: 'basic', :published => true}
+      can :read, Post, {level: 'pro', :published => true}  
+      can :read, Post, {level: 'committee', :published => true}  
       can :read, Post, :published => false
+      can :create, [Post, Document, Message, Survey]
       can [:edit,:destroy], Post
       cannot :publish, Post
     end
-    
-    can :create, Comment
-    
-    if user.primary_contact? || user.billing_contact?
-      can :edit, Person, :company_id => user.company_id
-      can :manage, Company, :id => user.company_id
-      cannot :destroy, Company
-    end
-    
-    can :read, Company, :id => user.company_id
-
-    can :manage, Person, :id => user.id
-    
+            
     can :manage, :all if user.admin?
     
     # The first argument to `can` is the action you are giving the user permission to do.

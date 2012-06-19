@@ -35,3 +35,6 @@ Ccromembers::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+BLOG_DOMAIN = 'ccro.dev'
+PORTAL_DOMAIN = 'ccromembers.dev'
