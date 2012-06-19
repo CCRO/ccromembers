@@ -101,7 +101,7 @@ window.Mercury = {
           sep:                 ' '
           },
         insertLink:            ['Link', 'Insert Link', { modal: '/mercury/modals/link.html', regions: ['full', 'markdown'] }],
-        insertMedia:           ['Media', 'Insert Media (images and videos)', { modal: '/mercury/modals/media.html', regions: ['full', 'markdown'] }],
+        insertMedia:           ['Media', 'Insert Media (images and videos)', { regions: ['full', 'markdown'] }],
         insertTable:           ['Table', 'Insert Table', { modal: '/mercury/modals/table.html', regions: ['full', 'markdown'] }],
         insertCharacter:       ['Character', 'Special Characters', { modal: '/mercury/modals/character.html', regions: ['full', 'markdown'] }],
         snippetPanel:          ['Snippet', 'Snippet Panel', { panel: '/mercury/panels/snippets.html' }],
@@ -312,7 +312,20 @@ window.Mercury = {
     // callback functions are executed within the scope of the given region, so you have access to all it's methods.
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
-      htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); }
+      htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); },
+      insertMedia: function() {
+          Mercury.modal('/mercury/modals/media.html', { title: 'Insert Media (images and videos)', handler: 'insertMedia' });
+        
+          $('#media_image_size, #media_image_color').live('change', function() {
+            var split_url = $('#media_image_url').val().split("/");
+            var split_file = split_url[split_url.length-1].split("_xx_");
+            var file = split_file[split_file.length-1];
+            var newfile = $('#media_image_color').val() + $('#media_image_size').val() + "xx_" + file
+            split_url[split_url.length-1] = newfile;
+            $('#media_image_url').val(split_url.join("/"));
+          });
+        
+        }
       },
 
 

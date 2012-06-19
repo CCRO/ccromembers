@@ -34,31 +34,62 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
-  version :thumb_sm_bw do
+  version :bw_sm_sq_xx do
     process :resize_to_fill => [100, 100]
     process :remove_color
   end
 
-  version :thumb_med_bw do
+  version :bw_med_sq_xx do
     process :resize_to_fill => [200, 200]
     process :remove_color
   end
 
-  version :thumb_lrg_bw do
+  version :bw_lrg_sq_xx do
     process :resize_to_fill => [400, 400]
     process :remove_color
   end
+  
+  version :bw_xx do
+    process :remove_color
+  end
 
-  version :thumb_sm do
+  version :bw_sm_thumb_xx do
+    process :resize_to_limit => [100, 100]
+    process :remove_color
+  end
+
+  version :bw_med_thumb_xx do
+    process :resize_to_limit => [200, 200]
+    process :remove_color
+  end
+
+  version :bw_lrg_thumb_xx do
+    process :resize_to_limit => [400, 400]
+    process :remove_color
+  end
+  
+  version :sm_sq_xx do
     process :resize_to_fill => [100, 100]
   end
 
-  version :thumb_med do
+  version :med_sq_xx do
     process :resize_to_fill => [200, 200]
   end
 
-  version :thumb_lrg do
+  version :lrg_sq_xx do
     process :resize_to_fill => [400, 400]
+  end
+
+  version :sm_thumb_xx do
+    process :resize_to_limit => [100, 100]
+  end
+
+  version :med_thumb_xx do
+    process :resize_to_limit => [200, 200]
+  end
+
+  version :lrg_thumb_xx do
+    process :resize_to_limit => [400, 400]
   end
 
   # Create different versions of your uploaded files:
