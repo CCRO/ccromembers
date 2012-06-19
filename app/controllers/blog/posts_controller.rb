@@ -54,7 +54,7 @@ class Blog::PostsController < ApplicationController
     redirect_to post
   end
   
-  def mercury_update
+  def update
     post = Post.find(params[:id])
 
     authorize! :edit, post

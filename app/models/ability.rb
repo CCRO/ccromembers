@@ -15,7 +15,7 @@ class Ability
     
     if user.role == 'editor'
       can :create, [Post, Document, Message, Survey]
-      #can :read, Post, :published => false
+      can :read, Post, :published => false
       can [:edit,:destroy], Post
       cannot :publish, Post
     end

@@ -9,6 +9,7 @@ group :development do
   gem 'mysql2'
   gem 'hirb'
   gem 'foreman'
+  gem 'rails-footnotes'
 end
 
 group :production do
@@ -64,3 +65,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'paperclip'

@@ -46,6 +46,11 @@ class ApplicationController < ActionController::Base
     #logger.info "Redirecting back to: " + session[key] || default
     session[:url_return_to] = nil
   end
+    
+  def is_editing?
+    params[:mercury_frame]
+  end
+  helper_method :is_editing?
      
   def current_user
     current_user ||= Person.find_by_id(session[:user_id]) if session[:user_id]

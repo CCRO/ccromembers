@@ -1,17 +1,27 @@
 class Mercury::ImagesController < MercuryController
-  
+
   respond_to :json
 
+  # POST /images.json
   def create
-     @blog_image = ActiveRecord::Base::Image.new(params[:image])
-     @blog_image.save!
-     render :json => @blog_image.to_json(:only => :image)
+    @image = Mercury::Image.new(params[:image])
+    @image.save
+    respond_to do |format|
+      format.json {
+     	  render :json => {:image => @image} 
+      }
+    end
   end
 
+  # DELETE /images/1.json
   def destroy
-    @image = ActiveRecord::Base::Image.find(params[:id])
+    @image = Mercury::Image.find(params[:id])
     @image.destroy
-    respond_with @image
+    respond_to do |format|
+      format.json {
+     	  render :json => {:image => @image} 
+      }
+    end
   end
 
 end

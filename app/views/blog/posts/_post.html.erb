@@ -4,7 +4,7 @@
 <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
   <h1 class="post_title">
     <% if params[:action] == 'show' %>
-      <div id="post_title" class="pull-left mercury-region" data-type="editable" style="min-width: 100px; margin-right: 10px;"><%= post.title.html_safe %></div>
+      <div id="post_title" class="pull-left mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
     <% else %>
       <%= link_to post.title.html_safe, blog_post_path(post)  %>
     <% end %> 
@@ -33,7 +33,7 @@
   <% if params[:action] == 'index' && post_counter > 0 %>
   <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
   <% else %>
-    <p class="post_body"><div id="post_body" class="mercury-region" data-type="editable"><%= post.body.html_safe unless params[:action] == 'draft' %></div></p>
+    <p class="post_body"><div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div></p>
   <% end %>
   <br>
   <div style="clear: both"></div>

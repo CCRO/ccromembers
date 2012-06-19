@@ -2,7 +2,11 @@ Ccromembers::Application.routes.draw do
   
   
 
-  Mercury::Engine.routes
+    namespace :mercury do
+      resources :images
+    end
+
+  mount Mercury::Engine => '/'
 
   constraints(:domain => BLOG_DOMAIN) do
     namespace :blog, :path => '/' do
