@@ -10,5 +10,10 @@ class UserMailer < ActionMailer::Base
     @person = person
     mail :to => person.email, :subject => "Password Reset Successfully"
   end
+
+  def activation(person)
+    @person = person
+    mail :to => person.email, :subject => "Please activate your CCRO account"
+  end
   
 end

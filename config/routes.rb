@@ -60,6 +60,9 @@ Ccromembers::Application.routes.draw do
   post 'forgot_password' => 'password_resets#create', :as => :forgot_password
   get 'reset_password/:perishable_token' => 'password_resets#edit', :as => :reset_password
   put 'reset_password/:perishable_token' => 'password_resets#update', :as => :reset_password
+  get 'activation' => 'sessions#activation', :as => :activation
+  post 'activate(/:activation_token)' => 'sessions#activate', :as => :activate
+  get 'activate(/:activation_token)' => 'sessions#activate'
 
   match 'forbidden' => 'static#403', :as => :forbidden
   

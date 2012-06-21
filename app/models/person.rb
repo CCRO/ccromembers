@@ -14,11 +14,12 @@ class Person < ActiveRecord::Base
   has_secure_password
 
   before_save :check_contacts
+  before_save :merge_name
   before_create :generate_token
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
-  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio
+  attr_accessible :first_name, :last_name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio
 
   validates_uniqueness_of :email
   
@@ -80,6 +81,13 @@ class Person < ActiveRecord::Base
     UserMailer.password_reset(self).deliver
   end
 
+  def send_activation
+    generate_perishable_token
+    self.perishable_token_sent_at = Time.zone.now
+    save!
+    UserMailer.activation(self).deliver
+  end
+
   def generate_token(column = :auth_token)
     begin
       self[column] = SecureRandom.urlsafe_base64
@@ -103,6 +111,10 @@ class Person < ActiveRecord::Base
     else
       true
     end
+  end
+  
+  def merge_name
+    self.name = self.first_name + ' ' + self.last_name
   end
 
   def create_access_token

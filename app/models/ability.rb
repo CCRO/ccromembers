@@ -5,6 +5,7 @@ class Ability
     user ||= Person.new # guest user (not logged in)
         
     can :read, Post, {level: 'public', published: true}
+    can :create, Person
     
     if user.basic?
       can :read, Survey if user.id

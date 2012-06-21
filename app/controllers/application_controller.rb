@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   
   before_filter :cookie_authentication
   
+  before_filter :activation_authentication
+  
   # Collect additional debug details for New Relic RPM is available
   # Do this after all other before filters so details are present
   before_filter :set_new_relic_custom_parameters
@@ -32,7 +34,7 @@ class ApplicationController < ActionController::Base
   def store_location
     unless params[:controller] == "sessions"
       session[:url_after_login] = request.url unless current_user || request.url == new_sessions_url
-      session[:url_return_to] = request.url if !request.xhr? && request.path != "/login"
+      session[:url_return_to] = request.url if !request.xhr? && (request.path != "/login" && request.path != "/register")
       logger.info 'Session: ' + session.to_s
     end
   end
@@ -85,16 +87,45 @@ class ApplicationController < ActionController::Base
   def http_basic_authentication
     if !current_user && (request.format == Mime::XML || request.format == Mime::JSON)
       authenticate_or_request_with_http_basic do |username, password|
-        session[:user_id] ||= Person.find_by_access_token(username).id if Person.find_by_access_token(username)
+        login_user(Person.find_by_access_token(username)) if Person.find_by_access_token(username)
       end
     end
   end
   
   def cookie_authentication
     if !current_user && cookies[:auth_token]
-      session[:user_id] = Person.find_by_auth_token!(cookies.signed[:auth_token]).id if Person.find_by_auth_token!(cookies.signed[:auth_token])
-      current_user.generate_token!
-      cookies.permanent.signed[:auth_token] = current_user.auth_token
+      login_user(Person.find_by_auth_token(cookies.signed[:auth_token])) if Person.find_by_auth_token(cookies.signed[:auth_token])
+      if current_user
+        current_user.generate_token!
+        cookies.permanent.signed[:auth_token] = current_user.auth_token
+      end
     end
   end
+  
+  def activation_authentication
+    if params[:activation_token]
+      user = activate_user(Person.find_by_perishable_token(params[:activation_token])) if Person.find_by_perishable_token(params[:activation_token])
+      login_user(user)
+      if current_user
+        params[:id] = user.id
+        cookies.permanent.signed[:auth_token] = current_user.auth_token
+      end
+    end
+  end
+  
+  def activate_user(person)
+    if person
+      person.generate_token!
+      person.verified = true
+      person.save
+      person
+    end
+  end
+
+  def login_user(person)
+    if person
+      session[:user_id] = person.id if person.verified
+    end
+  end
+  
 end
