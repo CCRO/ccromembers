@@ -37,6 +37,7 @@
         <% unless current_user %>
           <div class="pull-right">
           <%= form_tag  :sessions, :class => "form-inline" do %>
+            <%= hidden_field_tag :remember_me, '1' %>
             <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
             <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
             <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
