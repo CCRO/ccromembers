@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120619193745) do
+ActiveRecord::Schema.define(:version => 20120620160804) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20120619193745) do
     t.string   "avatar"
     t.text     "bio"
     t.string   "role"
+    t.string   "auth_token"
   end
 
   create_table "posts", :force => true do |t|

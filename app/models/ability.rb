@@ -4,6 +4,8 @@ class Ability
   def initialize(user)
     user ||= Person.new # guest user (not logged in)
         
+    can :read, Post, level: 'public'
+    
     if user.basic?
       can :read, Survey if user.id
       can :read, Post, {level: 'basic', published: true}

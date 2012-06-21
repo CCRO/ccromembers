@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   
   before_filter :http_basic_authentication
   
+  before_filter :cookie_authentication
+  
   # Collect additional debug details for New Relic RPM is available
   # Do this after all other before filters so details are present
   before_filter :set_new_relic_custom_parameters
@@ -85,6 +87,14 @@ class ApplicationController < ActionController::Base
       authenticate_or_request_with_http_basic do |username, password|
         session[:user_id] ||= Person.find_by_access_token(username).id if Person.find_by_access_token(username)
       end
+    end
+  end
+  
+  def cookie_authentication
+    if !current_user && cookies[:auth_token]
+      session[:user_id] = Person.find_by_auth_token!(cookies.signed[:auth_token]).id if Person.find_by_auth_token!(cookies.signed[:auth_token])
+      current_user.generate_token!
+      cookies.permanent.signed[:auth_token] = current_user.auth_token
     end
   end
 end

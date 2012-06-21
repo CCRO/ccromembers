@@ -11,6 +11,9 @@ class SessionsController < ApplicationController
   def create
     user = Person.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
+      if params[:remember_me]
+        cookies.permanent.signed[:auth_token] = user.auth_token
+      end
       session[:user_id] = user.id
       redirect_back_or_default root_url
     else
@@ -20,6 +23,7 @@ class SessionsController < ApplicationController
   end
   
   def destroy
+    cookies.delete(:auth_token)
     session[:user_id] = nil
     redirect_back_or_default root_url, :flash => {:success => t(:logout_flash)}
   end

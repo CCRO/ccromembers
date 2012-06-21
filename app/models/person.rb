@@ -14,6 +14,7 @@ class Person < ActiveRecord::Base
   has_secure_password
 
   before_save :check_contacts
+  before_create :generate_token
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
@@ -78,6 +79,17 @@ class Person < ActiveRecord::Base
     save!
     UserMailer.password_reset(self).deliver
   end
+
+  def generate_token(column = :auth_token)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while Person.exists?(column => self[column])
+  end
+
+  def generate_token!(column = :auth_token)
+    generate_token(column)
+    self.save!
+  end
   
   private
     
@@ -102,5 +114,4 @@ class Person < ActiveRecord::Base
       self.perishable_token = SecureRandom.urlsafe_base64
     end while Person.exists?(:perishable_token => self.perishable_token)
   end
-  
 end
