@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   
-  layout 'document', :except => 'show'
-  layout 'ccro', :only => 'show'
+  layout 'documents', :except => 'show'
+  layout 'doc_viewer', :only => 'show'
   
   before_filter :require_user
   # GET /documents

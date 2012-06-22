@@ -1,0 +1,10 @@
+.hero-unit {
+  min-height: 400px !important;
+  position: relative;
+}
+
+.hero-unit .btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

@@ -204,21 +204,6 @@ ol.toc a::after {
 	
 }
 
-ul.thumbnails li .doc-index-btns {
-	display:none;
-}
-
-ul.thumbnails li:hover .doc-index-btns {
-	display: block;
-	position: absolute;
-	right: 10px;
-	top: 10px;
-}
-
-
-ul.thumbnails li {
-	position: relative;
-}
 
 div#sidebar {
 	position: fixed;
@@ -329,74 +314,3 @@ div.page p {
 }
 
 
-/* Corner Banner */
-ul.thumbnails li {
-  overflow: hidden;
-}
-
-#corner-banner {
-  position: absolute;
-  z-index: 100;
-  left: -40px;
-  top: 30px;
-  display: block;
-  width: 70%;
-  background: #333; /* old browsers */
-  background: -moz-linear-gradient(top, #333 0%, #000 100%); /* firefox */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,darkred), color-stop(100%,#533)); /* webkit */
-  text-align:center;
-  font-size:11px;
-  line-height:13px;
-  padding:3px 3px 4px 3px;
-  text-shadow: #000 1px 1px 0;
-        
-  -moz-transform: rotate(-45deg);  /* FF3.5+ */
-  -o-transform: rotate(-45deg);  /* Opera 10.5 */
-  -webkit-transform: rotate(-45deg);  /* Saf3.1+, Chrome */
-  transform: rotate(-45deg);  /* CSS3 (for when it gets supported) */
-
-        
-  box-shadow: rgba(0,0,0, 0.2) 0px 0px 6px;  
-  -moz-box-shadow: rgba(0,0,0, 0.2) 0px 0px 6px;  
-  -webkit-box-shadow: rgba(0,0,0, 0.2) 0px 0px 6px;     
-  -o-box-shadow: rgba(0,0,0, 0.2) 0px 0px 6px;     
-}
-
-.banner-danger {
-  background: #333 !important; /* old browsers */
-  background: -moz-linear-gradient(top, #333 0%, #000 100%) !important; /* firefox */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,darkred), color-stop(100%,#533)) !important; /* webkit */  
-}
-
-.banner-success {
-  background: #333 !important; /* old browsers */
-  background: -moz-linear-gradient(top, #333 0%, #000 100%) !important; /* firefox */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,green), color-stop(100%,#353)) !important; /* webkit */  
-}
-		
-		
-#corner-banner strong {
-	letter-spacing:1px;
-	font-style:bold;
-	font-size:14px !important;
-	color:#fff;
-	text-transform:uppercase;
-	line-height:16px;
-	display:block;
-}
-
-
-ul.thumbnails li h5#title {
-  font-size: 18px;
-  position: absolute;
-  top: 50%;
-  line-height: 24px;
-  text-align: center;
-  left: 0px;
-  padding: 0px 20px;
-  color: white;
-  z-index: 10;
-  display: block !important;
-  margin-top: -35%;
-  width: 80%;
-}

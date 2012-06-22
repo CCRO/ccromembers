@@ -1,7 +1,14 @@
 Ccromembers::Application.routes.draw do
   
   
-
+  resources :signups, :only => ['index', 'new', 'create'] do
+    collection do 
+      get :basic
+      get :pro
+      get :return
+    end    
+  end
+  
   resources :subscriptions
 
   resources :groups
