@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   
   before_filter :http_basic_authentication
   
+  before_filter :cookie_authentication
+  
+  before_filter :activation_authentication
+  
   # Collect additional debug details for New Relic RPM is available
   # Do this after all other before filters so details are present
   before_filter :set_new_relic_custom_parameters
@@ -30,22 +34,38 @@ class ApplicationController < ActionController::Base
   def store_location
     unless params[:controller] == "sessions"
       session[:url_after_login] = request.url unless current_user || request.url == new_sessions_url
-      session[:url_return_to] = request.url if !request.xhr? && request.path != "/login"
-      logger.info session
+      session[:url_return_to] = request.url if !request.xhr? && (request.path != "/login" && request.path != "/register")
+      logger.info 'Session: ' + session.to_s
     end
   end
 
-  def redirect_back_or_default(default, key = :url_return_to, *options)
-    redirect_to(session[key] || default, *options)
-    logger.info "Redirecting back to: " + session[key] || default
-    session[key] = nil
+  def redirect_back_or_default(default, *options)
+    if session[:url_return_to].present?
+      logger.info "Redirecting back to url_return_to: " + session[:url_return_to]
+      redirect_to(session[:url_return_to], *options)
+    else
+      logger.info "Redirecting back to default: " +  default
+      redirect_to(default, *options)
+    end
+    #logger.info "Redirecting back to: " + session[key] || default
+    session[:url_return_to] = nil
   end
+    
+  def is_editing?
+    params[:mercury_frame]
+  end
+  helper_method :is_editing?
      
   def current_user
-    @current_user ||= Person.find(session[:user_id]) if session[:user_id]
+    current_user ||= Person.find_by_id(session[:user_id]) if session[:user_id]
   end
   helper_method :current_user
 
+  def default_company
+    Company.find_by_role('administrator')
+  end
+  helper_method :default_company
+  
   def require_user
     redirect_to login_url, :flash => {:error => t(:no_user_flash)} if current_user.nil?
   end
@@ -55,11 +75,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to :back,:flash => {error: "Not authorized." } unless current_user.admin?
+    redirect_to dashboard_path,:flash => {error: "Not authorized." } unless current_user && current_user.admin?
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to :back,:flash => {error: exception.message }
+    redirect_to forbidden_path(), :flash => {error: exception.message }
   end
   
   protected
@@ -67,8 +87,45 @@ class ApplicationController < ActionController::Base
   def http_basic_authentication
     if !current_user && (request.format == Mime::XML || request.format == Mime::JSON)
       authenticate_or_request_with_http_basic do |username, password|
-        session[:user_id] ||= Person.find_by_access_token(username).id if Person.find_by_access_token(username)
+        login_user(Person.find_by_access_token(username)) if Person.find_by_access_token(username)
       end
     end
   end
+  
+  def cookie_authentication
+    if !current_user && cookies[:auth_token]
+      login_user(Person.find_by_auth_token(cookies.signed[:auth_token])) if Person.find_by_auth_token(cookies.signed[:auth_token])
+      if current_user
+        current_user.generate_token!
+        cookies.permanent.signed[:auth_token] = current_user.auth_token
+      end
+    end
+  end
+  
+  def activation_authentication
+    if params[:activation_token]
+      user = activate_user(Person.find_by_perishable_token(params[:activation_token])) if Person.find_by_perishable_token(params[:activation_token])
+      login_user(user)
+      if current_user
+        params[:id] = user.id
+        cookies.permanent.signed[:auth_token] = current_user.auth_token
+      end
+    end
+  end
+  
+  def activate_user(person)
+    if person
+      person.generate_token!
+      person.verified = true
+      person.save
+      person
+    end
+  end
+
+  def login_user(person)
+    if person
+      session[:user_id] = person.id if person.verified
+    end
+  end
+  
 end

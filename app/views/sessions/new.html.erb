@@ -19,7 +19,10 @@
       <%= label_tag :password %><br />
       <%= password_field_tag :password %>
     </div>
-
+    <div class="field">
+      <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+      <%= label_tag :remember_me %>
+    </div>
     <div class="actions"><%= submit_tag "Log In", :class => "btn" %> <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %></div>
   <% end%>
 </div>

@@ -9,6 +9,7 @@ group :development do
   gem 'mysql2'
   gem 'hirb'
   gem 'foreman'
+  gem 'rails-footnotes'
 end
 
 group :production do
@@ -19,13 +20,21 @@ end
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
-gem 'wikitext'
 gem 'nokogiri'
+gem 'htmlentities'
+gem 'truncate_html'
 gem 'cancan'
-gem "bcurren-freshbooks.rb", :git => 'git://github.com/bcurren/freshbooks.rb.git'
-
+gem 'bcurren-freshbooks.rb', :git => 'git://github.com/bcurren/freshbooks.rb.git'
+gem 'carrierwave'
+gem 'fog', "~> 1.3.1"
+gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
+gem 'mercury-rails'
+gem 'google_visualr'
+gem 'jqcloud-rails'
+gem 'acts_as_list'
+gem 'chargify_api_ares'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -57,3 +66,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'paperclip'

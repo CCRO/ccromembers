@@ -1,0 +1,2 @@
+$("#question_responses_<%= @question.id %> li:last-child").before('<li id="question_<%= @question.id %>_response_<%= @index %>"><input type="<%= @question.response_type %>"> <%= @response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(@question.survey,@question, :response_id => @index ), :remote => true %></span></li>');
+$("form#question_<%= @question.id %> input[name=\"response_text\"]").val("");

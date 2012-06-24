@@ -1,14 +1,25 @@
 class Person < ActiveRecord::Base
+
+  has_many :subscriptions, :as => :owner
+  # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
+  # has_many :closed_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => false }
+
+  mount_uploader :avatar, AvatarUploader
+
+  has_many :responses
+  
   belongs_to :company 
   has_many :documents, :as => :owner 
 
   has_secure_password
 
   before_save :check_contacts
+  before_save :merge_name
+  before_create :generate_token
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
-  attr_accessible :name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome
+  attr_accessible :first_name, :last_name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio
 
   validates_uniqueness_of :email
   
@@ -24,17 +35,33 @@ class Person < ActiveRecord::Base
   def billing_contact?
     (self.company && self.company.billing_contact == self)
   end
+  
+  def committee?
+    self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership'])
+  end
 
-  def role
-    self.company.role if self.company
+  def pro?
+    self.subscriptions.active.pluck(:product).include? 'pro'
   end
   
-  def member?
-    ['full-member', 'participating-member', 'member-emeritus', 'board'].include? self.role
+  def basic?
+    self.id.present?
+  end
+
+  def super_admin?
+    self.role == 'super_admin'
   end
   
   def admin?
-    self.role == 'administrator'
+    ['admin', 'super_admin'].include? self.role
+  end
+  
+  def editor?
+    self.role == 'editor'
+  end
+  
+  def moderator?
+    self.role == 'moderator'
   end
   
   def to_xml(options={})
@@ -53,6 +80,24 @@ class Person < ActiveRecord::Base
     save!
     UserMailer.password_reset(self).deliver
   end
+
+  def send_activation
+    generate_perishable_token
+    self.perishable_token_sent_at = Time.zone.now
+    save!
+    UserMailer.activation(self).deliver
+  end
+
+  def generate_token(column = :auth_token)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while Person.exists?(column => self[column])
+  end
+
+  def generate_token!(column = :auth_token)
+    generate_token(column)
+    self.save!
+  end
   
   private
     
@@ -67,6 +112,10 @@ class Person < ActiveRecord::Base
       true
     end
   end
+  
+  def merge_name
+    self.name = self.first_name + ' ' + self.last_name
+  end
 
   def create_access_token
     self.access_token = rand(36**8).to_s(36) if self.access_token.nil?
@@ -77,5 +126,4 @@ class Person < ActiveRecord::Base
       self.perishable_token = SecureRandom.urlsafe_base64
     end while Person.exists?(:perishable_token => self.perishable_token)
   end
-  
 end

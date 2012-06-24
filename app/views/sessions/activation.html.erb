@@ -1,0 +1,27 @@
+<div id="password-reset" class="new">
+	<div class="offset1">
+		<table>
+			<tr>
+        <td valign="top"><%= image_tag "ccro_short.png", :width => 250, :id => 'logo_short' %></td>
+		<td valign="top" class="span5">
+      		<h2>Activate your account</h2>
+      		<p>Please check your email for the activation link.</p>
+      		<br />
+      		<%= form_tag activate_path, :class => 'form-inline', :method => :post do %>
+      		   <%= text_field_tag :activation_token, params[:activation_token], :placeholder => 'Activation Token' %>
+      		  <%= submit_tag "Activate", :class => 'btn' %>
+      		<% end %>
+			<div id="notices">
+				<% flash.each do |key, msg| %>
+				  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+			      <a class="close" data-dismiss="alert">×</a>
+			      <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+			    </div>
+				<% end %>
+			</div>
+			
+        </td>
+      </tr>
+    </table>
+	</div>
+</div>

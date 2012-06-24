@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   
-  layout 'document', :except => 'show'
-  layout 'ccro', :only => 'show'
+  layout 'documents', :except => 'show'
+  layout 'doc_viewer', :only => 'show'
   
   before_filter :require_user
   # GET /documents
@@ -54,7 +54,7 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(params[:document])
-    @document.owner ||= Company.first
+    @document.owner ||= default_company
     @document.author = current_user
 
     respond_to do |format|
@@ -84,6 +84,14 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def mercury_update
+    document = Document.find(params[:id])
+    document.title = params[:content][:document_title][:value]
+    document.body = params[:content][:document_body][:value]
+    document.save!
+    render text: ""
+  end
+  
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy

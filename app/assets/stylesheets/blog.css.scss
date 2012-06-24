@@ -1,0 +1,213 @@
+@media print {
+  aside, header .pull-right, #about_author, footer {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  div.page .btn-toolbar {
+    display: none !important;
+  }
+  
+  #header_logo {
+    width: 150px;
+    margin-bottom: 50px;
+  }
+  
+  #post_management_controls {
+    display: none !important;
+  }
+  
+  .post_date {
+    display: none;
+  }
+  
+  h2 {
+    color: #000;
+    font-size: 1.2em;
+  }
+  
+  h2:first-child {
+    padding-top: 20px;
+  }
+    
+  #post_author {
+    padding-top: 10px !important;
+  }
+  
+  @page {
+    size: 8.5in 11in;
+    margin: 16mm 16mm 16mm 16mm;
+
+    @top-left {
+      content: "CCRO";
+    }
+
+  }
+
+  @page :left {
+    @top-left {
+      content: "CCRO";
+    }
+  }
+
+  h2 {
+    string-set: header content();
+  }
+
+  @page :right {
+    @top-right {
+      content: string(header, first); 
+    }
+  }
+
+  @page :left {
+    @bottom-left {
+      content: counter(page);
+    }
+  }
+  
+}
+
+@media screen {
+  body#blog {
+    margin-top: 0px;
+    background-color: #f6f6f6;
+  }
+
+  body#blog header.fatty {
+    padding: 20px 200px;
+    margin-top: 0;
+    height: 300px;
+    background-color: 
+    #383838;
+  }
+
+	div.page {
+	  position: relative;
+	  margin-top: 25px;
+	  padding: 20px;
+	  background-color: white;
+	  border: 1px solid #dddddd;
+	}
+
+	div.page-shadow {
+	  background: url('../images/leaftshadow-900.png') no-repeat bottom;
+	  padding-bottom: 20px;
+	  padding-top: 10px; 
+	}
+
+  body#blog .page {
+    margin-top: 0 !important;
+  }
+
+  body#blog .page-shadow {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 20px;
+  }
+}
+
+  #post_body img{
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .post_date {
+    color: #696969;
+    font-size: smaller;
+  }
+
+  body#blog h2 {
+    color: #32609e;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    
+  }
+
+  body#blog h3:before {
+    content: '';
+  }
+
+  article {
+    margin-bottom: 25px;
+  }
+
+  header {
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+  .post-footer {
+    text-transform:uppercase;
+  }
+
+  .hr-dark {
+    border-top: 1px solid #696969;
+  /*  border-bottom: 1px solid #dddddd;*/
+  }
+
+  .hr-small-margin {
+    margin: 5px 0;
+  }
+
+  .post-footer-heading {
+    color: gray;
+  }
+  article img[align=left] {
+    padding: 0px 10px 10px 0px;
+  }
+
+  article img[align=right] {
+    padding: 0px 0px 10px 10px;
+  }
+
+  .index_post_partial img {
+    max-height: 200px;
+    max-width: 200px;
+  }
+
+  .watermark-draft {
+    background: url('../images/watermark-draft-light.png');
+  }
+  
+  .emphasized {
+    font-size: 120%;
+    font-weight: bold;
+  }
+  
+  .callout {
+    border: 1px solid lightGrey;
+    background-color: white;
+    width: 200px;
+    padding: 10px;
+    margin: 0px 10px 10px 10px;
+    box-shadow: 1px 1px 3px gray;
+    font-weight: bold;
+    font-size: 110%;
+  }
+  
+  .callout-small {
+    width: 100px !important;
+    padding: 5px !important;
+  }
+  
+  .callout-large {
+    width: 450px !important;
+    padding: 10px !important;
+  }
+
+    
+  .callout img {
+     margin-bottom: 10px;
+   }
+   
+

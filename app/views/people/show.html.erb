@@ -3,8 +3,15 @@
   <li><a href="/people">People</a> <span class="divider">/</span></li>
   <li class="active"><%= link_to @person.name, @person %></li>
 </ul>
-
+ 	<ul class="thumbnails">
+     <li class="span2">
+       <a href="#" class="thumbnail">
+         <%= avatar_for @person %>
+       </a>
+     </li>
+   </ul>
 <p>
+	
   <b>Name:</b>
   <%= @person.name %>
 </p>
@@ -17,6 +24,10 @@
 <p>
   <b>Email:</b>
   <%= @person.email %>
+</p>
+<p>
+  <b>Bio:</b>
+  <%= @person.bio %>
 </p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |

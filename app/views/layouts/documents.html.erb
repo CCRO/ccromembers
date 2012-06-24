@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= params[:controller].capitalize %></title>
+  <noscript>
+      <meta http-equiv="refresh" content="0;URL=/static/noscript" />
+  </noscript>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "documents", :media => "all" %>
+  
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "mercury" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'shared/nav' %>
+	<div class="container">
+		<div id="notices" style="position: fixed; z-index: 999; top: 210px; margin-left: 300px;">
+			<% flash.each do |key, msg| %>
+	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+	          <a class="close" data-dismiss="alert">×</a>
+	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+	        </div>
+			<% end %>
+		</div>
+<!--Body content (BEGIN)-->
+<%= yield %>
+<!--Body content (END)-->
+<%= render 'shared/footer' %>
+</body>
+</html>

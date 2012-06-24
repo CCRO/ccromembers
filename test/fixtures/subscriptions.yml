@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+pro:
+  owner_id: 3
+  owner_type: Person
+  product: pro
+  payment_method: chargify
+  payment_id: 22J4JH5B6N5
+  active: 1
+
+committee:
+  owner_id: 2
+  owner_type: Company
+  product: committee
+  payment_method: freshbooks
+  payment_id: 2HG45H67HJ7HJ
+  active: 1

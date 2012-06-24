@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413211425) do
+ActiveRecord::Schema.define(:version => 20120621191235) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -71,6 +71,27 @@ ActiveRecord::Schema.define(:version => 20120413211425) do
     t.boolean  "published"
   end
 
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "images", :force => true do |t|
+    t.string   "image"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "mercury_images", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "messages", :force => true do |t|
     t.string   "subject"
     t.text     "content"
@@ -93,6 +114,75 @@ ActiveRecord::Schema.define(:version => 20120413211425) do
     t.string   "access_token"
     t.string   "perishable_token"
     t.datetime "perishable_token_sent_at"
+    t.string   "avatar"
+    t.text     "bio"
+    t.string   "role"
+    t.string   "auth_token"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.boolean  "verified"
+  end
+
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.string   "level"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "survey_id"
+    t.text     "prompt"
+    t.text     "possible_responses"
+    t.string   "response_type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "position"
+  end
+
+  add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"
+
+  create_table "responses", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "question_id"
+    t.integer  "selected_response"
+    t.text     "text_response"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.text     "selected_responses"
+  end
+
+  add_index "responses", ["person_id"], :name => "index_responses_on_person_id"
+  add_index "responses", ["question_id"], :name => "index_responses_on_question_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "product"
+    t.string   "payment_method"
+    t.string   "payment_id"
+    t.boolean  "active"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.integer  "owner_id"
+    t.string   "title"
+    t.text     "discription"
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.text     "blurb"
   end
 
   create_table "versions", :force => true do |t|

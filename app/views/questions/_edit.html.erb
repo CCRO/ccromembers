@@ -1,0 +1,27 @@
+<%= content_tag_for :li, question do %>
+<span class="handle"><i class="icon-move"></i></span><h2><%= question.prompt %><span class="delete_selector "><%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %></span></h2>
+      
+      <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
+      <ul id="question_responses_<%= question.id %>" style="list-style: none;">
+        <% if question.possible_responses.present? %>
+          <% question.possible_responses.each_with_index do |response, index| %>
+            <li id="question_<%= question.id %>_response_<%= index %>"><input type="<%= question.response_type %>"> <%= response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => index), :remote => true %></span></li>
+          <% end %>
+        <% end %>
+  
+        <li><form id="question_<%= question.id %>" class="form-inline" action="<%= new_response_survey_question_path(question.survey,question) %>" data-remote="true"
+          method="post"><input type="text" name="response_text" class="adjinput" placeholder="Add new response"><input type="submit" class="btn btn-primary delete_selector" value="Save response"></form></li>
+        </ul>
+      <% end %>
+      <% if question.response_type == 'multiline' %>
+        <textarea class="span8"></textarea>
+      <% end %>
+
+      <% if question.response_type == 'singleline' %>
+        <input type="text" class="span8">
+      <% end %>
+      
+      <br>
+      <br>
+      
+<% end %>

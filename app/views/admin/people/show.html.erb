@@ -1,0 +1,23 @@
+<ul class="breadcrumb">
+  <li><a href="#">Directory</a> <span class="divider">/</span></li>
+  <li><a href="/people">People</a> <span class="divider">/</span></li>
+  <li class="active"><%= link_to @person.name, @person %></li>
+</ul>
+
+<p>
+  <b>Name:</b>
+  <%= @person.name %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @person.company.name if @person.company %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @person.email %>
+</p>
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

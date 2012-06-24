@@ -1,11 +1,35 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  email: MyString
-  password_digest: MyString
+admin:
+  id: 1
+  email: admin@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
+  company_id: 1
+  role: super_admin
+  
+basic:
+  id: 2
+  email: basic@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
 
-two:
-  name: MyString
-  email: MyString
-  password_digest: MyString
+pro:
+  id: 3
+  email: pro@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
+
+participant:
+  id: 4
+  email: participant@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
+
+committee:
+  id: 5
+  email: committee@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
+  company_id: 2
+
+editor:
+  id: 6
+  email: editor@ccro.org
+  password_digest: $2a$10$IR0NcY.C5FGLBWcY2EVSX./2xJZxLKEiWVkOxCbZdlbFGvXenwPPG
+  role: editor

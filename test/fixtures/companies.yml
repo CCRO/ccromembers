@@ -1,13 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+ccro:
+  id: 1
+  name: CCRO
 
-one:
-  name: MyString
-  role: MyString
-  primary_person_id: 1
-  billing_person_id: 1
-
-two:
-  name: MyString
-  role: MyString
-  primary_person_id: 1
-  billing_person_id: 1
+committee:
+  id: 2
+  name: ConocoPhillips
+  

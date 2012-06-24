@@ -1,0 +1,84 @@
+
+<%= form_for [@survey, Question.new] do |f| %>
+  <table class="table table-striped table-bordered hide">
+    <thead>
+      <tr>
+        <td>
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <%= f.submit "Save Question", :class => 'btn btn-large' %>
+            </div>
+            <div id="space" class="pull-right">
+              &nbsp&nbsp&nbsp&nbsp
+            </div>
+            <div class="btn-group pull-right">
+              <a href="#" class="btn btn-large btn-primary"><i class="icon-remove-circle"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-check"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-text-height"></i></a>
+              <a href="#" class="btn btn-large"><i class="icon-align-left"></i></a>
+            </div>
+          </div>
+          <h3><%= f.text_field :prompt, :class => 'input-xlarge focused pull-left' %></h3>
+        </td>
+      </tr>
+    </thead>
+    <!--
+    <tbody>
+      <tr>
+        <td></td>
+      </tr>
+    </tbody>
+    -->
+  </table>
+<% end %>
+
+
+<div class="page" style="background-color: white;">
+  
+  <div class="pull-right"> Add Question: 
+    <a href="" rel="new_question_type" data-qtype="radio">Radio Buttons</a> | 
+    <a href="" rel="new_question_type" data-qtype="checkbox">Checkboxes</a> | 
+    <a href="" rel="new_question_type" data-qtype="singleline">Single-line Text</a> | 
+    <a href="" rel="new_question_type" data-qtype="multiline">Multi-line Text</a>
+    </div>
+    
+  <br>
+  <br>
+
+  <h1 class="ribbon-left"><%= @survey.title %></h1><br><br>
+  
+     <%= form_for @survey, :remote => true do |f| %>
+       <%= f.label :blurb do %><h2>Relevant survey information</h2><% end %>
+       <%= f.text_area :blurb , :class => 'submittable span8' %>
+     <% end %>
+     
+<ul id="questions" data-update-url="<%= sort_surveys_url %>">
+<% @survey.questions.order("position").each do |question| %> 
+ <%= render :partial => 'questions/edit', :locals => {:question => question} %> 
+<% end %> 
+</ul>  
+   
+<div id="add_question" class="add_question_form hide">
+<%= form_for [@survey, Question.new], :html => { :class =>"form-inline"}, :remote => true do |f| %>
+  <%= f.hidden_field :response_type, :value => 'radio' %>
+  <%= f.text_field :prompt, :class =>"span8 adjinput", :placeholder =>"Prompt for question with radio buttons" %>
+  <%= f.submit 'Save question', :class => 'btn btn-primary' %> or <%= link_to "cancel", "javascript:$('.add_question_form').hide();" %>
+<% end %>
+</div>
+<br>
+<hr>
+<div class="btn-toolbar span4 offset4" style="margin-top: -35px">
+  <div class="btn-group">
+    <a href="" rel="new_question_type" data-qtype="radio" class="btn btn-large"><i class="icon-remove-circle"></i></a>
+    <a href="" rel="new_question_type" data-qtype="checkbox" class="btn btn-large"><i class="icon-check"></i></a>
+    <a href="" rel="new_question_type" data-qtype="singleline" class="btn btn-large"><i class="icon-text-height"></i></a>
+    <a href="" rel="new_question_type" data-qtype="multiline" class="btn btn-large"><i class="icon-align-left"></i></a>
+  </div>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+
+<%= link_to "Back to surveys", surveys_path, :class => 'btn btn-large' %>
+
+

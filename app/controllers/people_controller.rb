@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :require_user, :except => ['new', 'create']
+  before_filter :require_admin, :except => ['new', 'create', 'show']
   # GET /people
   # GET /people.json
   def index
@@ -32,6 +32,8 @@ class PeopleController < ApplicationController
   # GET /people/new
   # GET /people/new.json
   def new
+    cookies[:url_after_signup] = session[:url_return_to]
+    
     @person = Person.new
     @companies = Company.pluck(:name)
 
@@ -65,7 +67,8 @@ class PeopleController < ApplicationController
         
     respond_to do |format|
       if @person.save
-        format.html { redirect_to @person, notice: 'Person was successfully created.' }
+        @person.send_activation
+        format.html { redirect_to activation_path }
         format.json { render json: @person, status: :created, location: @person }
       else
         format.html { render action: "new" }

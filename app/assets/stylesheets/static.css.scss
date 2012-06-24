@@ -24,8 +24,17 @@ div.page-shadow {
   padding-bottom: 20px;
 }
 
+
 div.page h2 {
   color: #32609e;
+  /* border-bottom: 1px dotted #32609e; */
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+
+h2.heading {
+  color: black;
   border-bottom: 1px dotted #32609e;
   margin-top: 10px;
   margin-bottom: 5px;
@@ -53,23 +62,6 @@ div.page blockquote {
   margin: 0px 150px 0px 100px;
 }
 
-div.page h1 {
-	counter-reset:section;
-}
-
-div.page h2:not(.numbering_exclude) {
-	counter-reset:subsection;
-}
-
-div.page h2:not(.numbering_exclude):before {
-	counter-increment:section;
-	content:counter(section) ". ";
-}
-
-div.page h3:not(.numbering_exclude):before {
-	counter-increment:subsection;
-	content:counter(section) "." counter(subsection) " ";
-}
 
 p.redacted, ol.redacted, ul.redacted:not(.nav), blockquote.redacted  {
 	overflow: hidden;
@@ -181,3 +173,6 @@ div.page ol ol ol {
 	list-style-type: lower-roman;
 }
 
+div#access-forbidden #logo_short {
+	margin-right: 25px;
+}
