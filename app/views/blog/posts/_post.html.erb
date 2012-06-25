@@ -14,7 +14,7 @@
       <%= publish_toggle(post) if can?(:publish, post) && params[:action] == 'show' %>
     </div>
 
-  <h1 class="post_title"> <div id="post_title" class="pull-left mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
+  <h1 class="post_title"> <div id="post_title" class="pull-left mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= link_to post.title.html_safe, post %></div>
       <span class="post_date"><%= short_date(post) %></span>
 </h1>
 <h3 id="post_author">by <%= post.author.try(:name) %></h3>
