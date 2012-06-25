@@ -141,6 +141,11 @@
     margin-bottom: 25px;
   }
 
+  #post_preview {
+    height: 230px;
+    overflow-y: hidden;
+  }
+
   header {
     margin-top: 10px;
     margin-bottom: 50px;
@@ -148,6 +153,7 @@
 
   .post-footer {
     text-transform:uppercase;
+    clear: both;
   }
 
   .hr-dark {
@@ -156,7 +162,8 @@
   }
 
   .hr-small-margin {
-    margin: 5px 0;
+    margin-top: 0;
+    margin-bottom: 5px;
   }
 
   .post-footer-heading {
@@ -170,7 +177,7 @@
     padding: 0px 0px 10px 10px;
   }
 
-  .index_post_partial img {
+  .index_post_partial span:not(.callout) img {
     max-height: 200px;
     max-width: 200px;
   }
@@ -210,4 +217,93 @@
      margin-bottom: 10px;
    }
    
+  .ribbon-left {
+      position: absolute;
+      left: -10px;
+    max-width: 80%;
+      padding: 4px 8px;
+      background: #000;
+      color: #fff;
+      -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  }
+  
+  .ribbon-left:after {
+      content: '';
+      display: block;
+      height: 20px;
+      width: 8px;
+      position: absolute;
+      bottom: -65px;
+      left: 0px;
+      background: transparent;
+      z-index: -1;
+      border-top: 45px solid #444444;
+      border-left: 45px solid transparent;
+  }
 
+  .ribbon-right {
+      position: absolute;
+      right: -10px;
+      padding: 4px 8px;
+      background: #000;
+      min-width: 80px;
+      color: #fff;
+      -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    -webkit-transition:all 1.0s ease-in-out;
+    -moz-transition:all 1.0s ease-in-out;
+    -o-transition:all 1.0s ease-in-out;
+    -ms-transition:all 1.0s ease-in-out;  
+    transition:all 1.0s ease-in-out;
+  }
+
+
+
+  .ribbon-right .ribbon-collapse {
+    display: none;
+  }
+
+  .ribbon-right:hover .ribbon-collapse {
+    display: inline;
+  }
+
+  .ribbon-right:after {
+      content: '';
+      display: block;
+      height: 20px;
+      width: 8px;
+      position: absolute;
+      top: 44px;
+      right: 0px;
+      background: transparent;
+      z-index: -1;
+      border-top: 45px solid #696969;
+      border-right: 45px solid transparent;
+  }
+
+  .ribbon-important {
+    background: darkred;
+  }
+
+  .ribbon-important:after {
+    border-top: 45px solid #bb6969;
+  }
+
+  .ribbon-success {
+    background: green;
+  }
+
+  .ribbon-success:after {
+    border-top: 45px solid #69bb69;
+  }
+
+  .ribbon-info {
+    background: #49AFCD;
+  }
+
+  .ribbon-info:after {
+    border-top: 45px solid #1F6377;
+  }

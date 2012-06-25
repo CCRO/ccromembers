@@ -3,7 +3,7 @@ class Blog::PostsController < ApplicationController
   layout 'blog'
   
   def index
-    @posts = Post.where(:published => true)
+    @posts = Post.where(:published => true).order('published_at DESC')
     
     respond_to do |format|
       format.html
@@ -13,7 +13,7 @@ class Blog::PostsController < ApplicationController
   end
   
   def draft
-    @posts = Post.where(:published => false)
+    @posts = Post.where(:published => false).order('updated_at DESC')
   end
   
   def show
@@ -60,12 +60,19 @@ class Blog::PostsController < ApplicationController
 
     authorize! :edit, post
     
-    post.title = params[:content][:post_title][:value]
-    post.title = "Untitled" if post.title == "<br>" || post.title.blank?
-    post.body = params[:content][:post_body][:value]
-    post.author ||= current_user
-    post.save! 
-    render text: ""
+    if params[:content]
+      logger.info 'WE TRY TO UPDATE EVERYTHING'
+      post.title = params[:content][:post_title][:value]
+      post.title = "Untitled" if post.title == "<br>" || post.title.blank?
+      post.body = params[:content][:post_body][:value]
+      post.author ||= current_user
+      post.save! 
+      render text: ""
+    else
+      logger.info 'WE TRY TO UPDATE LEVEL'
+      post.update_attributes(params[:post])
+      render text: ""
+    end
   end
   
   def publish

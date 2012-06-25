@@ -15,10 +15,19 @@
   <div class="page" style="background-color: #fff; margin-top: 25px !important;">
   <% @posts.each do |post| %>
   <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
-    <h3 class="post_title">
+    
+    <h3 class="post_title pull-left span5">
         <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
         <%= link_to post.title.html_safe, blog_post_path(post)  %>
   	</h3>
+  	
+  	<div>
+  	  <%= form_for post, :remote => true do |f| %>
+        <%= f.label :level, 'For Pro subscribers' %>
+        <%= f.check_box :level, { :class => 'submittable' }, "pro", "basic" %>
+      <% end %>
+    </div>
+    
     <div style="clear: both"></div>
     <div class="post-footer">
     <hr class="hr-small-margin">
