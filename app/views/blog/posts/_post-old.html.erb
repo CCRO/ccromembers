@@ -1,0 +1,75 @@
+
+
+
+
+<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) ||  params[:action] == 'draft' %>
+  <div class="page <%= "watermark-draft" unless post.published? %>">
+<% end %>
+<article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
+  <h1 class="post_title">
+    <% if params[:action] == 'show' %>
+      <div id="post_title" class="pull-left mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
+    <% else %>
+      <%= link_to post.title.html_safe, blog_post_path(post)  %>
+    <% end %> 
+    <span class="post_date">
+      <% if post.created_at.to_date == Time.now.to_date %>
+  			<%= l post.created_at, :format => :time %>
+  		<% else %>
+  			<%= l post.created_at.to_date, :format => :short %>
+  		<% end %>
+		</span>
+		<% if params[:action] == 'show' %>
+	  <div class="btn-toolbar pull-right">
+		<% if can? :edit, post %>
+	  <div class="btn-group">
+  		<%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Post', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
+      	<i class="icon-pencil"></i> Edit Post
+    	<% end %>
+    </div>
+    <% end %>
+      <%= publish_toggle(post) if can? :publish, post %>
+    </div>
+  	<% end %>
+	</h1>
+  
+
+
+  <% if post.author %><h3 id="post_author">by <%= post.author.name %></h3><% end %>
+
+    <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
+    <div id="post_preview">
+    <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
+    </div>
+  <% else %>
+    <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
+  <% end %>
+<div class="post-footer">
+  <hr class="hr-small-margin">
+  <p class="pull-right"><span class="post-footer-heading">Published: </span><strong><%= t post.published_at.to_s(:long) if post.published_at.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
+  <hr class="hr-small-margin hr-dark">
+</div>
+<br />
+<% if can? :edit, post %>
+  <div id="post_management_controls" class="pull-right">
+	<%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+	</div>
+<% end %>
+
+</article>
+<% if params[:action] == 'show' || (params[:action] == 'index' && post_counter == 0) || params[:action] == 'draft' %>
+  </div>
+<% end %>
+
+<% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
+  <div id="about_author" class="">
+    <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
+      <%= avatar_for post.author %>
+        <h5><%= post.author.name %></h5>
+        <p><%= post.author.company.name %></p>
+      </div>
+      <h3>About the author</h3>
+      <p><%= post.author.bio %></p>
+     <div style="clear: both"></div> 
+</div>
+<% end %>
