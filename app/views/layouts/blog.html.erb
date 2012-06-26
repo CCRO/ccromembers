@@ -13,7 +13,9 @@
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
-<header class="fatty">
+<header class="fatty collapse">
+  <div class="container">
+      <div class="row">
   <div class="pull-right">
     <div class="btn-toolbar">
       <div class="btn-group">
@@ -51,6 +53,10 @@
     </div>
   <% end %>
   <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> <a href="#">About</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="#">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Subscribe</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Help</a>
+</div>
+<div id="header_expanded" class="row">
+  <iframe id="promo_video" src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+</div>
 </header>
 
 <div class="container">

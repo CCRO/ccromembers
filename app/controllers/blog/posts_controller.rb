@@ -31,6 +31,7 @@ class Blog::PostsController < ApplicationController
     
     @post.body = "This is the content of your new blog post."
     @post.owner = current_user
+    @post.author = current_user
     @post.published = false
     @post.level ||= 'public'
     

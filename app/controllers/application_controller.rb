@@ -79,7 +79,13 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to forbidden_path(), :flash => {error: exception.message }
+    if exception.subject.class.name == 'Post'
+      logger.info 'EXCEPTION: ' + exception.subject.class.name + exception.to_json
+      message = "<br><br>To read the article entitled \"#{exception.subject.title}\". You must have #{exception.subject.level} subscription.<br><br>" 
+      redirect_to forbidden_path(), :flash => {error: (exception.message + message).html_safe }
+    else
+      redirect_to forbidden_path(), :flash => {error: exception.message }
+    end
   end
   
   protected

@@ -471,6 +471,7 @@ window.Mercury = {
       var link = $('#mercury_iframe').contents().find('#edit_link');
       Mercury.saveURL = link.data('save-url');
       link.hide();
+      $('#post_management_controls').hide();
    });
     
     Mercury.on('saved', function() {
