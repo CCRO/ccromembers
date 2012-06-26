@@ -54,8 +54,21 @@
   <% end %>
   <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> <a href="#">About</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="#">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Subscribe</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Help</a>
 </div>
+
 <div id="header_expanded" class="row">
-  <iframe id="promo_video" src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <div id="header_promo" class="pull-right">
+    <h1>Committee of Chief Risk Officers:</h1>
+  <p>Advancing Best Practices for Energy Companies</p>
+  <p>
+    <% unless params[:controller] == 'signups' %>  
+      <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
+    <% end %> 
+  </p>
+  </div>
+
+  <div id="promo_video" class="span8">
+    <iframe src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  </div>
 </div>
 </header>
 

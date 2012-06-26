@@ -87,6 +87,33 @@
     position: relative;
   }
 
+  body#blog header.fatty div#header_expanded div#header_promo {
+    margin-left: -100px;
+    max-width: 450px;
+    line-height: 48px;
+  }
+
+  body#blog header.fatty div#header_expanded h1 {
+    color: #5DAFFA;
+    font-size: 46px;
+    line-height: 46px;
+    padding-top: 30px;
+  }
+  body#blog header.fatty div#header_expanded p {
+    color: #FFFFFF;
+    font-size: 46px;
+    line-height: 46px;
+    padding-top: 20px;
+    font-weight: bold;
+  }
+
+  body#blog header.fatty div#header_expanded a.btn {
+    font-weight: bold;
+  }
+
+#header_expanded{
+  margin-top: 20px;
+}
   
 	div.page {
 	  position: relative;
