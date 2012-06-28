@@ -5,13 +5,24 @@
   <% end %>
   <div class="btn-toolbar pull-right">
     <% if can?(:edit, post) && params[:action] == 'show' %>
-    <div class="btn-group">
-      <%= link_to "/editor" + request.path, class: 'btn', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
-        <i class="icon-pencil"></i> Edit Post
-      <% end %>
-    </div>
+      <div class="btn-group">
+        <%= link_to "/editor" + request.path, class: 'btn', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
+          <i class="icon-pencil"></i> Edit Post
+        <% end %>
+      </div>
     <% end %>
-      <%= publish_toggle(post) if can?(:publish, post) && params[:action] == 'show' %>
+      <% if can?(:publish, post) && params[:action] == 'show' %>
+        <%= publish_toggle(post) %>
+        <div id="post_level_selector", class="control-group radio inline" >
+          <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
+            <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+            <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+            <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+            <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Member' %>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
 
   <h1 class="post_title">
