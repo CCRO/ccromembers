@@ -6,7 +6,9 @@ class Post < ActiveRecord::Base
   
   belongs_to :author, :class_name => 'Person'
   belongs_to :owner, :polymorphic => true
-  
+ 
+  has_many :comments, :as => :commentable
+ 
   before_save :set_published_date
   
   validate :title, :presence => true

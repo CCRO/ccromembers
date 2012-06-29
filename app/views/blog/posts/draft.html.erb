@@ -1,45 +1,47 @@
-  <div class="well">
-    <%= form_for [:blog, Post.new] do |f| %>
-      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
-    <% end %>
-    <div style="clear: both;"></div>
-    <% if flash[:notice] %>
-       <br>
-       <div class="alert alert-error"><%= flash[:notice] %></div>
-     <% end %>
-  </div>
+<div class="well">
+  <%= form_for [:blog, Post.new] do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
+  <% end %>
+  <div style="clear: both;"></div>
+  <% if flash[:notice] %>
+     <br>
+     <div class="alert alert-error"><%= flash[:notice] %></div>
+   <% end %>
+</div>
   
  
 
-  <div class="page" style="background-color: #fff; margin-top: 25px !important;">
-  <% @posts.each do |post| %>
-  <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
-    
-    <h1 class="post_title pull-left span5">
-        <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
-        <%= link_to post.title.html_safe, blog_post_path(post)  %>
-  	</h1>
-  	
-  	<div class="control-group radio inline pull-right">
-  	  <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
-        <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
-        <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
-        <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-        <%= f.radio_button :level, "member", :class => 'submittable' %><%= f.label :level, 'Member' %>
-      <% end %>
-    </div>
-    
-    <div style="clear: both"></div>
-    <div class="post-footer">
-    <hr class="hr-small-margin">
-    <p class="pull-right"><span class="post-footer-heading">By: </span><strong><%= post.author.name if post.author.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
-    <hr class="hr-small-margin hr-dark">
-    <br>
-  </div>
 
-  </article>
+<% @posts.each do |post| %>
+  <div class="page" style="background-color: #fff; margin-top: 25px !important;">
+    <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
+    
+      <h1 class="post_title pull-left span5">
+          <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
+          <%= link_to post.title.html_safe, blog_post_path(post)  %>
+    	</h1>
+  	
+    	<div class="control-group radio inline pull-right">
+    	  <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
+          <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+          <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+          <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+          <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Member' %>
+        <% end %>
+      </div>
+    
+      <div style="clear: both"></div>
+      <div class="post-footer">
+        <hr class="hr-small-margin">
+          <p class="pull-right"><span class="post-footer-heading">By: </span><strong><%= post.author.name if post.author.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
+        <hr class="hr-small-margin hr-dark">
+
+        <br>
+      </div>
+    </article>
+  </div>  
 <% end %>
-</div>
+
 
 

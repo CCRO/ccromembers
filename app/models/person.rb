@@ -26,8 +26,9 @@ class Person < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_presence_of :access_token
   validates_uniqueness_of :access_token
-
   
+  scope :editors, where(role: 'editors')
+
   def primary_contact?
     (self.company && self.company.primary_contact == self)
   end

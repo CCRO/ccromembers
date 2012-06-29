@@ -22,6 +22,9 @@ Ccromembers::Application.routes.draw do
   constraints(:domain => BLOG_DOMAIN) do
     namespace :blog, :path => '/' do
       resources :posts do
+        
+        resources :comments
+
         collection do
           get :draft
         end
