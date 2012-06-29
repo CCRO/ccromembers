@@ -16,4 +16,12 @@ module Blog::PostHelper
   		l post.created_at.to_date, :format => :short
   	end
   end
+
+  def editor_selector(post)
+    html = form_for post, { :remote => true } do |f|
+      ::Person.editors.map { |editor| [editor.name, editor.id] }
+      html += f.select(:author_id, options_for_select(editors))
+    end
+    html
+  end
 end

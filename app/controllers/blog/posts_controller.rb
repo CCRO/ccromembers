@@ -17,6 +17,7 @@ class Blog::PostsController < ApplicationController
   end
   
   def show
+    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @post = Post.find(params[:id])
     
     authorize! :read, @post
@@ -27,6 +28,7 @@ class Blog::PostsController < ApplicationController
   end
   
   def create
+
     @post = Post.new(params[:post])
     
     @post.body = "This is the content of your new blog post."
