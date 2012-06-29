@@ -97,18 +97,18 @@ window.Mercury = {
         sep1:                  ' ',
         undoredo:              {
           undo:                ['Undo', 'Undo your last action'],
-          redo:                ['Redo', 'Redo your last action'],
+      //  redo:                ['Redo', 'Redo your last action'],
           sep:                 ' '
           },
         insertLink:            ['Link', 'Insert Link', { modal: '/mercury/modals/link.html', regions: ['full', 'markdown'] }],
         insertMedia:           ['Media', 'Insert Media (images and videos)', { regions: ['full', 'markdown'] }],
         insertTable:           ['Table', 'Insert Table', { modal: '/mercury/modals/table.html', regions: ['full', 'markdown'] }],
-        insertCharacter:       ['Character', 'Special Characters', { modal: '/mercury/modals/character.html', regions: ['full', 'markdown'] }],
-        snippetPanel:          ['Snippet', 'Snippet Panel', { panel: '/mercury/panels/snippets.html' }],
+     // insertCharacter:       ['Character', 'Special Characters', { modal: '/mercury/modals/character.html', regions: ['full', 'markdown'] }],
+     // snippetPanel:          ['Snippet', 'Snippet Panel', { panel: '/mercury/panels/snippets.html' }],
         sep2:                  ' ',
-        historyPanel:          ['History', 'Page Version History', { panel: '/mercury/panels/history.html' }],
+     // historyPanel:          ['History', 'Page Version History', { panel: '/mercury/panels/history.html' }],
         sep3:                  ' ',
-        notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }]
+     // notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }]
         },
 
       editable: {
@@ -471,6 +471,7 @@ window.Mercury = {
       var link = $('#mercury_iframe').contents().find('#edit_link');
       Mercury.saveURL = link.data('save-url');
       link.hide();
+      $('#post_management_controls').hide();
    });
     
     Mercury.on('saved', function() {

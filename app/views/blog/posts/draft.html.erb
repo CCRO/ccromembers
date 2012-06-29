@@ -15,10 +15,21 @@
   <div class="page" style="background-color: #fff; margin-top: 25px !important;">
   <% @posts.each do |post| %>
   <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
-    <h3 class="post_title">
+    
+    <h1 class="post_title pull-left span5">
         <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
         <%= link_to post.title.html_safe, blog_post_path(post)  %>
-  	</h3>
+  	</h1>
+  	
+  	<div class="control-group radio inline pull-right">
+  	  <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
+        <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+        <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+        <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+        <%= f.radio_button :level, "member", :class => 'submittable' %><%= f.label :level, 'Member' %>
+      <% end %>
+    </div>
+    
     <div style="clear: both"></div>
     <div class="post-footer">
     <hr class="hr-small-margin">

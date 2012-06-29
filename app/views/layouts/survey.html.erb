@@ -33,7 +33,11 @@
             <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
             <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
           <% end %>
-          <%= link_to "I don't have an account, but ...", register_path, :class => 'pull-right' %>
+          
+          <% unless params[:controller] == 'signups' %>
+            <%= link_to "Learn about subscribing", signups_path, :class => 'pull-right' %><br>
+          <% end %>
+          <%= link_to "I need to reset my password", forgot_password_path, :class => 'pull-right' %>
           </div>
         <% end %>
         <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), surveys_path %>
@@ -62,3 +66,4 @@
 <!--Body content (END)-->
 </body>
 </html>
+
