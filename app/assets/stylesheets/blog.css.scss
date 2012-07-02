@@ -81,7 +81,7 @@
   body#blog header.fatty {
     padding: 20px 200px;
     margin-top: 0;
-    height: 500px;
+    height: 520px;
     background-color: 
     #383838;
     position: relative;
@@ -110,6 +110,12 @@
     position: absolute;
     top: 0px;
     right: -80px;
+  }
+
+  body#blog .editor_selector{
+    position: absolute;
+    top: -35px;
+    right: 0px;
   }
   
   body#blog #video {

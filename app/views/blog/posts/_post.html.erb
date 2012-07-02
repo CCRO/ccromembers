@@ -20,9 +20,14 @@
           <% if can?(:publish, post) && params[:action] == 'show' %>
             <%= publish_toggle(post) %>
             
-            <%= form_for post, { :remote => true } do |f| %>
-              <% editors = @editors.all.map { |editor| [editor.name, editor.id] } %>
-              <%= select_tag('post[author_id]', options_for_select(editors, :selected => post.author.id), :include_blank => true, :class => 'submittable') %>
+            <% unless params[:mercury_frame] %>
+              <div class="editor_selector">
+                <%= form_for post, { :remote => true } do |f| %>
+                  <% editors = @editors.all.map { |editor| [editor.name, editor.id] } %>
+                  <b>Assign this post to: </b>
+                  <%= select_tag('post[author_id]', options_for_select(editors, :selected => post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% end %>
+              </div>
             <% end %>
             
             <div id="post_level_selector", class="control-group radio inline" >

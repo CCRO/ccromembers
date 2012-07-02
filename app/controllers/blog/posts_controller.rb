@@ -14,6 +14,7 @@ class Blog::PostsController < ApplicationController
   
   def draft
     @posts = Post.where(:published => false).order('updated_at DESC')
+    @my_posts = Post.where(published: false, author_id: current_user).order('updated_at DESC')
   end
   
   def show

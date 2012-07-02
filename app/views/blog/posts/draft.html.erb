@@ -1,3 +1,7 @@
+<% if params[:my_drafts] %>
+  <% @posts = @my_posts %>
+<% end %>
+
 <div class="well">
   <%= form_for [:blog, Post.new] do |f| %>
     <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
