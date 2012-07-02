@@ -65,7 +65,6 @@ class Blog::PostsController < ApplicationController
     authorize! :edit, post
     
     if params[:content]
-      logger.info 'WE TRY TO UPDATE EVERYTHING'
       post.title = params[:content][:post_title][:value]
       post.title = "Untitled" if post.title == "<br>" || post.title.blank?
       post.body = params[:content][:post_body][:value]
@@ -73,10 +72,10 @@ class Blog::PostsController < ApplicationController
       post.save! 
       render text: ""
     else
-      logger.info 'WE TRY TO UPDATE LEVEL'
       post.update_attributes(params[:post])
       render text: ""
     end
+
   end
   
   def publish

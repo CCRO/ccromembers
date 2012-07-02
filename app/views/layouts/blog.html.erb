@@ -14,98 +14,90 @@
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
-<header class="fatty <%='collapse' if params[:action] == 'show' %>">
-  <div class="container">
-      <div class="row">
-    <div id="logo" class="span6">
-    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> <a href="#">About</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="#">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Subscribe</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Help</a>
-  </div>
+  
+  <header class="fatty <%='collapse' if params[:action] == 'show' %> ">
+    <div id='fatty_basket' class="container">
+      <div id='fatty_nav'class="row">
+        <div id="logo" class="span7">
+          <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> <a href="#">About</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="#">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Subscribe</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Help</a>
+        </div>
 
-  <% if current_user %>
-  <div class="span6">
-    <div class="btn-toolbar pull-right">
-      <div class="btn-group">
-        <% if can? :create, Post %>
-          <%= link_to draft_blog_posts_path, :class => 'btn btn-large' do %>  
-            <i class="icon-list-alt"></i> Manage drafts
-          <% end %>
-        <% end %>
-      </div>
-      <div class="btn-group">
-          <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
-          <%= link_to logout_path, :class => 'btn btn-large' do %>
-            <i class="icon-off"></i>
-          <% end %>
-     </div>
-    </div>
-  </div>
-  <% end %>
-  <% unless current_user %>
-    <div class="span6">
-    <%= form_tag  :sessions, :class => "form-inline pull-right" do %>
-      <%= hidden_field_tag :remember_me, '1' %>
-      <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
-      <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
-      <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-    <% end %>
-
-    <% if false %>
-    <% unless params[:controller] == 'signups' %>
-      <%= link_to "Learn about subscribing", signups_path %><br>
-    <% end %>
-    <%= link_to "I need to reset my password", forgot_password_path %>
-    <% end %>
-
-    </div>
-  <% end %>
-
-</div>
-
-<div id="header_expanded" class="row">
-  <div id="promo_video" class="span8">
-    <iframe id="video" src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="770" height="432" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-  </div>
-  <div id="header_promo" class="span4">
-    <h1>Committee of Chief Risk Officers:</h1>
-  <p>Advancing Best Practices for Energy Companies</p>
-  <p>
-    <% unless params[:controller] == 'signups' %>  
-      <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
-    <% end %> 
-  </p>
-  </div>
-
-
-</div>
-</header>
-
-<div class="container">
-     	<div class="row">
-    	  <% unless params[:controller] == 'signups' %>  
-    	    <aside class="span3">
-            <ul class="nav nav-tabs nav-stacked">
-                <li><%= link_to "Home", blog_posts_path %></li>
-                <li><a href="http://ccro.org/about/237">About the CCRO</a></li>
-            </ul>
+        
+          <% if current_user %>
           
-            <ul class="nav nav-tabs nav-stacked" style="padding-top: 15px;">
+            <div class="btn-toolbar pull-right">
+              <div class="btn-group">
                 <% if can? :create, Post %>
-                  <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How create new blog posts</a></li>
-                  <li><%= link_to 'Manage my drafts', draft_blog_posts_path(my_drafts: true) %></li>
+                  <%= link_to draft_blog_posts_path, :class => 'btn' do %>  
+                    <i class="icon-list-alt"></i> Manage drafts
+                  <% end %>
                 <% end %>
-            </ul>
-          </aside>
-        <% end %>
-        <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
-              <%= yield %>
-        </section>
-      </div>  
+              </div>
+              <div class="btn-group">
+                <%= link_to current_user.name, current_user, :class => 'btn' %>
+                <%= link_to logout_path, :class => 'btn' do %>
+                  <i class="icon-off"></i>
+                <% end %>
+             </div>
+            </div>
+          
+          <% else %>
+            <div id="login_tools" class="span5">  
+              <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
+                <%= hidden_field_tag :remember_me, '1' %>
+                <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+                <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+                <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+              <% end %>
+            </div> 
+          <% end %>
+        
+      </div>
+
+      <div id="header_expanded" class="row">
+        <div id="promo_video" class="span8">
+          <iframe id="video" src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="770" height="432" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+        </div>
+        <div id="header_promo" class="span4">
+          <h1>Committee of Chief Risk Officers:</h1>
+          <p>Advancing Best Practices for Energy Companies</p>
+          <p>
+            <% unless params[:controller] == 'signups' %>  
+              <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
+            <% end %> 
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+  <div class="container">
+    <div class="row">
+      <% unless params[:controller] == 'signups' %>  
+      	<aside class="span3">
+          <ul class="nav nav-tabs nav-stacked">
+              <li><%= link_to "Home", blog_posts_path %></li>
+              <li><a href="http://ccro.org/about/237">About the CCRO</a></li>
+          </ul>
+            
+          <ul class="nav nav-tabs nav-stacked" style="padding-top: 15px;">
+              <% if can? :create, Post %>
+                <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How create new blog posts</a></li>
+                <li><%= link_to 'Manage my drafts', draft_blog_posts_path(my_drafts: true) %></li>
+              <% end %>
+          </ul>
+        </aside>
+      <% end %>
+
+      <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
+            <%= yield %>
+      </section>
+    </div>  
       <footer>
         &copy; 2012 CCRO
       </footer>
-    </div>
   </div>
-</div>
 <!--Body content (END)-->
 <%= render :partial => 'blog/ga' if Rails.env.production? %>
 </body>
