@@ -35,7 +35,8 @@ class SignupsController < ApplicationController
     
     #send validation email
     user.send_activation
-    
+    AdminMailer.signup_complete(user, cookies[:url_after_signup]).deliver
+
     render text: "Check yo email!"
   end
 end

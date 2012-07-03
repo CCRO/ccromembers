@@ -126,6 +126,16 @@
     background-color: black;
   }
 
+  body#blog header.fatty #nav_links li{
+    display: inline;
+    padding-right: 20px;
+  }
+  body#blog header.fatty #nav_links{
+    list-style: none;
+    font-weight: bold;
+    padding-top: 15px;
+  }
+
   body#blog header.fatty #login_tools{
     padding-top: 10px;
   }
@@ -173,7 +183,11 @@
 
   body#blog .page {
     margin-top: 0 !important;
-  }
+  } 
+
+  body#blog .page #post_management_controls{
+    float: right;
+  } 
 
   body#blog .page-shadow {
     margin-top: 0 !important;

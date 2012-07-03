@@ -3,7 +3,19 @@ class Blog::PostsController < ApplicationController
   layout 'blog'
   
   def index
-    @posts = Post.where(:published => true).order('published_at DESC')
+    if params[:filter] 
+      if params[:filter] == 'drafts'
+        authorize! :create, Post
+        @posts = Post.where(:published => false).order('updated_at DESC')
+      end
+      if params[:filter] == 'my_drafts'
+        authorize! :create, Post
+        @posts = Post.where(:published => false, author_id: current_user).order('updated_at DESC')
+      end
+    end
+    
+    @posts ||= Post.where(:published => true).order('published_at DESC')
+    
     
     respond_to do |format|
       format.html
@@ -19,9 +31,12 @@ class Blog::PostsController < ApplicationController
   
   def show
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
-    @post = Post.find(params[:id])
-    
-    authorize! :read, @post
+    if params['token']
+      @post = Post.find_by_viewing_token(params[:token])
+    else 
+      @post = Post.find(params[:id])
+      authorize! :read, @post
+    end
   end
   
   def new
@@ -81,6 +96,19 @@ class Blog::PostsController < ApplicationController
   def publish
     @post = Post.find(params[:id])
     @post.published = params[:published]
+
+    authorize! :publish, @post
+
+    @post.save 
+    redirect_to blog_post_path(@post)
+  end
+
+  def reset_token
+    @post = Post.find(params[:id])
+    @post.generate_token(:viewing_token)
+
+    authorize! :publish, @post
+
     @post.save 
     redirect_to blog_post_path(@post)
   end

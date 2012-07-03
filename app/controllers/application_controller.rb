@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   private
   
   def store_location
-    unless params[:controller] == "sessions"
+    unless params[:controller] == "sessions" || params[:controller] == "people"
       session[:url_after_login] = request.url unless current_user || request.url == new_sessions_url
       session[:url_return_to] = request.url if !request.xhr? && (request.path != "/login" && request.path != "/register")
       logger.info 'Session: ' + session.to_s

@@ -67,13 +67,18 @@
           <hr class="hr-small-margin hr-dark">
         </div>
         <br />
-
-
-      <% if can? :edit, post %>
-        <div id="post_management_controls" class="pull-right">
-      	 <%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
-      	</div>
-      <% end %>
+      <div class="row">
+        <% if can? :publish, post %>
+          <div id="post_share_controls" class="span5">
+           <%= shared_post_url(post.viewing_token)%> <%= clippy(shared_post_url(post.viewing_token)) %>
+          </div>
+        <% end %>
+        <% if can? :edit, post %>
+          <div id="post_management_controls" class="span3">
+        	 <%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+        	</div>
+        <% end %>
+      </div>
       <% if false %>
         <% if params[:action] == 'show' %>
             <h1 class="ribbon-left">Comments:</h1>

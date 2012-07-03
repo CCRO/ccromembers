@@ -8,4 +8,8 @@ class DebugController < ApplicationController
     @params = params
     @request = request   
   end
+
+  def test
+  	# AdminMailer.signup_complete(Person.last, "http://example.com/blah").deliver
+  end
 end

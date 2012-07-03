@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120621191235) do
+ActiveRecord::Schema.define(:version => 20120703191623) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -62,13 +62,14 @@ ActiveRecord::Schema.define(:version => 20120621191235) do
     t.datetime "published_at"
     t.integer  "owner_id"
     t.string   "owner_type"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "format"
     t.integer  "author_id"
     t.boolean  "archived"
     t.string   "asin"
     t.boolean  "published"
+    t.string   "viewing_token"
   end
 
   create_table "groups", :force => true do |t|
@@ -129,11 +130,12 @@ ActiveRecord::Schema.define(:version => 20120621191235) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "author_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.boolean  "published"
     t.datetime "published_at"
     t.string   "level"
+    t.string   "viewing_token"
   end
 
   create_table "questions", :force => true do |t|
