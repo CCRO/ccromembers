@@ -35,7 +35,7 @@
             <div class="btn-toolbar pull-right">
               <div class="btn-group">
                 <% if can? :create, Post %>
-                  <%= link_to draft_blog_posts_path, :class => 'btn' do %>  
+                  <%= link_to blog_draft_posts_path, :class => 'btn' do %>  
                     <i class="icon-list-alt"></i> Manage drafts
                   <% end %>
                 <% end %>
@@ -90,7 +90,7 @@
           <ul class="nav nav-tabs nav-stacked" style="padding-top: 15px;">
               <% if can? :create, Post %>
                 <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How create new blog posts</a></li>
-                <li><%= link_to 'Manage my drafts', my_draft_blog_posts_path() %></li>
+                <li><%= link_to 'Manage my drafts', blog_my_draft_posts_path() %></li>
               <% end %>
           </ul>
         </aside>
