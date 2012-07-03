@@ -70,7 +70,6 @@
       <div class="row">
         <% if can? :publish, post %>
           <div id="post_share_controls" class="span5">
-           <%= #blog_shared_post_url(post.viewing_token) %> <%= #clippy(blog_shared_post_url(post.viewing_token)) %>
           </div>
         <% end %>
         <% if can? :edit, post %>
@@ -101,4 +100,4 @@
     <p><%= post.author.bio %></p>
     <div style="clear: both"></div> 
   </div>
-<% end %>
+  <% end %>
