@@ -36,11 +36,11 @@ Ccromembers::Application.routes.draw do
           get :reset_token
         end
       end
-    end
+    match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_blog_posts'
+    match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_blog_posts'
+    match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
-    match 'drafts' => 'blog/posts#index', :defaults => { filter: 'drafts' }, as: 'draft_blog_posts'
-    match 'my_drafts' => 'blog/posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_blog_posts'
-    match 'shared_post/:token' => 'blog/posts#show', as: 'shared_post'
+    end
     
     resources :posts
     
