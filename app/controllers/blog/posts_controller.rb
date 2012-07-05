@@ -74,6 +74,15 @@ class Blog::PostsController < ApplicationController
     redirect_to post
   end
   
+  def edit
+    post = Post.find(params[:id])
+    unless post.locked?
+      post.lock(current_user)
+      post.save
+    end
+    redirect_to "/editor" + blog_post_path(post)
+  end
+
   def update
     post = Post.find(params[:id])
 
@@ -84,6 +93,7 @@ class Blog::PostsController < ApplicationController
       post.title = "Untitled" if post.title == "<br>" || post.title.blank?
       post.body = params[:content][:post_body][:value]
       post.author ||= current_user
+      post.unlock
       post.save! 
       render text: ""
     else

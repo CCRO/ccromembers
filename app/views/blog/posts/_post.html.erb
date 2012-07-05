@@ -1,4 +1,12 @@
 <% unless post.level == 'committee' && params[:action] == 'index' && cannot?(:read, post)%> 
+  <% if post.locked? %>
+    <% if post.locker == current_user %>
+      <span class="label">You are currently the editor of this post.</span>
+    <% else %>
+      <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Post is currently being edited by <%= post.locker.name %></span>
+    <% end %>
+    <br><br>
+  <% end %>
   <div class="page <%= "watermark-draft" unless post.published? %>">
     <article id="post-<%= post.id %>">
         
@@ -12,7 +20,7 @@
         <div class="btn-toolbar pull-right">
           <% if can?(:edit, post) && params[:action] == 'show' %>
             <div class="btn-group">
-              <%= link_to "/editor" + request.path, class: 'btn', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
+              <%= link_to edit_blog_post_path(post), class: 'btn', id: "edit_link", data: {save_url: mercury_update_blog_post_path(post)} do %>
                 <i class="icon-pencil"></i> Edit Post
               <% end %>
             </div>

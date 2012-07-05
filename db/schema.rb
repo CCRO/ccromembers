@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703191623) do
+ActiveRecord::Schema.define(:version => 20120705154032) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -136,6 +136,9 @@ ActiveRecord::Schema.define(:version => 20120703191623) do
     t.datetime "published_at"
     t.string   "level"
     t.string   "viewing_token"
+    t.boolean  "locked"
+    t.integer  "locker_id"
+    t.datetime "locked_at"
   end
 
   create_table "questions", :force => true do |t|
