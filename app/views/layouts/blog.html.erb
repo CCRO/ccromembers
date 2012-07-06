@@ -15,7 +15,7 @@
 <body id="blog">
 <!--Body content (BEGIN)-->
   
-  <header class="fatty <%='collapse' if params[:action] == 'show' %> ">
+  <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
     <div id='fatty_basket' class="container">
       <div id='fatty_nav'class="row">
         <div id="logo" class="span3">

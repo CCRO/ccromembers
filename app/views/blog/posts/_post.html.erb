@@ -14,7 +14,7 @@
           <h1 class="ribbon-right ribbon-info"><%= post.level.capitalize %></h1>
         <% end %>
         <% if post.level == 'committee' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><%= 'Member' %></h1>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-lock icon-white"></i><%= 'Member' %></h1>
         <% end %>
 
         <div class="btn-toolbar pull-right">

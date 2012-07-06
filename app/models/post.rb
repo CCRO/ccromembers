@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
   
   has_paper_trail
+  acts_as_taggable
   
   include ActionView::Helpers::SanitizeHelper
   
