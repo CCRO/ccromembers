@@ -1,5 +1,5 @@
 <% unless post.level == 'committee' && params[:action] == 'index' && cannot?(:read, post)%> 
-  <% if post.locked? %>
+  <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
     <% if post.locker == current_user %>
       <span class="label">You are currently the editor of this post.</span>
     <% else %>
@@ -11,10 +11,10 @@
     <article id="post-<%= post.id %>">
         
         <% if post.level == 'pro' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info"><%= post.level.capitalize %></h1>
+          <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
         <% end %>
         <% if post.level == 'committee' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-lock icon-white"></i><%= 'Member' %></h1>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= 'Member' %></h1>
         <% end %>
 
         <div class="btn-toolbar pull-right">
@@ -71,16 +71,24 @@
 
         <div class="post-footer">
           <hr class="hr-small-margin">
-            <p class="pull-right"><span class="post-footer-heading">Published: </span><strong><%= t post.published_at.to_s(:long) if post.published_at.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
+            <p class="pull-right">
+              <span class="post-footer-heading">Updated: </span>
+              <strong><%= time_ago_in_words post.updated_at %> ago</strong>
+            </p>
+            <p>
+              <span class="post-footer-heading">Categories: </span>
+              <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
+            </p>
           <hr class="hr-small-margin hr-dark">
         </div>
         <br />
       <div class="row">
-        <% if can? :publish, post %>
+        <% if current_user && current_user.admin? && params[:action] == 'show' %>
           <div id="post_share_controls" class="span5">
+            <%= blog_shared_post_url(post.viewing_token)%> <%= clippy(blog_shared_post_url(post.viewing_token)) %> 
           </div>
         <% end %>
-        <% if can? :edit, post %>
+        <% if can?(:edit, post) && params[:action] == 'show' %>
           <div id="post_management_controls" class="span3">
         	 <%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
         	</div>
