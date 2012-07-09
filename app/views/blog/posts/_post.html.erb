@@ -63,7 +63,7 @@
         
         <% if params[:filter] == 'drafts' %>
             <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
-              <div id="post_preview">
+              <div id="post_preview" class='drafts'>
                 <%=raw post.body.split('[---MORE---]').first %>
               </div>
             <% else %>
