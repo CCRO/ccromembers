@@ -56,7 +56,7 @@
           <% else %>
             <%= link_to post.title.html_safe, blog_post_path(post)  %>
           <% end %>
-          <span class="post_date"><%= short_date(post) %></span>
+          <div class="post_date"><%= short_date(post) %></div>
         </h1>
         
         <h3 id="post_author">by <%= post.author.try(:name) %></h3>
@@ -72,7 +72,7 @@
         <% else %>
             <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
               <div id="post_preview">
-                <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
+                <%=raw post.body.split('[---MORE---]').first %>
               </div>
             <% else %>
               <% if is_editing? %>
