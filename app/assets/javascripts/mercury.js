@@ -172,7 +172,7 @@ window.Mercury = {
           },
         rules:                 {
           horizontalRule:      ['Horizontal Rule', 'Insert a horizontal rule'],
-          markTruncate:        ['Truncate Here','Insert a [---MORE---] to truncate'], 
+          //markTruncate:        ['Truncate Here','Insert a [---MORE---] to truncate'], 
           sep1:                '-'
           },
         formatting:            {
