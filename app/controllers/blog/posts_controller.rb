@@ -52,6 +52,7 @@ class Blog::PostsController < ApplicationController
     @post.author = current_user
     @post.published = false
     @post.level ||= 'public'
+    @post.generate_token(:viewing_token)
     
     authorize! :create, @post
     
