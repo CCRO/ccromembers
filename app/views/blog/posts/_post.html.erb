@@ -60,14 +60,29 @@
         </h1>
         
         <h3 id="post_author">by <%= post.author.try(:name) %></h3>
-
-        <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
-          <div id="post_preview">
-            <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
-          </div>
+        
+        <% if params[:filter] == 'drafts' %>
+            <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
+              <div id="post_preview">
+                <%=raw post.body.split('[---MORE---]').first %>
+              </div>
+            <% else %>
+              <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
+            <% end %>
         <% else %>
-          <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
+            <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
+              <div id="post_preview">
+                <%= truncate_html(post.body, :seperator => ' ', :length => 700, :omission => ' ...') %>
+              </div>
+            <% else %>
+              <% if is_editing? %>
+                <div id="post_body" class="mercury-region" data-mercury="full" contentEditable><%= post.body.html_safe unless params[:action] == 'draft' %></div>
+              <% else %>
+                <div id="post_body" class="mercury-region" data-mercury="full"><%= post.body.gsub('[---MORE---]', '').html_safe unless params[:action] == 'draft' %></div>
+              <% end %>
+            <% end %>
         <% end %>
+          
 
         <div class="post-footer">
           <hr class="hr-small-margin">
@@ -85,7 +100,7 @@
       <div class="row">
         <% if current_user && current_user.admin? && params[:action] == 'show' %>
           <div id="post_share_controls" class="span5">
-            <%= blog_shared_post_url(post.viewing_token)%> <%= clippy(blog_shared_post_url(post.viewing_token)) %> 
+            <%= blog_shared_post_url(post.viewing_token)%> <%= clippy(blog_shared_post_url(post.viewing_token)) %>
           </div>
         <% end %>
         <% if can?(:edit, post) && params[:action] == 'show' %>
