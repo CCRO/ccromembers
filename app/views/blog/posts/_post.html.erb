@@ -10,10 +10,11 @@
   <div class="page <%= "watermark-draft" unless post.published? %>">
     <article id="post-<%= post.id %>">
         
-        <% if post.level == 'pro' && params[:action] == 'index' %>
+        <% if post.level == 'basic' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
+        <% elsif post.level == 'pro' && params[:action] == 'index' %>
           <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
-        <% end %>
-        <% if post.level == 'committee' && params[:action] == 'index' %>
+        <% elsif post.level == 'committee' && params[:action] == 'index' %>
           <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= 'Member' %></h1>
         <% end %>
 
@@ -64,7 +65,7 @@
         <% if params[:filter] == 'drafts' %>
             <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
               <div id="post_preview" class='drafts'>
-                <%=raw post.body.split('[---MORE---]').first %>
+                <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', post %></b>
               </div>
             <% else %>
               <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
@@ -72,7 +73,7 @@
         <% else %>
             <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
               <div id="post_preview">
-                <%=raw post.body.split('[---MORE---]').first %>
+                <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', post %></b>
               </div>
             <% else %>
               <% if is_editing? %>
