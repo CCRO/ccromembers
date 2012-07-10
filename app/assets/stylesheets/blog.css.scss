@@ -192,6 +192,10 @@
     margin-top: 0 !important;
   } 
 
+  body#blog .page .post_title {
+    max-width: 650px;
+  }
+
   body#blog .page #post_management_controls{
     float: right;
   } 
