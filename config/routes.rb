@@ -19,51 +19,31 @@ Ccromembers::Application.routes.draw do
 
   mount Mercury::Engine => '/'
 
-  constraints(:domain => BLOG_DOMAIN) do
-    namespace :blog, :path => '/' do
-      resources :posts do
-        
-        resources :comments
+    
+    resources :posts do
+      
+      resources :comments
 
-        collection do
-          get :draft
-        end
-        
-        member do 
-          post :mercury_update
-          get :publish
-          get :claim
-          get :reset_token
-          get :duplicate
-        end
+      collection do
+        get :draft
       end
+      
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+      end
+    end
+
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
     match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
-    end
-    
-      resources :posts do
-        
-        resources :comments
-
-        collection do
-          get :draft
-        end
-        
-        member do 
-          post :mercury_update
-          get :publish
-          get :claim
-          get :reset_token
-          get :duplicate
-        end
-      end
-    
-    root :to => 'blog/posts#index'
-  end
   
-  constraints(:domain => PORTAL_DOMAIN) do
+    
+    root :to => 'posts#index'
   
     namespace :admin do
       resources :people
@@ -78,10 +58,8 @@ Ccromembers::Application.routes.draw do
       resources :comments
     end
 
-    root :to => 'documents#index'
 
-  end
-  
+ 
   match 'login' => 'sessions#new', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'register' => 'people#new', :as => :register
@@ -116,8 +94,7 @@ Ccromembers::Application.routes.draw do
     end
     
     collection { post :sort }
-    
-  end
+  end  
   
   match ':controller(/:action(/:id))(.:format)'
 end

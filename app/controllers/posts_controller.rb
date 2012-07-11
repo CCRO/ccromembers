@@ -1,4 +1,4 @@
-class Blog::PostsController < ApplicationController
+class PostsController < ApplicationController
   
   layout 'blog'
   
@@ -58,10 +58,10 @@ class Blog::PostsController < ApplicationController
     authorize! :create, @post
     
     if @post.save
-      redirect_to blog_post_path(@post)
+      redirect_to post_path(@post)
     else
       flash[:notice] = "Please give your new draft a title."
-      redirect_to draft_blog_posts_path
+      redirect_to draft_posts_path
     end
   end
   
@@ -82,7 +82,7 @@ class Blog::PostsController < ApplicationController
       post.lock(current_user)
       post.save
     end
-    redirect_to "/editor" + blog_post_path(post)
+    redirect_to "/editor" + post_path(post)
   end
 
   def update
@@ -112,7 +112,7 @@ class Blog::PostsController < ApplicationController
     authorize! :publish, @post
 
     @post.save 
-    redirect_to blog_post_path(@post)
+    redirect_to post_path(@post)
   end
 
   def duplicate
@@ -130,7 +130,7 @@ class Blog::PostsController < ApplicationController
     authorize! :create, @duplicate
 
     @duplicate.save 
-    redirect_to blog_post_path(@duplicate)
+    redirect_to post_path(@duplicate)
   end
 
   def reset_token
@@ -140,7 +140,7 @@ class Blog::PostsController < ApplicationController
     authorize! :publish, @post
 
     @post.save 
-    redirect_to blog_post_path(@post)
+    redirect_to post_path(@post)
   end
   
   def destroy
@@ -151,7 +151,7 @@ class Blog::PostsController < ApplicationController
     if @post.destroy
       redirect_to root_path
     else
-      redirect_to blog_post_path(@post)
+      redirect_to post_path(@post)
     end
   end
 end

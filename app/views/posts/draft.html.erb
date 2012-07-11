@@ -23,7 +23,7 @@
     
       <h1 class="post_title pull-left span5">
           <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
-          <%= link_to post.title.html_safe, blog_post_path(post)  %>
+          <%= link_to post.title.html_safe, post_path(post)  %>
     	</h1>
   	
     	<div class="control-group radio inline pull-right">
