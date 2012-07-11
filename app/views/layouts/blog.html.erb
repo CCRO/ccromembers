@@ -84,18 +84,18 @@
               <% if can? :create, Post %>
                 <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
                 <li><%= link_to 'Manage my drafts', my_draft_posts_path() %></li>
-              <% end %>
-              <% if current_user.admin? %>
                 <br><br>
+              <% end %>
                 <center>
                   <%= link_to "http://ccro.org/events/show/80" do %>
                     <%= image_tag "https://dl.dropbox.com/s/hzegquhb0vzbccp/risk_network_summit_logo_2012.png" %><br><br>
                   <% end %>
-                  <%= image_tag "http://placehold.it/300x250" %><br><br>
-                  <%= image_tag "http://placehold.it/300x600" %>
+                  <% if current_user && current_user.admin? %>
+                    <%= image_tag "http://placehold.it/300x250" %><br><br>
+                    <%= image_tag "http://placehold.it/300x600" %>
+                  <% end %>
                 </center>
-              <% end %>
-          </ul>
+           </ul>
         </aside>
       <% end %>
 
