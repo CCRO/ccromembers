@@ -88,7 +88,9 @@
               <% if current_user.admin? %>
                 <br><br>
                 <center>
-                  <%= image_tag "https://dl.dropbox.com/s/hzegquhb0vzbccp/risk_network_summit_logo_2012.png" %><br><br>
+                  <%= link_to "http://ccro.org/events/show/80" do %>
+                    <%= image_tag "https://dl.dropbox.com/s/hzegquhb0vzbccp/risk_network_summit_logo_2012.png" %><br><br>
+                  <% end %>
                   <%= image_tag "http://placehold.it/300x250" %><br><br>
                   <%= image_tag "http://placehold.it/300x600" %>
                 </center>
@@ -106,6 +108,6 @@
       </footer>
   </div>
 <!--Body content (END)-->
-<%= render :partial => 'blog/ga' if Rails.env.production? %>
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>
