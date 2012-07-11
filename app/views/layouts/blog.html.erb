@@ -3,11 +3,9 @@
 <head>
   <title>CCRO - <%= "CCRO Blog" %></title>
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
-  <%= stylesheet_link_tag "bootstrap-wysihtml5", :media => "all" %>
   <%= stylesheet_link_tag "blog", :media => "all" %>
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "mercury" %>
   <%= csrf_meta_tags %>
   <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss") %>
   <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>

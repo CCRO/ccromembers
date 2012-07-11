@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @message = Message.find(params[:id])
-    
+    @commentable = @message
     authorize! :read, @message
     
     respond_to do |format|

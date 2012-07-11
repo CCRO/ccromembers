@@ -104,19 +104,20 @@
             <%= blog_shared_post_url(post.viewing_token)%> <%= clippy(blog_shared_post_url(post.viewing_token)) %>
           </div>
         <% end %>
-        <% if can?(:edit, post) && params[:action] == 'show' %>
-          <div id="post_management_controls" class="span3">
-        	 <%= link_to "email this", blog_post_path(post) %> | <%= link_to "claim this post", claim_blog_post_path(post) %> | <%= link_to "archive this post", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+        <% if can?(:edit, post) && (params[:action] == 'show' || params[:action] == 'index' ) %>
+          <div id="post_management_controls" class="pull-right">
+        	 <%= link_to "share", blog_post_path(post) %> | <%= link_to "duplicate", duplicate_blog_post_path(post) %> | <%= link_to "claim ", claim_blog_post_path(post) %> | <%= link_to "archive", blog_post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
         	</div>
         <% end %>
       </div>
+      <br>
       <% if false %>
         <% if params[:action] == 'show' %>
             <h1 class="ribbon-left">Comments:</h1>
             <%= render :partial => 'shared/comment_hidden_form' %>
             <%= render :partial => 'shared/comment', :collection => @post.comments.reverse %>
         <% end %>
-      <% end %> 
+       <% end %> 
     </article>
   </div>
 <% end %>

@@ -35,6 +35,7 @@ class Blog::PostsController < ApplicationController
       @post = Post.find_by_viewing_token(params[:token])
     else 
       @post = Post.find(params[:id])
+      @commentable = @post
       authorize! :read, @post
     end
   end
@@ -112,6 +113,24 @@ class Blog::PostsController < ApplicationController
 
     @post.save 
     redirect_to blog_post_path(@post)
+  end
+
+  def duplicate
+    post = Post.find(params[:id])
+    @duplicate = Post.new(post.attributes)
+    @duplicate.owner = current_user
+    @duplicate.title += " Copy"
+    @duplicate.generate_token
+    @duplicate.published = false
+    @duplicate.locked = nil
+    @duplicate.locker_id = nil
+    @duplicate.locked_at = nil
+    @duplicate.tag_list = nil
+
+    authorize! :create, @duplicate
+
+    @duplicate.save 
+    redirect_to blog_post_path(@duplicate)
   end
 
   def reset_token

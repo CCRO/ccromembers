@@ -1,5 +1,16 @@
 /*
-*= require 'font-awesome'
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require bootstrap-wysihtml5
+ *= require 'font-awesome'
 */
 
 @media print {
@@ -266,14 +277,6 @@
     color: gray;
   }
 
-  /* article img[align=left] {
-    padding: 0px 10px 10px 0px;
-  }
-
-  article img[align=right] {
-    padding: 0px 0px 10px 10px;
-  } */
-
   .index_post_partial span:not(.callout) img {
     max-height: 200px;
     max-width: 200px;
@@ -301,16 +304,6 @@
   .emphasized {
     font-size: 120%;
     font-weight: bold;
-  }
-  
-  .page img, .page .callout {
-    border: 1px solid lightGrey;
-    background-color: white;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 1px 1px 3px gray;
-    font-weight: bold;
-    font-size: 110%;
   }
   
   .callout-small {
@@ -427,4 +420,40 @@
     background: #098A03;
   }
 
+  .page img, .page .callout {
+    border: 1px solid lightGrey;
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 1px 1px 3px gray;
+    font-weight: bold;
+    font-size: 110%;
+  }
 
+  body#blog table.agenda img {
+    max-width: 50px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  body#blog table.agenda th {
+    background-color: #71AACA;
+  }
+
+  body#blog table.agenda th {
+    color: white;
+  }
+
+/* Comments */
+
+blockquote {
+  border-left: 5px solid #BBB;
+}
+
+blockquote > a.close {
+  display: none;
+}
+
+blockquote:hover > a.close {
+  display: block;
+}

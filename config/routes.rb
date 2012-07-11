@@ -34,6 +34,7 @@ Ccromembers::Application.routes.draw do
           get :publish
           get :claim
           get :reset_token
+          get :duplicate
         end
       end
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
@@ -42,7 +43,22 @@ Ccromembers::Application.routes.draw do
 
     end
     
-    resources :posts
+      resources :posts do
+        
+        resources :comments
+
+        collection do
+          get :draft
+        end
+        
+        member do 
+          post :mercury_update
+          get :publish
+          get :claim
+          get :reset_token
+          get :duplicate
+        end
+      end
     
     root :to => 'blog/posts#index'
   end
