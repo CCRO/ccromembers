@@ -24,6 +24,7 @@
     </div>
     <div class="modal-footer">&nbsp;</div>
   </div>
+
   <div class="modal hide fade" id="modal-current_user">
     <div class="modal-header">
       <a href="#" class="close">×</a>
@@ -56,4 +57,16 @@
       <%= button_to 'View Profile', current_user %>
     </div>
   </div>
+
+  <% if @post %>
+    <div class="modal hide fade" id="modal-share_link">
+      <div class="modal-header">
+        <h1><%= @post.title.html_safe %></h1>
+      </div>
+      <div class="modal-body center">
+        <h2>Share this post:</h2>
+        <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
+      </div>
+    </div>
   <% end %>
+<% end %>
