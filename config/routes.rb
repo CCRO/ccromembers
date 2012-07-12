@@ -34,9 +34,11 @@ Ccromembers::Application.routes.draw do
         get :claim
         get :reset_token
         get :duplicate
+        get :restore
       end
     end
 
+    match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
     match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'

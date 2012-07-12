@@ -12,6 +12,10 @@ class PostsController < ApplicationController
         authorize! :create, Post
         @posts = Post.where(:published => false, author_id: current_user).order('updated_at DESC')
       end
+      if params[:filter] == 'archive'
+        authorize! :create, Post
+        @posts = Version.where(item_type: "Post", event: "destroy").map { |v| v.reify }.reverse.uniq
+      end
     end
     
     @posts ||= Post.where(:published => true).order('published_at DESC')
@@ -112,6 +116,14 @@ class PostsController < ApplicationController
     authorize! :publish, @post
 
     @post.save 
+    redirect_to post_path(@post)
+  end
+
+  def restore
+    @post = Version.where(item_type: 'Post', item_id: params[:id], event: 'destroy').last.reify
+    @post.published = false
+    @post.author = current_user
+    @post.save!
     redirect_to post_path(@post)
   end
 
