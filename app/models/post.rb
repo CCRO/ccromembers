@@ -36,6 +36,13 @@ class Post < ActiveRecord::Base
     self.locked, self.locker, self.locked_at = nil, nil, nil
   end
 
+  def share_by_email(email_list, sender)
+    email_list = email_list.gsub(' ', '').split(',') if email_list.class.name == 'String'
+    email_list.each do |email|
+      PostMailer.share_post(self, email, sender).deliver
+    end
+  end
+
   def locked?
     if self.locked_at && self.locked_at < 2.hours.ago
       self.unlock

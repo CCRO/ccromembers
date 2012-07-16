@@ -66,6 +66,11 @@
       <div class="modal-body center">
         <h2>Share this post:</h2>
         <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
+        <h2>Share by email:</h2>
+        <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
+          <%= text_field_tag 'email_list' %>
+          <%= submit_tag 'Send', class: 'btn' %>
+        <% end %>
       </div>
     </div>
   <% end %>

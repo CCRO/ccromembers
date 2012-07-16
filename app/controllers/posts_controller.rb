@@ -43,6 +43,14 @@ class PostsController < ApplicationController
       authorize! :read, @post
     end
   end
+
+  def share
+    post = Post.find(params[:id])
+    authorize! :read, post
+    post.share_by_email(params[:email_list], current_user)
+    redirect_to post
+  end
+
   
   def new
     @post = Post.new
