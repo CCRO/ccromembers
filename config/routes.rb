@@ -1,6 +1,8 @@
 Ccromembers::Application.routes.draw do
   
   
+  get "exceptions/accessdenied", as: 'exceptions_accessdenied'
+
   resources :signups, :only => ['index', 'new', 'create'] do
     collection do 
       get :basic
