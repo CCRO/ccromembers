@@ -34,7 +34,9 @@ class PostsController < ApplicationController
   end
   
   def show
+    @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
+    @editors += Person.where(role: nil)
     if params['token']
       @post = Post.find_by_viewing_token(params[:token])
     else 

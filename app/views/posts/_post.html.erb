@@ -33,7 +33,7 @@
             <% unless params[:mercury_frame] %>
               <div class="editor_selector">
                 <%= form_for post, { :remote => true } do |f| %>
-                  <% editors = @editors.all.map { |editor| [editor.name, editor.id] } %>
+                  <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                   <b>Assign this post to: </b>
                   <%= select_tag('post[author_id]', options_for_select(editors, :selected => post.author.id), :include_blank => true, :class => 'submittable') %>
                 <% end %>
@@ -111,13 +111,13 @@
               <% end %>
           <% end %>
       </div>
-      <% if false %>
+      
         <% if params[:action] == 'show' %>
             <h1 class="ribbon-left">Comments:</h1>
             <%= render :partial => 'shared/comment_hidden_form' %>
             <%= render :partial => 'shared/comment', :collection => @post.comments.reverse %>
         <% end %>
-       <% end %> 
+    
     </article>
   </div>
 <% end %>
