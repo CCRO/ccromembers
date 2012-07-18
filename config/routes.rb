@@ -44,6 +44,7 @@ Ccromembers::Application.routes.draw do
     match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
     match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'
+    match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
   

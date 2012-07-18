@@ -16,6 +16,9 @@ class PostsController < ApplicationController
         authorize! :create, Post
         @posts = Version.where(item_type: "Post", event: "destroy").map { |v| v.reify }.reverse.uniq
       end
+      if params[:filter] == 'summit'
+        @posts = Post.where(published: true).tagged_with("summit")
+      end
     end
     
     @posts ||= Post.where(:published => true).order('published_at DESC')
