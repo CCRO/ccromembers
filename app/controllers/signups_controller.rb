@@ -37,6 +37,6 @@ class SignupsController < ApplicationController
     user.send_activation
     AdminMailer.signup_complete(user, cookies[:url_after_signup]).deliver
 
-    render text: "Check yo email!"
+    render text: "We have sent you a confirmation email!"
   end
 end
