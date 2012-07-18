@@ -1,5 +1,5 @@
 class SignupsController < ApplicationController
-  layout 'blog'
+  layout 'blog' 
   
   def index
     
