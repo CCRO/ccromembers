@@ -20,6 +20,9 @@ class PostsController < ApplicationController
         @posts = Post.where(published: true).tagged_with("summit")
       end
     end
+    if params[:tag_name]
+      @posts = Post.where(published: true).tagged_with(params[:tag_name])
+    end
     
     @posts ||= Post.where(:published => true).order('published_at DESC')
     

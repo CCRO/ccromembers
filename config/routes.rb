@@ -41,6 +41,7 @@ Ccromembers::Application.routes.draw do
       end
     end
 
+    match 'tag/:tag_name' => 'posts#index', as: 'tagged_posts'
     match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
     match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'

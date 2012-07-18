@@ -80,14 +80,15 @@
     <div class="row">
       <% unless params[:controller] == 'signups' %>  
       	<aside class="span3">
-          <ul class="nav nav-tabs nav-stacked">
-            <li><%= link_to 'All Summit Posts', summit_posts_path() %></li>
-            <% if can? :create, Post %>
+          <% if can? :create, Post %>
+            <ul class="nav nav-tabs nav-stacked">
               <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
               <li><%= link_to 'Manage my drafts', my_draft_posts_path() %></li>
               <li><%= link_to 'Archived posts', archive_posts_path() %></li>
-            <% else %>
-            <% end %>
+            </ul>
+          <% end %>
+          <ul class="nav nav-tabs nav-stacked">
+            <li><%= link_to 'Summit', tagged_posts_path('summit') %></li>
           </ul>
           <center>
             <%= link_to "http://ccromembers.org/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" do %>

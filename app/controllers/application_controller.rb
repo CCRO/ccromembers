@@ -79,11 +79,9 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    session[:access_denied_to] = 
-    logger.info 'EXCEPTION: ' + exception.subject.class.name + exception.to_json
-    exception = exception.subject.attributes.delete_if { |key,value| value.to_s.length > 128 } 
-    logger.info 'Modified EXCEPTION: ' + exception.to_json 
-    session[:exception] = exception
+    session[:access_denied_return_url] = request.url
+    subject = exception.subject.attributes.delete_if { |key,value| value.to_s.length > 128 } if exception.subject.class.name == 'Post'
+    session[:access_denied_subject] = subject
     redirect_to exceptions_accessdenied_path()
 
     # case exception.subject.class.name
