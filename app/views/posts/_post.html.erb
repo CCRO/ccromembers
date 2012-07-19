@@ -41,11 +41,17 @@
             <% end %>
             
             <div id="post_level_selector", class="control-group radio inline" >
+              <p>Level</p>
               <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
                 <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
                 <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
                 <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
                 <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Member' %>
+              <% end %>
+              <p>Commenting</p>
+              <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
+                <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
+                <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
               <% end %>
             </div>
           <% end %>
@@ -112,7 +118,7 @@
           <% end %>
       </div>
       
-        <% if params[:action] == 'show' %>
+        <% if params[:action] == 'show' && @post.commenting_enabled == true %>
             <h1 class="ribbon-left">Comments:</h1>
             <%= render :partial => 'shared/comment_hidden_form' %>
             <%= render :partial => 'shared/comment', :collection => @post.comments.reverse %>
