@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   private
   
   def store_location
-    unless params[:controller] == "sessions"
+    unless params[:controller] == "sessions" || params[:controller] == "people" || params[:controller] == "exceptions"
       session[:url_after_login] = request.url unless current_user || request.url == new_sessions_url
       session[:url_return_to] = request.url if !request.xhr? && (request.path != "/login" && request.path != "/register")
       logger.info 'Session: ' + session.to_s
@@ -79,13 +79,19 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    if exception.subject.class.name == 'Post'
-      logger.info 'EXCEPTION: ' + exception.subject.class.name + exception.to_json
-      message = "<br><br>To read the article entitled \"#{exception.subject.title}\". You must have #{exception.subject.level} subscription.<br><br>" 
-      redirect_to forbidden_path(), :flash => {error: (exception.message + message).html_safe }
-    else
-      redirect_to forbidden_path(), :flash => {error: exception.message }
-    end
+    session[:access_denied_return_url] = request.url
+    subject = exception.subject.attributes.delete_if { |key,value| value.to_s.length > 128 } if exception.subject.class.name == 'Post'
+    session[:access_denied_subject] = subject
+    redirect_to exceptions_accessdenied_path()
+
+    # case exception.subject.class.name
+    # when 'Post'
+    #   logger.info 'EXCEPTION: ' + exception.subject.class.name + exception.to_json
+    #   message = "<br><br>To read the article entitled \"#{exception.subject.title}\". You must have #{exception.subject.level} subscription.<br><br>" 
+    #   redirect_to forbidden_path(), :flash => {error: (exception.message + message).html_safe }
+    # else
+    #   redirect_to forbidden_path(), :flash => {error: exception.message }
+    # end
   end
   
   protected

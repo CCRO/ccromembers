@@ -35,6 +35,7 @@ gem 'google_visualr'
 gem 'jqcloud-rails'
 gem 'acts_as_list'
 gem 'chargify_api_ares'
+gem 'acts-as-taggable-on'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,6 +49,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem "twitter-bootstrap-rails"
   gem 'bootstrap-wysihtml5-rails'
+  gem 'font-awesome-rails'
 end
 
 gem 'jquery-rails'

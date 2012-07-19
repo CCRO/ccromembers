@@ -1,5 +1,5 @@
 class SignupsController < ApplicationController
-  layout 'blog'
+  layout 'blog' 
   
   def index
     
@@ -35,7 +35,8 @@ class SignupsController < ApplicationController
     
     #send validation email
     user.send_activation
-    
-    render text: "Check yo email!"
+    AdminMailer.signup_complete(user, cookies[:url_after_signup]).deliver
+
+    render text: "We have sent you a confirmation email!"
   end
 end

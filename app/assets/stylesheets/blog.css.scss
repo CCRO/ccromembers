@@ -1,3 +1,18 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require bootstrap-wysihtml5
+ *= require 'font-awesome'
+*/
+
 @media print {
   aside, header .pull-right, #about_author, footer {
     display: none !important;
@@ -68,8 +83,7 @@
     @bottom-left {
       content: counter(page);
     }
-  }
-  
+  } 
 }
 
 @media screen {
@@ -79,16 +93,20 @@
   }
 
   body#blog header.fatty {
-    padding: 20px 200px;
+    padding: 0px 20px;
     margin-top: 0;
-    height: 500px;
+    height: 540px;
     background-color: 
     #383838;
     position: relative;
-  }
+  } 
  
+ body#blog header.fatty #fatty_basket {
+    padding: 20px 0px;
+  } 
+
   body#blog header.collapse {
-    height: 50px !important;
+    height: 90px !important;
   }
 
   body#blog header.collapse div#header_expanded {
@@ -98,7 +116,7 @@
 @media(max-width: 1403px) {
   
   body#blog header {
-    height: 50px !important;
+    height: 90px !important;
   }
 
   body#blog header div#header_expanded {
@@ -111,10 +129,34 @@
     top: 0px;
     right: -80px;
   }
+
+  body#blog .editor_selector{
+    position: absolute;
+    top: -35px;
+    right: 0px;
+  }
   
   body#blog #video {
     box-shadow: 0px 0px 40px 0px #000000;
     background-color: black;
+  }
+
+  body#blog header.fatty #nav_links li{
+    display: inline;
+    padding-right: 20px;
+  }
+  body#blog header.fatty #nav_links{
+    list-style: none;
+    font-weight: bold;
+    padding-top: 15px;
+  }
+
+  body#blog header.fatty #login_tools{
+    padding-top: 10px;
+  }
+
+  #header_expanded{
+    padding-top: 20px;
   }
 
   body#blog header.fatty div#header_expanded div#header_promo {
@@ -139,18 +181,17 @@
   body#blog header.fatty div#header_expanded a.btn {
     font-weight: bold;
   }
-
-#header_expanded{
-  margin-top: 20px;
-}
   
 	div.page {
 	  position: relative;
 	  margin-top: 25px;
 	  padding: 20px;
 	  background-color: white;
-	  border: 1px solid #dddddd;
 	}
+
+  .watermark-draft {
+    border: 2px solid #CA1313;
+  }
 
 	div.page-shadow {
 	  background: url('../images/leaftshadow-900.png') no-repeat bottom;
@@ -160,7 +201,15 @@
 
   body#blog .page {
     margin-top: 0 !important;
+  } 
+
+  body#blog .page .post_title {
+    max-width: 650px;
   }
+
+  body#blog .page #post_management_controls{
+    float: right;
+  } 
 
   body#blog .page-shadow {
     margin-top: 0 !important;
@@ -196,11 +245,11 @@
   }
 
   article {
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
   }
 
   #post_preview {
-    height: 230px;
+    /*height: 230px;*/
     overflow-y: hidden;
   }
 
@@ -228,36 +277,33 @@
     color: gray;
   }
 
-  /* article img[align=left] {
-    padding: 0px 10px 10px 0px;
-  }
-
-  article img[align=right] {
-    padding: 0px 0px 10px 10px;
-  } */
-
   .index_post_partial span:not(.callout) img {
     max-height: 200px;
     max-width: 200px;
   }
 
+  .page.watermark-draft:before {
+    content: "DRAFT";
+    -webkit-transform: rotate(-90deg);
+    position: absolute;
+    font-weight: bold;
+    font-size: larger;
+    color: white;
+    display: block;
+    margin-left: -73px;
+    background-color: #CA1313;
+    padding: 5px;
+    margin-top: 1px;
+    letter-spacing: 2px;
+  }
+
   .watermark-draft {
-    background: url('../images/watermark-draft-light.png');
+    /* background: url('../images/watermark-draft-light.png'); */
   }
   
   .emphasized {
     font-size: 120%;
     font-weight: bold;
-  }
-  
-  .page img, .page .callout {
-    border: 1px solid lightGrey;
-    background-color: white;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 1px 1px 3px gray;
-    font-weight: bold;
-    font-size: 110%;
   }
   
   .callout-small {
@@ -370,4 +416,54 @@
     background: #402468;
   }
 
+  .ribbon-basic {
+    background: #098A03;
+  }
 
+  .page img, .page .callout {
+    border: 1px solid lightGrey;
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 1px 1px 3px gray;
+    font-weight: bold;
+    font-size: 110%;
+  }
+
+  body#blog table.agenda img {
+    max-width: 50px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  body#blog table.agenda th {
+    background-color: #71AACA;
+  }
+
+  body#blog table.agenda th {
+    color: white;
+  }
+
+  body#blog table.agenda h2 {
+    margin: 0px;
+  }
+
+  body#blog table.agenda .dont-resize {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 0px !important;
+  }
+
+/* Comments */
+
+blockquote {
+  border-left: 5px solid #BBB;
+}
+
+blockquote > a.close {
+  display: none;
+}
+
+blockquote:hover > a.close {
+  display: block;
+}

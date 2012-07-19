@@ -3,4 +3,4 @@ class Subscription < ActiveRecord::Base
   scope :active, where(:active => true)
   scope :closed, where(:active => false)
   
-end
+end 

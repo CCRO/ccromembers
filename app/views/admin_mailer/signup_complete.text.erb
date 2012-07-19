@@ -1,0 +1,14 @@
+Admin,
+
+<%= @person.name %> has registered on the CCRO website. 
+
+They now have the following active subscriptions:
+<% @person.subscriptions.each do |sub| %>
+	<%= sub.product %>
+<% end %>
+
+To view this person click here:
+<%= person_url(@person) %>
+
+They were trying to access:
+<%= @requested_url %>

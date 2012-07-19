@@ -172,6 +172,7 @@ window.Mercury = {
           },
         rules:                 {
           horizontalRule:      ['Horizontal Rule', 'Insert a horizontal rule'],
+          //markTruncate:        ['Truncate Here','Insert a [---MORE---] to truncate'], 
           sep1:                '-'
           },
         formatting:            {
@@ -312,6 +313,7 @@ window.Mercury = {
     // callback functions are executed within the scope of the given region, so you have access to all it's methods.
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
+      markTruncate: function(selection) { selection.replace('[---MORE---]'); },
       htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); },
       insertMedia: function() {
           Mercury.modal('/mercury/modals/media.html', { title: 'Insert Media (images and videos)', handler: 'insertMedia' });
@@ -460,7 +462,7 @@ window.Mercury = {
   // ## Debug Mode
   //
   // Turning debug mode on will log events and other various things (using console.debug if available).
-  debug: false,
+  debug: true,
 
   // The onload method is provided as a callback in case you want to override default Mercury Editor behavior.  It will
   // be called directly after the Mercury scripts have loaded, but before anything has been initialized.  It's a good

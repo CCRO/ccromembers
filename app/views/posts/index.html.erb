@@ -1,0 +1,19 @@
+<% if ['drafts', 'my_drafts'].include?(params[:filter]) && can?(:create, Post) %>
+	<div class="well">
+	  <%= form_for Post.new do |f| %>
+	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	    <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
+	  <% end %>
+	  <div style="clear: both;"></div>
+	  <% if flash[:notice] %>
+	     <br>
+	     <div class="alert alert-error"><%= flash[:notice] %></div>
+	   <% end %>
+	</div>
+<% end %>
+
+<% if @posts.present? %>
+	<%= render @posts %>
+<% else %>
+	<h1>You do not currently have any drafts. </h1><h2>Good job, everything is published! Or you need to get to work.</h2>
+<% end %>

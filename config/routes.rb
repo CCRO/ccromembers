@@ -1,6 +1,8 @@
 Ccromembers::Application.routes.draw do
   
   
+  get "exceptions/accessdenied", as: 'exceptions_accessdenied'
+
   resources :signups, :only => ['index', 'new', 'create'] do
     collection do 
       get :basic
@@ -19,30 +21,36 @@ Ccromembers::Application.routes.draw do
 
   mount Mercury::Engine => '/'
 
-  constraints(:domain => BLOG_DOMAIN) do
-    namespace :blog, :path => '/' do
-      resources :posts do
-        
-        resources :comments
+    
+    resources :posts do
+      
+      resources :comments
 
-        collection do
-          get :draft
-        end
-        
-        member do 
-          post :mercury_update
-          get :publish
-          get :claim
-        end
+      collection do
+        get :draft
+      end
+      
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
       end
     end
-    
-    resources :posts
-    
-    root :to => 'blog/posts#index'
-  end
+
+    match 'tag/:tag_name' => 'posts#index', as: 'tagged_posts'
+    match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
+    match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
+    match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'
+    match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
+    match 'shared_post/:token' => 'posts#show', as: 'shared_post'
+
   
-  constraints(:domain => PORTAL_DOMAIN) do
+    
+    root :to => 'posts#index'
   
     namespace :admin do
       resources :people
@@ -57,10 +65,8 @@ Ccromembers::Application.routes.draw do
       resources :comments
     end
 
-    root :to => 'documents#index'
 
-  end
-  
+ 
   match 'login' => 'sessions#new', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'register' => 'people#new', :as => :register
@@ -95,8 +101,7 @@ Ccromembers::Application.routes.draw do
     end
     
     collection { post :sort }
-    
-  end
+  end  
   
   match ':controller(/:action(/:id))(.:format)'
 end

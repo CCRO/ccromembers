@@ -1,0 +1,8 @@
+<%= @email %>, 
+
+<%= @sender.name %> has shared a CCRO article with you titled "<%= @post.title %>"
+
+<%= strip_tags @post.body.gsub('&nbsp;', ' ').split('[---MORE---]').first + " ..." %>
+
+Contine to full article:
+<%= post_url(@post) %>
