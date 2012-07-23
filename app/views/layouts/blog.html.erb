@@ -11,6 +11,11 @@
   <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
 </head>
 <body id="blog">
+    <% if false %>
+    <% if can? :read, Post, {level: 'committee', :published => true}   %>
+      <%= render 'shared/nav' %>
+    <% end %>
+  <% end %>
 <!--Body content (BEGIN)-->
   
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
@@ -93,7 +98,8 @@
           <center>
             <%= link_to "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" do %>
               <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/461/Screen_Shot_2012-07-16_at_9.07.06_AM.png" %><br><br>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
             <% end %>
             <% if current_user && current_user.admin? %>
               <%= image_tag "http://placehold.it/300x250" %><br><br>
