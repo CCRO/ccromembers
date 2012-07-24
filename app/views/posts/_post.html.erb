@@ -1,11 +1,13 @@
 <% #unless post.level == 'committee' && params[:action] == 'index' && cannot?(:read, post)%> 
-  <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
-    <% if post.locker == current_user %>
-      <span class="label">You are currently the editor of this post.</span>
-    <% else %>
-      <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Post is currently being edited by <%= post.locker.name %></span>
+  <% if can?(:edit, post) && params[:action] == 'show' %>
+    <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
+      <% if post.locker == current_user %>
+        <span class="label">You are currently the editor of this post.</span>
+      <% else %>
+        <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Post is currently being edited by <%= post.locker.name %></span>
+      <% end %>
+      <br><br>
     <% end %>
-    <br><br>
   <% end %>
   <div class="page <%= "watermark-draft" unless post.published? %>">
     <article id="post-<%= post.id %>">
