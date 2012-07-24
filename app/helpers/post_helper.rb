@@ -10,10 +10,10 @@ module PostHelper
   end
 
   def short_date(post)
-  	 if post.created_at.to_date == Time.now.to_date
-  		l post.created_at, :format => :time
+  	 if post.published_at.to_date == Time.now.to_date
+  		l post.published_at, :format => :time
   	else
-  		l post.created_at.to_date, :format => :short
+  		l post.published_at.to_date, :format => :short
   	end
   end
 
