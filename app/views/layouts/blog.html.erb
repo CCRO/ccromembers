@@ -96,11 +96,16 @@
             <li><%= link_to 'Summit', tagged_posts_path('summit') %></li>
           </ul>
           <center>
-            <%= link_to "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" do %>
+            <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
               <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
             <% end %>
+            <%= link_to "http://www.riskadvisory.com/index.html" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
+            <% end %>
+            <%= link_to "http://www.ccro.org/directory/7" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
+            <% end %>  
+            
             <% if current_user && current_user.admin? %>
               <%= image_tag "http://placehold.it/300x250" %><br><br>
               <%= image_tag "http://placehold.it/300x600" %>
