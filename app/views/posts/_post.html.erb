@@ -1,4 +1,4 @@
-<% unless post.level == 'committee' && params[:action] == 'index' && cannot?(:read, post)%> 
+<% #unless post.level == 'committee' && params[:action] == 'index' && cannot?(:read, post)%> 
   <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
     <% if post.locker == current_user %>
       <span class="label">You are currently the editor of this post.</span>
@@ -15,7 +15,7 @@
         <% elsif post.level == 'pro' && params[:action] == 'index' %>
           <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
         <% elsif post.level == 'committee' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= 'Member' %></h1>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
         <% end %>
 
         <div class="btn-toolbar pull-right">
@@ -46,7 +46,7 @@
                 <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
                 <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
                 <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-                <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Member' %>
+                <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
               <% end %>
               <p>Commenting</p>
               <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
@@ -126,7 +126,7 @@
     
     </article>
   </div>
-<% end %>
+<% #end %>
 
 <% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
   <div id="about_author" class="">
