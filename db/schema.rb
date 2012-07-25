@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706155920) do
+ActiveRecord::Schema.define(:version => 20120719191314) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -130,8 +130,8 @@ ActiveRecord::Schema.define(:version => 20120706155920) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "author_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.boolean  "published"
     t.datetime "published_at"
     t.string   "level"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20120706155920) do
     t.integer  "locker_id"
     t.datetime "locked_at"
     t.string   "tag_list"
+    t.boolean  "commenting_enabled"
   end
 
   create_table "questions", :force => true do |t|

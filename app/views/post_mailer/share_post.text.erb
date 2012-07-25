@@ -1,6 +1,6 @@
 <%= @email %>, 
 
-<%= @sender.name %> has shared a CCRO article with you titled "<%= @post.title %>"
+<%= @sender.name %> has shared a CCRO article with you titled "<%= strip_tags(@post.title).strip %>"
 
 <%= strip_tags @post.body.gsub('&nbsp;', ' ').split('[---MORE---]').first + " ..." %>
 

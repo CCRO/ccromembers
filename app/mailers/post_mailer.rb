@@ -1,6 +1,6 @@
 class PostMailer < ActionMailer::Base
   default from: "info@ccro.org"
-
+  include ActionView::Helpers::SanitizeHelper
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -10,6 +10,6 @@ class PostMailer < ActionMailer::Base
     @post = post
     @sender = sender
     @email = email
-    mail :to => @email, :subject => "#{@sender.name} has shared a CCRO article with you titled \"#{@post.title}\""
+    mail :to => @email, :from => @sender.email , :subject => "#{@sender.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\""
   end
 end

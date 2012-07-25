@@ -127,7 +127,14 @@
   body#blog #post_level_selector {
     position: absolute;
     top: 0px;
-    right: -80px;
+    right: -110px;
+  }
+
+  body#blog #post_level_selector p {
+    font-weight: bold;
+    margin-bottom: 0px;
+    position: relative;
+    right: 18px;
   }
 
   body#blog .editor_selector{
