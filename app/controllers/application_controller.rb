@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_browser
+
   before_filter :store_location
 
   before_filter :set_mailer_host
@@ -11,6 +13,13 @@ class ApplicationController < ActionController::Base
   
   before_filter :activation_authentication
   
+  def check_browser
+    browser = Browser.new(:ua => request.env['HTTP_USER_AGENT'], :accept_language => "en-us")
+
+    redirect_to hell_path if browser.ie? && params[:controller] != 'static'
+    logger.info "Browser Status: #{request.env['HTTP_USER_AGENT']}  =>  #{browser.to_s}"
+  end
+
   # Collect additional debug details for New Relic RPM is available
   # Do this after all other before filters so details are present
   before_filter :set_new_relic_custom_parameters
