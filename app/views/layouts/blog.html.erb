@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>CCRO - <%= "CCRO Blog" %></title>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
   <%= stylesheet_link_tag "blog", :media => "all" %>
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
@@ -12,6 +12,32 @@
   <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
 </head>
 <body id="blog">
+    <!--[if IE]>
+    <script type="text/javascript" 
+     src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+
+    <style>
+     .chromeFrameInstallDefaultStyle {
+       width: 100%; /* default is 800px */
+       border: 5px solid blue;
+     }
+    </style>
+
+    <div id="prompt">
+     <!-- if IE without GCF, prompt goes here -->
+    </div>
+ 
+    <script>
+     // The conditional ensures that this code will only execute in IE,
+     // Therefore we can use the IE-specific attachEvent without worry
+     window.attachEvent("onload", function() {
+       CFInstall.check({
+         mode: "inline", // the default
+         node: "prompt"
+       });
+     });
+    </script>
+  <![endif]-->
     <% if false %>
     <% if can? :read, Post, {level: 'committee', :published => true}   %>
       <%= render 'shared/nav' %>
