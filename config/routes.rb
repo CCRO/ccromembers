@@ -64,6 +64,7 @@ Ccromembers::Application.routes.draw do
       member { post :mercury_update }
       resources :comments
     end
+    match 'shared_document/:token' => 'documents#show', as: 'shared_document'
 
 
  

@@ -3,7 +3,7 @@ class DocumentsController < ApplicationController
   layout 'documents', :except => 'show'
   layout 'doc_viewer', :only => 'show'
   
-  before_filter :require_user
+  before_filter :require_user, :except => 'show'
   # GET /documents
   # GET /documents.json
   def index
@@ -23,7 +23,12 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @document = Document.find(params[:id])
+    if params['token']
+      @document = Document.find_by_viewing_token(params[:token])
+    else 
+      @document = Document.find(params[:id])
+      authorize! :read, @document
+    end
 
     respond_to do |format|
       format.html # show.html.erb

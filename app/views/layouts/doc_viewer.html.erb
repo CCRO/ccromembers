@@ -27,7 +27,11 @@
   <body id="doc_viewer" data-spy="scroll" >
 
     <div class="container">
-              <%= yield %>
+       <%= yield %>
+       
+	   <footer>
+        <%= render 'shared/footer' %>
+      </footer>
     </div> <!-- /container -->
 
     <!-- Le javascript
@@ -36,7 +40,7 @@
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "mercury" %>
 	
-	<div class="print-footer">&copy; 2012 CCRO. All Rights Reserved. Printed exclusively for Christopher Jones, CCRO.</div>
+
   </body>
 <script>
 	$('div.page ol.standard').before('<h4 class="ribbon-right ribbon-info"><i class="icon-info-sign icon-white" style="margin-top: 2px;"></i><span class="ribbon-collapse"> Risk Management Standard</span></h4>')

@@ -68,5 +68,11 @@ class Document < ActiveRecord::Base
   def permalink
     "#{id}-#{title.parameterize}"
   end
-  
+
+  def generate_token(column = :viewing_token)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while Post.exists?(column => self[column])
+  end
+ 
 end
