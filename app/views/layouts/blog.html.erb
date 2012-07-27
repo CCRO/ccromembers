@@ -47,7 +47,8 @@
     <% end %>
   <% end %>
 <!--Body content (BEGIN)-->
-  
+<%= render 'shared/browser_warning' %>
+
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
     <div id='fatty_basket' class="container">
       <div id='fatty_nav'class="row">
@@ -96,7 +97,7 @@
 
       <div id="header_expanded" class="row">
         <div id="promo_video" class="span8">
-          <iframe id="video" src="http://player.vimeo.com/video/40555402?title=0&amp;byline=0&amp;portrait=0" width="770" height="432" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+          <img id="video" src="https://s3.amazonaws.com/ccro_static/empty_office.png" width="770" height="432" frameborder="0" >
         </div>
         <div id="header_promo" class="span4">
           <h1>Committee of Chief Risk Officers:</h1>

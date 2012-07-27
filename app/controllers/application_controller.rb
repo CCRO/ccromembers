@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def check_browser
     browser = Browser.new(:ua => request.env['HTTP_USER_AGENT'], :accept_language => "en-us")
 
-    redirect_to hell_path if browser.ie? && params[:controller] != 'static'
+    redirect_to hell_path if (browser.ie6? || browser.ie7?) && params[:controller] != 'static'
     logger.info "Browser Status: #{request.env['HTTP_USER_AGENT']}  =>  #{browser.to_s}"
   end
 
