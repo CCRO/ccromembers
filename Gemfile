@@ -37,6 +37,7 @@ gem 'acts_as_list'
 gem 'chargify_api_ares'
 gem 'acts-as-taggable-on'
 gem 'browser'
+gem 'doc_raptor'
 
 # Gems used only for assets and not required
 # in production environments by default.
