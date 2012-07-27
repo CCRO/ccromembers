@@ -23,5 +23,6 @@
 <%= yield %>
 <!--Body content (END)-->
 <%= render 'shared/footer' %>
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>

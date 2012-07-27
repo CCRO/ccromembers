@@ -9,5 +9,6 @@
 <!--Body content (BEGIN)-->
 <%= yield %>
 <!--Body content (END)-->
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>
