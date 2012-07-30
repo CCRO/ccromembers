@@ -13,7 +13,6 @@ class Ability
       can :create, Comment
       can [:edit, :destroy], [Post, Document, Comment, Message], :author_id => user.id
       can :manage, Person, :id => user.id
-      
     end
     
     if user.pro?
