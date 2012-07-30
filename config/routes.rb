@@ -67,11 +67,11 @@ Ccromembers::Application.routes.draw do
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
-    match 'tag/:tag_name' => 'pages#index', as: 'tagged_posts'
-    match 'archive' => 'pages#index', :defaults => { filter: 'archive' }, as: 'archive_pages'
-    match 'drafts' => 'pages#index', :defaults => { filter: 'drafts' }, as: 'draft_pages'
-    match 'my_drafts' => 'pages#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_pages'
-    match 'summit' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
+    match 'page_tag/:tag_name' => 'pages#index', as: 'tagged_pages'
+    match 'page_archive' => 'pages#index', :defaults => { filter: 'archive' }, as: 'archive_pages'
+    match 'page_drafts' => 'pages#index', :defaults => { filter: 'drafts' }, as: 'draft_pages'
+    match 'my_page_drafts' => 'pages#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_pages'
+    match 'summit_page' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
     match 'shared_page/:token' => 'pages#show', as: 'shared_page'
   
     

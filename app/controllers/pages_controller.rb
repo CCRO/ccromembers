@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-	layout 'blog'
+	layout 'page'
   
   def index
     if params[:filter] 
