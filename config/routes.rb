@@ -41,6 +41,25 @@ Ccromembers::Application.routes.draw do
       end
     end
 
+    resources :pages do
+      
+      resources :comments
+
+      collection do
+        get :draft
+      end
+      
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
+      end
+    end
+
     match 'tag/:tag_name' => 'posts#index', as: 'tagged_posts'
     match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
@@ -48,6 +67,12 @@ Ccromembers::Application.routes.draw do
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
+    match 'tag/:tag_name' => 'pages#index', as: 'tagged_posts'
+    match 'archive' => 'pages#index', :defaults => { filter: 'archive' }, as: 'archive_pages'
+    match 'drafts' => 'pages#index', :defaults => { filter: 'drafts' }, as: 'draft_pages'
+    match 'my_drafts' => 'pages#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_pages'
+    match 'summit' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
+    match 'shared_page/:token' => 'pages#show', as: 'shared_page'
   
     
     root :to => 'posts#index'
