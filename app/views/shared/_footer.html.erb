@@ -68,6 +68,17 @@
         <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
         <h2>Share by email:</h2>
         <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
+          <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
+          <% standard_body = 
+          "Hello,
+          
+          #{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"
+
+          #{strip_tags(raw @post.body.split('[---MORE---]').first).strip}
+          
+          continued here: #{post_url}"%>
+          <%= text_area_tag 'my_subject', standard_subject, :rows => 2, :cols => 5  %><br><br>
+          <%= text_area_tag 'short_message', standard_body, :rows => 10, :cols => 25 %><br><br>
           <%= text_field_tag 'email_list' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>

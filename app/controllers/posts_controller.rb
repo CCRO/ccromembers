@@ -60,7 +60,7 @@ class PostsController < ApplicationController
   def share
     post = Post.find(params[:id])
     authorize! :read, post
-    post.share_by_email(params[:email_list], current_user)
+    post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
     redirect_to post
   end
 
