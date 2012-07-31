@@ -77,9 +77,12 @@
           #{strip_tags(raw @post.body.split('[---MORE---]').first).strip}
           
           continued here: #{post_url}"%>
-          <%= text_area_tag 'my_subject', standard_subject, :rows => 2, :cols => 5  %><br><br>
-          <%= text_area_tag 'short_message', standard_body, :rows => 10, :cols => 25 %><br><br>
-          <%= text_field_tag 'email_list' %>
+          <h4>subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 1, style: 'width: 95%; important!' %><br><br>
+          <h4>body</h4>
+          <%= text_area_tag 'short_message', standard_body, rows: 5, style: 'width: 95%; important!' %><br><br>
+          <h4>intended recipient/s</h4>
+          <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>
       </div>
