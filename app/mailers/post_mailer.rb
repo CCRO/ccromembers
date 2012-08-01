@@ -6,10 +6,12 @@ class PostMailer < ActionMailer::Base
   #
   #   en.post_mailer.share_post.subject
   #
-  def share_post(post, email, sender)
+  def share_post(post, email, my_subject, short_message, sender)
     @post = post
     @sender = sender
     @email = email
-    mail :to => @email, :from => @sender.email , :subject => "#{@sender.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\""
+    @my_subject = my_subject
+    @short_message = short_message
+    mail :to => @email, :from => @sender.email , :subject => @my_subject, :body => @short_message
   end
 end

@@ -36,10 +36,10 @@ class Post < ActiveRecord::Base
     self.locked, self.locker, self.locked_at = nil, nil, nil
   end
 
-  def share_by_email(email_list, sender)
+  def share_by_email(email_list, my_subject, short_message, sender)
     email_list = email_list.gsub(' ', '').split(',') if email_list.class.name == 'String'
     email_list.each do |email|
-      PostMailer.share_post(self, email, sender).deliver
+      PostMailer.share_post(self, email, my_subject, short_message, sender).deliver
     end
   end
 
