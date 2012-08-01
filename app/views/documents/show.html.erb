@@ -4,13 +4,14 @@
 			<%= link_to image_tag(asset_path('ccro_long.png'), :width => '100%'), documents_path %>
 		</div>
 		<br />
-			<% if current_user && current_user.admin? %>
+
+		<% if current_user && current_user.admin? %>
 			<div class="btn-toolbar">
 				<div class="btn-group">
-				  <a data-toggle="modal" href="#modal-share_link"  class="btn" >
+				  	<a data-toggle="modal" href="#modal-share_link"  class="btn" >
 						<i class="icon-share"></i>
 					</a>
-				  <%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Document', id: "edit_link", data: {save_url: mercury_update_document_path(@document)} do %>
+				  	<%= link_to "/editor" + request.path, class: 'btn', rel: 'tooltip', title: 'Edit Document', id: "edit_link", data: {save_url: mercury_update_document_path(@document)} do %>
 						<i class="icon-pencil"></i>
 					<% end %> 
 					<a href="/documents/<%= @document.id %>" class="btn" data-confirm="Are you sure?" data-method="delete" rel="nofollow">
@@ -18,39 +19,41 @@
 					</a>
 				</div>
 			</div>
-			<% end %>
-	      <ul class="nav nav-tabs nav-stacked">
+		<% end %>
+
+	    <ul class="nav nav-tabs nav-stacked">
 	        <li class="active"><a href="#">Author <span class="pull-right"><%= truncate(@document.owner.name,:length => 25, :omission =>"...") if @document.owner %></span></a></li>
 	        <li class="active"><a href="#">Updated Date <span class="pull-right"><%= @document.updated_at.to_date.to_s(:rfc822) %></span></a></li>
 	        <li class="active"><a href="">Published <span class="btn-group pull-right" style="margin-top: -5px; margin-right: -5px;"> 
-					<% if @document.published %>
-						<button id="doc-toggle-pub" href="#" class="btn btn-success" rel="tooltip" title="Toggle Published">
-							<i class="icon-ok icon-white"></i> Published
-						</button>
-					<% else %>
-						<button id="doc-toggle-pub" href="#" class="btn btn-danger" rel="tooltip" title="Toggle Published">
-							<i class="icon-remove icon-white"></i> Draft
-						</button>
-					<% end %>
-					<button href="#" class="btn" rel="tooltip" title="Set permissions">
-						<i class="icon-cog"></i>
+				<% if @document.published %>
+					<button id="doc-toggle-pub" href="#" class="btn btn-success" rel="tooltip" title="Toggle Published">
+						<i class="icon-ok icon-white"></i> Published
 					</button>
+				<% else %>
+					<button id="doc-toggle-pub" href="#" class="btn btn-danger" rel="tooltip" title="Toggle Published">
+						<i class="icon-remove icon-white"></i> Draft
+					</button>
+				<% end %>
+				<button href="#" class="btn" rel="tooltip" title="Set permissions">
+					<i class="icon-cog"></i>
+				</button>
 				</span></a></li>
 	        <li class="active"><a href="#">Published Date <span class="pull-right"><%= @document.published_at.to_date.to_s(:rfc822) %></span></a></li>
+	    </ul>
 
-	      </ul>
 		<% unless params[:view] %>
-		      <ul id="sections-nav" class="nav nav-tabs nav-stacked">
-		        <li id="control"><a id="toggle-toc" href="#">Table of Contents<i class="icon-chevron-up pull-right"></i></a></li>
-		        <%  @document.sections.each do |section| %>
+	      <ul id="sections-nav" class="nav nav-tabs nav-stacked">
+	        <li id="control"><a id="toggle-toc" href="#">Table of Contents<i class="icon-chevron-up pull-right"></i></a></li>
+	        <%  @document.sections.each do |section| %>
 				<li><a href="#<%= section[:title].parameterize %>"><%= section[:title] %></a></li>
-				<% end %>
-		      </ul>
-		 <% end %>
-		 <% if false %>
-			 <% if @document.id == '5' %>
-			      <ul id="doc-views-nav" class="nav nav-tabs nav-stacked">
-			        <li id="control"><a id="toggle-views" href="#">Alternate Views<i class="icon-chevron-down pull-right"></i></a></li>
+			<% end %>
+	      </ul>
+		<% end %>
+
+		<% if false %>
+			<% if @document.id == '5' %>
+			    <ul id="doc-views-nav" class="nav nav-tabs nav-stacked">
+			       	<li id="control"><a id="toggle-views" href="#">Alternate Views<i class="icon-chevron-down pull-right"></i></a></li>
 			        <li class="hide"><a href="?#">Clear Alternate View</a></li>
 			        <li class="hide"><a href="?view=principal_1">Compare to PJM Principal No. 1</a></li>
 			        <li class="hide"><a href="?view=principal_2">Compare to PJM Principal No. 2</a></li>
@@ -60,11 +63,12 @@
 			        <li class="hide"><a href="?view=principal_6">Compare to PJM Principal No. 6</a></li>
 			        <li class="hide"><a href="?view=principal_7">Compare to PJM Principal No. 7</a></li>
 			        <li class="hide"><a href="?view=principal_8">Compare to PJM Principal No. 8</a></li>
-			      </ul>
-			  <% end %>
-		  <% end %>
-		   <% if @document.id == '5' %>
-		      <ul id="" class="nav nav-tabs nav-stacked">
+			    </ul>
+			<% end %>
+		<% end %>
+		   
+		<% #if @document.id == '5' %>
+	    	<ul id="" class="nav nav-tabs nav-stacked">
 		        <li <a href="?view=principal_1">Compare to PJM Principal No. 1</a></li>
 		        <li <a href="?view=principal_2">Compare to PJM Principal No. 2</a></li>
 		        <li <a href="?view=principal_3">Compare to PJM Principal No. 3</a></li>
@@ -73,14 +77,15 @@
 		        <li <a href="?view=principal_6">Compare to PJM Principal No. 6</a></li>
 		        <li <a href="?view=principal_7">Compare to PJM Principal No. 7</a></li>
 		        <li <a href="?view=principal_8">Compare to PJM Principal No. 8</a></li>
-		      </ul>
-		  <% end %>
+	      	</ul>
+		<% #end %>
+	</div>
 
-	    </div>
+
     <div class="page">
-      <h1 class="ribbon-left"><span id="document_title" class="mercury-region" data-type="editable"><%= @document.title.html_safe %></span></h1>
-	  <div id="document_body" class="mercury-region" data-type="editable">
-		<%= @document.body.html_safe %>
-	  </div>
-    </div>
+    	<h1 class="ribbon-left"><span id="document_title" class="mercury-region" data-type="editable"><%= @document.title.html_safe %></span></h1>
+  		<div id="document_body" class="mercury-region" data-type="editable">
+			<%= @document.body.html_safe %>
+  		</div>
+	</div>
 </div>
