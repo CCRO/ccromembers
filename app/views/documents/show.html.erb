@@ -52,23 +52,7 @@
 	      </ul>
 		<% end %>
 
-		<% if false %>
-			<% if @document.id == '5' %>
-			    <ul id="doc-views-nav" class="nav nav-tabs nav-stacked">
-			       	<li id="control"><a id="toggle-views" href="#">Alternate Views<i class="icon-chevron-down pull-right"></i></a></li>
-			        <li class="hide"><a href="?#">Clear Alternate View</a></li>
-			        <li class="hide"><a href="?view=principal_1">Compare to PJM Principal No. 1</a></li>
-			        <li class="hide"><a href="?view=principal_2">Compare to PJM Principal No. 2</a></li>
-			        <li class="hide"><a href="?view=principal_3">Compare to PJM Principal No. 3</a></li>
-			        <li class="hide"><a href="?view=principal_4">Compare to PJM Principal No. 4</a></li>
-			        <li class="hide"><a href="?view=principal_5">Compare to PJM Principal No. 5</a></li>
-			        <li class="hide"><a href="?view=principal_6">Compare to PJM Principal No. 6</a></li>
-			        <li class="hide"><a href="?view=principal_7">Compare to PJM Principal No. 7</a></li>
-			        <li class="hide"><a href="?view=principal_8">Compare to PJM Principal No. 8</a></li>
-			    </ul>
-			<% end %>
-		<% end %>
-
+		<% if @document.id == '5' %>
 		    <ul id="doc-views-nav" class="nav nav-tabs nav-stacked">
 		       	<li id="control"><a id="toggle-views" href="#">Alternate Views<i class="icon-chevron-down pull-right"></i></a></li>
 		        <li> <a href="?#">Clear Alternate View</a></li>
@@ -80,8 +64,8 @@
 		        <li> <a href="?view=principal_6">Compare to PJM Principal No. 6</a></li>
 		        <li> <a href="?view=principal_7">Compare to PJM Principal No. 7</a></li>
 		        <li> <a href="?view=principal_8">Compare to PJM Principal No. 8</a></li>
-		    </ul>
-
+	    	</ul>
+		<% end %>
 	</div>
 
 
