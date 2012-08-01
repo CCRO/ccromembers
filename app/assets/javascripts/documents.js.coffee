@@ -48,6 +48,7 @@ jQuery ->
     $('#sections-nav li:not(#control)').toggleClass('hide')
     $(this).children('i').toggleClass('icon-chevron-down')
     $(this).children('i').toggleClass('icon-chevron-up')
+    
     $.cookie("doc-toggle-toc", $('ul#sections-nav li:not(#control):first').hasClass('hide'))
   $('a#toggle-views').click ->
     $('#doc-views-nav li:not(#control)').toggleClass('hide')
