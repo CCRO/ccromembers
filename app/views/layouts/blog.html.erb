@@ -4,6 +4,7 @@
   <title>CCRO - <%= "CCRO Blog" %></title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "style", :media => "all" %>
   <%= stylesheet_link_tag "blog", :media => "all" %>
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
@@ -13,14 +14,13 @@
 </head>
 <body id="blog">
 
-    <% if false %>
-    <% if can? :read, Post, {level: 'committee', :published => true}   %>
-      <%= render 'shared/nav' %>
-    <% end %>
-  <% end %>
+
+<% if can? :read, Post, {level: 'committee', :published => true}   %>
+  <%= render 'shared/nav' %>
+<% end %>
+
 <!--Body content (BEGIN)-->
 <%= render 'shared/browser_warning' %>
-
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
     <div id='fatty_basket' class="container">
       <div id='fatty_nav'class="row">
@@ -91,9 +91,10 @@
       	<aside class="span3">
           <% if can? :create, Post %>
             <ul class="nav nav-tabs nav-stacked">
-              <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
-              <li><%= link_to 'Manage my drafts', my_draft_posts_path() %></li>
+              <li><%= link_to 'Drafts page', draft_posts_path() %></li>
+              <li><%= link_to 'My drafts', my_draft_posts_path() %></li>
               <li><%= link_to 'Archived posts', archive_posts_path() %></li>
+              <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
             </ul>
           <% end %>
           <ul class="nav nav-tabs nav-stacked">

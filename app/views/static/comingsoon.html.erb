@@ -1,6 +1,19 @@
-	<div class="alert alert-block alert-info span8 offset2">
-  	  <a class="close" data-dismiss="alert">×</a>
-  		<h4 class="alert-heading">Coming Soon!</h4>
-  	  	The feature you are trying to access is coming soon! Please stay tuned.
+<head>
+  <title>CCRO - <%= "CCRO Blog" %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "style", :media => "all" %>
+  <%= stylesheet_link_tag "blog", :media => "all" %>
+  <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
+</head>
+<body id="blog">
+	<div class="row-fluid">
+	  <div class="hero-unit span6">
+	    <h1>Coming Soon!</h1>
+	    <p> The feature you are trying to access is being developed right now! Please stay tuned.
+	    <p>
+	      <%= link_to "back", :back,  :class => "btn btn-success btn-large" %>
+	    </p>
+	  </div>
 	</div>
-	<br /><br /><br />
+</body>
