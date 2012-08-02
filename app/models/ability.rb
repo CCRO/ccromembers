@@ -6,6 +6,7 @@ class Ability
         
     can :read, Post, {level: 'public', published: true}
     can :create, Person
+    can :read, Survey if user.id
     
     if user.basic?
       can :read, Survey if user.id
