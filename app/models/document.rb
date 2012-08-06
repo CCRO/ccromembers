@@ -1,3 +1,4 @@
+
 class Document < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   default_url_options[:host] = 'ccromembers.dev'

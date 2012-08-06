@@ -12,6 +12,7 @@ class DocumentsController < ApplicationController
     else
       @documents = Document.published.accessible_by(current_ability)
     end
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,8 +34,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document, :options => {:except => [:body], :methods => [:preview]} }
-      format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} }
-      
+      format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} } 
     end
   end
   
