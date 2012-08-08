@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new.json
   def new
     @document = Document.new
-    @document.format = 'markdown'
+    # @document.format = 'markdown'
     
     respond_to do |format|
       format.html # new.html.erb
@@ -59,12 +59,14 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(params[:document])
+    @document.generate_token
+    @document.archived = false
     @document.owner ||= default_company
     @document.author = current_user
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, :flash => { :success => 'Document was successfully created.'} }
+        format.html { redirect_to document_path(@document), :flash => { :success => 'Document was successfully created.'} }
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }

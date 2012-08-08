@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
   
   before_filter :activation_authentication
   
+  before_filter :set_cache
+
+  def set_cache
+    response.headers["Cache-Control"] = "max-age=3600, must-revalidate"
+  end
+
   def check_browser
     browser = Browser.new(:ua => request.env['HTTP_USER_AGENT'], :accept_language => "en-us")
 

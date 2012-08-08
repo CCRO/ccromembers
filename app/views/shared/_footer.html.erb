@@ -88,7 +88,7 @@
       </div>
     </div>
   <% end %>
-  <% if @document %>
+  <% if @document && @document.id %>
     <div class="modal hide fade" id="modal-share_link">
       <div class="modal-header">
         <h1><%= @document.title %></h1>
