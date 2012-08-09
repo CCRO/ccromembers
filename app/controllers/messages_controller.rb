@@ -1,4 +1,7 @@
 class MessagesController < ApplicationController
+
+  before_filter :require_user
+
   # GET /messages
   # GET /messages.json
   def index
@@ -16,6 +19,7 @@ class MessagesController < ApplicationController
   def show
     @message = Message.find(params[:id])
     @commentable = @message
+    impressionist(@message)
     authorize! :read, @message
     
     respond_to do |format|

@@ -4,10 +4,7 @@
 		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...') %>
 	  </td>
 	<td class="span2"><strong><%= message.owner.name %></strong></td>
-	<td class="span2">
-		<% if message.comments.count > 0 %>
-		<span class="badge badge-inverse pull-right"><%= link_to message.comments.count, message_path(message) + '#comments', :style => 'color:white;' %></span>
-		<% end %>
+	<td class="span1">
 		<h5 style="color: grey;">
 		<% if message.last_activity_time == Time.now.to_date %>
 			<%= l message.last_activity_time, :format => :time %>
@@ -15,6 +12,15 @@
 			<%= l message.last_activity_time.to_date, :format => :short %>
 		<% end %>
 		</h5>
+	</td>
+	<td class="span1">
+		<% if message.impressionist_count(:filter=>:user_id) > 0 %>
+		<span class="badge badge-inverse pull-right"><%= link_to message.impressionist_count(:filter=>:user_id).to_s + " Views", message_path(message), :style => 'color:white;' %></span>
+		<% end %>
+		<% if message.comments.count > 0 %>
+		<br />
+		<span class="badge badge-inverse pull-right"><%= link_to message.comments.count.to_s + " Comments", message_path(message) + '#comments', :style => 'color:white;' %></span>
+		<% end %>
 	</td>
 </tr>
 	
