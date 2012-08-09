@@ -100,7 +100,11 @@ GEM
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
+    httpclient (2.2.5)
     i18n (0.6.0)
+    impressionist (1.1.1)
+      httpclient (~> 2.2)
+      nokogiri (~> 1.5)
     journey (1.0.4)
     jqcloud-rails (1.0.0)
       jquery-rails
@@ -224,6 +228,7 @@ DEPENDENCIES
   google_visualr
   hirb
   htmlentities
+  impressionist
   jqcloud-rails
   jquery-rails
   mercury-rails

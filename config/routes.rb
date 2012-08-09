@@ -59,6 +59,10 @@ Ccromembers::Application.routes.draw do
     resources :comments
     resources :messages, :path => 'discussions' do
       resources :comments
+      member do
+        get :archive
+        get :unarchive
+      end
     end
     resources :documents do
       member { post :mercury_update }

@@ -2,8 +2,11 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.accessible_by(current_ability)
+    @messages = Message.not_archived.accessible_by(current_ability)
     @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+
+    @archived_messages = Message.archived.accessible_by(current_ability)
+    @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -96,5 +99,23 @@ class MessagesController < ApplicationController
       format.html { redirect_to messages_url }
       format.json { head :no_content }
     end
+  end
+
+  def archive
+    message = Message.find(params[:id])
+    authorize! :destory, message
+
+    message.archive
+
+    redirect_to message
+  end
+
+  def unarchive
+    message = Message.find(params[:id])
+    authorize! :destory, message
+
+    message.unarchive
+
+    redirect_to message
   end
 end

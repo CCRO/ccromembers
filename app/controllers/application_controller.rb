@@ -13,10 +13,11 @@ class ApplicationController < ActionController::Base
   
   before_filter :activation_authentication
   
-  before_filter :set_cache
+  before_filter :set_cache_buster
 
-  def set_cache
-    response.headers["Cache-Control"] = "max-age=3600, must-revalidate"
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
   end
 
   def check_browser

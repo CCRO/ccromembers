@@ -13,6 +13,11 @@
 	<% if can? :manage, @message %>
 		<div class="btn-group pull-right">
 		  <%= link_to raw('<i class="icon-pencil"></i>'), edit_message_url(@message), :class => 'btn' %>
+		  <% if @message.archived == true %>
+		  	<%= link_to raw('<i class="icon-inbox"></i> Unarchive'), unarchive_message_path(@message), :class => 'btn' %>
+		  <% else %>
+		  	<%= link_to raw('<i class="icon-inbox"></i> Archive'), archive_message_path(@message), :class => 'btn' %>
+		  <% end %>
 		  <%= link_to raw('<i class="icon-remove"></i>'), @message, :method => 'delete', :class => 'btn', :confirm => "Are you sure?" %>
 		</div>
 	<% end %>

@@ -8,6 +8,13 @@
 		<table class="table messages">
 			<%= render @messages.reverse %>
 		</table>
+		<% if @archived_messages %>
+		<h2 class="ribbon-left">Archived</h2>
+
+		<table class="table messages">
+			<%= render @archived_messages.reverse %>
+		</table>
+		<% end %>
 	</div>
 </div>
 	
