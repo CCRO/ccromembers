@@ -3,13 +3,18 @@
 	  	<% if can? :create, Message %>
 			<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
 		<% end %>
-		<h1 class="ribbon-left">Discussions</h1>
+		<h1 class="ribbon-left">Active Discussions</h1>
 
 		<table class="table messages">
 			<%= render @messages.reverse %>
 		</table>
-		<% if @archived_messages %>
-		<h2 class="ribbon-left">Archived</h2>
+
+	</div>
+</div>
+<div id="message_content_border">
+  <div id="message_content_box">
+  			<% if @archived_messages %>
+		<h2 class="ribbon-left">Archived Discussions</h2>
 
 		<table class="table messages">
 			<%= render @archived_messages.reverse %>
