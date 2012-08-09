@@ -3,6 +3,8 @@ class Message < ActiveRecord::Base
 
   belongs_to :owner, :polymorphic => true
   belongs_to :author, :class_name => 'Person'
+
+  is_impressionable
   
   scope :sorted_by_activity, :joins => :comments, :group => 'messages.id', :order => "comments.created_at,messages.created_at DESC"
   scope :archived, where(archived: true)
