@@ -6,10 +6,14 @@
 	<td class="span2"><strong><%= message.owner.name %></strong></td>
 	<td class="span1">
 		<h5 style="color: grey;">
-		<% if message.last_activity_time == Time.now.to_date %>
-			<%= l message.last_activity_time, :format => :time %>
+		<% unless message.archived %>
+			<% if message.last_activity_time == Time.now.to_date %>
+				<%= l message.last_activity_time, :format => :time %>
+			<% else %>
+				<%= l message.last_activity_time.to_date, :format => :short %>
+			<% end %>
 		<% else %>
-			<%= l message.last_activity_time.to_date, :format => :short %>
+			Archived
 		<% end %>
 		</h5>
 	</td>

@@ -57,6 +57,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(params[:message])
     @message.owner ||= default_company
+    @message.archived = false
     @message.author = current_user
     @message.published_at ||= Time.now
     
