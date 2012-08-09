@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120809184135) do
+ActiveRecord::Schema.define(:version => 20120809195818) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -129,6 +129,20 @@ ActiveRecord::Schema.define(:version => 20120809184135) do
     t.string   "owner_type"
     t.boolean  "archived"
     t.integer  "counter_cache"
+  end
+
+  create_table "moderators", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "message_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "observers", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "message_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "pages", :force => true do |t|

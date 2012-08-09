@@ -4,6 +4,8 @@ class Message < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   belongs_to :author, :class_name => 'Person'
 
+  has_many :moderators
+  has_many :observers
   is_impressionable
   
   scope :sorted_by_activity, :joins => :comments, :group => 'messages.id', :order => "comments.created_at,messages.created_at DESC"

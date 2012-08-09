@@ -11,6 +11,9 @@ class Person < ActiveRecord::Base
   belongs_to :company 
   has_many :documents, :as => :owner 
 
+  # has_many :observed_messages, :through => :observer
+  # has_many :moderated_messages, :through => :moderator
+  
   has_secure_password
 
   before_save :check_contacts
