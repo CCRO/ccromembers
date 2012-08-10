@@ -117,7 +117,18 @@
         	</div>
           <div>
             <%if post.published %>
-            <p style="padding-left:30px;"><strong><%= post.impressionist_count(:filter=>:user_id).to_s + " people have viewed this post " + post.impressionist_count(:filter=>:all).to_s + " times" %></strong></p>
+              <% if post.impressionist_count(:filter=>:user_id) == 1 %>
+                <% first_part = " person has viewed this post "%>
+              <% else %>
+                <% first_part = " people have viewed this post "%>
+              <% end %>
+              <% if post.impressionist_count(:filter=>:all) == 1 %>
+                <% last_part = " time"%>
+              <% else %>
+                <% last_part = " times"%>
+              <% end %>
+            
+            <p style="padding-left:30px;"><strong><%= post.impressionist_count(:filter=>:user_id).to_s + first_part + post.impressionist_count(:filter=>:all).to_s + last_part %></strong></p>
             <% end %>
           </div>
         <% end %>
