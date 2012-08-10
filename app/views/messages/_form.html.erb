@@ -2,6 +2,6 @@
     <%= form_for @message do |f| %>
     <%= f.text_field :subject, :placeholder => 'Subject', :class => 'span11 input-xlarge startfocus' %><br />
     <%= f.text_area :content, :rows => '25', :class => 'span11 simple_editor' %>
-    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
+    <%= f.submit "Update discussion topic", :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
     <% end %>
 </div>
