@@ -50,6 +50,8 @@ class PostsController < ApplicationController
       @commentable = @post
       authorize! :read, @post
     end
+    
+    impressionist(@post)
 
     respond_to do |format|
       format.html

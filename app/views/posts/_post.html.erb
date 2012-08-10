@@ -66,7 +66,9 @@
           <% else %>
             <%= link_to post.title.html_safe, post_path(post)  %>
           <% end %>
-          <div class="post_date"><%= short_date(post) %></div>
+          <div class="post_date">
+          </div>
+
         </h1>
         
         <h3 id="post_author">by <%= post.author.try(:name) %></h3>
@@ -109,9 +111,13 @@
         <br />
       <div class="row">
         <% if can?(:edit, post) && (params[:action] == 'show' || (params[:action] == 'index' && params[:filter] != 'archive') ) %>
+
           <div id="post_management_controls" class="pull-right">
         	 <% if @post %><a data-toggle="modal" href="#modal-share_link">share</a> | <% end %><%= link_to "duplicate", duplicate_post_path(post) %> | <%= link_to "claim ", claim_post_path(post) %> | <%= link_to "archive", post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
         	</div>
+          <div>
+            <p style="padding-left:30px;"><strong><%= post.impressionist_count(:filter=>:user_id).to_s + " people have viewed this post " + post.impressionist_count(:filter=>:all).to_s + " times" %></strong></p>
+          </div>
         <% end %>
         <% if ( params[:action]  == 'index' && params[:filter] == 'archive' ) %>
             <%= link_to restore_post_path(post), class: 'btn pull-right' do %>

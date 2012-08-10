@@ -7,10 +7,10 @@ class Post < ActiveRecord::Base
   
   belongs_to :author, :class_name => 'Person'
   belongs_to :owner, :polymorphic => true
-
   belongs_to :locker, :class_name => 'Person'
- 
   has_many :comments, :as => :commentable
+  is_impressionable
+
  
   before_save :set_published_date
   
