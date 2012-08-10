@@ -6,7 +6,7 @@
 			<h1 class="pull-left" style="padding-right: 10px; margin-top: 3px;"><i class="icon-inbox"></i></h1>
 		<% end %>
 		<strong><%= link_to message.subject, message %></strong> - 
-		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...') %><br />
+		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...').gsub("&nbsp;", " ") %><br />
 		<%= raw("<strong>Moderators: </strong>") + message.moderators.map { |m| m.person.name }.to_sentence if message.moderators.count > 0 %>
 	  </td>
 	<td class="span2"><strong><%= message.owner.name %></strong></td>
