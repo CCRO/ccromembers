@@ -116,7 +116,9 @@
         	 <% if @post %><a data-toggle="modal" href="#modal-share_link">share</a> | <% end %><%= link_to "duplicate", duplicate_post_path(post) %> | <%= link_to "claim ", claim_post_path(post) %> | <%= link_to "archive", post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
         	</div>
           <div>
+            <%if post.published %>
             <p style="padding-left:30px;"><strong><%= post.impressionist_count(:filter=>:user_id).to_s + " people have viewed this post " + post.impressionist_count(:filter=>:all).to_s + " times" %></strong></p>
+            <% end %>
           </div>
         <% end %>
         <% if ( params[:action]  == 'index' && params[:filter] == 'archive' ) %>
