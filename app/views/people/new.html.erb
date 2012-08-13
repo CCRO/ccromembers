@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="well span8 offset2">
-	<h1>CCRO User Registration</h1>
+	<h2>CCRO Basic Subscription</h2>
   <%= javascript_tag "var companies = #{ @companies.to_json };" %>
 
   <%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
@@ -47,7 +47,7 @@
       </div>
     </fieldset>
     <div class="actions">
-      <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>
+      <%= f.submit "Sign Up", :class => 'btn' %> or <%= link_to 'back', :back %>
     </div>
 
   <% end %>

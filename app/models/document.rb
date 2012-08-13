@@ -7,6 +7,7 @@ class Document < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :comments, :as => :commentable
   
+  is_impressionable
   has_paper_trail
   
   attr_reader :preview
