@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Question:</b>
+  <%= @poll.question %>
+
+</p>
+
+<p>
+  <b>Choice a:</b>
+  <%= @poll.choice_a %>
+  <%= link_to "PICK A", pick_a_poll_path(@poll)%>
+</p>
+
+<p>
+  <b>Choice b:</b>
+  <%= @poll.choice_b %>
+  <%= link_to "PICK B", pick_b_poll_path(@poll)%>
+</p>
+
+<p>
+  <b>Choice c:</b>
+  <%= @poll.choice_c %>
+  <%= link_to "PICK C", pick_c_poll_path(@poll)%>
+</p>
+
+<p>
+  <b>Choice d:</b>
+  <%= @poll.choice_d %>
+  <%= link_to "PICK D", pick_d_poll_path(@poll)%>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @poll.active %>
+</p>
+
+<% if false %>
+<p>
+  <b>Polling session:</b>
+  <%= @poll.polling_session %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_poll_path(@poll) %> |
+<%= link_to 'Back', polls_path %>
+<% end %>

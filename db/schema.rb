@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120809195818) do
+ActiveRecord::Schema.define(:version => 20120814183210) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -145,26 +145,6 @@ ActiveRecord::Schema.define(:version => 20120809195818) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "pages", :force => true do |t|
-    t.string   "title"
-    t.text     "header"
-    t.text     "body"
-    t.integer  "owner_id"
-    t.integer  "owner_type"
-    t.integer  "author_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.boolean  "published"
-    t.datetime "published_at"
-    t.string   "level"
-    t.string   "viewing_token"
-    t.boolean  "locked"
-    t.integer  "locker_id"
-    t.datetime "locked_at"
-    t.string   "tag_list"
-    t.boolean  "commenting_enabled"
-  end
-
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -184,6 +164,26 @@ ActiveRecord::Schema.define(:version => 20120809195818) do
     t.string   "last_name"
     t.boolean  "verified"
   end
+
+  create_table "polling_sessions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "polls", :force => true do |t|
+    t.text     "question"
+    t.text     "choice_a"
+    t.text     "choice_b"
+    t.text     "choice_c"
+    t.text     "choice_d"
+    t.boolean  "active"
+    t.integer  "polling_session_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "polls", ["polling_session_id"], :name => "index_polls_on_polling_session_id"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
