@@ -3,6 +3,7 @@ class PollsController < ApplicationController
   # GET /polls.json
   def index
     @polls = Poll.all
+    authorize! :create, Polls
 
     respond_to do |format|
       format.html # index.html.erb
