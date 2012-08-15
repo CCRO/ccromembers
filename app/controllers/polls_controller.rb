@@ -21,6 +21,15 @@ class PollsController < ApplicationController
     end
   end
 
+  def report
+    @poll = Poll.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @poll }
+    end
+  end
+
   # GET /polls/new
   # GET /polls/new.json
   def new
@@ -91,36 +100,52 @@ class PollsController < ApplicationController
     end
   end
 
-
-  def pick_a
+  def deactivate
     @poll = Poll.find(params[:id])
-    impressionist(@poll, "a")
+    @poll.active = false
+    @poll.save
 
     redirect_to @poll.polling_session
   end
 
+  def activate
+    @poll = Poll.find(params[:id])
+    @poll.active = true
+    @poll.save
+
+    redirect_to @poll.polling_session
+  end
+
+
+  def pick_a
+    @poll = Poll.find(params[:id])
+    impressionist(@poll, "a", :unique => [:impressionable_type, :impressionable_id, :user_id])
+
+    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
+  end
+
   def pick_b
     @poll = Poll.find(params[:id])
-    impressionist(@poll, "b")
+    impressionist(@poll, "b", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to "/static/thanks.html"
+    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
   end
 
   def pick_c
     @poll = Poll.find(params[:id])
-    impressionist(@poll, "c")
+    impressionist(@poll, "c", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to "/static/thanks.html"
+    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
   end
 
   def pick_d
     @poll = Poll.find(params[:id])
-    impressionist(@poll, "d")
+    impressionist(@poll, "d", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to "/static/thanks.html"
+    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
   end
 
 end

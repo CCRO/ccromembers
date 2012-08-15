@@ -1,12 +1,22 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Question:</b>
-  <%= poll.question %>
-  <% if poll.active %>
-    <P>This poll is active!</p><%= link_to 'Go to poll', poll_path(poll) %>
-  <% end%>
-</p>
+
+<% if poll.active %>
+<h2>
+  <b>Poll:</b>
+  <%= link_to poll.question, poll_path(poll) %>
+  <% if current_user && current_user.admin? %><br>
+    <%= link_to 'Deactiveate poll', deactivate_poll_path(poll), :class => 'btn btn-large' %><br>
+    <%= link_to 'Poll report', report_poll_path(poll), :class => 'btn btn-large' %>
+  <% end %>
+</h2>
+
+<% elsif current_user && current_user.admin? %>
+  <h2>
+  <b>Poll:</b>
+  <%= link_to poll.question, poll_path(poll) %>
+  <%= link_to 'Activate poll', activate_poll_path(poll), :class => 'btn btn-large' %>
+</h2>
+<% end %>
 
 <% if false %>
 <p>

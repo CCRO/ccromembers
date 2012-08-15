@@ -2,15 +2,22 @@ Ccromembers::Application.routes.draw do
   
   
   resources :polls do
-      member do
-        get 'pick_a'
-        get 'pick_b'
-        get 'pick_c'
-        get 'pick_d'
-      end
+    member do
+      get 'pick_a'
+      get 'pick_b'
+      get 'pick_c'
+      get 'pick_d'
+      get 'deactivate'
+      get 'activate'
+      get 'report'
     end
+  end
 
-  resources :polling_sessions
+  resources :polling_sessions do
+    member do
+      get 'report'
+    end
+  end
 
   get "exceptions/accessdenied", as: 'exceptions_accessdenied'
 

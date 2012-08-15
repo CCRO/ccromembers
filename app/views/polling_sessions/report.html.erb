@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @polling_session.name %>
+  <%= link_to 'Back to polling session', polling_session_path(@polling_session), :class => 'btn btn-large' %>
+</h1>
+
+<% if @poll.present? %>
+	<% @poll.each do |r| %>
+		<p>
+		  <b>Question:</b>
+		  <%= r.question %>
+
+		</p>
+
+		<p>
+		  <b>Choice a:</b>
+		  <%= r.choice_a %>
+		  :<%= Impression.where(impressionable_type: Poll, impressionable_id: r.id, message: 'a').count%>
+		</p>
+
+		<p>
+		  <b>Choice b:</b>
+		  <%= r.choice_b %>
+		  :<%= Impression.where(impressionable_type: Poll, impressionable_id: r.id, message: 'b').count%>
+		</p>
+
+		<p>
+		  <b>Choice c:</b>
+		  <%= r.choice_c %>
+		  :<%= Impression.where(impressionable_type: Poll, impressionable_id: r.id, message: 'c').count%>
+		</p>
+
+		<p>
+		  <b>Choice d:</b>
+		  <%= r.choice_d %>
+		  :<%= Impression.where(impressionable_type: Poll, impressionable_id: r.id, message: 'd').count%>
+		</p>
+		<br>
+		<br>
+	<% end %>
+<% else %>
+	<h1>There are not currently any Reports. </h1><h2>Let's go Poll some people!</h2>
+<% end %>
+
+<% if current_user.admin? %>
+	<%= link_to 'New Poll', new_poll_for_session_path(@polling_session) %><br>
+	<%= link_to 'All Polling sessions', polling_sessions_path %>
+<% end %>
+
+<% if false %>
+<%= link_to 'Edit', edit_polling_session_path(@polling_session) %> |
+<%= link_to 'Back', polling_sessions_path %>
+<% end %>

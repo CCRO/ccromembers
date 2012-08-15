@@ -36,11 +36,12 @@
     <%= f.check_box :active %>
   </div>
   
-  <%= f.hidden_field :polling_session, :value => @polling_session.id %>
+  <%= f.hidden_field :polling_session_id, value: @polling_session.id %>
+
   <% if false %>
   <div class="field">
-    <%= f.label :polling_session %><br />
-    <%= f.text_field :polling_session %>
+    <%= f.label :polling_session_id %><br />
+    <%= f.text_field :polling_session_id %>
   </div>
   <% end %>
   <div class="actions">

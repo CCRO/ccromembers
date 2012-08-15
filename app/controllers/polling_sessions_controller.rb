@@ -22,6 +22,16 @@ class PollingSessionsController < ApplicationController
     end
   end
 
+  def report
+    @polling_session = PollingSession.find(params[:id])
+    @poll = @polling_session.polls
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @polling_session }
+    end
+  end
+
   # GET /polling_sessions/new
   # GET /polling_sessions/new.json
   def new

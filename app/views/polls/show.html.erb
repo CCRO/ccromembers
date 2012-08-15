@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 
 <p>
   <b>Question:</b>
@@ -7,33 +7,30 @@
 </p>
 
 <p>
-  <b>Choice a:</b>
-  <%= @poll.choice_a %>
-  <%= link_to "PICK A", pick_a_poll_path(@poll)%>
+  <b>A:</b>
+  <%= @poll.choice_a %><br>
+  <%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %>
 </p>
 
 <p>
-  <b>Choice b:</b>
-  <%= @poll.choice_b %>
-  <%= link_to "PICK B", pick_b_poll_path(@poll)%>
+  <b>B:</b>
+  <%= @poll.choice_b %><br>
+  <%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %>
 </p>
 
 <p>
-  <b>Choice c:</b>
-  <%= @poll.choice_c %>
-  <%= link_to "PICK C", pick_c_poll_path(@poll)%>
+  <b>C:</b>
+  <%= @poll.choice_c %><br>
+  <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %>
 </p>
 
 <p>
-  <b>Choice d:</b>
-  <%= @poll.choice_d %>
-  <%= link_to "PICK D", pick_d_poll_path(@poll)%>
+  <b>D:</b>
+  <%= @poll.choice_d %><br>
+  <%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %>
 </p>
 
-<p>
-  <b>Active:</b>
-  <%= @poll.active %>
-</p>
+<%= link_to 'Return to Polling Session', polling_session_path(@poll.polling_session) %>
 
 <% if false %>
 <p>

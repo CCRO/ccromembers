@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Question:</b>
+  <%= @report.question %>
+
+</p>
+
+<p>
+  <b>Choice a:</b>
+  <%= @report.choice_a %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @report.id, message: 'a').count%>
+</p>
+
+<p>
+  <b>Choice b:</b>
+  <%= @report.choice_b %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @report.id, message: 'b').count%>
+</p>
+
+<p>
+  <b>Choice c:</b>
+  <%= @report.choice_c %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @report.id, message: 'c').count%>
+</p>
+
+<p>
+  <b>Choice d:</b>
+  <%= @report.choice_d %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @report.id, message: 'd').count%>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @report.active %>
+</p>
+
+
+<% if false %>
+<p>
+  <b>Polling session:</b>
+  <%= @poll.polling_session %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_poll_path(@poll) %> |
+<%= link_to 'Back', polls_path %>
+<% end %>
