@@ -1,6 +1,24 @@
 Ccromembers::Application.routes.draw do
   
   
+  resources :polls do
+    member do
+      get 'pick_a'
+      get 'pick_b'
+      get 'pick_c'
+      get 'pick_d'
+      get 'deactivate'
+      get 'activate'
+      get 'report'
+    end
+  end
+
+  resources :polling_sessions do
+    member do
+      get 'report'
+    end
+  end
+
   get "exceptions/accessdenied", as: 'exceptions_accessdenied'
 
   resources :signups, :only => ['index', 'new', 'create'] do
@@ -20,7 +38,6 @@ Ccromembers::Application.routes.draw do
     end
 
   mount Mercury::Engine => '/'
-
     
     resources :posts do
       
@@ -69,8 +86,6 @@ Ccromembers::Application.routes.draw do
       resources :comments
     end
     match 'shared_document/:token' => 'documents#show', as: 'shared_document'
-
-
  
   match 'login' => 'sessions#new', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
@@ -86,6 +101,8 @@ Ccromembers::Application.routes.draw do
   get 'activate(/:activation_token)' => 'sessions#activate'
 
   match 'forbidden' => 'static#403', :as => :forbidden
+  match 'new_poll(/:polling_session)' => 'polls#new_for_session', as: :new_poll_for_session
+
   
   resource :sessions
   resources :people

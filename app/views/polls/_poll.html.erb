@@ -1,0 +1,57 @@
+
+
+<% if poll.active %>
+<h2>
+  <b>Poll:</b>
+  <%= link_to poll.question, poll_path(poll) %>
+  <% if current_user && current_user.admin? %><br>
+    <%= link_to 'Deactiveate poll', deactivate_poll_path(poll), :class => 'btn btn-large' %><br>
+    <%= link_to 'Poll report', report_poll_path(poll), :class => 'btn btn-large' %>
+  <% end %>
+</h2>
+
+<% elsif current_user && current_user.admin? %>
+  <h2>
+  <b>Poll:</b>
+  <%= link_to poll.question, poll_path(poll) %>
+  <%= link_to 'Activate poll', activate_poll_path(poll), :class => 'btn btn-large' %>
+</h2>
+<% end %>
+
+<% if false %>
+<p>
+  <b>Choice a:</b>
+  <%= poll.choice_a %>
+</p>
+
+<p>
+  <b>Choice b:</b>
+  <%= poll.choice_b %>
+</p>
+
+<p>
+  <b>Choice c:</b>
+  <%= poll.choice_c %>
+</p>
+
+<p>
+  <b>Choice d:</b>
+  <%= poll.choice_d %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= poll.active %>
+</p>
+
+
+<p>
+  <b>Polling session:</b>
+  <%= poll.polling_session %>
+</p>
+<% end %>
+
+<% if false %>
+<%= link_to 'Edit', edit_poll_path(poll) %> |
+<%= link_to 'Back', polls_path %>
+<% end %>

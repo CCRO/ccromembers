@@ -1,0 +1,23 @@
+<h1>Listing polling_sessions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @polling_sessions.each do |polling_session| %>
+  <tr>
+    <td><%= polling_session.name %></td>
+    <td><%= link_to 'Show', polling_session %></td>
+    <td><%= link_to 'Edit', edit_polling_session_path(polling_session) %></td>
+    <td><%= link_to 'Destroy', polling_session, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Polling session', new_polling_session_path %>
