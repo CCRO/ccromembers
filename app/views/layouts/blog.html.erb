@@ -9,8 +9,8 @@
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss") %>
-  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
+  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss", :title => "CCRO RSS Feed") %>
+  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom", :title => "CCRO Atom Feed") %>
 </head>
 <body id="blog">
 
@@ -30,7 +30,7 @@
         <div class="span4">
           <ul id="nav_links">
             <li><%= link_to 'Home', posts_path %></li>
-            <li><%= link_to 'About', "http://ccro.org/about/237" %></li>
+            <li><%= link_to 'About', "http://v3.ccro.org/about/237" %></li>
             <li><%= link_to 'Contact', '#' %></li>
             <li><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
             <li><%= link_to 'Subscribe', signups_path %></li>
@@ -95,16 +95,16 @@
       	<aside class="span3">
           <% if can? :create, Post %>
             <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Drafts page', draft_posts_path() %></li>
-              <li><%= link_to 'My drafts', my_draft_posts_path() %></li>
-              <li><%= link_to 'Archived posts', archive_posts_path() %></li>
+              <li><%= link_to 'Drafts', draft_posts_path() %></li>
+              <li><%= link_to 'My Drafts', my_draft_posts_path() %></li>
+              <li><%= link_to 'Archived Posts', archive_posts_path() %></li>
               <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
             </ul>
           <% end %>
           <ul class="nav nav-tabs nav-stacked">
             <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
             <li><%= link_to 'Summit Agenda', "http://ccromembers.org/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
-            <li><%= link_to 'Summit Agenda as pdf', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
+            <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
           </ul>
           <center>
             <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
@@ -113,8 +113,11 @@
             <%= link_to "http://www.riskadvisory.com/index.html" do %>
               <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
             <% end %>
-            <%= link_to "http://www.ccro.org/directory/7" do %>
+            <%= link_to "http://v3.ccro.org/directory/7" do %>
               <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
+            <% end %>  
+            <%= link_to "http://v3.ccro.org/directory/1371" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/StructureLogo.jpg" %><br><br>
             <% end %>  
             
             <% if current_user && current_user.admin? %>

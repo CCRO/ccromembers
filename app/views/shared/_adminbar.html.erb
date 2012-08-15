@@ -1,0 +1,12 @@
+<div id="adminbar">
+  <%= yield :adminbar %>
+	<ul class="pull-right">
+		<li><i class="icon-eye-open"></i><br><p>Preview</p></li>
+		<li><i class="icon-random"></i><br><p>View as ...</p></li>
+		<li>
+      <%= link_to people_path do %>
+      <i class="icon-user"></i><br><p>Users</p>
+      <% end %>
+    </li>
+	</ul>
+</div>

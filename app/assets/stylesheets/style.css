@@ -332,3 +332,63 @@ div#preview {
   height: auto;
   border: 0;
 }
+
+div#adminbar {
+background-color: #333;
+border: 1px solid black;
+position: fixed;
+bottom: 0;
+left: 0;
+height: 90px;
+width: 100%;
+z-index: 999;
+}
+
+div#adminbar ul {
+list-style: none;
+display: block;
+margin-bottom: 0px !important;
+margin-left: 0 !important;
+border-left: 1px solid #0A0A0A;
+border-right: 1px solid #363636;
+}
+
+div#adminbar li {
+display: block;
+height: 90px;
+list-style: none;
+float: left;
+padding: 7px 20px 0px 20px;
+border-right: 1px solid #0A0A0A;
+border-left: 1px solid #363636;
+}
+
+div#adminbar li:hover {
+  background-color: #222;
+}
+
+div#adminbar li:hover p, div#adminbar li:hover i {
+  color: #bbb;
+  text-decoration: none;
+}
+
+div#adminbar a {
+  text-decoration: none;
+}
+div#adminbar i {
+font-size: 50px;
+text-align: center;
+line-height: 50px;
+text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
+color: black;
+text-decoration: none;
+}
+
+div#adminbar p {
+text-align: center;
+text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
+font-weight: bold;
+color: black;
+line-height: 1em;
+text-decoration: none;
+}
