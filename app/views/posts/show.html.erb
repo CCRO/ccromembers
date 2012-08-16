@@ -1,3 +1,80 @@
-<%= render @post %>
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	      <%= link_to edit_post_path(@post), id: "edit_link", data: {save_url: mercury_update_post_path(@post)} do %>
+	      <i class="icon-edit"></i><br><p>Edit Post</p>
+	      <% end %>
+	    </li>
+		<li>
+	      <%= link_to duplicate_post_path(@post) do %>
+	      <i class="icon-copy"></i><br><p>Duplicate <br>Post</p>
+	      <% end %>
+	    </li>
+		<li>
+	      <%= link_to post_path(@post), method: 'delete', :confirm => "Are you sure?" do %>
+	      <i class="icon-trash"></i><br><p>Delete <br>Post</p>
+	      <% end %>
+	    </li>
+		<li><%= link_to "#modal-share_link", 'data-toggle' => "modal" do %><i class="icon-link"></i><br /><p>Share <br>Post</p><% end %></li>
+		<li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %><i class="icon-cog"></i><br /><p>Post <br>Settings</p><% end %></li>
+	</ul>
+<% end %>
 
-  
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-settings">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>Post Settings</h3>
+    </div>
+    <div class="modal-body center">
+	<table cellpadding="10">
+		<tr>
+			<td>
+			<% if can?(:publish, @post) && params[:action] == 'show' %>
+            
+            <div class="control-group radio inline" >
+              <b>Level</b>
+              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+                <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+                <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+                <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+                <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
+              <% end %>
+              <b>Commenting</b>
+              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+                <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
+                <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
+              <% end %>
+            </div>
+          <% end %>
+</td>
+	  <td valign="top">
+	  	<% if can?(:publish, @post) && params[:action] == 'show' %>
+            
+            <% unless params[:mercury_frame] %>
+              <div >
+                <%= form_for @post, { :remote => true } do |f| %>
+                  <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
+                  <b>Assign this post to: </b>
+                  <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%= publish_toggle(@post) %>
+
+        <% end %>
+
+	  </td>
+	  </tr>
+	  </table>
+    </div>
+    <div class="modal-footer">
+       <%= button_to 'Back to Post', @post %>
+    </div>
+  </div>
+
+<% end %>
+
+
+<%= render @post %>
