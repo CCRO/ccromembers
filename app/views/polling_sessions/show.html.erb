@@ -10,10 +10,13 @@
 <% else %>
 	<h1>There are not currently any Polls. </h1><h2>Are you ready to get to work?</h2>
 <% end %>
-
+<br>
+<br>
 <% if current_user && current_user.admin? %>
-	<%= link_to 'New Poll', new_poll_for_session_path(@polling_session) %><br>
+	<%= link_to "New Poll", new_poll_for_session_path(@polling_session), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %><br>
 	<%= link_to 'All polling sessions', polling_sessions_path %>
+<% elsif current_user %>
+<%= link_to "Refresh Poll List", polling_session_path(@polling_session), class: "btn btn-large btn-info", style: 'width: 150px; height: 25px;' %>
 <% end %>
 
 <% if false %>

@@ -16,6 +16,7 @@ class PollingSessionsController < ApplicationController
   def show
     @polling_session = PollingSession.find(params[:id])
     @polls = @polling_session.polls
+    authorize! :read, PollingSession
 
     respond_to do |format|
       format.html # show.html.erb
