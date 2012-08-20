@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= params[:controller].capitalize %></title>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "messages", :media => 'all' if params[:controller] == 'messages' %> 
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="container">
+		<div id="notices">
+			<% flash.each do |key, msg| %>
+	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+	          <a class="close" data-dismiss="alert">×</a>
+	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+	        </div>
+			<% end %>
+		</div>
+<!--Body content (BEGIN)-->
+		<%= yield %>
+	</div>
+<!--Body content (END)-->
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
+</body>
+</html>

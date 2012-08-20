@@ -1,6 +1,9 @@
 class PollingSessionsController < ApplicationController
   # GET /polling_sessions
   # GET /polling_sessions.json
+
+  layout 'polls'
+
   def index
     @polling_sessions = PollingSession.all
     authorize! :create, PollingSession

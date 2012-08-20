@@ -1,6 +1,8 @@
 class PollsController < ApplicationController
   # GET /polls
   # GET /polls.json
+  layout 'polls'
+  
   def index
     @polls = Poll.all
     authorize! :create, Polls

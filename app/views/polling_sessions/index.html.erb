@@ -1,6 +1,6 @@
 <h1>Listing polling_sessions</h1>
 
-<table>
+<table class="table table-bordered table-condensed"><br>
   <tr>
     <th>Name</th>
     <th></th>
@@ -10,7 +10,7 @@
 
 <% @polling_sessions.each do |polling_session| %>
   <tr>
-    <td><%= polling_session.name %></td>
+    <td><%= link_to polling_session.name, polling_session %></td>
     <td><%= link_to 'Show', polling_session %></td>
     <td><%= link_to 'Edit', edit_polling_session_path(polling_session) %></td>
     <td><%= link_to 'Destroy', polling_session, confirm: 'Are you sure?', method: :delete %></td>
