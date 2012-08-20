@@ -11,6 +11,24 @@ class Company < ActiveRecord::Base
   before_save :check_contacts
   after_initialize :first_is_admin
   
+  def level
+    if self.committee_leadership?
+      'committee-leadership'
+    elsif self.committee?
+      'committee'
+    else
+      ''
+    end
+  end
+
+  def committee?
+    self.subscriptions.active.pluck(:product).include? 'committee'
+  end
+
+  def committee_leadership?
+    self.subscriptions.active.pluck(:product).include? 'committee-leadership'
+  end
+ 
   def update_balance!
     if self.freshbooks_id.present?
        @fbc = Freshbooks.new
@@ -29,7 +47,8 @@ class Company < ActiveRecord::Base
       true
     end
   end
-  
+ 
+
   def first_is_admin
     self.role = 'administrator' if Company.count == 0
   end

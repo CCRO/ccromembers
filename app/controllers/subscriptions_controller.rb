@@ -2,7 +2,16 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions 
   # GET /subscriptions.json
   def index
-    @subscriptions = Subscription.all
+    if params[:company_id]
+      @owner = Company.find(params[:company_id])
+      @subscriptions = Subscription.where(owner_type: 'Company', owner_id: params[:company_id])
+    end
+    if params[:person_id]
+      @owner = Person.find(params[:person_id])
+      @subscriptions ||= Subscription.where(owner_type: 'Person', owner_id: params[:person_id])
+    end
+  
+    @subscriptions ||= Subscription.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,6 +35,9 @@ class SubscriptionsController < ApplicationController
   def new
     @subscription = Subscription.new
 
+    @owner = Company.find(params[:company_id]) if params[:company_id]
+    @owner = Person.find(params[:person_id]) if params[:person_id]
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @subscription }
@@ -42,9 +54,12 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(params[:subscription])
 
+    @subscription.owner = Company.find(params[:company_id]) if params[:company_id]
+    @subscription.owner = Person.find(params[:person_id]) if params[:person_id]
+
     respond_to do |format|
       if @subscription.save
-        format.html { redirect_to @subscription, notice: 'Subscription was successfully created.' }
+        format.html { redirect_to polymorphic_path([@subscription.owner, :subscriptions]), notice: 'Subscription was successfully created.' }
         format.json { render json: @subscription, status: :created, location: @subscription }
       else
         format.html { render action: "new" }
@@ -73,10 +88,11 @@ class SubscriptionsController < ApplicationController
   # DELETE /subscriptions/1.json
   def destroy
     @subscription = Subscription.find(params[:id])
+    @owner = @subscription.owner
     @subscription.destroy
 
     respond_to do |format|
-      format.html { redirect_to subscriptions_url }
+      format.html { redirect_to polymorphic_url([@owner, :subscriptions]) }
       format.json { head :no_content }
     end
   end

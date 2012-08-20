@@ -26,9 +26,13 @@
   <%= @person.email %>
 </p>
 <p>
+  <b>Verifed:</b>
+  <%= @person.verified %>
+</p>
+<p>
   <b>Bio:</b>
   <%= @person.bio %>
 </p>
 
-<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Edit', edit_person_path(@person) %> | <%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | 
 <%= link_to 'Back', people_path %>
