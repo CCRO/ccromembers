@@ -1,8 +1,12 @@
 class PollingSessionsController < ApplicationController
   # GET /polling_sessions
   # GET /polling_sessions.json
+
+  layout 'polls'
+
   def index
     @polling_sessions = PollingSession.all
+    authorize! :create, PollingSession
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +19,7 @@ class PollingSessionsController < ApplicationController
   def show
     @polling_session = PollingSession.find(params[:id])
     @polls = @polling_session.polls
+    authorize! :read, PollingSession
 
     respond_to do |format|
       format.html # show.html.erb

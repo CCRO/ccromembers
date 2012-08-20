@@ -1,8 +1,11 @@
 class PollsController < ApplicationController
   # GET /polls
   # GET /polls.json
+  layout 'polls'
+  
   def index
     @polls = Poll.all
+    authorize! :create, Polls
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +17,22 @@ class PollsController < ApplicationController
   # GET /polls/1.json
   def show
     @poll = Poll.find(params[:id])
+    authorize! :read, Poll
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @poll }
+    end
+  end
+
+  def active
+    @poll = Poll.where(active: true).last
+    
+    if @poll
+      @impression = Impression.where(impressionable_type: 'Poll', user_id: current_user.id, impressionable_id: @poll.id).last
+    end
+    
+    authorize! :read, Poll
 
     respond_to do |format|
       format.html # show.html.erb
@@ -94,10 +113,7 @@ class PollsController < ApplicationController
     @poll = Poll.find(params[:id])
     @poll.destroy
 
-    respond_to do |format|
-      format.html { redirect_to polls_url }
-      format.json { head :no_content }
-    end
+    redirect_to @poll.polling_session
   end
 
   def deactivate
@@ -110,6 +126,11 @@ class PollsController < ApplicationController
 
   def activate
     @poll = Poll.find(params[:id])
+    deactivate_me = Poll.where(active: true)
+    deactivate_me.each do |d|
+      d.active = false
+      d.save
+    end
     @poll.active = true
     @poll.save
 
@@ -121,7 +142,7 @@ class PollsController < ApplicationController
     @poll = Poll.find(params[:id])
     impressionist(@poll, "a", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
-    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
+    redirect_to active_polls_path, notice: 'Thanks for participating.'
   end
 
   def pick_b
@@ -129,7 +150,7 @@ class PollsController < ApplicationController
     impressionist(@poll, "b", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
+    redirect_to active_polls_path, notice: 'Thanks for participating.'
   end
 
   def pick_c
@@ -137,7 +158,7 @@ class PollsController < ApplicationController
     impressionist(@poll, "c", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
+    redirect_to active_polls_path, notice: 'Thanks for participating.'
   end
 
   def pick_d
@@ -145,7 +166,7 @@ class PollsController < ApplicationController
     impressionist(@poll, "d", :unique => [:impressionable_type, :impressionable_id, :user_id])
 
     
-    redirect_to @poll.polling_session, notice: 'Thanks for participating.'
+    redirect_to active_polls_path, notice: 'Thanks for participating.'
   end
 
 end

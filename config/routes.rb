@@ -11,6 +11,9 @@ Ccromembers::Application.routes.draw do
       get 'activate'
       get 'report'
     end
+    collection do
+      get 'active'
+    end
   end
 
   resources :polling_sessions do

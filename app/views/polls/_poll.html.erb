@@ -1,57 +1,66 @@
 
-
-<% if poll.active %>
-<h2>
-  <b>Poll:</b>
-  <%= link_to poll.question, poll_path(poll) %>
-  <% if current_user && current_user.admin? %><br>
-    <%= link_to 'Deactiveate poll', deactivate_poll_path(poll), :class => 'btn btn-large' %><br>
-    <%= link_to 'Poll report', report_poll_path(poll), :class => 'btn btn-large' %>
-  <% end %>
-</h2>
-
-<% elsif current_user && current_user.admin? %>
+<br>
+<div class="btn-group">
+  <% if poll.active %>
   <h2>
-  <b>Poll:</b>
-  <%= link_to poll.question, poll_path(poll) %>
-  <%= link_to 'Activate poll', activate_poll_path(poll), :class => 'btn btn-large' %>
-</h2>
-<% end %>
+    <%= link_to "Poll: " + poll.question, poll_path(poll) %>
+    <% if current_user && current_user.admin? %><br>
+      <div class="btn-group">
+        <%= link_to 'Deactiveate', deactivate_poll_path(poll), :class => 'btn btn-large' %>
+        <%= link_to 'Report', report_poll_path(poll), :class => 'btn btn-large' %>
+      </div>
+    <% end %>
+  </h2>
 
-<% if false %>
-<p>
-  <b>Choice a:</b>
-  <%= poll.choice_a %>
-</p>
+  <% elsif current_user && current_user.admin? %>
+    <h2>
+      <div class="btn-group">
+        <%= link_to "Poll: " + poll.question, poll_path(poll) %><br>
+        <%= link_to 'Activate', activate_poll_path(poll), :class => 'btn btn-large' %>
+        <%= link_to 'Report', report_poll_path(poll), :class => 'btn btn-large' %>
+        <%= link_to 'Edit', edit_poll_path(poll), :class => 'btn btn-large' %>
+        <%= link_to 'Destroy', poll, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-large' %>
+      </div>
+    </h2>
+  <% end %>
 
-<p>
-  <b>Choice b:</b>
-  <%= poll.choice_b %>
-</p>
+  <% if false %>
+  <p>
+    <b>Choice a:</b>
+    <%= poll.choice_a %>
+  </p>
 
-<p>
-  <b>Choice c:</b>
-  <%= poll.choice_c %>
-</p>
+  <p>
+    <b>Choice b:</b>
+    <%= poll.choice_b %>
+  </p>
 
-<p>
-  <b>Choice d:</b>
-  <%= poll.choice_d %>
-</p>
+  <p>
+    <b>Choice c:</b>
+    <%= poll.choice_c %>
+  </p>
 
-<p>
-  <b>Active:</b>
-  <%= poll.active %>
-</p>
+  <p>
+    <b>Choice d:</b>
+    <%= poll.choice_d %>
+  </p>
+
+  <p>
+    <b>Active:</b>
+    <%= poll.active %>
+  </p>
 
 
-<p>
-  <b>Polling session:</b>
-  <%= poll.polling_session %>
-</p>
-<% end %>
+  <p>
+    <b>Polling session:</b>
+    <%= poll.polling_session %>
+  </p>
+  <% end %>
 
-<% if false %>
-<%= link_to 'Edit', edit_poll_path(poll) %> |
-<%= link_to 'Back', polls_path %>
-<% end %>
+  <% if false %>
+  <%= link_to 'Edit', edit_poll_path(poll) %> |
+  <%= link_to 'Back', polls_path %>
+  <% end %>
+</div>
+
+

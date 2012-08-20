@@ -9,6 +9,7 @@ class Ability
     can :read, Survey if user.id
     
     if user.basic?
+      can :read, [PollingSession, Poll]
       can :read, Survey if user.id
       can :read, [Post, Document], {level: 'basic', published: true}
       can :create, Comment

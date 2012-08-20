@@ -36,7 +36,9 @@
     <%= f.check_box :active %>
   </div>
   
-  <%= f.hidden_field :polling_session_id, value: @polling_session.id %>
+  <% unless params[:action] == 'edit' %>
+    <%= f.hidden_field :polling_session_id, value: @polling_session.id %>
+  <% end %>
 
   <% if false %>
   <div class="field">
