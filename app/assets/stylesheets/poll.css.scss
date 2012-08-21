@@ -12,8 +12,13 @@
  *= require bootstrap-wysihtml5
  *= require 'font-awesome'
 */
-body{
-  margin: 0;
-  margin-top: 20px;
+body .mobile{
+  line-height: 100%;
+  font-size: 200%;
+  margin: 0; margin-top: 20px; margin-left: 5%; margin-right: 5%;
   padding: 0;
+}
+
+.mobile .row{
+  width: 100%; margin-bottom: 5%;
 }

@@ -3,7 +3,7 @@ class PollsController < ApplicationController
   # GET /polls.json
   layout 'polls'
   has_mobile_fu
-  before_filter :force_mobile_format
+  #before_filter :force_mobile_format
   
   def index
     @polls = Poll.all

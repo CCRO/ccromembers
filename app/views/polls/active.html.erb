@@ -1,5 +1,9 @@
 <head>
+  <% if false %>
   <meta http-equiv="refresh" content="10" />
+  <% end %>
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+  <%= stylesheet_link_tag "poll" %>
 </head>
 
 <% unless @poll %>
@@ -12,33 +16,40 @@
       You have voted in the current poll.
     </h1>
   <% else %>
-    <p>
-      <b>Question:</b>
-      <%= @poll.question %>
-    </p>
+    <div class="container"> 
+      <div class="row">
+        <div class="span11">
+          </p><b>Question:</b>
+          <%= @poll.question %></p><br>
+        </div>
+      </div>
 
-    <p>
-      <b>A:</b>
-      <%= @poll.choice_a %><br>
-      <%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info" %>
-    </p>
+      <div class="row" style="width: 100%; margin-bottom: 5%;">
+          <p><b>A:</b>
+          <%= @poll.choice_a %><br></p>
+          <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
+      </div>
 
-    <p>
-      <b>B:</b>
-      <%= @poll.choice_b %><br>
-      <%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info" %>
-    </p>
+      <div class="row" style="width: 100%; margin-bottom: 5%;">
+        <p><b>B:</b>
+        <%= @poll.choice_b %><br></p>
+        <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
+      </div>
 
-    <p>
-      <b>C:</b>
-      <%= @poll.choice_c %><br>
-      <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info" %>
-    </p>
+      <div class="row" style="width: 100%; margin-bottom: 5%;">
+        <p><b>C:</b>
+        <%= @poll.choice_c %><br></p>
+       <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
+      </div>
 
-    <p>
-      <b>D:</b>
-      <%= @poll.choice_d %><br>
-      <%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info" %>
-    </p>
+      <div class="row" style="width: 100%; margin-bottom: 5%;">
+        <p><b>D:</b>
+        <%= @poll.choice_d %><br></p>
+        <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
+      </div>
+      <br>
+      <br>
+      <br><div></div>
+    </div>  
   <% end %>
 <% end %>
