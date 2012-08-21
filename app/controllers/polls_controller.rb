@@ -2,6 +2,8 @@ class PollsController < ApplicationController
   # GET /polls
   # GET /polls.json
   layout 'polls'
+  has_mobile_fu
+  before_filter :force_mobile_format
   
   def index
     @polls = Poll.all
@@ -35,6 +37,7 @@ class PollsController < ApplicationController
     authorize! :read, Poll
 
     respond_to do |format|
+      format.mobile
       format.html # show.html.erb
       format.json { render json: @poll }
     end

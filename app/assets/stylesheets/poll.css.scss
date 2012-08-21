@@ -23,14 +23,20 @@ body{
 
 @media (max-width: 767px) { /* tablet*/
   .btn-large{
-    width: 90%;
-    height: 50px;
+    height: 100px;
+  }
+
+  .btn h1 a:link {
+    font-size: 60px;
   }
 }
 
 @media (max-width: 480px) { /* phone*/
   .btn-large{
-    width: 90%;
-    height: 50px;
+    height: 100px;
+  }
+
+  .btn h1 a:link{
+    font-size: 60px;
   }
 }
