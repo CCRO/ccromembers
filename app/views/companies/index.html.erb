@@ -11,7 +11,7 @@
       <thead>
       <tr>
         <th>Name <%= link_to(companies_path(:sort => 'name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-        <th>Role <%= link_to(companies_path(:sort => 'role')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+        <th>Level <%= link_to(companies_path(:sort => 'level')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
         <th>Primary Contact</th>
         <th>Billing Contact</th>
         <th></th>
@@ -20,8 +20,8 @@
       <tbody>
       <% @companies.each do |company| %>
         <tr>
-          <td><%= company.name %></td>
-          <td><%= company.role %></td>
+          <td><%= link_to company.name, company %></td>
+          <td><%= company.level %></td>
           <td><%= link_to_person company.primary_contact.name, company.primary_contact if company.primary_contact %></td>
           <td><%= link_to company.billing_contact.name, company.billing_contact if company.billing_contact %></td>
           <td>
@@ -36,6 +36,7 @@
                 <% unless company.highrise_id.blank? && company.freshbooks_id.blank? %>
 					<li class="divider"></li>
 				<% end %>
+                <li><%= link_to 'Subscriptions', company_subscriptions_path(company) %></li>
                 <li><%= link_to 'Edit', edit_company_path(company) %></li>
                 <li><%= link_to 'Delete', company, confirm: 'Are you sure?', method: :delete %></li>
               </ul>

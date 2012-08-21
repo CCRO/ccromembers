@@ -39,6 +39,16 @@ class Person < ActiveRecord::Base
   def billing_contact?
     (self.company && self.company.billing_contact == self)
   end
+
+  def level
+    if self.committee?
+      'committee'
+    elsif self.pro?
+      'pro'
+    else
+      'basic'
+    end
+  end
   
   def committee?
     self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership']).present?

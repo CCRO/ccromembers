@@ -108,8 +108,14 @@ Ccromembers::Application.routes.draw do
 
   
   resource :sessions
-  resources :people
-  resources :companies
+  
+  resources :people do
+      resources :subscriptions
+  end
+
+  resources :companies do
+      resources :subscriptions
+  end
 
   resources :surveys do
     resources :questions do
