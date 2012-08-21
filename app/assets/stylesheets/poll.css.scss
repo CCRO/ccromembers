@@ -15,24 +15,22 @@
 body{
   margin-top: 20px;
 }
-
-@media (min-width: 1200px) { /* desktop*/
-  .btn-large{
-    width: 150px;
-    height: 25px;
-  }
+/* desktop*/
+.btn-large{
+  width: 150px;
+  height: 25px;
 }
 
 @media (max-width: 767px) { /* tablet*/
   .btn-large{
-    width: 150px;
-    height: 25px;
+    width: 90%;
+    height: 50px;
   }
 }
 
 @media (max-width: 480px) { /* phone*/
   .btn-large{
     width: 90%;
-    height: 30px;
+    height: 50px;
   }
 }
