@@ -60,7 +60,7 @@ class Person < ActiveRecord::Base
     self.subscriptions.active.pluck(:product).include? 'pro'
   end
   
-  def pro?
+  def participant?
     self.subscriptions.active.pluck(:product).include? 'participant'
   end
   

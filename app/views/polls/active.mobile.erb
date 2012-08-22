@@ -1,9 +1,33 @@
 <head>
   <meta http-equiv="refresh" content="10" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
   <%= stylesheet_link_tag "bootstrap_and_overrides" %>
   <%= stylesheet_link_tag "poll" %>
 </head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
 
+$(document).on("click", "a", function( event ){
+ 
+// Stop the default behavior of the browser, which
+// is to change the URL of the page.
+event.preventDefault();
+ 
+// Manually change the location of the page to stay in
+// "Standalone" mode and change the URL at the same time.
+location.href = $( event.target ).attr( "href" );
+ 
+}
+);
+</script>
 <% unless @poll %>
   <h1>
     There are no active polls at this time.
@@ -15,7 +39,6 @@
     </h1>
   <% else %>
   <div class="mobile">
-    <p>mobile version</p>
     <div class="container"> 
       <div class="row">
         <div class="span11">
@@ -27,25 +50,25 @@
       <div class="row">
           <p><b>A:</b>
           <%= @poll.choice_a %><br></p>
-          <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: "font-size: 60px; height: 20%; width: 100%;" %></h1>
+          <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: "width: 85%;" %></h1>
       </div>
 
       <div class="row" style="width: 100%; margin-bottom: 5%;">
         <p><b>B:</b>
         <%= @poll.choice_b %><br></p>
-        <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: "font-size: 60px; height: 20%; width: 100%;" %></h1>
+        <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: "width: 85%;" %></h1>
       </div>
 
       <div class="row" style="width: 100%; margin-bottom: 5%;">
         <p><b>C:</b>
         <%= @poll.choice_c %><br></p>
-       <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: "font-size: 60px; height: 20%; width: 100%;" %></h1>
+       <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: "width: 85%;" %></h1>
       </div>
 
       <div class="row" style="width: 100%; margin-bottom: 5%;">
         <p><b>D:</b>
         <%= @poll.choice_d %><br></p>
-        <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: "font-size: 60px; height: 20%; width: 100%;" %></h1>
+        <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: "width: 85%;" %></h1>
       </div>
       <br>
       <br>

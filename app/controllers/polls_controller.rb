@@ -1,6 +1,7 @@
 class PollsController < ApplicationController
   # GET /polls
   # GET /polls.json
+  before_filter :require_user
   layout 'polls'
   has_mobile_fu
   #before_filter :force_mobile_format
