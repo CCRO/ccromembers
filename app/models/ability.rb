@@ -23,7 +23,7 @@ class Ability
       can :read, [Post, Document], {level: 'pro', :published => true}  
     end
     
-    if user.committee?
+    if user.committee? || user.participant?
       can :read, [Post, Document], {level: 'basic', :published => true}
       can :read, [Post, Document], {level: 'pro', :published => true}  
       can :read, [Post, Document], {level: 'committee', :published => true}  

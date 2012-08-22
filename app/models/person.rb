@@ -43,7 +43,9 @@ class Person < ActiveRecord::Base
   def level
     if self.committee?
       'committee'
-    elsif self.pro?
+    elsif self.participant?
+      'participant'
+   elsif self.pro?
       'pro'
     else
       'basic'
@@ -56,6 +58,10 @@ class Person < ActiveRecord::Base
 
   def pro?
     self.subscriptions.active.pluck(:product).include? 'pro'
+  end
+  
+  def pro?
+    self.subscriptions.active.pluck(:product).include? 'participant'
   end
   
   def basic?
