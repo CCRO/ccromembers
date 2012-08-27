@@ -49,6 +49,7 @@
       Role: <%= current_user.role.capitalize if current_user.role %><br />
       Email: <%= mail_to current_user.email %><br />
       Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
+      PIN Code: <%= current_user.pin_code %></p>
 	  </td>
 	  </tr>
 	  </table>
