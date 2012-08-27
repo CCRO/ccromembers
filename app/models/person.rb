@@ -116,7 +116,7 @@ class Person < ActiveRecord::Base
 
   def generate_pin(column = :pin_code)
     begin
-      self[column] = format('%04d', rand(1..9999))
+      self[column] = format('%04d', rand(9999))
     end while Person.exists?(column => self[column])
     self.save!
   end
