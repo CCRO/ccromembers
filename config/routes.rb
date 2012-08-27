@@ -68,10 +68,14 @@ Ccromembers::Application.routes.draw do
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
+
+    constraints(:host => 'polls.ccro.org') do
+      root :to => 'polls#active'
+    end
   
-    
     root :to => 'posts#index'
-  
+
+
     namespace :admin do
       resources :people
       resources :companies
