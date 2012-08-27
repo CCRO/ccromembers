@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814183210) do
+ActiveRecord::Schema.define(:version => 20120827214557) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -183,6 +183,8 @@ ActiveRecord::Schema.define(:version => 20120814183210) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "verified"
+    t.string   "pin_code"
+    t.string   "mobile_phone"
   end
 
   create_table "polling_sessions", :force => true do |t|

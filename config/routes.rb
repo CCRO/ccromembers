@@ -1,6 +1,10 @@
 Ccromembers::Application.routes.draw do
   
   
+  get "call_manager/sms"
+
+  get "call_manager/voice"
+
   resources :polls do
     member do
       get 'pick_a'

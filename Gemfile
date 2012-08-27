@@ -40,6 +40,7 @@ gem 'browser'
 gem 'doc_raptor'
 gem 'impressionist'
 gem 'mobile-fu'
+gem 'twilio-ruby'
 
 # Gems used only for assets and not required
 # in production environments by default.

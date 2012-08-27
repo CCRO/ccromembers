@@ -46,6 +46,7 @@ class PollsController < ApplicationController
 
   def report
     @poll = Poll.find(params[:id])
+    @results = ["a","b","c","d"].zip(["a","b","c","d"].map { |r| Impression.where(impressionable_type: 'Poll', impressionable_id: @poll.id, message: r).count })
 
     respond_to do |format|
       format.html # show.html.erb
