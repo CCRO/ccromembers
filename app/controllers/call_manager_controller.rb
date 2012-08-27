@@ -22,8 +22,8 @@ layout 'twiml'
 
   def voice
   	twiml = Twilio::TwiML::Response.new do |r|
-  		if Person.find_by_mobile_phone(params['From'])
-  			@person = Person.find_by_mobile_phone(params['From'])
+  		if Person.find_by_mobile_phone(params['Caller'])
+  			@person = Person.find_by_mobile_phone(params['Caller'])
 			r.Say "hello #{@person.name}!", :voice => 'woman'
 		else 
 			r.Say 'You are calling from an unknown number.', :voice => 'woman'
