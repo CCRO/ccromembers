@@ -22,7 +22,11 @@
       <td><%= person.level if person.level %></td>
       <td><%= link_to person.company.name, person.company if person.company %></td>
       <td><%= person.email %></td>
-      <td><%= person.verified.to_s.capitalize %></td>
+      <td><% if person.verified %>
+            <%= person.verified.to_s.capitalize %></td>
+            <% else %>
+            <%= link_to 'Resend Email', resend_activation_person_path(person), class: 'btn'%></td>
+            <% end %>
       <td>
         <div class="btn-group">
           <%= button_to 'Edit', edit_person_path(person) %>

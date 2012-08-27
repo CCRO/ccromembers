@@ -110,6 +110,9 @@ Ccromembers::Application.routes.draw do
   resource :sessions
   
   resources :people do
+      member do
+        get :resend_activation
+      end
       resources :subscriptions
   end
 
