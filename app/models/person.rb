@@ -118,11 +118,15 @@ class Person < ActiveRecord::Base
     begin
       self[column] = format('%04d', rand(9999))
     end while Person.exists?(column => self[column])
-    self.save!
   end
 
   def generate_token!(column = :auth_token)
     generate_token(column)
+    self.save!
+  end
+
+  def generate_pin!(column = :pin_code)
+    generate_pin(column)
     self.save!
   end
   
