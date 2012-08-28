@@ -1,5 +1,8 @@
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+
 <div class="span4 offset4">
-  <center><%= image_tag "ccro_long.png", :width => '250' %></center><br />
+  <center><%= image_tag "ccro_long.png", :width => '250', style: 'padding-top: 20px;' %></center><br />
   
   <div id="notices">
   	<% flash.each do |key, msg| %>
@@ -13,7 +16,7 @@
   <%= form_tag sessions_path, :class => "well" do %>
     <div class="field">
       <%= label_tag :email %><br />
-      <%= text_field_tag :email, nil, :placeholder => "your@email.com" %>
+      <%= text_field_tag :email, nil, :placeholder => "your@email.com", :autocapitalize => "off", type: 'email' %>
     </div>
     <div class="field">
       <%= label_tag :password %><br />

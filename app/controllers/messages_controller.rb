@@ -1,9 +1,15 @@
 class MessagesController < ApplicationController
+
+  before_filter :require_user
+
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.accessible_by(current_ability)
+    @messages = Message.not_archived.accessible_by(current_ability)
     @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+
+    @archived_messages = Message.archived.accessible_by(current_ability)
+    @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,6 +22,7 @@ class MessagesController < ApplicationController
   def show
     @message = Message.find(params[:id])
     @commentable = @message
+    impressionist(@message)
     authorize! :read, @message
     
     respond_to do |format|
@@ -50,6 +57,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(params[:message])
     @message.owner ||= default_company
+    @message.archived = false
     @message.author = current_user
     @message.published_at ||= Time.now
     
@@ -96,5 +104,23 @@ class MessagesController < ApplicationController
       format.html { redirect_to messages_url }
       format.json { head :no_content }
     end
+  end
+
+  def archive
+    message = Message.find(params[:id])
+    authorize! :destory, message
+
+    message.archive
+
+    redirect_to message
+  end
+
+  def unarchive
+    message = Message.find(params[:id])
+    authorize! :destory, message
+
+    message.unarchive
+
+    redirect_to message
   end
 end

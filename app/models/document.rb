@@ -1,3 +1,4 @@
+
 class Document < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   default_url_options[:host] = 'ccromembers.dev'
@@ -6,6 +7,7 @@ class Document < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :comments, :as => :commentable
   
+  is_impressionable
   has_paper_trail
   
   attr_reader :preview
@@ -68,5 +70,11 @@ class Document < ActiveRecord::Base
   def permalink
     "#{id}-#{title.parameterize}"
   end
-  
+
+  def generate_token(column = :viewing_token)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while Post.exists?(column => self[column])
+  end
+ 
 end

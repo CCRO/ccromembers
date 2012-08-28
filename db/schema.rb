@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719191314) do
+ActiveRecord::Schema.define(:version => 20120827214557) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20120719191314) do
     t.string   "asin"
     t.boolean  "published"
     t.string   "viewing_token"
+    t.string   "level"
   end
 
   create_table "groups", :force => true do |t|
@@ -83,6 +84,30 @@ ActiveRecord::Schema.define(:version => 20120719191314) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "impressions", :force => true do |t|
+    t.string   "impressionable_type"
+    t.integer  "impressionable_id"
+    t.integer  "user_id"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.string   "view_name"
+    t.string   "request_hash"
+    t.string   "ip_address"
+    t.string   "session_hash"
+    t.text     "message"
+    t.text     "referrer"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "impressions", ["controller_name", "action_name", "ip_address"], :name => "controlleraction_ip_index"
+  add_index "impressions", ["controller_name", "action_name", "request_hash"], :name => "controlleraction_request_index"
+  add_index "impressions", ["controller_name", "action_name", "session_hash"], :name => "controlleraction_session_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], :name => "poly_ip_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], :name => "poly_request_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
+  add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
   create_table "mercury_images", :force => true do |t|
     t.string   "image_file_name"
@@ -98,10 +123,46 @@ ActiveRecord::Schema.define(:version => 20120719191314) do
     t.text     "content"
     t.integer  "author_id"
     t.datetime "published_at"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "owner_id"
     t.string   "owner_type"
+    t.boolean  "archived"
+    t.integer  "counter_cache"
+  end
+
+  create_table "moderators", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "message_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "observers", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "message_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.text     "header"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.integer  "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.string   "level"
+    t.string   "viewing_token"
+    t.boolean  "locked"
+    t.integer  "locker_id"
+    t.datetime "locked_at"
+    t.string   "tag_list"
+    t.boolean  "commenting_enabled"
   end
 
   create_table "people", :force => true do |t|
@@ -122,7 +183,29 @@ ActiveRecord::Schema.define(:version => 20120719191314) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "verified"
+    t.string   "pin_code"
+    t.string   "mobile_phone"
   end
+
+  create_table "polling_sessions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "polls", :force => true do |t|
+    t.text     "question"
+    t.text     "choice_a"
+    t.text     "choice_b"
+    t.text     "choice_c"
+    t.text     "choice_d"
+    t.boolean  "active"
+    t.integer  "polling_session_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "polls", ["polling_session_id"], :name => "index_polls_on_polling_session_id"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -141,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20120719191314) do
     t.datetime "locked_at"
     t.string   "tag_list"
     t.boolean  "commenting_enabled"
+    t.boolean  "archived"
   end
 
   create_table "questions", :force => true do |t|

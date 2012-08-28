@@ -1,15 +1,25 @@
-<% if ['drafts', 'my_drafts'].include?(params[:filter]) && can?(:create, Post) %>
-	<div class="well">
+<% content_for :adminbar do %>
+	<ul>
+		<li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %><i class="icon-asterisk"></i><br><p>New Post</p><% end %></li>
+	</ul>
+<% end %>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-new-post">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>New Post</h3>
+    </div>
+    <div class="modal-body center">
 	  <%= form_for Post.new do |f| %>
-	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	    <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
-	  <% end %>
-	  <div style="clear: both;"></div>
-	  <% if flash[:notice] %>
-	     <br>
-	     <div class="alert alert-error"><%= flash[:notice] %></div>
-	   <% end %>
+	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	</div>
+    <div class="modal-footer">
+	    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+    </div>
+	  <% end %>
+  </div>
+
 <% end %>
 
 <% if @posts.present? %>

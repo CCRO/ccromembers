@@ -3,7 +3,7 @@ class DocumentsController < ApplicationController
   layout 'documents', :except => 'show'
   layout 'doc_viewer', :only => 'show'
   
-  before_filter :require_user
+  before_filter :require_user, :except => 'show'
   # GET /documents
   # GET /documents.json
   def index
@@ -12,6 +12,7 @@ class DocumentsController < ApplicationController
     else
       @documents = Document.published.accessible_by(current_ability)
     end
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,13 +24,17 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @document = Document.find(params[:id])
+    if params['token']
+      @document = Document.find_by_viewing_token(params[:token])
+    else 
+      @document = Document.find(params[:id])
+      authorize! :read, @document
+    end
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document, :options => {:except => [:body], :methods => [:preview]} }
-      format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} }
-      
+      format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} } 
     end
   end
   
@@ -37,7 +42,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new.json
   def new
     @document = Document.new
-    @document.format = 'markdown'
+    # @document.format = 'markdown'
     
     respond_to do |format|
       format.html # new.html.erb
@@ -54,12 +59,14 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(params[:document])
+    @document.generate_token
+    @document.archived = false
     @document.owner ||= default_company
     @document.author = current_user
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, :flash => { :success => 'Document was successfully created.'} }
+        format.html { redirect_to document_path(@document), :flash => { :success => 'Document was successfully created.'} }
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }

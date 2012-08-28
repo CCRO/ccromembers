@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_browser
+
   before_filter :store_location
 
   before_filter :set_mailer_host
@@ -11,6 +13,20 @@ class ApplicationController < ActionController::Base
   
   before_filter :activation_authentication
   
+  before_filter :set_cache_buster
+
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+  end
+
+  def check_browser
+    browser = Browser.new(:ua => request.env['HTTP_USER_AGENT'], :accept_language => "en-us")
+
+    redirect_to hell_path if (browser.ie6? || browser.ie7?) && params[:controller] != 'static'
+    logger.info "Browser Status: #{request.env['HTTP_USER_AGENT']}  =>  #{browser.to_s}"
+  end
+
   # Collect additional debug details for New Relic RPM is available
   # Do this after all other before filters so details are present
   before_filter :set_new_relic_custom_parameters

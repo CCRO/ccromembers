@@ -112,4 +112,14 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def resend_activation
+    @person = Person.find(params[:id])
+
+    authorize! :create, @person
+
+    @person.send_activation
+
+    redirect_to :back, :flash => {success: "Activation email resent to user."}
+  end
 end

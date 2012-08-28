@@ -74,7 +74,7 @@ module ApplicationHelper
   def date_picker(object_name, method, options = {}, html_options = {})
     date = (options[:value]) ? options[:value] : Date.today
     html = <<-EOF
-    <div class="input-append date datepicker" id="dp3" data-date="#{l date}" data-date-format="mm-dd-yyyy">
+    <div class="input-append date datepicker" id="dp3" data-date="#{l date}" data-date-format="yyyy-mm-dd">
       <input name="#{object_name}[#{method}]" class="span2" size="16" type="text" value="#{l date}">
       <span class="add-on"><i class="icon-th"></i></span>
     </div>

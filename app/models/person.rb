@@ -11,6 +11,9 @@ class Person < ActiveRecord::Base
   belongs_to :company 
   has_many :documents, :as => :owner 
 
+  # has_many :observed_messages, :through => :observer
+  # has_many :moderated_messages, :through => :moderator
+  
   has_secure_password
 
   before_save :check_contacts
@@ -36,13 +39,29 @@ class Person < ActiveRecord::Base
   def billing_contact?
     (self.company && self.company.billing_contact == self)
   end
+
+  def level
+    if self.committee?
+      'committee'
+    elsif self.participant?
+      'participant'
+   elsif self.pro?
+      'pro'
+    else
+      'basic'
+    end
+  end
   
   def committee?
-    self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership'])
+    self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership']).present?
   end
 
   def pro?
     self.subscriptions.active.pluck(:product).include? 'pro'
+  end
+  
+  def participant?
+    self.subscriptions.active.pluck(:product).include? 'participant'
   end
   
   def basic?
@@ -93,6 +112,13 @@ class Person < ActiveRecord::Base
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while Person.exists?(column => self[column])
+  end
+
+  def generate_pin(column = :pin_code)
+    begin
+      self[column] = format('%04d', rand(9999))
+    end while Person.exists?(column => self[column])
+    self.save!
   end
 
   def generate_token!(column = :auth_token)

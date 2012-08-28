@@ -6,10 +6,12 @@ class Ability
         
     can :read, Post, {level: 'public', published: true}
     can :create, Person
+    can :read, Survey if user.id
     
     if user.basic?
+      can :read, [PollingSession, Poll]
       can :read, Survey if user.id
-      can :read, Post, {level: 'basic', published: true}
+      can :read, [Post, Document], {level: 'basic', published: true}
       can :create, Comment
       can [:edit, :destroy], [Post, Document, Comment, Message], :author_id => user.id
       can :manage, Person, :id => user.id
@@ -17,14 +19,14 @@ class Ability
     end
     
     if user.pro?
-      can :read, Post, {level: 'basic', :published => true}
-      can :read, Post, {level: 'pro', :published => true}  
+      can :read, [Post, Document], {level: 'basic', :published => true}
+      can :read, [Post, Document], {level: 'pro', :published => true}  
     end
     
-    if user.committee?
-      can :read, Post, {level: 'basic', :published => true}
-      can :read, Post, {level: 'pro', :published => true}  
-      can :read, Post, {level: 'committee', :published => true}  
+    if user.committee? || user.participant?
+      can :read, [Post, Document], {level: 'basic', :published => true}
+      can :read, [Post, Document], {level: 'pro', :published => true}  
+      can :read, [Post, Document], {level: 'committee', :published => true}  
       can :read, [Document, Comment, Message, Survey]
       can :read, Post, :published => true
       can :read, Company, :id => user.company_id

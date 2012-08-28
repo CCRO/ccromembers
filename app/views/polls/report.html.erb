@@ -1,0 +1,53 @@
+<head>
+  <meta http-equiv="refresh" content="10" />
+</head>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Question:</b>
+  <%= @poll.question %>
+
+</p>
+
+<p>
+  <b>Choice a:</b>
+  <%= @poll.choice_a %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'a').count%>
+</p>
+
+<p>
+  <b>Choice b:</b>
+  <%= @poll.choice_b %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'b').count%>
+</p>
+
+<p>
+  <b>Choice c:</b>
+  <%= @poll.choice_c %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'c').count%>
+</p>
+
+<p>
+  <b>Choice d:</b>
+  <%= @poll.choice_d %>
+  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'd').count%>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @poll.active %>
+</p>
+
+<%= link_to 'Back to polling session', polling_session_path(@poll.polling_session) %>
+
+<% if false %>
+<p>
+  <b>Polling session:</b>
+  <%= @poll.polling_session %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_poll_path(@poll) %> |
+<%= link_to 'Back', polls_path %>
+<% end %>

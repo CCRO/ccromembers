@@ -2,7 +2,7 @@
   <div class="subnav-inner">
     <div class="container">
     <ul class="nav nav-pills">
-      <% if params[:controller] == 'people' || params[:controller] == 'companies' %>
+      <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
           Directory: 
         </div>
@@ -20,9 +20,11 @@
         <li <%= 'class=active' if params[:controller] == 'working_groups' %>><a href="/static/comingsoon">Working Groups</a></li>
         <li <%= 'class=active' if params[:controller] == 'documents' %>><a href="/documents">Documents</a></li>
       <% end %>
-      <form class="subnav-search pull-right">
-        <input type="text" class="search-query" placeholder="Search">
-      </form>
+      <% if false %>
+        <form class="subnav-search pull-right">
+          <input type="text" class="search-query" placeholder="Search">
+        </form>
+      <% end %>
     </ul>
     </div>
   </div>

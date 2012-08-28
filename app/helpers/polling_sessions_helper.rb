@@ -1,0 +1,2 @@
+module PollingSessionsHelper
+end

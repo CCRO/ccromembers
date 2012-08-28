@@ -50,12 +50,21 @@ class PostsController < ApplicationController
       @commentable = @post
       authorize! :read, @post
     end
+
+    if @post.published 
+      impressionist(@post)
+    end
+
+    respond_to do |format|
+      format.html
+      format.pdf { doc_raptor_send }
+    end
   end
 
   def share
     post = Post.find(params[:id])
     authorize! :read, post
-    post.share_by_email(params[:email_list], current_user)
+    post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
     redirect_to post
   end
 
@@ -180,6 +189,24 @@ class PostsController < ApplicationController
       redirect_to root_path
     else
       redirect_to post_path(@post)
+    end
+  end
+
+  def doc_raptor_send(options = { })
+    default_options = { 
+      :name             => controller_name,
+      :document_type    => request.format.to_sym,
+      :test             => ! Rails.env.production?,
+    }
+    options = default_options.merge(options)
+    options[:document_content] ||= render_to_string
+    ext = options[:document_type].to_sym
+    
+    response = DocRaptor.create(options)
+    if response.code == 200
+      send_data response, :filename => "#{options[:name]}.#{ext}", :type => ext
+    else
+      render :inline => response.body, :status => response.code
     end
   end
 end

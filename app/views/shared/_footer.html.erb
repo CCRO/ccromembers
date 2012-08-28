@@ -14,6 +14,8 @@
     </footer>  
     </div>
 
+<%= render 'shared/adminbar' if current_user && (current_user.admin? || current_user.editor?) %>
+
   <div class="modal hide fade" id="modal-window">
     <div class="modal-header">
       <a href="#" class="close">×</a>
@@ -47,6 +49,7 @@
       Role: <%= current_user.role.capitalize if current_user.role %><br />
       Email: <%= mail_to current_user.email %><br />
       Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
+      PIN Code: <%= current_user.pin_code %></p>
 	  </td>
 	  </tr>
 	  </table>
@@ -58,6 +61,8 @@
     </div>
   </div>
 
+<%= yield :modal_settings %>
+
   <% if @post %>
     <div class="modal hide fade" id="modal-share_link">
       <div class="modal-header">
@@ -68,10 +73,35 @@
         <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
         <h2>Share by email:</h2>
         <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
-          <%= text_field_tag 'email_list' %>
+          <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
+          <% standard_body = 
+          "Hello,
+          
+          #{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"
+
+          #{strip_tags(raw @post.body.split('[---MORE---]').first).strip}
+          
+          continued here: #{post_url}"%>
+          <h4>subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 1, style: 'width: 95%; important!' %><br><br>
+          <h4>body</h4>
+          <%= text_area_tag 'short_message', standard_body, rows: 5, style: 'width: 95%; important!' %><br><br>
+          <h4>intended recipient/s</h4>
+          <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>
       </div>
+    </div>
+  <% end %>
+  <% if @document && @document.id %>
+    <div class="modal hide fade" id="modal-share_link">
+      <div class="modal-header">
+        <h1><%= @document.title %></h1>
+      </div>
+      <div class="modal-body center">
+        <h2>Share this document:</h2>
+        <p><%= shared_document_url(@document.viewing_token)%> <%= clippy(shared_document_url(@document.viewing_token)) %></p>
+       </div>
     </div>
   <% end %>
 <% end %>

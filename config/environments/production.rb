@@ -47,7 +47,7 @@ Ccromembers::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.css bootstrap-wysihtml5.css bootstrap_and_overrides.css surveys.css signup.css ccro.css documents.css doc_viewer.css blog.css mercury.css mercury_overrides.css mercury.js jquery-1.7.js mercury_overrides.js surveys.js )
+  config.assets.precompile += %w( application.css bootstrap-wysihtml5.css bootstrap_and_overrides.css surveys.css signup.css ccro.css documents.css doc_viewer.css blog.css messages.css style.css mercury.css mercury_overrides.css poll.css mercury.js jquery-1.7.js mercury_overrides.js surveys.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

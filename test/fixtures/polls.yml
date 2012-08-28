@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  question: MyText
+  choice_a: MyText
+  choice_b: MyText
+  choice_c: MyText
+  choice_d: MyText
+  active: false
+  polling_session: 
+
+two:
+  question: MyText
+  choice_a: MyText
+  choice_b: MyText
+  choice_c: MyText
+  choice_d: MyText
+  active: false
+  polling_session: 

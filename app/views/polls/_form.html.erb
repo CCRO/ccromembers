@@ -1,0 +1,52 @@
+<%= form_for(@poll) do |f| %>
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
+
+      <ul>
+      <% @poll.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :question %>
+    <%= f.text_area :question, rows: 5 %><br /><br />
+  </div>
+  <div class="field">
+    <%= f.label :choice_a %>
+    <%= f.text_area :choice_a, rows: 5  %><br /><br />
+  </div>
+  <div class="field">
+    <%= f.label :choice_b %>
+    <%= f.text_area :choice_b, rows: 5  %><br /><br />
+  </div>
+  <div class="field">
+    <%= f.label :choice_c %>
+    <%= f.text_area :choice_c, rows: 5  %><br /><br />
+  </div>
+  <div class="field">
+    <%= f.label :choice_d %>
+    <%= f.text_area :choice_d, rows: 5  %><br /><br />
+  </div>
+  <div class="field">
+    <% f.label :active %>
+    <% f.check_box :active %>
+  </div>
+  
+  <% unless params[:action] == 'edit' %>
+    <%= f.hidden_field :polling_session_id, value: @polling_session.id %>
+  <% end %>
+
+  <% if false %>
+  <div class="field">
+    <%= f.label :polling_session_id %><br />
+    <%= f.text_field :polling_session_id %>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

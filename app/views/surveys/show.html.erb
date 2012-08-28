@@ -60,8 +60,11 @@
         
   <% end %>
 </div>
-<%= link_to "Finished with survey for now", surveys_path, :class => 'btn btn-large' %>  
-
+<% if can? :create, Post %>
+  <%= link_to "Finished with survey for now", surveys_path, :class => 'btn btn-large' %>  
+<% else %>
+  <%= link_to "Finished with survey for now", report_survey_path(survey), :class => 'btn btn-large' %>
+<% end %>
 
 
 
