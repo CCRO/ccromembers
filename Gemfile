@@ -52,6 +52,7 @@ group :assets do
   gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'yui-compressor'
   gem "twitter-bootstrap-rails"
   gem 'bootstrap-wysihtml5-rails'
   gem 'font-awesome-rails'
