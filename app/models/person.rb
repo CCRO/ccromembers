@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
 
   before_save :check_contacts
   before_save :merge_name
-  before_create :generate_token
+  before_create :initialize_person
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
@@ -118,16 +118,25 @@ class Person < ActiveRecord::Base
     begin
       self[column] = format('%04d', rand(9999))
     end while Person.exists?(column => self[column])
-    self.save!
   end
 
   def generate_token!(column = :auth_token)
     generate_token(column)
     self.save!
   end
+
+  def generate_pin!(column = :pin_code)
+    generate_pin(column)
+    self.save!
+  end
   
   private
     
+  def initialize_person
+    generate_token
+    generate_pin
+  end
+
   def check_contacts
     if !self.new_record? && self.company_id_changed? && self.company_id_was && Company.exists?(self.company_id_was)
       previous_company = Company.find(self.company_id_was)

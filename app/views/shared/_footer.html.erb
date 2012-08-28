@@ -48,8 +48,9 @@
       <p>Company: <%= current_user.company.name if current_user.company %><br />
       Role: <%= current_user.role.capitalize if current_user.role %><br />
       Email: <%= mail_to current_user.email %><br />
+      Mobile: <%= current_user.mobile_phone || raw("Text <b>#{current_user.pin_code}</b> to 281-815-4177 to verify.") %><br />
       Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
-      PIN Code: <%= current_user.pin_code %></p>
+      PIN Code: <b><%= current_user.pin_code %></b></p>
 	  </td>
 	  </tr>
 	  </table>
