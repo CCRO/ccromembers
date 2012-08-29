@@ -9,8 +9,8 @@
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss", :title => "CCRO RSS Feed") %>
-  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom", :title => "CCRO Atom Feed") %>
+  <%= auto_discovery_link_tag(:rss, "/posts.rss", :title => "CCRO RSS Feed") %>
+  <%= auto_discovery_link_tag(:atom, "/posts.atom", :title => "CCRO Atom Feed") %>
 </head>
 <body id="blog">
 
@@ -103,6 +103,11 @@
           <ul class="nav nav-tabs nav-stacked">
             <li><%= link_to 'Summit Application', "http://ccro.org/posts/97-ccro-risk-networking-summit-application" %></li>
             <li><%= link_to 'Summit Agenda', "http://ccro.org/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
+            </ul>
+          <% end %>
+          <ul class="nav nav-tabs nav-stacked">
+            <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
+            <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
             <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
             <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
           </ul>

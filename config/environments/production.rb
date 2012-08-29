@@ -14,6 +14,9 @@ Ccromembers::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
+  config.assets.css_compressor = :yui
+  config.assets.js_compressor = :uglifier
+
   config.static_cache_control = "public, max-age=2592000"
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -44,7 +47,7 @@ Ccromembers::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = ENV['ASSET_HOST']
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( application.css bootstrap-wysihtml5.css bootstrap_and_overrides.css surveys.css signup.css ccro.css documents.css doc_viewer.css blog.css messages.css style.css mercury.css mercury_overrides.css poll.css mercury.js jquery-1.7.js mercury_overrides.js surveys.js )
