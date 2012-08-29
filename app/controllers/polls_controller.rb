@@ -48,6 +48,14 @@ class PollsController < ApplicationController
     @poll = Poll.find(params[:id])
     @results = ["a","b","c","d"].zip(["a","b","c","d"].map { |r| Impression.where(impressionable_type: 'Poll', impressionable_id: @poll.id, message: r).count })
 
+    data_table = GoogleVisualr::DataTable.new
+    data_table.new_column('string', 'Option' )
+    data_table.new_column('number', 'count')
+    data_table.add_rows(@results)
+
+    option = { width: 400, height: 300, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
+    @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @poll }

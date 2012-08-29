@@ -1,77 +1,53 @@
 <head>
   <meta http-equiv="refresh" content="10" />
-   <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('text', 'Options');
-        data.addColumn('number', 'count');
-        data.addRows(<% @results %>);
-
-        // Set chart options
-        var options = {<% @poll.question %>,
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
 </head>
 <p id="notice"><%= notice %></p>
 
-<div id="chart_div"></div>
+<br>
+<container>
+  <div class="row-fluid">
+    <h2 class='offset1'>
+      <%= @poll.question %>
+    </h2>
+  </div>
+  <div class="row-fluid">
+    <div class='span4'>
+      <div id='chart'></div>
+      <%= render_chart(@chart, 'chart') %>
+    </div>
+    <div class='span5' style='padding-top: 80px;'>
+      <p>
+        <span class="label label-inverse"><%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'a').count%> Votes</span>
+        <b>A:</b>
+        <%= @poll.choice_a %>
+        
+      </p>
 
-<p>
-  <b>Question:</b>
-  <%= @poll.question %>
+      <p>
+        <span class="label label-inverse"><%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'b').count%> Votes</span>
+        <b>B:</b>
+        <%= @poll.choice_b %>
+        
+      </p>
 
-</p>
+      <p>
+        <span class="label label-inverse"><%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'c').count%> Votes</span>
+        <b>C:</b>
+        <%= @poll.choice_c %>
+        
+      </p>
 
-<p>
-  <b>Choice a:</b>
-  <%= @poll.choice_a %>
-  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'a').count%>
-</p>
+      <p>
+        <span class="label label-inverse"><%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'd').count%> Votes</span>
+        <b>D:</b>
+        <%= @poll.choice_d %>
+        
+      </p>
+    </div>
+  </div>
 
-<p>
-  <b>Choice b:</b>
-  <%= @poll.choice_b %>
-  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'b').count%>
-</p>
-
-<p>
-  <b>Choice c:</b>
-  <%= @poll.choice_c %>
-  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'c').count%>
-</p>
-
-<p>
-  <b>Choice d:</b>
-  <%= @poll.choice_d %>
-  :<%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'd').count%>
-</p>
-
-<p>
-  <b>Active:</b>
-  <%= @poll.active %>
-</p>
-
-<%= link_to 'Back to polling session', polling_session_path(@poll.polling_session) %>
+  <%= link_to 'Back to polling session', polling_session_path(@poll.polling_session) %>
+</container>
 
 <% if false %>
 <p>
