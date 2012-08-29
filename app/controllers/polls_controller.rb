@@ -56,6 +56,8 @@ class PollsController < ApplicationController
     option = { width: 400, height: 300, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
     @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
 
+    authorize! :create, Poll
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @poll }
