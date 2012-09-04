@@ -53,7 +53,7 @@ class PollsController < ApplicationController
     data_table.new_column('number', 'count')
     data_table.add_rows(@results)
 
-    option = { width: 400, height: 300, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
+    option = { width: 750, height: 600, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
     @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
 
     authorize! :create, Poll

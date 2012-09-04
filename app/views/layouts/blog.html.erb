@@ -14,7 +14,6 @@
 </head>
 <body id="blog">
 
-
 <% if can? :read, Post, {level: 'committee', :published => true}   %>
   <%= render 'shared/nav' %>
 <% end %>
@@ -53,7 +52,6 @@
                   <i class="icon-off"></i>
                 <% end %>
              </div>
-
             </div>
           <% else %>
             <div id="login_tools" class="span5">  
@@ -91,6 +89,7 @@
 
   <div class="container">
     <div class="row">
+      
       <% unless params[:controller] == 'signups' %>  
       	<aside class="span3">
           <% if can? :create, Post %>
