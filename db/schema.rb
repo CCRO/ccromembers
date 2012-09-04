@@ -14,7 +14,6 @@
 
 ActiveRecord::Schema.define(:version => 20120827214557) do
 
-
   create_table "comments", :force => true do |t|
     t.string   "subject"
     t.text     "content"
