@@ -1,9 +1,9 @@
 <% if params[:my_drafts] %>
-  <% @posts = @my_posts %>
+  <% @pages = @my_pages %>
 <% end %>
 
 <div class="well">
-  <%= form_for Post.new do |f| %>
+  <%= form_for Page.new do |f| %>
     <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New draft title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <%= f.submit "Create new draft", :class => "btn btn-large pull-right" %>
   <% end %>
@@ -15,17 +15,17 @@
 </div>
 
 
-<% @posts.each do |post| %>
+<% @pages.each do |page| %>
   <div class="page" style="background-color: #fff; margin-top: 25px !important;">
-    <article id="post-<%= post.id %>" class="<%= "index_post_partial" if params[:action] == 'index' %>">
+    <article id="page-<%= page.id %>" class="<%= "index_page_partial" if params[:action] == 'index' %>">
     
-      <h1 class="post_title pull-left span5">
-          <% post.title = "{Untitled}" if strip_tags(post.title.strip).blank? %>
-          <%= link_to post.title.html_safe, post_path(post)  %>
+      <h1 class="page_title pull-left span5">
+          <% page.title = "{Untitled}" if strip_tags(page.title.strip).blank? %>
+          <%= link_to page.title.html_safe, page_path(page)  %>
     	</h1>
   	
     	<div class="control-group radio inline pull-right">
-    	  <%= form_for post, { :remote => true, :class => 'radio inline' } do |f| %>
+    	  <%= form_for page, { :remote => true, :class => 'radio inline' } do |f| %>
           <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
           <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
           <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
@@ -34,9 +34,9 @@
       </div>
     
       <div style="clear: both"></div>
-      <div class="post-footer">
+      <div class="page-footer">
         <hr class="hr-small-margin">
-          <p class="pull-right"><span class="post-footer-heading">By: </span><strong><%= post.author.name if post.author.present? %></strong></p><p><span class="post-footer-heading">Updated: </span><strong><%= time_ago_in_words post.updated_at %> ago</strong></p>
+          <p class="pull-right"><span class="page-footer-heading">By: </span><strong><%= page.author.name if page.author.present? %></strong></p><p><span class="page-footer-heading">Updated: </span><strong><%= time_ago_in_words page.updated_at %> ago</strong></p>
         <hr class="hr-small-margin hr-dark">
 
         <br>

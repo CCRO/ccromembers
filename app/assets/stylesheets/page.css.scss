@@ -1,0 +1,476 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require bootstrap-wysihtml5
+ *= require 'font-awesome'
+*/
+
+@media print {
+  aside, header .pull-right, #about_author, footer {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  div.page .btn-toolbar {
+    display: none !important;
+  }
+  
+  #header_logo {
+    width: 150px;
+    margin-bottom: 50px;
+  }
+  
+  #post_management_controls {
+    display: none !important;
+  }
+  
+  .post_date {
+    display: none;
+  }
+  
+  h2 {
+    color: #000;
+    font-size: 1.2em;
+  }
+  
+  h2:first-child {
+    padding-top: 20px;
+  }
+    
+  #post_author {
+    padding-top: 10px !important;
+  }
+  
+  @page {
+    size: 8.5in 11in;
+    margin: 16mm 16mm 16mm 16mm;
+
+    @top-left {
+      content: "CCRO";
+    }
+
+  }
+
+  @page :left {
+    @top-left {
+      content: "CCRO";
+    }
+  }
+
+  h2 {
+    string-set: header content();
+  }
+
+  @page :right {
+    @top-right {
+      content: string(header, first); 
+    }
+  }
+
+  @page :left {
+    @bottom-left {
+      content: counter(page);
+    }
+  } 
+}
+
+@media screen {
+  body#web_page {
+    margin-top: 0px;
+    background-color: #f6f6f6;
+  }
+
+  body#web_page header.fatty {
+    padding: 0px 20px;
+    margin-top: 0;
+    height: 540px;
+    background-color: 
+    #383838;
+    position: relative;
+  } 
+ 
+ body#web_page header.fatty #fatty_basket {
+    padding: 20px 0px;
+  } 
+
+  body#web_page header.collapse {
+    height: 90px !important;
+  }
+
+  body#web_page header.collapse div#header_expanded {
+    display: none;
+  }
+
+@media(max-width: 1403px) {
+  
+  body#web_page header {
+    height: 90px !important;
+  }
+
+  body#web_page header div#header_expanded {
+    display: none;
+  }
+
+}
+  body#web_page #post_level_selector {
+    position: absolute;
+    top: 0px;
+    right: -110px;
+  }
+
+  body#web_page #post_level_selector p {
+    font-weight: bold;
+    margin-bottom: 0px;
+    position: relative;
+    right: 18px;
+  }
+
+  body#web_page .editor_selector{
+    position: absolute;
+    top: -35px;
+    right: 0px;
+  }
+  
+  body#web_page #video {
+    box-shadow: 0px 0px 40px 0px #000000;
+    background-color: black;
+  }
+
+  body#web_page header.fatty #nav_links li{
+    display: inline;
+    padding-right: 20px;
+  }
+  body#web_page header.fatty #nav_links{
+    list-style: none;
+    font-weight: bold;
+    padding-top: 15px;
+  }
+
+  body#web_page header.fatty #login_tools{
+    padding-top: 10px;
+  }
+
+  #header_expanded{
+    padding-top: 20px;
+  }
+
+  body#web_page header.fatty div#header_expanded div#header_promo {
+    line-height: 48px;
+  }
+
+  body#web_page header.fatty div#header_expanded h1 {
+    color: #5DAFFA;
+    font-size: 42px;
+    line-height: 42px;
+    padding-top: 10px;
+  }
+
+  body#web_page header.fatty div#header_expanded p {
+    color: #FFFFFF;
+    font-size: 46px;
+    line-height: 46px;
+    padding-top: 20px;
+    font-weight: bold;
+  }
+
+  body#web_page header.fatty div#header_expanded a.btn {
+    font-weight: bold;
+  }
+  
+	div.page {
+	  position: relative;
+	  margin-top: 25px;
+	  padding: 20px;
+	  background-color: white;
+	}
+
+  .watermark-draft {
+    border: 2px solid #CA1313;
+  }
+
+	div.page-shadow {
+	  background: url('../images/leaftshadow-900.png') no-repeat bottom;
+	  padding-bottom: 20px;
+	  padding-top: 10px; 
+	}
+
+  body#web_page .page {
+    margin-top: 0 !important;
+  } 
+
+  body#web_page .page .post_title {
+    max-width: 650px;
+  }
+
+  body#web_page .page #post_management_controls{
+    float: right;
+  } 
+
+  body#web_page .page-shadow {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 20px;
+  }
+}
+
+  #post_body img{
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .post_date {
+    color: #696969;
+    font-size: smaller;
+  }
+
+  body#web_page h2 {
+    color: #32609e;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    
+  }
+
+  body#web_page h3:before {
+    content: '';
+  }
+
+  article {
+    /* margin-bottom: 25px; */
+  }
+
+  #post_preview {
+    /*height: 230px;*/
+    overflow-y: hidden;
+  }
+
+  header {
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+  .post-footer {
+    text-transform:uppercase;
+    clear: both;
+  }
+
+  .hr-dark {
+    border-top: 1px solid #696969;
+  /*  border-bottom: 1px solid #dddddd;*/
+  }
+
+  .hr-small-margin {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .post-footer-heading {
+    color: gray;
+  }
+
+  .index_post_partial span:not(.callout) img {
+    max-height: 200px;
+    max-width: 200px;
+  }
+
+  .page.watermark-draft:before {
+    content: "DRAFT";
+    -webkit-transform: rotate(-90deg);
+    position: absolute;
+    font-weight: bold;
+    font-size: larger;
+    color: white;
+    display: block;
+    margin-left: -73px;
+    background-color: #CA1313;
+    padding: 5px;
+    margin-top: 1px;
+    letter-spacing: 2px;
+  }
+
+  .watermark-draft {
+    /* background: url('../images/watermark-draft-light.png'); */
+  }
+  
+  .emphasized {
+    font-size: 120%;
+    font-weight: bold;
+  }
+  
+  .callout-small {
+    width: 100px !important;
+    padding: 5px !important;
+  }
+  
+  .callout-large {
+    width: 350px !important;
+    padding: 10px !important;
+  }
+
+    
+  .callout img {
+     margin-bottom: 10px;
+   }
+   
+  .ribbon-left {
+      position: absolute;
+      left: -10px;
+    max-width: 80%;
+      padding: 4px 8px;
+      background: #000;
+      color: #fff;
+      -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  }
+  
+  .ribbon-left:after {
+      content: '';
+      display: block;
+      height: 20px;
+      width: 8px;
+      position: absolute;
+      bottom: -65px;
+      left: 0px;
+      background: transparent;
+      z-index: -1;
+      border-top: 45px solid #444444;
+      border-left: 45px solid transparent;
+  }
+
+  .ribbon-right {
+      position: absolute;
+      right: -10px;
+      padding: 4px 8px;
+      background: #000;
+      min-width: 80px;
+      color: #fff;
+      -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    -webkit-transition:all 1.0s ease-in-out;
+    -moz-transition:all 1.0s ease-in-out;
+    -o-transition:all 1.0s ease-in-out;
+    -ms-transition:all 1.0s ease-in-out;  
+    transition:all 1.0s ease-in-out;
+  }
+
+
+
+  .ribbon-right .ribbon-collapse {
+    display: none;
+  }
+
+  .ribbon-right:hover .ribbon-collapse {
+    display: inline;
+  }
+
+  .ribbon-right:after {
+      content: '';
+      display: block;
+      height: 20px;
+      width: 8px;
+      position: absolute;
+      top: 44px;
+      right: 0px;
+      background: transparent;
+      z-index: -1;
+      border-top: 45px solid #696969;
+      border-right: 45px solid transparent;
+  }
+
+  .ribbon-important {
+    background: darkred;
+  }
+
+  .ribbon-important:after {
+    border-top: 45px solid #bb6969;
+  }
+
+  .ribbon-success {
+    background: green;
+  }
+
+  .ribbon-success:after {
+    border-top: 45px solid #69bb69;
+  }
+
+  .ribbon-info {
+    background: #49AFCD;
+  }
+
+  .ribbon-info:after {
+    border-top: 45px solid #1F6377;
+  }
+
+  .ribbon-member {
+    background: #402468;
+  }
+
+  .ribbon-basic {
+    background: #098A03;
+  }
+
+  .page img, .page .callout {
+    border: 1px solid lightGrey;
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 1px 1px 3px gray;
+    font-weight: bold;
+    font-size: 110%;
+  }
+
+  body#web_page table.agenda img {
+    max-width: 50px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  body#web_page table.agenda th {
+    background-color: #71AACA;
+  }
+
+  body#web_page table.agenda th {
+    color: white;
+  }
+
+  body#web_page table.agenda h2 {
+    margin: 0px;
+  }
+
+  body#web_page table.agenda .dont-resize {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 0px !important;
+  }
+
+/* Comments */
+
+blockquote {
+  border-left: 5px solid #BBB;
+}
+
+blockquote > a.close {
+  display: none;
+}
+
+blockquote:hover > a.close {
+  display: block;
+}

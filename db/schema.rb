@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20120827214557) do
 
+
   create_table "comments", :force => true do |t|
     t.string   "subject"
     t.text     "content"
@@ -145,6 +146,49 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.datetime "updated_at", :null => false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.text     "header"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.integer  "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.string   "level"
+    t.string   "viewing_token"
+    t.boolean  "locked"
+    t.integer  "locker_id"
+    t.datetime "locked_at"
+    t.string   "tag_list"
+    t.boolean  "commenting_enabled"
+  end
+
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.text     "header"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.integer  "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.string   "level"
+    t.string   "viewing_token"
+    t.boolean  "locked"
+    t.integer  "locker_id"
+    t.datetime "locked_at"
+    t.string   "tag_list"
+    t.boolean  "commenting_enabled"
+  end
+
+>>>>>>> 1d40e3e62442e127179f07b1d875c7893f4ea666
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"
