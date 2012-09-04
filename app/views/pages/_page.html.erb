@@ -19,46 +19,6 @@
       <% elsif page.level == 'committee' && params[:action] == 'index' %>
         <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= page.level.capitalize %></h1>
       <% end %>
-
-      <div class="btn-toolbar pull-right">
-        <% if can?(:edit, page) && params[:action] == 'show' %>
-          <div class="btn-group">
-            <%= link_to edit_page_path(page), class: 'btn', id: "edit_link", data: {save_url: mercury_update_page_path(page)} do %>
-              <i class="icon-pencil"></i> Edit Page
-            <% end %>
-          </div>
-        <% end %>
-        
-        <% if can?(:publish, page) && params[:action] == 'show' %>
-          <%= publish_toggle(page) %>
-          
-          <% unless params[:mercury_frame] %>
-            <div class="editor_selector">
-              <%= form_for page, { :remote => true } do |f| %>
-                <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
-                <b>Assign this page to: </b>
-                <%= select_tag('page[author_id]', options_for_select(editors, :selected => page.author.id), :include_blank => true, :class => 'submittable') %>
-              <% end %>
-            </div>
-          <% end %>
-          
-          <div id="page_level_selector", class="control-group radio inline" >
-            <p>Level</p>
-            <%= form_for page, { :remote => true, :class => 'radio inline' } do |f| %>
-              <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
-              <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
-              <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-              <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
-            <% end %>
-            <p>Commenting</p>
-            <%= form_for page, { :remote => true, :class => 'radio inline' } do |f| %>
-              <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
-              <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
-            <% end %>
-          </div>
-        <% end %>
-
-      </div>
   
       <h1 class="page_title">
         <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
