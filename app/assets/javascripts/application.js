@@ -28,8 +28,8 @@ window.addEventListener("load",function() {
 		// Hide the address bar!
 		window.scrollTo(0, 1);
 	}, 0);
-	$('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
-  $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
+	// $('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
+  // $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
 });
 
 $('.submittable').live('change', function() {

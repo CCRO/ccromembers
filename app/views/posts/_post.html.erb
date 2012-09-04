@@ -9,7 +9,7 @@
       <br><br>
     <% end %>
   <% end %>
-  <div class="page <%= "watermark-draft" unless post.published? %>">
+  <div class="page drop-shadow lifted <%= "watermark-draft" unless post.published? %>">
     <article id="post-<%= post.id %>">
         
         <% if post.level == 'basic' && params[:action] == 'index' %>

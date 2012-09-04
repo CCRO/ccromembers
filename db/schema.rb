@@ -145,26 +145,6 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "pages", :force => true do |t|
-    t.string   "title"
-    t.text     "header"
-    t.text     "body"
-    t.integer  "owner_id"
-    t.integer  "owner_type"
-    t.integer  "author_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.boolean  "published"
-    t.datetime "published_at"
-    t.string   "level"
-    t.string   "viewing_token"
-    t.boolean  "locked"
-    t.integer  "locker_id"
-    t.datetime "locked_at"
-    t.string   "tag_list"
-    t.boolean  "commenting_enabled"
-  end
-
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"
