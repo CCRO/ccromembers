@@ -19,15 +19,6 @@
         <% elsif post.level == 'committee' && params[:action] == 'index' %>
           <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
         <% end %>
-    
-        <h1 class="post_title">
-          <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
-            <div id="post_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
-          <% else %>
-            <%= link_to post.title.html_safe, post_path(post)  %>
-          <% end %>
-          <div class="post_date">
-          </div>
   
       <h1 class="post_title">
         <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
