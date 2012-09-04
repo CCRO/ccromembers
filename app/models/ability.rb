@@ -4,31 +4,31 @@ class Ability
   def initialize(user)
     user ||= Person.new # guest user (not logged in)
         
-    can :read, Post, {level: 'public', published: true}
+    can :read, [Post, Page], {level: 'public', published: true}
     can :create, Person
     can :read, Survey if user.id
     
     if user.basic?
       can :read, [PollingSession, Poll]
       can :read, Survey if user.id
-      can :read, [Post, Document], {level: 'basic', published: true}
+
+      can :read, [Post, Page, Document], {level: 'basic', published: true}
       can :create, Comment
-      can [:edit, :destroy], [Post, Document, Comment, Message], :author_id => user.id
+      can [:edit, :destroy], [Post, Document, Comment, Message, Page], :author_id => user.id
       can :manage, Person, :id => user.id
-      
     end
     
     if user.pro?
-      can :read, [Post, Document], {level: 'basic', :published => true}
-      can :read, [Post, Document], {level: 'pro', :published => true}  
+      can :read, [Post, Page, Document], {level: 'basic', :published => true}
+      can :read, [Post, Page, Document], {level: 'pro', :published => true}  
     end
     
-    if user.committee? || user.participant?
-      can :read, [Post, Document], {level: 'basic', :published => true}
-      can :read, [Post, Document], {level: 'pro', :published => true}  
-      can :read, [Post, Document], {level: 'committee', :published => true}  
-      can :read, [Document, Comment, Message, Survey]
-      can :read, Post, :published => true
+    if user.committee?
+      can :read, [Post, Page, Document], {level: 'basic', :published => true}
+      can :read, [Post, Page, Document], {level: 'pro', :published => true}  
+      can :read, [Post, Page, Document], {level: 'committee', :published => true}  
+      can :read, [Document, Comment, Message, Survey, Page]
+      can :read, [Post, Page, Document], :published => true
       can :read, Company, :id => user.company_id
       
       if user.primary_contact? || user.billing_contact?
@@ -39,13 +39,13 @@ class Ability
     end
     
     if user.editor?
-      can :read, Post, {level: 'basic', :published => true}
-      can :read, Post, {level: 'pro', :published => true}  
-      can :read, Post, {level: 'committee', :published => true}  
-      can :read, Post, :published => false
-      can :create, [Post, Document, Message, Survey]
-      can [:edit,:destroy], Post
-      cannot :publish, Post
+      can :read, [Post, Page], {level: 'basic', :published => true}
+      can :read, [Post, Page], {level: 'pro', :published => true}  
+      can :read, [Post, Page], {level: 'committee', :published => true}  
+      can :read, [Post, Page], :published => false
+      can :create, [Post, Document, Message, Survey, Page]
+      can [:edit,:destroy], [Post, Page]
+      cannot :publish, [Post, Page]
     end
             
     can :manage, :all if user.admin?

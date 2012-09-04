@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20120827214557) do
+=======
+ActiveRecord::Schema.define(:version => 20120730183140) do
+>>>>>>> d395e21ed6ed2b1a767dbc40f3ae9f544a32f07a
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -143,6 +147,26 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.integer  "message_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.text     "header"
+    t.text     "body"
+    t.integer  "owner_id"
+    t.integer  "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "published"
+    t.datetime "published_at"
+    t.string   "level"
+    t.string   "viewing_token"
+    t.boolean  "locked"
+    t.integer  "locker_id"
+    t.datetime "locked_at"
+    t.string   "tag_list"
+    t.boolean  "commenting_enabled"
   end
 
   create_table "pages", :force => true do |t|

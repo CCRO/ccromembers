@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= "CCRO Web Page maker!" %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "page", :media => "all" %>
+  <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss") %>
+  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
+</head>
+<body id="web_page">
+
+<!--Body content (BEGIN)-->
+<%= render 'shared/browser_warning' %>
+
+  <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
+    <div id='fatty_basket' class="container">
+      <div id='fatty_nav'class="row">
+        <div id="logo" class="span3">
+          <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
+        </div>
+        <div class="span4">
+          <ul id="nav_links">
+            <li><%= link_to 'Home', posts_path %></li>
+            <li><%= link_to 'About', "http://ccro.org/about/237" %></li>
+            <li><%= link_to 'Contact', '#' %></li>
+            <li><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
+            <li><%= link_to 'Subscribe', signups_path %></li>
+          </ul>
+        </div>
+
+        
+          <% if current_user %>
+            <div class="btn-toolbar pull-right">
+              <div class="btn-group">
+                <% if can? :create, Page %>
+                  <%= link_to draft_pages_path, :class => 'btn' do %>  
+                    <i class="icon-list-alt"></i> Manage Page drafts
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="btn-group">
+                <%= link_to current_user.name, current_user, :class => 'btn' %>
+                <%= link_to logout_path, :class => 'btn' do %>
+                  <i class="icon-off"></i>
+                <% end %>
+             </div>
+            </div>
+          <% else %>
+            <div id="login_tools" class="span5">  
+              <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
+                <%= hidden_field_tag :remember_me, '1' %>
+                <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+                <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+                <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+              <% end %>
+            </div> 
+          <% end %>
+        
+      </div>
+
+      <div id="header_expanded" class="row">
+        <div id="promo_video" class="span8">
+          <img id="video" src="https://s3.amazonaws.com/ccro_static/empty_office.png" width="770" height="432" frameborder="0" >
+        </div>
+        <div id="header_promo" class="span4">
+          <h1>Committee of Chief Risk Officers:</h1>
+          <p>Advancing Best Practices for Energy Companies</p>
+          <p>
+            <% unless params[:controller] == 'signups' %>  
+              <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
+            <% end %> 
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+  <div class="container">
+    <div class="row">
+     
+      <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
+            <%= yield %>
+      </section>
+       <% unless params[:controller] == 'signups' %>  
+        <aside class="span3">
+          <% if can? :create, Page %>
+            <ul class="nav nav-tabs nav-stacked">
+              <li><a href="http://blog.ccro.org/posts/19-introduction-to-blog-content-creation">How to create new blog posts</a></li>
+              <li><%= link_to 'Manage my pages', my_draft_pages_path() %></li>
+              <li><%= link_to 'Archived pages', archive_pages_path() %></li>
+            </ul>
+          <% end %>
+          <ul class="nav nav-tabs nav-stacked">
+            <li><%= link_to 'Summit Pages', tagged_pages_path('summit') %></li>
+          </ul>
+          <center>
+            <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
+            <% end %>
+            <%= link_to "http://www.riskadvisory.com/index.html" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
+            <% end %>
+            <%= link_to "http://www.ccro.org/directory/7" do %>
+              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
+            <% end %>  
+            
+            <% if current_user && current_user.admin? %>
+              <%= image_tag "http://placehold.it/300x250" %><br><br>
+              <%= image_tag "http://placehold.it/300x600" %>
+            <% end %>
+          </center>
+        </aside>
+      <% end %>
+    </div>  
+      <footer>
+        <%= render 'shared/footer' %>
+      </footer>
+  </div>
+<!--Body content (END)-->
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
+</body>
+</html>
