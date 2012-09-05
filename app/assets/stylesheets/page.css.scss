@@ -53,7 +53,6 @@
     padding-top: 10px !important;
   }
   
-  
   @page {
     size: 8.5in 11in;
     margin: 16mm 16mm 16mm 16mm;
@@ -125,6 +124,14 @@
   }
 
 }
+
+#pages_header_image{
+    width: 100%;
+    min-height: 40px;
+    margin: 0;
+    padding: 0px;
+  }
+
   body#web_page #post_level_selector {
     position: absolute;
     top: 0px;

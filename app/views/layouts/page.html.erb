@@ -85,67 +85,36 @@
       </div>
     </div>
   </header>
-  
 
-  <div class="container page">
+  
+  
+  <div class="container">
     <div class="row">
-     
-      <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
-            <%= yield %>
+      <% unless params[:controller] == 'signups' %>
+        <section>
+          <%= yield :pages_header_image %>
+        </section>
+      <% end %>
+    </div>
+
+    <div class="row page">
+      <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
+               style="<%= (params[:controller] == 'signups') ? 'margin-left: 20px;' : '' %>">
+        <%= yield %>
       </section>
-       <% unless params[:controller] == 'signups' %>  
-        <aside class="span3">
-          <% if can? :create, Post %>
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Drafts', draft_pages_path() %></li>
-              <li><%= link_to 'My Drafts', my_draft_pages_path() %></li>
-              <li><%= link_to 'Archived Posts', archive_pages_path() %></li>
-              <li><%= link_to 'All Pages', pages_path() %></li>
-            </ul>
-          <% end %>
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
-              <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
-              <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
-              <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
-            </ul>
-          <% if false %>
-          <center>
-            <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.riskadvisory.com/index.html" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://v3.ccro.org/directory/7" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
-            <% end %>  
-            <%= link_to "http://v3.ccro.org/directory/1371" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/StructureLogo.jpg" %><br><br>
-            <% end %>
-            <%= link_to "http://www.mre-consulting.com/" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/MRE_logo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.metricstream.com/" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/metricStream.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.sapient.com/en-us/about-sapient.html" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/sapient_logo.png" %><br><br>
-            <% end %>         
-            
-            <% if current_user && current_user.admin? %>
-              <%= image_tag "http://placehold.it/300x250" %><br><br>
-              <%= image_tag "http://placehold.it/300x600" %>
-            <% end %>
-          </center>
-          <% end %>
+
+      <% unless params[:controller] == 'signups' %>  
+        <aside class="pull-right" style="width: 20%">
+          <%= yield :aside %>
         </aside>
       <% end %>
-    </div>  
-      <footer>
-        <%= render 'shared/footer' %>
-      </footer>
+    </div> 
+
+    <footer>
+      <%= render 'shared/footer' %>
+    </footer>
   </div>
+
 <!--Body content (END)-->
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>

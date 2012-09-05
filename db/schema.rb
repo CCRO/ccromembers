@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827214557) do
+ActiveRecord::Schema.define(:version => 20120905162037) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.datetime "locked_at"
     t.string   "tag_list"
     t.boolean  "commenting_enabled"
+    t.string   "header_picture"
   end
 
   create_table "people", :force => true do |t|

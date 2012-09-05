@@ -119,6 +119,7 @@ class PagesController < ApplicationController
       page.title = params[:content][:page_title][:value]
       page.title = "Untitled" if page.title == "<br>" || page.title.blank?
       page.body = params[:content][:page_body][:value]
+      page.header_picture = params[:content][:pages_header_image][:value]
       page.author ||= current_user
       page.unlock
       page.save! 

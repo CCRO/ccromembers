@@ -1,23 +1,27 @@
-
-<% if can?(:edit, page) && params[:action] == 'show' %>
-  <% if page.locked? && ['show', 'edit'].include?(params[:action]) %>
-    <% if page.locker == current_user %>
-      <span class="label">You are currently the editor of this page.</span>
-    <% else %>
-      <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Page is currently being edited by <%= page.locker.name %></span>
+<% content_for :pages_header_image do %>
+  <% unless page.published? %>
+    <h2 style="color: red;"> This page is a draft </h2>
+  <% end %>
+  <% if can?(:edit, page) && params[:action] == 'show' %>
+    <% if page.locked? && ['show', 'edit'].include?(params[:action]) %>
+      <% if page.locker == current_user %>
+        <span class="label">You are currently the editor of this page.</span>
+      <% else %>
+        <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Page is currently being edited by <%= page.locker.name %></span>
+      <% end %>
+      <br><br>
     <% end %>
-    <br><br>
+  <% end %>
+
+  <% if params[:action] == 'show'%>
+    <div id="pages_header_image" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+      <%= page.header_picture.html_safe %>
+    </div>
   <% end %>
 <% end %>
-<div class="HERE <%= "watermark-draft" unless page.published? %>">
+
+<div>
   <article id="page-<%= page.id %>">
-    <div>
-      <% if params[:action] == 'show'%>
-        <div id="page_header_image" class="mercury-region" style="width: 100%; height: 200px; margin: 0; padding: 0;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
-    
-        </div>
-      <% end %>
-    </div><br>
     <h1 class="page_title">
       <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
         <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
@@ -45,7 +49,7 @@
         </div>
       <% else %>
         <% unless params[:action] == 'index'%>
-          <div id="page_body" class="mercury-region" data-mercury="full" contentEditable>
+          <div id="page_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
             <%= page.body.html_safe unless params[:action] == 'draft' %>
           </div>
         <% end %>
@@ -75,3 +79,22 @@
     <% end %>
   </article>
 </div>
+
+<% content_for :aside do %>
+  <% if can? :create, Post %>
+    <ul class="nav nav-tabs nav-stacked">
+      <li><%= link_to 'Drafts', draft_pages_path() %></li>
+      <li><%= link_to 'My Drafts', my_draft_pages_path() %></li>
+      <li><%= link_to 'Archived Posts', archive_pages_path() %></li>
+      <li><%= link_to 'All Pages', pages_path() %></li>
+    </ul>
+  <% end %>
+
+  <ul class="nav nav-tabs nav-stacked">
+    <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
+    <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
+    <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
+    <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
+  </ul>
+
+<% end %>
