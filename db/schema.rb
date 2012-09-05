@@ -11,8 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20120827214557) do
+
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.datetime "updated_at", :null => false
   end
 
+<<<<<<< HEAD
+=======
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.text     "header"
@@ -186,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20120827214557) do
     t.boolean  "commenting_enabled"
   end
 
+>>>>>>> 1d40e3e62442e127179f07b1d875c7893f4ea666
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"

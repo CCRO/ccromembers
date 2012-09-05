@@ -11,7 +11,6 @@
     <th>Company <%= link_to(people_path(:sort => 'company')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Email <%= link_to(people_path(:sort => 'email')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Mobile <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-    <th><center>Verified Email <%= link_to(people_path(:sort => 'verified')) do %> <i class="icon-resize-vertical"></i> <% end %></center></th>
     <th></th>
   </tr>
   </thead>
@@ -22,17 +21,8 @@
       <td><%= person.role if person.role %></td>
       <td><%= person.level if person.level %></td>
       <td><%= link_to person.company.name, person.company if person.company %></td>
-      <td><%= person.email %></td>
-      <td><%= person.mobile_phone || raw("<span class=\"badge badge-inverse\">PIN: #{person.pin_code}</span>") %></td>
-      <td>
-        <center>
-        <% if person.verified %>
-            <i class="icon-ok" style="color: green;"></i>
-            <% else %>
-            <%= link_to 'Resend Email', resend_activation_person_path(person), class: 'btn'%>
-            <% end %>
-          </center>
-      </td>
+      <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
+      <td><%= status_icon(person.mobile_phone.present?) %> <%= number_to_phone(person.mobile_phone) || raw("<span class=\"badge badge-inverse\">PIN: #{person.pin_code}</span>") %></td>
       <td>
         <div class="btn-group">
           <%= button_to 'Edit', edit_person_path(person) %>

@@ -21,6 +21,14 @@ module ApplicationHelper
     end
   end
   
+  def status_icon(condition)
+    if condition
+      content_tag :i, nil, :class => "icon-ok", :style => "color: green;"
+    else
+      content_tag :i, nil, :class => "icon-remove", :style => "color: red;"
+    end      
+  end
+
   def button_to(*args, &block)
     if args[2] && args[2][:class]
       args[2][:class] = 'btn ' + args[2][:class]

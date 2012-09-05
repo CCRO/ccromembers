@@ -10,6 +10,7 @@ group :development do
   gem 'hirb'
   gem 'foreman'
   gem 'rails-footnotes'
+  gem 'taps'
 end
 
 group :production do
