@@ -9,51 +9,50 @@
     <br><br>
   <% end %>
 <% end %>
-<div class="page <%= "watermark-draft" unless page.published? %>">
+<div class="HERE <%= "watermark-draft" unless page.published? %>">
   <article id="page-<%= page.id %>">
-      
-      <% if page.level == 'basic' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= page.level.capitalize %></h1>
-      <% elsif page.level == 'pro' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= page.level.capitalize %></h1>
-      <% elsif page.level == 'committee' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= page.level.capitalize %></h1>
+    <div>
+      <% if params[:action] == 'show'%>
+        <div id="page_header_image" class="mercury-region" style="width: 100%; height: 200px; margin: 0; padding: 0;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+    
+        </div>
       <% end %>
-  
-      <h1 class="page_title">
-        <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
-          <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= page.title.html_safe %></div>
-        <% else %>
-          <%= link_to page.title.html_safe, page_path(page)  %>
-        <% end %>
-        <div class="page_date"><%= short_date(page) %></div>
-      </h1>
-      
-      <h3 id="page_author">by <%= page.author.try(:name) %></h3>
-      
-      <% if params[:filter] == 'drafts' %>
-          <% if params[:action] == 'index' && (page_counter >= 0 || cannot?(:read, page))  %>
-            <div id="page_preview" class='drafts'>
-              <%=raw page.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', page %></b>
-            </div>
-          <% else %>
-            <div id="page_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= page.body.html_safe unless params[:action] == 'draft' %></div>
-          <% end %>
+    </div><br>
+    <h1 class="page_title">
+      <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
+        <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+          <%= page.title.html_safe %>
+        </div>
       <% else %>
-          <% if params[:action] == 'index' && (page_counter > 0 || cannot?(:read, page))  %>
-            <div id="page_preview">
-              <%=raw page.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', page %></b>
-            </div>
-          <% else %>
-            <% if is_editing? %>
-              <div id="page_body" class="mercury-region" data-mercury="full" contentEditable><%= page.body.html_safe unless params[:action] == 'draft' %></div>
-            <% else %>
-              <div id="page_body" class="mercury-region" data-mercury="full"><%= page.body.gsub('[---MORE---]', '').html_safe unless params[:action] == 'draft' %></div>
-            <% end %>
-          <% end %>
+        <%= link_to page.title.html_safe, page_path(page)  %>
       <% end %>
-        
-
+    </h1>
+    
+    <% if params[:filter] == 'drafts' %>
+        <% if params[:action] == 'index' && (page_counter >= 0 || cannot?(:read, page))  %>
+          <div id="page_preview" class='drafts'>
+            <br>
+          </div>
+        <% else %>
+          <div id="page_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+            <%= page.body.html_safe unless params[:action] == 'draft' %>
+          </div>
+        <% end %>
+    <% else %>
+      <% if is_editing? %>
+        <div id="page_body" class="mercury-region" data-mercury="full" contentEditable>
+          <%= page.body.html_safe unless params[:action] == 'draft' %>
+        </div>
+      <% else %>
+        <% unless params[:action] == 'index'%>
+          <div id="page_body" class="mercury-region" data-mercury="full" contentEditable>
+            <%= page.body.html_safe unless params[:action] == 'draft' %>
+          </div>
+        <% end %>
+      <% end %>  
+    <% end %>
+      
+    <% if params[:action] == 'index' %>
       <div class="page-footer">
         <hr class="hr-small-margin">
           <p class="pull-right">
@@ -67,26 +66,12 @@
         <hr class="hr-small-margin hr-dark">
       </div>
       <br />
-    
-      <% if params[:action] == 'show' && page.commenting_enabled == true %>
-          <h1 class="ribbon-left">Comments:</h1>
-          <%= render :partial => 'shared/comment_hidden_form' %>
-          <%= render :partial => 'shared/comment', :collection => page.comments.reverse %>
-      <% end %>
+    <% end %>
   
+    <% if params[:action] == 'show' && page.commenting_enabled == true %>
+        <h1 class="ribbon-left">Comments:</h1>
+        <%= render :partial => 'shared/comment_hidden_form' %>
+        <%= render :partial => 'shared/comment', :collection => page.comments.reverse %>
+    <% end %>
   </article>
 </div>
-
-
-<% if params[:action] == 'show' && page.author && page.author.respond_to?(:bio) && page.author.bio.present? %>
-  <div id="about_author" class="">
-    <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
-      <%= avatar_for page.author %>
-      <h5><%= page.author.name %></h5>
-      <p><%= page.author.company.name %></p>
-    </div>
-    <h3>About the author</h3>
-    <p><%= page.author.bio %></p>
-    <div style="clear: both"></div> 
-  </div>
-  <% end %>
