@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require codemirror
 //= require_tree ./jquery-plugins
 //= require jquery_ujs
 //= require twitter/bootstrap
@@ -35,3 +36,5 @@ window.addEventListener("load",function() {
 $('.submittable').live('change', function() {
   $(this).parents('form:first').submit();
 });
+
+var myCodeMirror = CodeMirror.fromTextArea($('.mercury-display-pane-container'));

@@ -57,6 +57,7 @@ group :assets do
   gem "twitter-bootstrap-rails"
   gem 'bootstrap-wysihtml5-rails'
   gem 'font-awesome-rails'
+  gem 'codemirror-rails'
 end
 
 gem 'jquery-rails'
