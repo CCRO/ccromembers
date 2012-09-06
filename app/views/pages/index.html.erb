@@ -1,3 +1,26 @@
+<% content_for :adminbar do %>
+	<ul>
+		<li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %><i class="icon-asterisk"></i><br><p>New Page</p><% end %></li>
+	</ul>
+<% end %>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-new-page">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>New Page</h3>
+    </div>
+    <div class="modal-body center">
+	  <%= form_for Page.new do |f| %>
+	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New page title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	</div>
+    <div class="modal-footer">
+	    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+    </div>
+	  <% end %>
+  </div>
+ <% end %>
+
 <% if ['drafts', 'my_drafts'].include?(params[:filter]) && can?(:create, Page) %>
 	<div class="well">
 	  <%= form_for Page.new do |f| %>

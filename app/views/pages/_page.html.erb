@@ -81,14 +81,6 @@
 </div>
 
 <% content_for :aside do %>
-  <% if can? :create, Post %>
-    <ul class="nav nav-tabs nav-stacked">
-      <li><%= link_to 'Drafts', draft_pages_path() %></li>
-      <li><%= link_to 'My Drafts', my_draft_pages_path() %></li>
-      <li><%= link_to 'Archived Posts', archive_pages_path() %></li>
-      <li><%= link_to 'All Pages', pages_path() %></li>
-    </ul>
-  <% end %>
 
   <ul class="nav nav-tabs nav-stacked">
     <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
