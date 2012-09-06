@@ -73,7 +73,7 @@ class PagesController < ApplicationController
 
     @page = Page.new(params[:page])
     
-    @page.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your page preview!"
+    @page.body = "Here is the start of a new page!"
     @page.owner = current_user
     @page.author = current_user
     @page.published = false
@@ -183,7 +183,7 @@ class PagesController < ApplicationController
     authorize! :destroy, @page
     
     if @page.destroy
-      redirect_to root_path
+      redirect_to pages_path
     else
       redirect_to page_path(@page)
     end
