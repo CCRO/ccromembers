@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CCRO - <%= params[:controller].capitalize %></title>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <%= stylesheet_link_tag    "cm", :media => "all" %>
+  <%= javascript_include_tag "cm" %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="cm">
+<!--Body content (BEGIN)-->
+<%= yield %>
+<!--Body content (END)-->
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
+</body>
+</html>
