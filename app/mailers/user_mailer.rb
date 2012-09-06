@@ -15,5 +15,10 @@ class UserMailer < ActionMailer::Base
     @person = person
     mail :to => person.email, :subject => "Please activate your CCRO account"
   end
+
+  def mobile_activation(person)
+    @person = person
+    mail :to => person.email, :subject => "Please verify your mobile phone linked to your CCRO account"
+  end
   
 end

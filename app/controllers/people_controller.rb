@@ -122,4 +122,14 @@ class PeopleController < ApplicationController
 
     redirect_to :back, :flash => {success: "Activation email resent to user."}
   end
+ 
+  def send_mobile_activation
+    @person = Person.find(params[:id])
+
+    authorize! :create, @person
+
+    @person.send_mobile_activation
+
+    redirect_to :back, :flash => {success: "Mobile activation email resent to user."}
+  end
 end
