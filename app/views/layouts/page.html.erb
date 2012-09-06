@@ -99,12 +99,12 @@
 
     <div class="row page">
       <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
-               style="<%= (params[:controller] == 'signups') ? 'margin-left: 20px;' : '' %>">
+               style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
         <%= yield %>
       </section>
 
       <% unless params[:controller] == 'signups' %>  
-        <aside class="pull-right" style="width: 20%">
+        <aside class="pull-right" style="width: 22%">
           <%= yield :aside %>
         </aside>
       <% end %>
