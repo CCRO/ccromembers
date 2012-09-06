@@ -11,7 +11,17 @@
         </a>
 
         <!-- Be sure to leave the brand out there if you want it shown -->
-        <a class="brand" href="#">CCRO Member</a>
+        <% if current_user.level == 'basic' %>
+        <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
+        <% elsif current_user.level == 'pro'%>
+        <%= link_to "CCRO Pro", posts_path, class: "brand", style: "color: white;" %>
+        <% elsif current_user.level == 'participant'%>
+        <%= link_to "CCRO Participant", posts_path, class: "brand", style: "color: white;" %>
+        <% elsif current_user.level == 'committee'%>
+        <%= link_to "CCRO Member", posts_path, class: "brand", style: "color: white;" %>
+        <% else %>
+        <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
+        <% end %>
 
         <!-- Everything you want hidden at 940px or less, place within here -->
         <div class="nav-collapse">
