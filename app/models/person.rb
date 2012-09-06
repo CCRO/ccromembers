@@ -101,6 +101,10 @@ class Person < ActiveRecord::Base
     UserMailer.password_reset(self).deliver
   end
 
+  def send_mobile_activation
+   UserMailer.mobile_activation(self).deliver
+  end
+
   def send_activation
     generate_perishable_token
     self.perishable_token_sent_at = Time.zone.now
