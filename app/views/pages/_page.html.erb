@@ -15,7 +15,9 @@
 
   <% if params[:action] == 'show'%>
     <div id="pages_header_image" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
-      <%= page.header_picture.gsub('&nbsp;', '').gsub('&nb', '').gsub('<br>', '').gsub('<div>', '').gsub('</div>', '').html_safe %>
+      <% if page.header_picture.present? %>
+        <%= page.header_picture.gsub('&nbsp;', '').gsub('&nb', '').gsub('<br>', '').gsub('<div>', '').gsub('</div>', '').html_safe %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
