@@ -12,17 +12,23 @@
 
         <!-- Be sure to leave the brand out there if you want it shown -->
         <% if current_user.level == 'basic' %>
-        <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
+          <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'pro'%>
-        <%= link_to "CCRO Pro", posts_path, class: "brand", style: "color: white;" %>
+          <%= link_to "CCRO Pro", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'participant'%>
-        <%= link_to "CCRO Participant", posts_path, class: "brand", style: "color: white;" %>
+         <%= link_to "CCRO Participant", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'committee'%>
-        <%= link_to "CCRO Member", posts_path, class: "brand", style: "color: white;" %>
+         <%= link_to "CCRO Member", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'admin' %>
-        <%= link_to posts_path, class: "brand", style: "color: white;" do %>
-          <span class="icon-star"> </span> CCRO Admin <span class="icon-star"> </span>
-          <% end %>
+          <%= link_to posts_path, class: "brand", style: "color: white;" do %>
+            <%if current_user.first_name == 'Bob' %>
+              CCRO Admin
+            <% elsif current_user.first_name == 'Danette' %>
+              <span class="icon-heart"> CCRO Admin <span class="icon-heart">
+            <% else%>
+              <span class="icon-star"> </span> CCRO Admin <span class="icon-star"> </span>
+            <% end %>
+          <% end %> 
         <% else %>
         <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
         <% end %>
