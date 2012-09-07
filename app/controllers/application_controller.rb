@@ -34,7 +34,6 @@ class ApplicationController < ActionController::Base
     return unless defined?(NewRelic)
     NewRelic::Agent.add_custom_parameters(
       :locale => (I18n.locale if I18n.locale),
-      :uuid => (uuid),
       :account => (current_user ? current_user.email : 'guest'),
       :return_to => (session[:url_return_to] if session[:url_return_to]),
       :return_to_login => (session[:url_after_login] if session[:url_after_login])
