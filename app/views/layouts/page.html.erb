@@ -66,22 +66,6 @@
                 <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %>
              </div> 
           <% end %>
-        
-      </div>
-
-      <div id="header_expanded" class="row">
-        <div id="promo_video" class="span8">
-          <img id="video" src="https://s3.amazonaws.com/ccro_static/empty_office.png" width="770" height="432" frameborder="0" >
-        </div>
-        <div id="header_promo" class="span4">
-          <h1>Committee of Chief Risk Officers:</h1>
-          <p>Advancing Best Practices for Energy Companies</p>
-          <p>
-            <% unless params[:controller] == 'signups' %>  
-              <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
-            <% end %> 
-          </p>
-        </div>
       </div>
     </div>
   </header>
