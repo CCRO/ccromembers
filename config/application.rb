@@ -67,5 +67,12 @@ module Ccromembers
     config.generators do |g|
       g.stylesheets false
     end
+
+    config.middleware.delete(ActionDispatch::Cookies) 
+    config.middleware.delete(ActionDispatch::Session::CookieStore) 
+    config.middleware.insert_before(Rails::Rack::Logger, ActionDispatch::Session::CookieStore) 
+    config.middleware.insert_before(ActionDispatch::Session::CookieStore, ActionDispatch::Cookies) 
+
+    config.log_tags = [ :uuid, :remote_ip, proc { |request| request.session[:user_id] || 'Anonymous' } ]
   end
 end

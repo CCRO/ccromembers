@@ -128,6 +128,9 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    marginalia (1.1.0)
+      actionpack (>= 2.3, < 3.3)
+      activerecord (>= 2.3, < 3.3)
     mercury-rails (0.8.0)
       coffee-rails
       rails (~> 3.2)
@@ -259,6 +262,7 @@ DEPENDENCIES
   impressionist
   jqcloud-rails
   jquery-rails
+  marginalia
   mercury-rails
   mobile-fu
   mysql2
