@@ -1,27 +1,26 @@
-<% content_for :pages_header_image do %>
-  <% unless page.published? %>
-    <h2 style="color: red;"> This page is a draft </h2>
-  <% end %>
-  <% if can?(:edit, page) && params[:action] == 'show' %>
-    <% if page.locked? && ['show', 'edit'].include?(params[:action]) %>
-      <% if page.locker == current_user %>
-        <span class="label">You are currently the editor of this page.</span>
-      <% else %>
-        <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Page is currently being edited by <%= page.locker.name %></span>
-      <% end %>
-      <br><br>
+<% if params[:action] == 'show'%>
+  <% content_for :pages_header_image do %>
+    <% unless page.published? %>
+      <h2 style="color: red;"> This page is a draft </h2>
     <% end %>
-  <% end %>
+    <% if can?(:edit, page) && params[:action] == 'show' %>
+      <% if page.locked? && ['show', 'edit'].include?(params[:action]) %>
+        <% if page.locker == current_user %>
+          <span class="label">You are currently the editor of this page.</span>
+        <% else %>
+          <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Page is currently being edited by <%= page.locker.name %></span>
+        <% end %>
+        <br><br>
+      <% end %>
+    <% end %>
 
-  <% if params[:action] == 'show'%>
-    <div id="pages_header_image" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+    <div id="pages_header_image" style="background-color: #222;"class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
       <% if page.header_picture.present? %>
         <%= page.header_picture.gsub('&nbsp;', '').gsub('&nb', '').gsub('<br>', '').gsub('<div>', '').gsub('</div>', '').html_safe %>
       <% end %>
-    </div>
+    </div> 
   <% end %>
 <% end %>
-
 <div>
   <article id="page-<%= page.id %>">
     <h1 class="page_title">
