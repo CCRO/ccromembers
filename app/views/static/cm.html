@@ -1,0 +1,20 @@
+<form id="mercury_html_editor" class="mercury-form" style="width:650px">
+
+  <textarea id="html_editor" class="mercury-display-pane-container" rows="5" style="width: 100%; height: 1064px; ">
+  </textarea>
+
+  <div class="form-actions mercury-display-controls">
+    <input class="btn btn-primary" name="commit" type="submit" value="Save and Replace">
+  </div>
+
+</form>
+
+<script>
+          var myCodeMirror = CodeMirror.fromTextArea(document.getElementsById('html_editor'), {
+            mode: 'htmlmixed',
+            theme: 'default',
+            matchBrackets: true,
+            lineNumbers: true,
+            lineWrapping: true,
+          });
+</script>
