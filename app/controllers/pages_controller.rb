@@ -183,7 +183,7 @@ class PagesController < ApplicationController
     authorize! :destroy, @page
     
     if @page.destroy
-      redirect_to pages_path
+      redirect_to draft_pages_path
     else
       redirect_to page_path(@page)
     end

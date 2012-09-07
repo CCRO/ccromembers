@@ -19,6 +19,10 @@
         <%= link_to "CCRO Participant", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'committee'%>
         <%= link_to "CCRO Member", posts_path, class: "brand", style: "color: white;" %>
+        <% elsif current_user.level == 'admin' %>
+        <%= link_to posts_path, class: "brand", style: "color: white;" do %>
+          <span class="icon-star"> </span> CCRO Admin <span class="icon-star"> </span>
+          <% end %>
         <% else %>
         <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
         <% end %>
