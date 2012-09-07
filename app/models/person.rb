@@ -41,7 +41,9 @@ class Person < ActiveRecord::Base
   end
 
   def level
-    if self.committee?
+    if self.admin?
+      'admin'
+    elsif self.committee?
       'committee'
     elsif self.participant?
       'participant'
