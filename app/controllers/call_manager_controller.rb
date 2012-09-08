@@ -24,9 +24,26 @@ layout 'twiml'
   	twiml = Twilio::TwiML::Response.new do |r|
   		if Person.find_by_mobile_phone(params['Caller'])
   			@person = Person.find_by_mobile_phone(params['Caller'])
-			r.Say "hello #{@person.name}!", :voice => 'woman'
+			r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
+      r.Dial do
+        r.Conference "700"
+      end
 		else 
-			r.Say 'You are calling from an unknown number.', :voice => 'woman'
+      unless params['Digits']
+  			r.Say 'You are calling from an unknown number.', :voice => 'woman'
+        r.Gather :numDigits => 4 do
+          r.Say "Please enter your PIN number", :voice => 'woman'
+        end
+      else
+        if Person.find_by_pin(params['Digits'])
+          @person = Person.find_by_pin(params['Digits'])
+          r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
+          r.Dial do
+            r.Conference "700"
+          end
+        else
+          r.Say "Unknown PIN. Goodbye.", :voice => 'woman' 
+        end         
 		end
 	end
 
