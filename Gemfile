@@ -6,7 +6,7 @@ gem 'rails', '3.2.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'mysql2'
+  gem 'pg'
   gem 'hirb'
   gem 'foreman'
   gem 'rails-footnotes'

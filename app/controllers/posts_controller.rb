@@ -194,9 +194,10 @@ class PostsController < ApplicationController
 
   def doc_raptor_send(options = { })
     default_options = { 
-      :name             => controller_name,
+      :name             => "CCRO-" + @post.permalink,
       :document_type    => request.format.to_sym,
       :test             => ! Rails.env.production?,
+      :strict           => false
     }
     options = default_options.merge(options)
     options[:document_content] ||= render_to_string
