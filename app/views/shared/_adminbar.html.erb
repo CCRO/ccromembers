@@ -1,8 +1,9 @@
 <div id="adminbar">
   <%= yield :adminbar %>
 	<ul class="pull-right">
-		<li><i class="icon-eye-open"></i><br><p>Preview</p></li>
-		<li><i class="icon-random"></i><br><p>View as ...</p></li>
+		<li><%= link_to posts_path do %><i class="icon-bullhorn"></i><br><p>Blog</p><% end %></li>
+		<li><%= link_to pages_path do %><i class="icon-book"></i><br><p>Pages</p><% end %></li>
+		<li><%= link_to polling_sessions_path do %><i class="icon-signal"></i><br><p>Polls</p><% end %></li>
 		<li>
       <%= link_to people_path do %>
       <i class="icon-user"></i><br><p>Users</p>

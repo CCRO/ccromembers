@@ -1,6 +1,31 @@
+<% content_for :adminbar do %>
+  <ul>
+    <li><%= link_to "#modal-new-polling_session", 'data-toggle' => "modal" do %><i class="icon-indent-right"></i><br><p>New Session</p><% end %></li>
+    <li><%= link_to active_polls_path do %><i class="icon-edit"></i><br><p>Active poll</p><% end %></li>
+  </ul>
+<% end %>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-new-polling_session">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>New Polling Session</h3>
+    </div>
+    <div class="modal-body center">
+    <%= form_for PollingSession.new do |f| %>
+      <%= f.text_field :name, :class => "input-xlarge focused pull-left", :placeholder => "New polling session title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new polling session", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+<% end %>
+
 <h1>Listing polling_sessions</h1>
 
-<table class="table table-bordered table-condensed"><br>
+<table class="table table-bordered table-condensed" style="font-size: 150%; line-height: 150%;"><br>
   <tr>
     <th>Name</th>
     <th></th>
