@@ -24,9 +24,10 @@ layout 'twiml'
   	twiml = Twilio::TwiML::Response.new do |r|
   		if Person.find_by_mobile_phone(params['Caller'])
   			@person = Person.find_by_mobile_phone(params['Caller'])
-			r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
-      r.Dial do
-        r.Conference "700"
+  			r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
+        r.Dial do
+          r.Conference "700"
+        end
       end
 		else 
       unless params['Digits']
@@ -43,7 +44,8 @@ layout 'twiml'
           end
         else
           r.Say "Unknown PIN. Goodbye.", :voice => 'woman' 
-        end         
+        end 
+      end        
 		end
 	end
 
