@@ -140,7 +140,6 @@ GEM
       rails
     multi_json (1.3.6)
     multi_xml (0.5.1)
-    mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
@@ -265,7 +264,6 @@ DEPENDENCIES
   marginalia
   mercury-rails
   mobile-fu
-  mysql2
   newrelic_rpm
   nokogiri
   paper_trail
