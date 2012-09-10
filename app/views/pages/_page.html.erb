@@ -84,16 +84,16 @@
 <% content_for :aside do %>
 <div class="well">
   <ul class="nav nav-list">
-    <% if @category %>
+    <% if @tag %>
     <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
     <li class="divider"></li>
       <% @category.each do |p| %>
-        <% if p.title == page.title %>
+        <% if p.title == page.title.html_safe %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
             <%= p.title %> <i class="icon-arrow-left"></i>
           <% end %></li>
         <% else %>
-          <li><%= link_to p.title, page_path(p) %></li>
+          <li><%= link_to p.title.html_safe, page_path(p) %></li>
         <% end %>
       <% end %>
     <% else %>
