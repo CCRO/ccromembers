@@ -15,6 +15,9 @@ class SessionsController < ApplicationController
         cookies.permanent.signed[:auth_token] = user.auth_token
       end
       session[:user_id] = user.id
+      user.last_platform = browser.platform
+      user.last_browser = browser.name
+      user.save
       redirect_back_or_default root_url
     else
       flash.now.alert = t(:login_invalid)

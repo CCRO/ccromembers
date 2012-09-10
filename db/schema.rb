@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905162037) do
+ActiveRecord::Schema.define(:version => 20120910211231) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -186,6 +186,8 @@ ActiveRecord::Schema.define(:version => 20120905162037) do
     t.boolean  "verified"
     t.string   "pin_code"
     t.string   "mobile_phone"
+    t.string   "last_browser"
+    t.string   "last_platform"
   end
 
   create_table "polling_sessions", :force => true do |t|
