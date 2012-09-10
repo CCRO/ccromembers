@@ -25,6 +25,7 @@ class PagesController < ApplicationController
     end
     
     @pages ||= Page.where(:published => true).order('published_at DESC')
+    authorize! :create, @page
     
     
     respond_to do |format|
