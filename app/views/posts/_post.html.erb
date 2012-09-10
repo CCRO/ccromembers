@@ -61,7 +61,7 @@
             <strong><%= time_ago_in_words post.updated_at %> ago</strong>
           </p>
           <p>
-            <span class="post-footer-heading">Categories: </span>
+            <span class="post-footer-heading">Category: </span>
             <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
           </p>
         <hr class="hr-small-margin hr-dark">

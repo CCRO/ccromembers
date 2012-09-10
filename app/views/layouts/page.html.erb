@@ -90,7 +90,7 @@
       <% unless params[:controller] == 'signups' %>  
         <aside class="pull-right" style="width: 22%">
 
-          <% if can? :create, Page %>
+          <% if params[:action] == 'index' %>
             <ul class="nav nav-tabs nav-stacked">
               <li><%= link_to 'Active Pages', pages_path() %></li>
               <li><%= link_to 'Draft Pages', draft_pages_path() %></li>

@@ -43,10 +43,13 @@ class PagesController < ApplicationController
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
+    
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 
       @page = Page.find(params[:id])
+      @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
+      @category = Page.tagged_with(@tag)
       @commentable = @page
       authorize! :read, @page
     end
@@ -126,7 +129,7 @@ class PagesController < ApplicationController
       render text: ""
     else
       page.update_attributes(params[:page])
-      render text: ""
+      redirect_to page_path(page)
     end
 
   end

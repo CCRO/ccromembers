@@ -67,6 +67,14 @@
 
 	  </td>
 	  </tr>
+    <tr>
+      <td class="Hero">
+        <%= form_for @post do |f| %>      
+          <%= f.label :tag_list, 'Post category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
+          <%= f.submit %>
+        <% end %>
+      </td>
+    </tr>
 	  </table>
     </div>
     <div class="modal-footer">

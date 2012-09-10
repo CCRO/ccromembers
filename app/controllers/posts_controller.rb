@@ -47,6 +47,8 @@ class PostsController < ApplicationController
       @post = Post.find_by_viewing_token(params[:token])
     else 
       @post = Post.find(params[:id])
+      @tag = @post.tags.pluck(:name).to_sentence if @post.tags.pluck(:name).present?
+      @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post
     end
@@ -129,7 +131,7 @@ class PostsController < ApplicationController
       render text: ""
     else
       post.update_attributes(params[:post])
-      render text: ""
+      redirect_to page_path(page)
     end
 
   end

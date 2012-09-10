@@ -65,7 +65,7 @@
             <strong><%= time_ago_in_words page.updated_at %> ago</strong>
           </p>
           <p>
-            <span class="page-footer-heading">Categories: </span>
+            <span class="page-footer-heading">Category: </span>
             <strong><%= (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None" %> </strong>
           </p>
         <hr class="hr-small-margin hr-dark">
@@ -82,12 +82,26 @@
 </div>
 
 <% content_for :aside do %>
-
-  <ul class="nav nav-tabs nav-stacked">
-    <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
-    <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
-    <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
-    <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
+<div class="well">
+  <ul class="nav nav-list">
+    <% if @category %>
+    <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
+    <li class="divider"></li>
+      <% @category.each do |p| %>
+        <% if p.title == page.title %>
+          <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
+            <%= p.title %> <i class="icon-arrow-left"></i>
+          <% end %></li>
+        <% else %>
+          <li><%= link_to p.title, page_path(p) %></li>
+        <% end %>
+      <% end %>
+    <% else %>
+      <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
+      <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
+      <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
+      <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li>
+    <% end %>
   </ul>
-
+</div>  
 <% end %>
