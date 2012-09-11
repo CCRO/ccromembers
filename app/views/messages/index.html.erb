@@ -1,25 +1,34 @@
-<div id="message_content_border">
-  <div id="message_content_box">
-	  	<% if can? :create, Message %>
-			<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
-		<% end %>
-		<h1 class="ribbon-left">Active Discussions</h1>
+<% if params[:tag_name] %>
+	<%= link_to messages_path do %>
+		<h2 class="btn"><i class="icon-map-marker "></i> See all messages </h2>
+	<% end %>
+<% end %>
+<% if @messages.count > 0 %>
+	<div id="message_content_border">
+	  <div id="message_content_box">
+		  	<% if can? :create, Message %>
+				<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
+			<% end %>
+			<h1 class="ribbon-left">Active Discussions</h1>
 
-		<table class="table messages">
-			<%= render @messages.reverse %>
-		</table>
+			<table class="table messages">
+				<%= render @messages.reverse %>
+			</table>
 
+		</div>
 	</div>
-</div>
-<div id="message_content_border">
-  <div id="message_content_box">
-  			<% if @archived_messages %>
-		<h2 class="ribbon-left">Archived Discussions</h2>
+<% end %>
+<% if @archived_messages.count > 0 %>
+	<div id="message_content_border">
+	  <div id="message_content_box">
+	  			<% if @archived_messages %>
+			<h2 class="ribbon-left">Archived Discussions</h2>
 
-		<table class="table messages">
-			<%= render @archived_messages.reverse %>
-		</table>
-		<% end %>
+			<table class="table messages">
+				<%= render @archived_messages.reverse %>
+			</table>
+			<% end %>
+		</div>
 	</div>
-</div>
+<% end %>
 	

@@ -1,8 +1,58 @@
-	<ul class="pager">
-	  <li class="previous">
-	    <%= link_to raw("&larr; Back to Discussions"), messages_url %>
-	  </li>
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	      <%= link_to edit_message_path(@message)  do %>
+	      <i class="icon-edit"></i><br><p>Edit <br>message</p>
+	      <% end %>
+	    </li>
+		<li>
+	       <% if @message.archived == true %>
+		  	<%= link_to unarchive_message_path(@message) do %>
+		  		<i class="icon-inbox"></i> <p>Unarchive</p>
+		  	<% end %>
+		  <% else %>
+		  	<%= link_to archive_message_path(@message) do %>
+		  		<i class="icon-inbox"></i> <p>Archive</p>
+		  	<% end %>
+		<% end %>
+	    </li>
+		<li>
+	      <%= link_to message_path(@message), method: 'delete', :confirm => "Are you sure?" do %>
+	      	<i class="icon-trash"></i><br><p>Delete <br>message</p>
+	      <% end %>
+	    </li>
+		<li>
+		<%= link_to "#modal-settings", 'data-toggle' => "modal" do %>
+			<i class="icon-cog"></i><br /><p>Message <br>Settings</p>
+		<% end %>
+		</li>
 	</ul>
+<% end %>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-settings">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <div class="Hero">
+        	<%= form_for @message do |f| %>      
+          		<%= f.label :tag_list, 'Message category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
+          		<%= f.submit %>
+        	<% end %>
+    	</div>
+    </div>
+    <div class="modal-footer">
+       <%= button_to 'Back to page', @message %>
+    </div>
+  </div>
+<% end %>
+
+
+<ul class="pager">
+  <li class="previous">
+    <%= link_to raw("&larr; Back to Discussions"), messages_url %>
+  </li>
+</ul>
+
 <div id="message_content_border">
   <div id="message_content_box">
   	<h1 class="pull-right" style="color: grey">
@@ -10,17 +60,6 @@
   	</h1>
   	<h1 id="comments"><%= @message.subject %></h1>
     <hr />
-	<% if can? :manage, @message %>
-		<div class="btn-group pull-right">
-		  <%= link_to raw('<i class="icon-pencil"></i>'), edit_message_url(@message), :class => 'btn' %>
-		  <% if @message.archived == true %>
-		  	<%= link_to raw('<i class="icon-inbox"></i> Unarchive'), unarchive_message_path(@message), :class => 'btn' %>
-		  <% else %>
-		  	<%= link_to raw('<i class="icon-inbox"></i> Archive'), archive_message_path(@message), :class => 'btn' %>
-		  <% end %>
-		  <%= link_to raw('<i class="icon-remove"></i>'), @message, :method => 'delete', :class => 'btn', :confirm => "Are you sure?" %>
-		</div>
-	<% end %>
 	<%= raw @message.content %>
 	<br /><br />
 	 <h1 class="ribbon-left">Comments:</h1>

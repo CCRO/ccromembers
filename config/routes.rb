@@ -91,6 +91,8 @@ Ccromembers::Application.routes.draw do
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
+    match 'message_tag/:tag_name' => 'messages#index', as: 'tagged_messages'
+
 
 
     constraints(:host => 'polls.ccro.org') do

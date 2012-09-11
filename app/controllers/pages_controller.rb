@@ -51,6 +51,8 @@ class PagesController < ApplicationController
       @page = Page.find(params[:id])
       @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
       @category = Page.tagged_with(@tag)
+      @articles = Post.tagged_with(@tag)
+      @messages = Message.tagged_with(@tag)
       @commentable = @page
       authorize! :read, @page
     end
@@ -74,7 +76,6 @@ class PagesController < ApplicationController
   end
   
   def create
-
     @page = Page.new(params[:page])
     
     @page.body = "Here is the start of a new page!"

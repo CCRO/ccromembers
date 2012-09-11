@@ -84,7 +84,7 @@
 <% content_for :aside do %>
 <div class="well">
   <ul class="nav nav-list">
-    <% if @tag %>
+    <% if @tag && @category.length > 1 %>
     <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
     <li class="divider"></li>
       <% @category.each do |p| %>
@@ -95,6 +95,22 @@
         <% else %>
           <li><%= link_to p.title.html_safe, page_path(p) %></li>
         <% end %>
+      <% end %>
+      <% if @articles.length > 0 %>
+        <li class="divider"></li>
+        <li>
+          <%= link_to tagged_posts_path(@tag) do %>
+            <i class="icon-share-alt"></i> Go to Related Articles
+          <% end %>
+        </li>
+      <% end %>
+      <% if @messages.length > 0 %>
+        <li class="divider"></li>
+        <li>
+          <%= link_to tagged_messages_path(@tag) do %>
+            <i class="icon-share-alt"></i> Go to Related Discussions
+          <% end %>
+        </li>
       <% end %>
     <% else %>
       <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>

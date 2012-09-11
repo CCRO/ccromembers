@@ -5,11 +5,19 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.not_archived.accessible_by(current_ability)
-    @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    if params[:tag_name]
+      @messages = Message.tagged_with(params[:tag_name]).not_archived.accessible_by(current_ability)
+      @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
-    @archived_messages = Message.archived.accessible_by(current_ability)
-    @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+      @archived_messages = Message.tagged_with(params[:tag_name]).archived.accessible_by(current_ability)
+      @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    else
+      @messages = Message.not_archived.accessible_by(current_ability)
+      @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+
+      @archived_messages = Message.archived.accessible_by(current_ability)
+      @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    end
 
     respond_to do |format|
       format.html # index.html.erb

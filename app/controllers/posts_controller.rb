@@ -131,7 +131,7 @@ class PostsController < ApplicationController
       render text: ""
     else
       post.update_attributes(params[:post])
-      redirect_to page_path(page)
+      redirect_to post_path(post)
     end
 
   end
