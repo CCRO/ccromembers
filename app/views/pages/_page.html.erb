@@ -86,7 +86,6 @@
   <ul class="nav nav-list">
     <% if @tag && @category.length > 1 %>
     <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
-    <li class="divider"></li>
       <% @category.each do |p| %>
         <% if p.title == page.title.html_safe %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
@@ -96,8 +95,10 @@
           <li><%= link_to p.title.html_safe, page_path(p) %></li>
         <% end %>
       <% end %>
+      <% if @articles.length > 0 || @messages.length > 0 %>
+        <li class="nav-header"> Other resources </li>
+      <% end %>
       <% if @articles.length > 0 %>
-        <li class="divider"></li>
         <li>
           <%= link_to tagged_posts_path(@tag) do %>
             <i class="icon-share-alt"></i> Go to Related Articles
@@ -105,7 +106,6 @@
         </li>
       <% end %>
       <% if @messages.length > 0 %>
-        <li class="divider"></li>
         <li>
           <%= link_to tagged_messages_path(@tag) do %>
             <i class="icon-share-alt"></i> Go to Related Discussions
