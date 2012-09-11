@@ -82,72 +82,73 @@
 </div>
 
 <% content_for :aside do %>
-<div class="well">
-  <ul class="nav nav-list">
-    <% if @tag && @category.length > 1 %>
-    <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
-      <% @category.each do |p| %>
-        <% if p.title == page.title.html_safe %>
-          <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
-            <%= p.title + " " %><i class="icon-arrow-left"></i>
-          <% end %></li>
-        <% else %>
-          <li><%= link_to p.title.html_safe, page_path(p) %></li>
+  <% if @tag && (@category.length > 1 || @articles.length > 1 || @messages.length > 1) %>
+    <div class="well">
+      <ul class="nav nav-list">
+        <% if @category.length > 1 %>
+          <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
+          <% @category.each do |p| %>
+            <% if p.title == page.title.html_safe %>
+              <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
+                <%= p.title + " " %><i class="icon-arrow-left"></i>
+              <% end %></li>
+            <% else %>
+              <li><%= link_to p.title.html_safe, page_path(p) %></li>
+            <% end %>
+          <% end %>
+        <% end %>  
+        <% if @articles.length > 0 || @messages.length > 0 %>
+          <li class="nav-header"> Other resources </li>
         <% end %>
-      <% end %>
-      <% if @articles.length > 0 || @messages.length > 0 %>
-        <li class="nav-header"> Other resources </li>
-      <% end %>
-      <% if @articles.length > 0 %>
-        <li class="btn-group">
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              </span><i class="icon-share-alt"></i>Go to Related Articles
-            </a>
-            <ul class="dropdown-menu pull-right">
-              <li>
-                <%= link_to tagged_posts_path(@tag) do %>
-                  <i class="icon-share-alt"></i> All Related Articles
-                <% end %>
-              </li>
-              <% @articles.each do |a| %>
-                <li><%= link_to a.title.html_safe, post_path(a) %></li>
-              <% end %>
-            </ul>
-          </li>
-        </li>
-      <% end %>
-
-      <% if @messages.length > 0 %>
-        <li class="btn-group">
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              </span><i class="icon-share-alt"></i>Go to Related Discussions
-            </a>
-            <ul class="dropdown-menu pull-right">
-              <li>
-                <%= link_to tagged_messages_path(@tag) do %>
-                  <i class="icon-share-alt"></i> All Related Discussions
-                <% end %>
-              </li>
-              <% @messages.each do |a| %>
+        <% if @articles.length > 0 %>
+          <li class="btn-group">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                </span><i class="icon-share-alt"></i>Related Articles
+              </a>
+              <ul class="dropdown-menu pull-right">
                 <li>
-                  <% if a.archived == false %>
-                    <%= link_to message_path(a) do %>
-                      <i class="icon-comment"></i><%= a.subject.html_safe %>
-                    <% end %>
-                  <% else %>
-                    <%= link_to message_path(a) do %>
-                      <i class="icon-inbox"></i><%= a.subject.html_safe %>
-                    <% end %>
+                  <%= link_to tagged_posts_path(@tag) do %>
+                    <i class="icon-share-alt"></i> All Related Articles
                   <% end %>
                 </li>
-              <% end %>
-            </ul>
+                <% @articles.each do |a| %>
+                  <li><%= link_to a.title.html_safe, post_path(a) %></li>
+                <% end %>
+              </ul>
+            </li>
           </li>
-        </li>
-      <% end %>  
-    <% end %>
-  </ul>
-</div>  
+        <% end %>
+        <% if @messages.length > 0 %>
+          <li class="btn-group">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                </span><i class="icon-share-alt"></i>Related Discussions
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li>
+                  <%= link_to tagged_messages_path(@tag) do %>
+                    <i class="icon-share-alt"></i> All Related Discussions
+                  <% end %>
+                </li>
+                <% @messages.each do |a| %>
+                  <li>
+                    <% if a.archived == false %>
+                      <%= link_to message_path(a) do %>
+                        <i class="icon-comment"></i><%= a.subject.html_safe %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to message_path(a) do %>
+                        <i class="icon-inbox"></i><%= a.subject.html_safe %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          </li>
+        <% end %>  
+      </ul>
+    </div> 
+  <% end %> 
 <% end %>
