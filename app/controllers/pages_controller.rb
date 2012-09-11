@@ -50,8 +50,8 @@ class PagesController < ApplicationController
     else 
       @page = Page.find(params[:id])
       @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
-      @category = Page.tagged_with(@tag)
-      @articles = Post.tagged_with(@tag)
+      @category = Page.where(published: true).tagged_with(@tag)
+      @articles = Post.where(published: true).tagged_with(@tag)
       @messages = Message.tagged_with(@tag)
       @commentable = @page
       authorize! :read, @page

@@ -89,7 +89,7 @@
       <% @category.each do |p| %>
         <% if p.title == page.title.html_safe %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
-            <%= p.title %> <i class="icon-arrow-left"></i>
+            <%= p.title + " " %><i class="icon-arrow-left"></i>
           <% end %></li>
         <% else %>
           <li><%= link_to p.title.html_safe, page_path(p) %></li>
@@ -99,19 +99,54 @@
         <li class="nav-header"> Other resources </li>
       <% end %>
       <% if @articles.length > 0 %>
-        <li>
-          <%= link_to tagged_posts_path(@tag) do %>
-            <i class="icon-share-alt"></i> Go to Related Articles
-          <% end %>
+        <li class="btn-group">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              </span><i class="icon-share-alt"></i>Go to Related Articles
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <%= link_to tagged_posts_path(@tag) do %>
+                  <i class="icon-share-alt"></i> All Related Articles
+                <% end %>
+              </li>
+              <% @articles.each do |a| %>
+                <li><%= link_to a.title.html_safe, post_path(a) %></li>
+              <% end %>
+            </ul>
+          </li>
         </li>
       <% end %>
+
       <% if @messages.length > 0 %>
-        <li>
-          <%= link_to tagged_messages_path(@tag) do %>
-            <i class="icon-share-alt"></i> Go to Related Discussions
-          <% end %>
+        <li class="btn-group">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              </span><i class="icon-share-alt"></i>Go to Related Discussions
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <%= link_to tagged_messages_path(@tag) do %>
+                  <i class="icon-share-alt"></i> All Related Discussions
+                <% end %>
+              </li>
+              <% @messages.each do |a| %>
+                <li>
+                  <% if a.archived == false %>
+                    <%= link_to message_path(a) do %>
+                      <i class="icon-comment"></i><%= a.subject.html_safe %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to message_path(a) do %>
+                      <i class="icon-inbox"></i><%= a.subject.html_safe %>
+                    <% end %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
         </li>
-      <% end %>
+      <% end %>  
     <% else %>
       <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
       <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
