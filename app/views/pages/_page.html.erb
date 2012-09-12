@@ -82,9 +82,10 @@
 </div>
 
 <% content_for :aside do %>
-  <% if @tag && (@category.length > 1 || @articles.length > 1 || @messages.length > 1) %>
+  <% if @tag && (@category.length > 1 || @articles.length > 0 || @messages.length > 0) %>
     <div class="well">
       <ul class="nav nav-list">
+        
         <% if @category.length > 1 %>
           <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
           <% @category.each do |p| %>
@@ -97,9 +98,11 @@
             <% end %>
           <% end %>
         <% end %>  
+        
         <% if @articles.length > 0 || @messages.length > 0 %>
           <li class="nav-header"> Other resources </li>
         <% end %>
+        
         <% if @articles.length > 0 %>
           <li class="btn-group">
             <li class="dropdown">
@@ -119,6 +122,7 @@
             </li>
           </li>
         <% end %>
+        
         <% if @messages.length > 0 %>
           <li class="btn-group">
             <li class="dropdown">
@@ -148,6 +152,7 @@
             </li>
           </li>
         <% end %>  
+      
       </ul>
     </div> 
   <% end %> 

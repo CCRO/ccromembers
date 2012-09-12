@@ -48,6 +48,7 @@ class PostsController < ApplicationController
     else 
       @post = Post.find(params[:id])
       @tag = @post.tags.pluck(:name).to_sentence if @post.tags.pluck(:name).present?
+      @all_tags = all_tags
       @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post

@@ -30,6 +30,8 @@ class MessagesController < ApplicationController
   def show
     @message = Message.find(params[:id])
     @commentable = @message
+    @tag = @message.tags.pluck(:name).to_sentence if @message.tags.pluck(:name).present?
+    @all_tags = all_tags
     impressionist(@message)
     authorize! :read, @message
     

@@ -64,11 +64,11 @@
 	  </tr>
     <tr>
       <td class="Hero">
-        <%= form_for @page do |f| %>      
-          <%= f.label :tag_list, 'Page category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
-          <%= f.submit %>
+      <%= form_for @page, { :remote => true } do |f| %>
+          <b>tag: </b>
+          <%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
         <% end %>
-      </td>
+    </td>  
     </tr>
 	  </table>
     </div>

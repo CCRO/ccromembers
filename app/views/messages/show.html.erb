@@ -34,15 +34,16 @@
     <div class="modal-header">
       <a href="#" class="close">×</a>
       <div class="Hero">
-        	<%= form_for @message do |f| %>      
-          		<%= f.label :tag_list, 'Message category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
-          		<%= f.submit %>
-        	<% end %>
-    	</div>
-    </div>
-    <div class="modal-footer">
-       <%= button_to 'Back to page', @message %>
-    </div>
+    	<%= form_for @message, { :remote => true } do |f| %>
+          <b>tag: </b>
+          <%= select_tag('message[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
+        <% end %>
+	  </div>	
+	</div>
+  </div>
+	<div class="modal-footer">
+	   <%= button_to 'Back to page', @message %>
+	</div>
   </div>
 <% end %>
 
