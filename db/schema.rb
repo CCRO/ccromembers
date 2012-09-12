@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905162037) do
+ActiveRecord::Schema.define(:version => 20120912192838) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(:version => 20120905162037) do
     t.integer  "owner_id"
     t.integer  "owner_type"
     t.integer  "author_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "published"
     t.datetime "published_at"
     t.string   "level"
@@ -164,6 +164,9 @@ ActiveRecord::Schema.define(:version => 20120905162037) do
     t.string   "tag_list"
     t.boolean  "commenting_enabled"
     t.string   "header_picture"
+    t.boolean  "pages_enabled",       :default => true
+    t.boolean  "articles_enabled",    :default => true
+    t.boolean  "discussions_enabled", :default => true
   end
 
   create_table "people", :force => true do |t|
@@ -186,6 +189,8 @@ ActiveRecord::Schema.define(:version => 20120905162037) do
     t.boolean  "verified"
     t.string   "pin_code"
     t.string   "mobile_phone"
+    t.string   "last_browser"
+    t.string   "last_platform"
   end
 
   create_table "polling_sessions", :force => true do |t|

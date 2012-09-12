@@ -82,11 +82,11 @@
 </div>
 
 <% content_for :aside do %>
-  <% if @tag && (@category.length > 1 || @articles.length > 0 || @messages.length > 0) %>
+  <% if @tag && (@category.length > 1 && page.pages_enabled == true || @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true) %>
     <div class="well">
       <ul class="nav nav-list">
         
-        <% if @category.length > 1 %>
+        <% if @category.length > 1 && page.pages_enabled == true %>
           <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
           <% @category.each do |p| %>
             <% if p.title == page.title.html_safe %>
@@ -99,11 +99,11 @@
           <% end %>
         <% end %>  
         
-        <% if @articles.length > 0 || @messages.length > 0 %>
+        <% if @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true %>
           <li class="nav-header"> Other resources </li>
         <% end %>
         
-        <% if @articles.length > 0 %>
+        <% if @articles.length > 0 && page.articles_enabled == true%>
           <li class="btn-group">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -123,7 +123,7 @@
           </li>
         <% end %>
         
-        <% if @messages.length > 0 %>
+        <% if @messages.length > 0 && page.discussions_enabled == true %>
           <li class="btn-group">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">

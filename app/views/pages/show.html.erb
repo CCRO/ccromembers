@@ -65,9 +65,17 @@
     <tr>
       <td class="Hero">
       <%= form_for @page, { :remote => true } do |f| %>
-          <b>tag: </b>
+          <b>Category tag: </b>
           <%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
         <% end %>
+        <div class="control-group checkbox inline" >
+            <b>Side Bar Widget</b>
+            <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
+              <%= f.check_box :pages_enabled, :class => 'submittable' %><%= f.label :pages_enabled %>
+              <%= f.check_box :articles_enabled, :class => 'submittable' %><%= f.label :articles_enabled %>
+              <%= f.check_box :discussions_enabled, :class => 'submittable' %><%= f.label :discussions_enabled %>
+            <% end %>
+          </div>
     </td>  
     </tr>
 	  </table>
