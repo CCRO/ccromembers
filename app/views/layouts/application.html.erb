@@ -20,9 +20,13 @@
 			<% end %>
 		</div>
 <!--Body content (BEGIN)-->
-<%= yield %>
+<div class="row">
+	<%= yield %>
+</div>
 <!--Body content (END)-->
-<%= render 'shared/footer' %>
+<footer>
+	<%= render 'shared/footer' %>
+</footer>
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>

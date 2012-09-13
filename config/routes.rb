@@ -38,6 +38,8 @@ Ccromembers::Application.routes.draw do
   
   resources :subscriptions
 
+  resources :tags
+
   resources :groups
 
     namespace :mercury do

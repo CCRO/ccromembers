@@ -1,0 +1,13 @@
+<div class="container span3">
+	<h1>Listing tags</h1><br>
+	<table class="table table-bordered">
+		<% @tags.each do |tag| %>
+		  <tr>
+		    <td class="span1"><%= tag.name %></td>
+		    <td class="span1"><%= link_to 'Edit', edit_tag_path(tag) %></td>
+		    <td class="span1"><%= link_to 'Destroy', tag_path(tag), confirm: "Everything taged with '#{tag}' will be untagged - is that what you want?", method: :delete %></td>
+		  </tr>
+		<% end %>
+	</table>
+	<%= link_to 'New Tag', new_tag_path, class: 'btn' %>
+</div>
