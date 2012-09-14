@@ -105,6 +105,7 @@ Ccromembers::Application.routes.draw do
     match 'page_archive' => 'pages#index', :defaults => { filter: 'archive' }, as: 'archive_pages'
     match 'page_drafts' => 'pages#index', :defaults => { filter: 'drafts' }, as: 'draft_pages'
     match 'my_page_drafts' => 'pages#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_pages'
+    match 'active_pages' => 'pages#index', :defaults => { filter: 'active' }, as: 'active_pages'
     match 'summit_page' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
     match 'shared_page/:token' => 'pages#show', as: 'shared_page'
 

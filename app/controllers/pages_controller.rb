@@ -19,12 +19,15 @@ class PagesController < ApplicationController
       if params[:filter] == 'summit'
         @pages = Page.where(published: true).tagged_with("summit")
       end
+      if params[:filter] == 'active'
+        @pages = Page.where(:published => true).order('published_at DESC')
+      end
     end
     if params[:tag_name]
       @pages = Page.where(published: true).tagged_with(params[:tag_name])
     end
     
-    @pages ||= Page.where(:published => true).order('published_at DESC')
+    @pages ||= Page.order('published_at DESC')
     authorize! :create, @page
     
     
