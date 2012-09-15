@@ -4,6 +4,8 @@ class Person < ActiveRecord::Base
   # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
   # has_many :closed_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => false }
 
+  has_and_belongs_to_many :smart_lists
+
   mount_uploader :avatar, AvatarUploader
 
   has_many :responses

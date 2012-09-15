@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120915221557) do
+ActiveRecord::Schema.define(:version => 20120915223201) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -200,6 +200,14 @@ ActiveRecord::Schema.define(:version => 20120915221557) do
     t.string   "last_browser"
     t.string   "last_platform"
   end
+
+  create_table "people_smart_lists", :id => false, :force => true do |t|
+    t.integer "person_id"
+    t.integer "smart_list_id"
+  end
+
+  add_index "people_smart_lists", ["person_id", "smart_list_id"], :name => "index_people_smart_lists_on_person_id_and_smart_list_id"
+  add_index "people_smart_lists", ["smart_list_id", "person_id"], :name => "index_people_smart_lists_on_smart_list_id_and_person_id"
 
   create_table "polling_sessions", :force => true do |t|
     t.string   "name"
