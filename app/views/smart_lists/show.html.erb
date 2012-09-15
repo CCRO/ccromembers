@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @smart_list.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @smart_list.type %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @smart_list.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_smart_list_path(@smart_list) %> |
+<%= link_to 'Back', smart_lists_path %>

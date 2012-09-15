@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912192838) do
+ActiveRecord::Schema.define(:version => 20120915221557) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -108,6 +108,14 @@ ActiveRecord::Schema.define(:version => 20120912192838) do
   add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], :name => "poly_request_index"
   add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
   add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
+
+  create_table "lists", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "mercury_images", :force => true do |t|
     t.string   "image_file_name"
@@ -257,6 +265,14 @@ ActiveRecord::Schema.define(:version => 20120912192838) do
 
   add_index "responses", ["person_id"], :name => "index_responses_on_person_id"
   add_index "responses", ["question_id"], :name => "index_responses_on_question_id"
+
+  create_table "smart_lists", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "owner_id"

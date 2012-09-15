@@ -1,0 +1,27 @@
+<h1>Listing smart_lists</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @smart_lists.each do |smart_list| %>
+  <tr>
+    <td><%= smart_list.name %></td>
+    <td><%= smart_list.type %></td>
+    <td><%= smart_list.description %></td>
+    <td><%= link_to 'Show', smart_list %></td>
+    <td><%= link_to 'Edit', edit_smart_list_path(smart_list) %></td>
+    <td><%= link_to 'Destroy', smart_list, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Smart list', new_smart_list_path %>

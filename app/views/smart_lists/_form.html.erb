@@ -1,0 +1,29 @@
+<%= form_for(@smart_list) do |f| %>
+  <% if @smart_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@smart_list.errors.count, "error") %> prohibited this smart_list from being saved:</h2>
+
+      <ul>
+      <% @smart_list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,6 +1,8 @@
 Ccromembers::Application.routes.draw do
   
   
+  resources :smart_lists
+
   get "call_manager/sms"
 
   get "call_manager/voice"
