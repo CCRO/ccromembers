@@ -5,7 +5,6 @@ class PeopleController < ApplicationController
   def index
     @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
     @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
-
     @people = Person.accessible_by(current_ability) unless @people
     
     respond_to do |format|

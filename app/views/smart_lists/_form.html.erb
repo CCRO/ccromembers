@@ -1,29 +1,78 @@
-<%= form_for(@smart_list) do |f| %>
-  <% if @smart_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@smart_list.errors.count, "error") %> prohibited this smart_list from being saved:</h2>
-
-      <ul>
-      <% @smart_list.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<% if params[:action] == 'new'%>
+  <%= form_tag({:controller => "smart_lists", :action => "create"}, class: 'form-inline', :method => "POST") do %>
+    <div class="row">
+      <table class="table table-bordered span4">
+        <tr>
+          <td class="span1"><%= label_tag :name %></td>
+          <td><%= text_field_tag :name %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag :description %></td>
+          <td><%= text_area_tag :description %></td>
+        </tr>
+      </table>
     </div>
+    <div class="row">
+      <table class="table table-bordered table-striped span9">
+        <tr>
+          <th></th>
+          <th><%= link_to sort: 'name' do %>Name <i class="icon-resize-vertical"></i> <% end %></th>
+          <th><%= link_to sort: 'role' do %>Role <i class="icon-resize-vertical"></i> <% end %></th>
+          <th>Level</th>
+          <th><%= link_to sort: 'company' do %>Company <i class="icon-resize-vertical"></i> <% end %></th>
+          <th><%= link_to sort: 'email' do %>Email <i class="icon-resize-vertical"></i> <% end %></th>
+        </tr>  
+        <% @people.each do |person| %>
+          <tr>
+            <td><%= check_box_tag 'people[]', person.id %></td>
+            <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %></td>
+            <td><%= person.role if person.role %></td>
+            <td><%= person.level if person.level %></td>
+            <td><%= link_to person.company.name, person.company if person.company %></td>
+            <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
+          </tr>  
+        <% end %>
+      </table> 
+    </div>
+    <%= submit_tag "Create", class: 'btn' %>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% elsif params[:action] == 'edit' %>
+  <%= form_tag({:controller => "smart_lists", :action => "update"}, class: 'form-inline', :method => "PUT") do %>
+    <div class="row">
+      <table class="table table-bordered span4">
+        <tr>
+          <td class="span2"><%= label_tag :name %></td>
+          <td><%= text_field_tag :name, @smart_list.name %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag :description %></td>
+          <td><%= text_area_tag :description, @smart_list.description %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="row">
+      <table class="table table-bordered table-striped span9">
+        <tr>
+          <th></th>
+          <th><%= link_to sort: 'name' do %>Name <i class="icon-resize-vertical"></i> <% end %></th>
+          <th><%= link_to sort: 'role' do %>Role <i class="icon-resize-vertical"></i> <% end %></th>
+          <th>Level</th>
+          <th><%= link_to sort: 'company' do %>Company <i class="icon-resize-vertical"></i> <% end %></th>
+          <th><%= link_to sort: 'email' do %>Email <i class="icon-resize-vertical"></i> <% end %></th>
+        </tr>  
+        <% @people.each do |person| %>
+          <tr>
+            <td><%= check_box_tag 'people[]', person.id, @list_items.include?(person) %></td>
+            <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %></td>
+            <td><%= person.role if person.role %></td>
+            <td><%= person.level if person.level %></td>
+            <td><%= link_to person.company.name, person.company if person.company %></td>
+            <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
+          </tr>
+        <% end %>
+      </table> 
+    </div>
+    <%= submit_tag "Update", class: 'btn' %>
+  <% end %>
 <% end %>

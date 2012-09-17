@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120915223201) do
+ActiveRecord::Schema.define(:version => 20120917185110) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20120915223201) do
     t.boolean  "pages_enabled",       :default => true
     t.boolean  "articles_enabled",    :default => true
     t.boolean  "discussions_enabled", :default => true
+    t.boolean  "smart_lists_enabled", :default => true
   end
 
   create_table "people", :force => true do |t|

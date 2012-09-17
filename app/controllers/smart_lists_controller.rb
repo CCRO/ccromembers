@@ -1,6 +1,5 @@
 class SmartListsController < ApplicationController
-  # GET /smart_lists
-  # GET /smart_lists.json
+
   def index
     @smart_lists = SmartList.all
 
@@ -14,6 +13,9 @@ class SmartListsController < ApplicationController
   # GET /smart_lists/1.json
   def show
     @smart_list = SmartList.find(params[:id])
+    @list_items = @smart_list.people
+    @tag = @smart_list.tags.pluck(:name).to_sentence if @smart_list.tags.pluck(:name).present?
+    @all_tags = all_tags
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,6 +27,9 @@ class SmartListsController < ApplicationController
   # GET /smart_lists/new.json
   def new
     @smart_list = SmartList.new
+    @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
+    @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
+    @people = Person.accessible_by(current_ability) unless @people
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,12 +40,22 @@ class SmartListsController < ApplicationController
   # GET /smart_lists/1/edit
   def edit
     @smart_list = SmartList.find(params[:id])
+    @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
+    @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
+    @people = Person.accessible_by(current_ability) unless @people
+    @list_items = @smart_list.people
   end
 
   # POST /smart_lists
   # POST /smart_lists.json
   def create
     @smart_list = SmartList.new(params[:smart_list])
+    @smart_list.name = params[:name]
+    if params[:people]
+      params[:people].each do |p|
+        @smart_list.people << Person.where(id: p)
+      end
+    end  
 
     respond_to do |format|
       if @smart_list.save
@@ -57,6 +72,14 @@ class SmartListsController < ApplicationController
   # PUT /smart_lists/1.json
   def update
     @smart_list = SmartList.find(params[:id])
+    if params[:people]
+      @smart_list.name = params[:name]
+      @smart_list.description = params[:description]
+      @smart_list.people = []
+      params[:people].each do |p|
+        @smart_list.people << Person.where(id: p)
+      end
+    end 
 
     respond_to do |format|
       if @smart_list.update_attributes(params[:smart_list])
@@ -80,4 +103,20 @@ class SmartListsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def duplicate
+    smart_list = SmartList.find(params[:id])
+    @duplicate = SmartList.new
+    @duplicate.name = smart_list.name + " copy"
+    @duplicate.description = smart_list.description
+    smart_list.people.each do |p|
+      @duplicate.people << Person.where(id: p)
+    end 
+
+    authorize! :create, @duplicate
+
+    @duplicate.save 
+    redirect_to smart_list_path(@duplicate)
+  end
+
 end

@@ -62,6 +62,7 @@ class PagesController < ApplicationController
         @articles = Post.tagged_with(@tag)
       end
       @messages = Message.tagged_with(@tag)
+      @smart_list = SmartList.tagged_with(@tag)
       @commentable = @page
       authorize! :read, @page
     end

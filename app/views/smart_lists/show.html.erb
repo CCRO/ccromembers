@@ -1,20 +1,43 @@
-<p id="notice"><%= notice %></p>
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+      <%= link_to edit_smart_list_path(@smart_list) do %>
+      <i class="icon-edit"></i><br><p>Edit List</p>
+      <% end %>
+    </li>
+		<li>
+      <%= link_to duplicate_smart_list_path(@smart_list) do %>
+      <i class="icon-copy"></i><br><p>Duplicate <br>List</p>
+      <% end %>
+    </li>
+		<li>
+      <%= link_to smart_list_path(@smart_list), method: 'delete', :confirm => "Are you sure?" do %>
+      <i class="icon-trash"></i><br><p>Delete <br>List</p>
+      <% end %>
+    </li>
+		<li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %><i class="icon-cog"></i><br /><p>List <br>Settings</p><% end %></li>
+	</ul>
+<% end %>
 
-<p>
-  <b>Name:</b>
-  <%= @smart_list.name %>
-</p>
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-settings">
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <div class="Hero">
+        <%= form_for @smart_list, { :remote => true } do |f| %>
+          <b>tag: </b>
+          <%= select_tag('smart_list[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
+        <% end %>
+      </div>  
+    </div>  
+  
+    <div class="modal-footer">
+      <%= button_to 'Back to page', @smart_list %>
+    </div>
+  </div>  
+<% end %>
 
-<p>
-  <b>Type:</b>
-  <%= @smart_list.type %>
-</p>
 
-<p>
-  <b>Description:</b>
-  <%= @smart_list.description %>
-</p>
+<%= render @smart_list %>
 
-
-<%= link_to 'Edit', edit_smart_list_path(@smart_list) %> |
-<%= link_to 'Back', smart_lists_path %>
+  

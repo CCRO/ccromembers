@@ -155,6 +155,21 @@
         <% end %>  
       
       </ul>
-    </div> 
+    </div>
+
+
+    <% if @smart_list && page.smart_lists_enabled == true %>
+      <div class="well">
+        <ul class="nav nav-list"> 
+          <% @smart_list.each do |list| %>
+            <li class="nav-header"><%= list.name %></li>
+            <% list.people.each do |person| %>
+              <li style="font-weight: lighter; padding-bottom: 10px;"><%= person.name %><br>
+              <span style="font-weight: normal;"><%= person.company.name %></span></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %> 
 <% end %>

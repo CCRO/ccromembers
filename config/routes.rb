@@ -1,7 +1,11 @@
 Ccromembers::Application.routes.draw do
   
   
-  resources :smart_lists
+  resources :smart_lists do
+    member do 
+      get :duplicate
+    end
+  end
 
   get "call_manager/sms"
 
