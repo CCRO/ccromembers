@@ -1,5 +1,7 @@
 class SmartListsController < ApplicationController
 
+  before_filter :check_authorize
+  
   def index
     @smart_lists = SmartList.all
 
@@ -117,6 +119,10 @@ class SmartListsController < ApplicationController
 
     @duplicate.save 
     redirect_to smart_list_path(@duplicate)
+  end
+
+  def check_authorize
+    authorize! :manage, SmartList
   end
 
 end

@@ -1,5 +1,7 @@
 class TagsController < ApplicationController
   
+  before_filter :check_authorize
+  
   def index
     @tags = ActsAsTaggableOn::Tag.all
 
@@ -79,4 +81,12 @@ class TagsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def check_authorize
+    authorize! :manage, ActsAsTaggableOn::Tag
+  end
+
+
+
+
 end
