@@ -9,9 +9,11 @@
   <% end %>
 <% end %>
 <% if @page %>
-  <div style='padding-left: 10px;'> 
-    <%= link_to "Back to #{@page.title}", page_path(@page), class: 'btn' %>  
-  </div>
+<div style="padding-left: 10px;">
+  <%= link_to page_path(@page), class: 'btn' do %>
+    <i class="icon-arrow-left"></i> Back to <%= @page.title %>
+  <% end %>
+</div>
   <br>
 <% end %>
   <div class="page drop-shadow lifted <%= "watermark-draft" unless post.published? %>">

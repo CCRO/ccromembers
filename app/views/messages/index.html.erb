@@ -1,9 +1,9 @@
 <% if params[:tag_name] %>
-	<%= link_to messages_path do %>
-		<h2 class="btn"><i class="icon-bullhorn"></i> See Unrelated Discussions </h2>
+	<%= link_to messages_path, class: 'btn' do %>
+		<i class="icon-bullhorn"></i> See Unrelated Discussions
 	<% end %>
-	<%= link_to page_path(@page) do %>
-		<h2 class="btn"><i class="icon-circle-arrow-left"></i> Back to <%= @page.title %> </h2>
+	<%= link_to page_path(@page), class: 'btn' do %>
+		<i class="icon-arrow-left"></i> Back to <%= @page.title %>
 	<% end %>
 <% end %>
 <% if @messages.count > 0 %>
@@ -17,8 +17,6 @@
 			<% else %>
 				<h1 class="ribbon-left">Active Discussions</h1>
 			<% end %>
-			
-
 			<table class="table messages">
 				<%= render @messages.reverse %>
 			</table>
