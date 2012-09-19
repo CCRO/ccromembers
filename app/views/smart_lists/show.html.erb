@@ -22,7 +22,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-settings">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <div class="Hero">
         <%= form_for @smart_list, { :remote => true } do |f| %>
           <b>tag: </b>

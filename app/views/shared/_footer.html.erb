@@ -18,7 +18,7 @@
 
   <div class="modal hide fade" id="modal-window">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>Loading...</h3>
     </div>
     <div class="modal-body center">
@@ -29,7 +29,7 @@
 
   <div class="modal hide fade" id="modal-current_user">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
       <h3><%= current_user.name %></h3>
     </div>
     <div class="modal-body center">

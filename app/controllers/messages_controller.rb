@@ -19,6 +19,10 @@ class MessagesController < ApplicationController
       @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
     end
 
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @messages }
@@ -34,6 +38,10 @@ class MessagesController < ApplicationController
     @all_tags = all_tags
     impressionist(@message)
     authorize! :read, @message
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     respond_to do |format|
       format.html # show.html.erb

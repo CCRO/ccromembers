@@ -6,7 +6,11 @@
 			<h1 class="pull-left" style="padding-right: 10px; margin-top: 3px;"><i class="icon-inbox"></i></h1>
 		<% end %>
 
-		<strong><%= link_to " " + message.subject, message %></strong> - 
+		<% if @page %>
+			<strong><%= link_to " " + message.subject, message_path(message, page: @page.id) %></strong> - 
+		<% else %>
+			<strong><%= link_to " " + message.subject, message %></strong> - 
+		<% end %>
 		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...').gsub("&nbsp;", " ") %>
 		<%= raw("<strong>Moderators: </strong>") + message.moderators.map { |m| m.person.name }.to_sentence if message.moderators.count > 0 %>
 	  </td>

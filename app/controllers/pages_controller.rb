@@ -47,6 +47,10 @@ class PagesController < ApplicationController
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])

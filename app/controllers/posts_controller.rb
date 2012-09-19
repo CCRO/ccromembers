@@ -25,6 +25,10 @@ class PostsController < ApplicationController
     end
     
     @posts ||= Post.where(:published => true).order('published_at DESC')
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     
     respond_to do |format|
@@ -52,6 +56,10 @@ class PostsController < ApplicationController
       @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post
+    end
+
+    if params[:page]
+      @page = Page.find(params[:page])
     end
 
     if @post.published 

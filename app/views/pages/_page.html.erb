@@ -112,12 +112,12 @@
               </a>
               <ul class="dropdown-menu pull-right">
                 <li>
-                  <%= link_to tagged_posts_path(@tag) do %>
+                  <%= link_to tagged_posts_path(@tag, page: page.id) do %>
                     <i class="icon-share-alt"></i> All Related Articles
                   <% end %>
                 </li>
                 <% @articles.each do |a| %>
-                  <li><%= link_to a.title.html_safe, post_path(a) %></li>
+                  <li><%= link_to a.title.html_safe, post_path(a, page: page.id) %></li>
                 <% end %>
               </ul>
             </li>
@@ -132,14 +132,14 @@
               </a>
               <ul class="dropdown-menu pull-right">
                 <li>
-                  <%= link_to tagged_messages_path(@tag) do %>
+                  <%= link_to tagged_messages_path(@tag, page: page.id) do %>
                     <i class="icon-share-alt"></i> All Related Discussions
                   <% end %>
                 </li>
                 <% @messages.each do |a| %>
                   <li>
                     <% if a.archived == false %>
-                      <%= link_to message_path(a) do %>
+                      <%= link_to message_path(a, page: page.id) do %>
                         <i class="icon-comment"></i><%= a.subject.html_safe %>
                       <% end %>
                     <% else %>
@@ -153,7 +153,6 @@
             </li>
           </li>
         <% end %>  
-      
       </ul>
     </div>
 

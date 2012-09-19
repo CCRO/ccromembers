@@ -7,7 +7,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-new-page">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>New Page</h3>
     </div>
     <div class="modal-body center">
@@ -51,7 +51,7 @@
 					<% else %>
 						<i class="icon-file" style="color: red;"></i>
 					<% end %>
-						<strong><%= (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None" %></strong>
+						<strong><%= link_to (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None", page_path(page) %></strong>
 					</th>
 					<th><%= link_to page.title.html_safe, page_path(page)  %></th>
 					<th><strong><%= time_ago_in_words page.updated_at %> ago</strong></th>
