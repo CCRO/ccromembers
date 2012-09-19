@@ -9,7 +9,12 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = Person.find_by_email(params[:email])
+    if params[:email]
+      email = params[:email]
+      email = email.downcase
+    end
+     
+    user = Person.find_by_email(email)
     if user && user.verified && user.authenticate(params[:password])
       if params[:remember_me]
         cookies.permanent.signed[:auth_token] = user.auth_token

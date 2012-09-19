@@ -20,6 +20,7 @@ class Person < ActiveRecord::Base
 
   before_save :check_contacts
   before_save :merge_name
+  before_save :lowercase_email
   before_create :initialize_person
   before_validation :create_access_token
 
@@ -170,4 +171,10 @@ class Person < ActiveRecord::Base
       self.perishable_token = SecureRandom.urlsafe_base64
     end while Person.exists?(:perishable_token => self.perishable_token)
   end
+
+  def lowercase_email
+    self.email = self.email.downcase
+  end
+
+
 end

@@ -1,9 +1,9 @@
 <% if params[:tag_name] %>
-	<%= link_to page_path(@page) do %>
-		<h2 class="btn"><i class="icon-circle-arrow-left"></i> Back to <%= @page.title %> </h2>
-	<% end %>
 	<%= link_to messages_path do %>
 		<h2 class="btn"><i class="icon-bullhorn"></i> See Unrelated Discussions </h2>
+	<% end %>
+	<%= link_to page_path(@page) do %>
+		<h2 class="btn"><i class="icon-circle-arrow-left"></i> Back to <%= @page.title %> </h2>
 	<% end %>
 <% end %>
 <% if @messages.count > 0 %>
