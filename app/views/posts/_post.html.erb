@@ -11,7 +11,7 @@
 <% end %>
   <div style='padding-left: 10px;'>
     <% if @page %>
-      <%= link_to 'Back to Page', page_path(@page), class: 'btn' %>
+      <%= link_to "Back to #{@page.title}", page_path(@page), class: 'btn' %>
     <% end %>
   </div>
   <br>
