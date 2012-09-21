@@ -1,6 +1,7 @@
 <% content_for :adminbar do %>
   <ul>
     <li><%= link_to new_poll_for_session_path(@polling_session) do %><i class="icon-ok-circle"></i><br><p>New Poll</p><% end %></li>
+    <li><%= link_to active_polls_path do %><i class="icon-edit"></i><br><p>Active poll</p><% end %></li>
   </ul>
 <% end %>
 
