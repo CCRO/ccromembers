@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag "bootstrap_and_overrides" %>
   <%= stylesheet_link_tag "poll" %>
 </head>
-
+<body>
 <% unless @poll %>
   <h1>
     There are no active polls at this time.
@@ -16,36 +16,38 @@
       You have voted in the current poll.
     </h1>
   <% else %>
-    <div class="container"> 
+    <div class="container span5" style="line-height: 18px;"> 
       <div class="row">
-        <div class="span11">
+        <div class="span5">
           </p><b>Question:</b>
-          <%= @poll.question %></p><br>
+          <h2><%= @poll.question %></p></h2>
         </div>
       </div>
 
-      <div class="row" style="width: 100%;">
-          <p><b>A:</b>
-          <%= @poll.choice_a %><br></p>
-          <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
-      </div>
+      <div class="offset1">
+        <div class="row" style="width: 100%;">
+            <p><b>A:</b>
+            <%= @poll.choice_a %><br>
+            <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1></p><br>
+        </div>
 
-      <div class="row" style="width: 100%;">
-        <p><b>B:</b>
-        <%= @poll.choice_b %><br></p>
-        <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
-      </div>
+        <div class="row" style="width: 100%;">
+          <p><b>B:</b>
+          <%= @poll.choice_b %><br>
+          <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1></p><br>
+        </div>
 
-      <div class="row" style="width: 100%;">
-        <p><b>C:</b>
-        <%= @poll.choice_c %><br></p>
-       <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
-      </div>
+        <div class="row" style="width: 100%;">
+          <p><b>C:</b>
+          <%= @poll.choice_c %><br>
+         <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1></p><br>
+        </div>
 
-      <div class="row" style="width: 100%;">
-        <p><b>D:</b>
-        <%= @poll.choice_d %><br></p>
-        <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
+        <div class="row" style="width: 100%;">
+          <p><b>D:</b>
+          <%= @poll.choice_d %><br>
+          <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1></p><br>
+        </div>
       </div>
       <br>
       <br>
@@ -53,3 +55,4 @@
     </div>  
   <% end %>
 <% end %>
+</body>
