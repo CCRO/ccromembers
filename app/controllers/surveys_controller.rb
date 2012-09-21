@@ -7,6 +7,7 @@ class SurveysController < ApplicationController
   
   def index
     @surveys = Survey.all
+    authorize! :create, @survey
   end
 
   def show
