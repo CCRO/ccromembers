@@ -99,16 +99,15 @@
               <li><%= link_to 'Archived Posts', archive_posts_path() %></li>
             </ul>
           <% end %>
+          <ul class="nav nav-tabs nav-stacked">
+              <li><%= link_to 'Summit Agenda', "/pages/8-summit-agenda" %></li>
+              <li><%= link_to 'Summit Application', "/pages/14-request-an-invitation" %></li> 
+            </ul>
+            
             <ul class="nav nav-tabs nav-stacked">
               <li><%= link_to 'Middle Office Survey', "/surveys/10" %></li>
               <li><%= link_to 'Short Governance Survey', "/surveys/11" %></li>
               <li><%= link_to 'Current Active Poll', "/polls/active" %></li>
-            </ul>
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Summit Application', "/posts/97-ccro-risk-networking-summit-application" %></li>
-              <li><%= link_to 'Summit Agenda', "/posts/90-risk-networking-summit-2012-nbsp-draft-agenda" %></li>
-              <li><%= link_to 'Summit Agenda as PDF', "https://s3.amazonaws.com/ccro_static/summit/CCRO-Summit-Agenda.pdf" %></li>
-              <li><%= link_to 'Summit Information', tagged_posts_path('summit') %></li> 
             </ul>
           <center>
             <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
