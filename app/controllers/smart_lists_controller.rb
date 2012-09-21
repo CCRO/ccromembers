@@ -42,9 +42,9 @@ class SmartListsController < ApplicationController
   # GET /smart_lists/1/edit
   def edit
     @smart_list = SmartList.find(params[:id])
-    @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
-    @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
-    @people = Person.accessible_by(current_ability) unless @people
+    @people = Person.search(params[:search]).joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
+    @people = Person.search(params[:search]).order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
+    @people = Person.search(params[:search]).accessible_by(current_ability) unless @people
     @list_items = @smart_list.people
   end
 
@@ -53,6 +53,7 @@ class SmartListsController < ApplicationController
   def create
     @smart_list = SmartList.new(params[:smart_list])
     @smart_list.name = params[:name]
+    @smart_list.description = params[:description]
     if params[:people]
       params[:people].each do |p|
         @smart_list.people << Person.where(id: p)
@@ -61,7 +62,7 @@ class SmartListsController < ApplicationController
 
     respond_to do |format|
       if @smart_list.save
-        format.html { redirect_to @smart_list, notice: 'Smart list was successfully created.' }
+        format.html { redirect_to edit_smart_list_path(@smart_list), notice: 'Smart list was successfully created.' }
         format.json { render json: @smart_list, status: :created, location: @smart_list }
       else
         format.html { render action: "new" }
@@ -74,18 +75,25 @@ class SmartListsController < ApplicationController
   # PUT /smart_lists/1.json
   def update
     @smart_list = SmartList.find(params[:id])
-    if params[:people]
-      @smart_list.name = params[:name]
-      @smart_list.description = params[:description]
+    @smart_list.name = params[:name]
+    @smart_list.description = params[:description]
+    data_set = Person.search(params[:search])
+
+    if @smart_list.people
+      @smart_list.people = @smart_list.people.reject{ |p| data_set.include? p }
+    else
       @smart_list.people = []
+    end
+
+    if params[:people]
       params[:people].each do |p|
         @smart_list.people << Person.where(id: p)
       end
-    end 
+    end
 
     respond_to do |format|
       if @smart_list.update_attributes(params[:smart_list])
-        format.html { redirect_to @smart_list, notice: 'Smart list was successfully updated.' }
+        format.html { redirect_to edit_smart_list_path(@smart_list), notice: 'Smart list was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

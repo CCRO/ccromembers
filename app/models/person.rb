@@ -176,5 +176,13 @@ class Person < ActiveRecord::Base
     self.email = self.email.downcase
   end
 
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
+
 
 end

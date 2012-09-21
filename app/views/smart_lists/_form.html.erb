@@ -12,33 +12,21 @@
         </tr>
       </table>
     </div>
-    <div class="row">
-      <table class="table table-bordered table-striped span9">
-        <tr>
-          <th></th>
-          <th><%= link_to sort: 'name' do %>Name <i class="icon-resize-vertical"></i> <% end %></th>
-          <th><%= link_to sort: 'role' do %>Role <i class="icon-resize-vertical"></i> <% end %></th>
-          <th>Level</th>
-          <th><%= link_to sort: 'company' do %>Company <i class="icon-resize-vertical"></i> <% end %></th>
-          <th><%= link_to sort: 'email' do %>Email <i class="icon-resize-vertical"></i> <% end %></th>
-        </tr>  
-        <% @people.each do |person| %>
-          <tr>
-            <td><%= check_box_tag 'people[]', person.id %></td>
-            <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %></td>
-            <td><%= person.role if person.role %></td>
-            <td><%= person.level if person.level %></td>
-            <td><%= link_to person.company.name, person.company if person.company %></td>
-            <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
-          </tr>  
-        <% end %>
-      </table> 
-    </div>
     <%= submit_tag "Create", class: 'btn' %>
   <% end %>
 
 <% elsif params[:action] == 'edit' %>
-  <%= form_tag({:controller => "smart_lists", :action => "update"}, class: 'form-inline', :method => "PUT") do %>
+<div class="container">
+   <div class="">
+        <%= form_tag edit_smart_list_path(@smart_list), class: 'form-inline', :method => 'get' do %>
+          <p>
+            <%= text_field_tag :search, params[:search] %>
+            <%= submit_tag "Search", :name => nil, class: 'btn' %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  <%= form_tag({:controller => "smart_lists", :action => "update" }, class: 'form-inline', :method => "PUT") do %>
     <div class="row">
       <table class="table table-bordered span4">
         <tr>
@@ -53,6 +41,16 @@
     </div>
     <div class="row">
       <table class="table table-bordered table-striped span9">
+        <% if params[:search] %>
+        <tr>
+          <th></th>
+          <th>Name </th>
+          <th>Role</th>
+          <th>level</th>
+          <th>Company</th>
+          <th>Email</th>
+        </tr>
+        <% else %>
         <tr>
           <th></th>
           <th><%= link_to sort: 'name' do %>Name <i class="icon-resize-vertical"></i> <% end %></th>
@@ -60,7 +58,8 @@
           <th>Level</th>
           <th><%= link_to sort: 'company' do %>Company <i class="icon-resize-vertical"></i> <% end %></th>
           <th><%= link_to sort: 'email' do %>Email <i class="icon-resize-vertical"></i> <% end %></th>
-        </tr>  
+        </tr>
+        <% end %>  
         <% @people.each do |person| %>
           <tr>
             <td><%= check_box_tag 'people[]', person.id, @list_items.include?(person) %></td>
@@ -73,6 +72,10 @@
         <% end %>
       </table> 
     </div>
+    <%= hidden_field_tag :search, params[:search] %>
     <%= submit_tag "Update", class: 'btn' %>
+    <%= link_to "Finished", smart_list_path(@smart_list), class: 'btn', confirm: 'This will not save changes since last update. Continue?' %>
+    <div>
+      <br>
   <% end %>
 <% end %>

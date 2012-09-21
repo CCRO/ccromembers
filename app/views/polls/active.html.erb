@@ -16,7 +16,6 @@
       You have voted in the current poll.
     </h1>
   <% else %>
-  <p>HTML version</p>
     <div class="container"> 
       <div class="row">
         <div class="span11">
@@ -25,25 +24,25 @@
         </div>
       </div>
 
-      <div class="row" style="width: 100%; margin-bottom: 5%;">
+      <div class="row" style="width: 100%;">
           <p><b>A:</b>
           <%= @poll.choice_a %><br></p>
           <h1><%= link_to "A", pick_a_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
       </div>
 
-      <div class="row" style="width: 100%; margin-bottom: 5%;">
+      <div class="row" style="width: 100%;">
         <p><b>B:</b>
         <%= @poll.choice_b %><br></p>
         <h1><%= link_to "B", pick_b_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
       </div>
 
-      <div class="row" style="width: 100%; margin-bottom: 5%;">
+      <div class="row" style="width: 100%;">
         <p><b>C:</b>
         <%= @poll.choice_c %><br></p>
        <h1> <%= link_to "C", pick_c_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
       </div>
 
-      <div class="row" style="width: 100%; margin-bottom: 5%;">
+      <div class="row" style="width: 100%;">
         <p><b>D:</b>
         <%= @poll.choice_d %><br></p>
         <h1><%= link_to "D", pick_d_poll_path(@poll), class: "btn btn-large btn-info", style: " width: 150px;" %></h1>
