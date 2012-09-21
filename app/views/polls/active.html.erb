@@ -1,7 +1,28 @@
 <head>
-  <% if false %>
-  <meta http-equiv="refresh" content="10" />
-  <% end %>
+  <meta http-equiv="refresh" content="30" />
+  <script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+
+$(document).on("click", "a", function( event ){
+ 
+// Stop the default behavior of the browser, which
+// is to change the URL of the page.
+event.preventDefault();
+ 
+// Manually change the location of the page to stay in
+// "Standalone" mode and change the URL at the same time.
+location.href = $( event.target ).attr( "href" );
+ 
+}
+);
+</script>
   <%= stylesheet_link_tag "bootstrap_and_overrides" %>
   <%= stylesheet_link_tag "poll" %>
 </head>
