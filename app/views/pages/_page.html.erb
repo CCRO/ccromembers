@@ -27,7 +27,7 @@
     <h1 class="page_title">
       <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
         <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
-          <%= page.title.html_safe %>
+          <%= page.title.html_safe if page.title %>
         </div>
       <% else %>
         <%= link_to page.title.html_safe, page_path(page)  %>
