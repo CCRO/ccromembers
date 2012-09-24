@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CCRO - <%= "CCRO" %></title>
+  <% if params[:action] == 'show' && @page.title.present? %>
+    <title>CCRO - <%= @page.title.html_safe %></title>
+  <% end %>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
   <%= stylesheet_link_tag "style", :media => "all" %>
