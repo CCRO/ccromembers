@@ -8,6 +8,7 @@
       <div class="btn-group">
         <%= link_to 'Deactiveate', deactivate_poll_path(poll), :class => 'btn btn-large' %>
         <%= link_to 'Report', report_poll_path(poll), :class => 'btn btn-large' %>
+        <%= link_to "#myModal", 'data-toggle' => "modal", :class => 'btn btn-large' do %>Respondents<% end %>
       </div>
     <% end %>
   </h2>
@@ -20,47 +21,54 @@
         <%= link_to 'Report', report_poll_path(poll), :class => 'btn btn-large' %>
         <%= link_to 'Edit', edit_poll_path(poll), :class => 'btn btn-large' %>
         <%= link_to 'Destroy', poll, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-large' %>
+        <%= link_to "#myModal", 'data-toggle' => "modal", :class => 'btn btn-large' do %>Respondents<% end %>
       </div>
     </h2>
   <% end %>
 
-  <% if false %>
-  <p>
-    <b>Choice a:</b>
-    <%= poll.choice_a %>
-  </p>
-
-  <p>
-    <b>Choice b:</b>
-    <%= poll.choice_b %>
-  </p>
-
-  <p>
-    <b>Choice c:</b>
-    <%= poll.choice_c %>
-  </p>
-
-  <p>
-    <b>Choice d:</b>
-    <%= poll.choice_d %>
-  </p>
-
-  <p>
-    <b>Active:</b>
-    <%= poll.active %>
-  </p>
-
-
-  <p>
-    <b>Polling session:</b>
-    <%= poll.polling_session %>
-  </p>
-  <% end %>
-
-  <% if false %>
-  <%= link_to 'Edit', edit_poll_path(poll) %> |
-  <%= link_to 'Back', polls_path %>
-  <% end %>
+  
 </div>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="myModal">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Poll Respondents</h3>
+      <h3>Question: <%= poll.question %></h3>
+    </div>
+    <div class="modal-body center">
+      <table class="table">
+        <tr>
+          <td>Name</td>
+          <td>Number</td>
+          <td>Answer</td>
+        </tr>
+        <tr>
+          <% list = Impression.where(impressionable_type: Poll, impressionable_id: poll.id) %>
+          <% if list %>
+            <% list.each do |i| %>
+            <% person = Person.find(i.user_id) %>
+            <td><%= person.name %></td>
+            <td><%= person.mobile_phone if person.mobile_phone.present? %></td>
+              <% if i.message == 'a' %>
+                <td><%= poll.choice_a %></td>
+              <% elsif i.message == 'b' %>
+                <td><%= poll.choice_b %></td>
+              <% elsif i.message == 'c' %>
+                <td><%= poll.choice_c %></td>
+              <% elsif i.message == 'd' %>
+                <td><%= poll.choice_d %></td>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tr>
+      </table>
+  
+    </div>
+    <div class="modal-footer">
+       
+    </div>
+  </div>
+<% end %>
 
 

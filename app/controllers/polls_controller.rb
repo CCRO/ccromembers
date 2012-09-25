@@ -21,6 +21,7 @@ class PollsController < ApplicationController
   def show
     @poll = Poll.find(params[:id])
     authorize! :read, Poll
+    @list = Impression.where(impressionable_type: Poll, impressionable_id: params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
