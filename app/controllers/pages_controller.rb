@@ -23,10 +23,15 @@ class PagesController < ApplicationController
         @pages = Page.where(:published => true).order('published_at DESC')
       end
     end
+
     if params[:tag_name]
       @pages = Page.where(published: true).tagged_with(params[:tag_name])
     end
     
+    if params[:group_id]
+      @pages = Group.find(params[:group_id]).pages.order('updated_at DESC')
+    end
+
     @pages ||= Page.order('published_at DESC')
     authorize! :create, @page
     
@@ -87,13 +92,16 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.new
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
   end
   
   def create
     @page = Page.new(params[:page])
     
     @page.body = "Here is the start of a new page!"
-    @page.owner = current_user
+    @page.owner = Group.find(params[:group_id]) if params[:group_id]
     @page.author = current_user
     @page.published = false
     @page.level ||= 'public'

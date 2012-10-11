@@ -34,5 +34,14 @@
   <%= @person.bio %>
 </p>
 
+<h2>Working Groups</h2>
+<hr>
+<% Group.all.each do |group| %>
+  <%= form_for Membership.new, :method => 'post', :remote => true do %>
+    <%= hidden_field_tag :group_id, group.id %>
+    <%= hidden_field_tag :person_id, @person.id %>
+    <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %> <%= group.name %>
+  <% end %>
+<% end %>
 <%= link_to 'Edit', edit_person_path(@person) %> | <%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | 
 <%= link_to 'Back', people_path %>

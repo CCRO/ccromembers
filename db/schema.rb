@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917185110) do
+ActiveRecord::Schema.define(:version => 20121011192758) do
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -117,6 +117,14 @@ ActiveRecord::Schema.define(:version => 20120917185110) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "memberships", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "person_id"
+    t.string   "fuction"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "mercury_images", :force => true do |t|
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -158,7 +166,7 @@ ActiveRecord::Schema.define(:version => 20120917185110) do
     t.text     "header"
     t.text     "body"
     t.integer  "owner_id"
-    t.integer  "owner_type"
+    t.string   "owner_type"
     t.integer  "author_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false

@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     @person = Person.find(params[:id])
-
+    @group_memberships = Group.pluck(:id).zip(Group.pluck(:id).map { |group_id| (@person.groups.where(:id => group_id).present?) ? 1 : 0 }) 
     authorize! :read, @person
     
     respond_to do |format|

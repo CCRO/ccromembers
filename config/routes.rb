@@ -46,7 +46,11 @@ Ccromembers::Application.routes.draw do
 
   resources :tags
 
-  resources :groups
+  resources :groups do
+    resources :pages
+  end
+
+  match '/memberships' => 'memberships#toggle', :via => :post
 
     namespace :mercury do
       resources :images

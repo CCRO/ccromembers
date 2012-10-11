@@ -5,4 +5,9 @@ class Group < ActiveRecord::Base
   # t.datetime "updated_at", :null => false
 
 	is_impressionable
+
+  has_many :pages, :as => :owner
+  has_many :memberships
+  has_many :people, :through => :memberships
+
 end
