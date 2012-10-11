@@ -88,7 +88,7 @@
       <ul class="nav nav-list">
         
         <% if @category.length > 1 && page.pages_enabled == true %>
-          <li class="nav-header"><%= @tag.upcase + ' Pages' %></li>
+          <li class="nav-header"><%= 'Related Pages' %></li>
           <% @category.each do |p| %>
             <% if p.title == page.title.html_safe %>
               <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
