@@ -7,6 +7,7 @@ class SurveysController < ApplicationController
   
   def index
     @surveys = Survey.all
+    authorize! :create, @survey
   end
 
   def show
@@ -69,6 +70,9 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @chart = Array.new
     @cloud = Array.new
+
+    authorize! :create, @survey
+    
     @survey.questions.each do |q|
       if q.results.present?
         if q.response_type == 'radio' || q.response_type == 'checkbox' || q.response_type == 'multiline' || q.response_type == 'singleline' 

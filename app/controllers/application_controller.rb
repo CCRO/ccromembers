@@ -155,5 +155,9 @@ class ApplicationController < ActionController::Base
       session[:user_id] = person.id if person.verified
     end
   end
+
+  def all_tags
+    ActsAsTaggableOn::Tag.all.each
+  end 
   
 end

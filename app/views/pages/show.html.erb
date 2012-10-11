@@ -23,7 +23,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-settings">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>page Settings</h3>
     </div>
     <div class="modal-body center">
@@ -64,11 +64,20 @@
 	  </tr>
     <tr>
       <td class="Hero">
-        <%= form_for @page do |f| %>      
-          <%= f.label :tag_list, 'Page category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
-          <%= f.submit %>
+      <%= form_for @page, { :remote => true } do |f| %>
+          <b>Category tag: </b>
+          <%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
         <% end %>
-      </td>
+        <div class="control-group checkbox inline" >
+            <b>Side Bar Widget</b>
+            <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
+              <%= f.check_box :pages_enabled, :class => 'submittable' %><%= f.label :pages_enabled %>
+              <%= f.check_box :articles_enabled, :class => 'submittable' %><%= f.label :articles_enabled %>
+              <%= f.check_box :discussions_enabled, :class => 'submittable' %><%= f.label :discussions_enabled %>
+              <%= f.check_box :smart_lists_enabled, :class => 'submittable' %><%= f.label :smart_lists_enabled %>
+            <% end %>
+          </div>
+    </td>  
     </tr>
 	  </table>
     </div>
@@ -76,7 +85,6 @@
        <%= button_to 'Back to page', @page %>
     </div>
   </div>
-
 <% end %>
 
 

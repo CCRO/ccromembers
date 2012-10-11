@@ -23,7 +23,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-settings">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>Post Settings</h3>
     </div>
     <div class="modal-body center">
@@ -69,11 +69,11 @@
 	  </tr>
     <tr>
       <td class="Hero">
-        <%= form_for @post do |f| %>      
-          <%= f.label :tag_list, 'Post category' %> <%= f.text_field :tag_list, :placeholder => @tag %>
-          <%= f.submit %>
+      <%= form_for @post, { :remote => true } do |f| %>
+          <b>tag: </b>
+          <%= select_tag('post[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
         <% end %>
-      </td>
+    </td>  
     </tr>
 	  </table>
     </div>

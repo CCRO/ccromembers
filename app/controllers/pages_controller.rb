@@ -19,12 +19,15 @@ class PagesController < ApplicationController
       if params[:filter] == 'summit'
         @pages = Page.where(published: true).tagged_with("summit")
       end
+      if params[:filter] == 'active'
+        @pages = Page.where(:published => true).order('published_at DESC')
+      end
     end
     if params[:tag_name]
       @pages = Page.where(published: true).tagged_with(params[:tag_name])
     end
     
-    @pages ||= Page.where(:published => true).order('published_at DESC')
+    @pages ||= Page.order('published_at DESC')
     authorize! :create, @page
     
     
@@ -44,13 +47,26 @@ class PagesController < ApplicationController
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 
       @page = Page.find(params[:id])
       @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
-      @category = Page.tagged_with(@tag)
+      @all_tags = all_tags
+      if @page.published == true
+        @category = Page.where(published: true).tagged_with(@tag)
+        @articles = Post.where(published: true).tagged_with(@tag)
+      else
+        @category = Page.tagged_with(@tag)
+        @articles = Post.tagged_with(@tag)
+      end
+      @messages = Message.tagged_with(@tag)
+      @smart_list = SmartList.tagged_with(@tag) if SmartList.tagged_with(@tag).present?
       @commentable = @page
       authorize! :read, @page
     end
@@ -74,7 +90,6 @@ class PagesController < ApplicationController
   end
   
   def create
-
     @page = Page.new(params[:page])
     
     @page.body = "Here is the start of a new page!"

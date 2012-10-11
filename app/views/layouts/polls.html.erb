@@ -24,11 +24,11 @@
 		<%= yield %>
 	</div>
 <!--Body content (END)-->
+<% if params[:controller] == 'polling_sessions' %>
 <footer>
-	<% if params[:controller] == 'polling_sessions' %>
 	<%= render 'shared/footer' %>
-	<% end %>
 </footer>
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
+<% end %>
 </body>
 </html>

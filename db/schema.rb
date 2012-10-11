@@ -109,6 +109,14 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
   add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
   add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
+  create_table "lists", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "mercury_images", :force => true do |t|
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -152,8 +160,8 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.integer  "owner_id"
     t.integer  "owner_type"
     t.integer  "author_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "published"
     t.datetime "published_at"
     t.string   "level"
@@ -164,6 +172,10 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.string   "tag_list"
     t.boolean  "commenting_enabled"
     t.string   "header_picture"
+    t.boolean  "pages_enabled",       :default => true
+    t.boolean  "articles_enabled",    :default => true
+    t.boolean  "discussions_enabled", :default => true
+    t.boolean  "smart_lists_enabled", :default => true
   end
 
   create_table "people", :force => true do |t|
@@ -189,6 +201,14 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.string   "last_browser"
     t.string   "last_platform"
   end
+
+  create_table "people_smart_lists", :id => false, :force => true do |t|
+    t.integer "person_id"
+    t.integer "smart_list_id"
+  end
+
+  add_index "people_smart_lists", ["person_id", "smart_list_id"], :name => "index_people_smart_lists_on_person_id_and_smart_list_id"
+  add_index "people_smart_lists", ["smart_list_id", "person_id"], :name => "index_people_smart_lists_on_smart_list_id_and_person_id"
 
   create_table "polling_sessions", :force => true do |t|
     t.string   "name"
@@ -254,6 +274,14 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
 
   add_index "responses", ["person_id"], :name => "index_responses_on_person_id"
   add_index "responses", ["question_id"], :name => "index_responses_on_question_id"
+
+  create_table "smart_lists", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "owner_id"

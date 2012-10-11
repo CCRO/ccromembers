@@ -7,7 +7,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-new-page">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>New Page</h3>
     </div>
     <div class="modal-body center">
@@ -19,7 +19,7 @@
     </div>
 	  <% end %>
   </div>
- <% end %>
+<% end %>
 
 <% if ['drafts', 'my_drafts'].include?(params[:filter]) && can?(:create, Page) %>
 	<div class="well">
@@ -36,7 +36,31 @@
 <% end %>
 
 <% if @pages.present? %>
-	<%= render @pages %>
+	<% if params[:action] == 'index' %>
+		<table class="table">
+			<tr>
+				<th class="span1">Category:</th>
+				<th class="span3">Name:</th>
+				<th class="span1">Updated at:</th>
+			</tr>
+				<% @pages.each do |page| %>
+				<tr>
+					<th>
+					<%if page.published == true %>
+						<i class="icon-file" style="color: green;"></i>
+					<% else %>
+						<i class="icon-file" style="color: red;"></i>
+					<% end %>
+						<strong><%= link_to (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None", page_path(page) %></strong>
+					</th>
+					<th><%= link_to page.title.html_safe, page_path(page)  %></th>
+					<th><strong><%= time_ago_in_words page.updated_at %> ago</strong></th>
+				</tr>
+				<% end %>
+		</table>
+	<% else %>
+		<%= render @pages %>
+	<% end %>
 <% else %>
 	<% if params[:filter] == 'drafts' %>
 		<h1>There are not currently any page drafts. </h1><h2>Good job, everything is published! Or you need to get to work.</h2>

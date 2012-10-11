@@ -2,20 +2,16 @@
   <meta http-equiv="refresh" content="30" />
 </head>
 <p id="notice"><%= notice %></p>
-
-<br>
-<container>
-  <div class="row-fluid">
-    <h2 class='offset1' style='font-size: 42px;'>
-      <%= @poll.question %>
-    </h2><br>
-  </div>
-  <div class="row-fluid">
-    <div class='pull-left'>
+<container style='position:fixed;'>
+  <div class="row-fluid" >
+    <div class='pull-left' style='position:relative; top: -200px; left:-400px;'>
       <div id='chart'></div>
       <%= render_chart(@chart, 'chart') %>
     </div>
-    <div class='' style='padding-top: 80px;'>
+    <div class="" style='padding-top: 230px; position:relative; left:-1000px; width:140%; z-index:100;' >
+      <h2 style='font-size: 38px;'>
+        <%= @poll.question %>
+      </h2><br>
       <h2>
         <span class="label label-inverse"><%= Impression.where(impressionable_type: Poll, impressionable_id: @poll.id, message: 'a').count%> Votes</span>
         <b>A:</b>

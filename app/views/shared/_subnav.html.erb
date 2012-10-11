@@ -10,14 +10,14 @@
         <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
         <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
       <% end %>
-      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>
+      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>
       <div class="navbar-text pull-left">
         Resource Center: 
       </div>
       <li class="divider-vertical"></li>
         <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
         <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
-        <li <%= 'class=active' if params[:controller] == 'working_groups' %>><a href="/static/comingsoon">Working Groups</a></li>
+        <li <%= 'class=active' if params[:controller] == 'working_groups' %>><a href="/pages/23-groups-overview">Working Groups</a></li>
         <li <%= 'class=active' if params[:controller] == 'documents' %>><a href="/documents">Documents</a></li>
       <% end %>
       <% if false %>

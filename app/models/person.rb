@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
   # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
   # has_many :closed_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => false }
 
+  has_and_belongs_to_many :smart_lists
+
   mount_uploader :avatar, AvatarUploader
 
   has_many :responses
@@ -20,6 +22,7 @@ class Person < ActiveRecord::Base
 
   before_save :check_contacts
   before_save :merge_name
+  before_save :lowercase_email
   before_create :initialize_person
   before_validation :create_access_token
 
@@ -170,4 +173,18 @@ class Person < ActiveRecord::Base
       self.perishable_token = SecureRandom.urlsafe_base64
     end while Person.exists?(:perishable_token => self.perishable_token)
   end
+
+  def lowercase_email
+    self.email = self.email.downcase
+  end
+
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
+
+
 end

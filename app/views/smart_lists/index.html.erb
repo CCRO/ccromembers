@@ -1,0 +1,35 @@
+<% content_for :adminbar do %>
+  <ul>
+    <li><%= link_to new_smart_list_path do %><i class="icon-asterisk"></i><br><p>New List</p><% end %></li>
+  </ul>
+<% end %>
+
+<div class="container span9">
+  <h1>Smart Lists</h1>
+  <br>
+  <table class="table table-bordered">
+    <tr>
+      <th class="span1">Name</th>
+      <th class="span1">Category</th>
+      <th class="span1"></th>
+      <th class="span1"></th>
+    </tr>
+
+  <% @smart_lists.each do |smart_list| %>
+    <tr>
+      <td><%= link_to smart_list.name, smart_list %></td>
+      <% if smart_list.tags.pluck(:name).present? %>
+        <td><%= link_to smart_list.tags.pluck(:name).to_sentence, smart_list %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+      <td><%= link_to 'Edit', edit_smart_list_path(smart_list) %></td>
+      <td><%= link_to 'Destroy', smart_list, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'New Smart list', new_smart_list_path %>
+</div>

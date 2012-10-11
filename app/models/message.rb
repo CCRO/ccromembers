@@ -1,4 +1,7 @@
 class Message < ActiveRecord::Base
+
+  acts_as_taggable
+  
   has_many :comments, :as => :commentable
 
   belongs_to :owner, :polymorphic => true

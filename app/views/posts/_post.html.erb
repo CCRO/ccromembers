@@ -1,4 +1,3 @@
-
 <% if can?(:edit, post) && params[:action] == 'show' %>
   <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
     <% if post.locker == current_user %>
@@ -8,6 +7,14 @@
     <% end %>
     <br><br>
   <% end %>
+<% end %>
+<% if @page %>
+<div style="padding-left: 10px;">
+  <%= link_to page_path(@page), class: 'btn' do %>
+    <i class="icon-arrow-left"></i> Back to <%= @page.title %>
+  <% end %>
+</div>
+  <br>
 <% end %>
   <div class="page drop-shadow lifted <%= "watermark-draft" unless post.published? %>">
     <article id="post-<%= post.id %>">

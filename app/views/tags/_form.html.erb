@@ -1,0 +1,13 @@
+<% if params[:action] == 'new'%>
+  <%= form_tag({:controller => "tags", :action => "create"}, :method => "POST") do %>
+    <%= label_tag :name %>
+    <%= text_field_tag :name %><br />
+    <%= submit_tag "Create", class: 'btn' %>
+  <% end %>
+<% elsif params[:action] == 'edit' %>
+  <%= form_tag({:controller => "tags", :action => "update"}, :method => "PUT") do %>
+    <%= label_tag :name %>
+    <%= text_field_tag :name, @tag %><br />
+    <%= submit_tag "Update", class: 'btn' %>
+  <% end %>
+<% end %>

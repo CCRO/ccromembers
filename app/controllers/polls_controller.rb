@@ -21,6 +21,7 @@ class PollsController < ApplicationController
   def show
     @poll = Poll.find(params[:id])
     authorize! :read, Poll
+    @list = Impression.where(impressionable_type: Poll, impressionable_id: params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -53,7 +54,7 @@ class PollsController < ApplicationController
     data_table.new_column('number', 'count')
     data_table.add_rows(@results)
 
-    option = { width: 750, height: 600, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
+    option = { width: 1600, height: 1200, title: '', is3D: true, backgroundColor: '#EFEFEF', slices: [{color: '#305D9A'}, {color: '#6C3'}, {color: 'black'}, {color: 'red'}]}
     @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
 
     authorize! :create, Poll
@@ -97,7 +98,7 @@ class PollsController < ApplicationController
 
     respond_to do |format|
       if @poll.save
-        format.html { redirect_to @poll, notice: 'Poll was successfully created.' }
+        format.html { redirect_to @poll, notice: 'Poll was successfully created. It has not been activated' }
         format.json { render json: @poll, status: :created, location: @poll }
       else
         format.html { render action: "new" }

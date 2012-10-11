@@ -25,6 +25,10 @@ class PostsController < ApplicationController
     end
     
     @posts ||= Post.where(:published => true).order('published_at DESC')
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     
     respond_to do |format|
@@ -48,9 +52,14 @@ class PostsController < ApplicationController
     else 
       @post = Post.find(params[:id])
       @tag = @post.tags.pluck(:name).to_sentence if @post.tags.pluck(:name).present?
+      @all_tags = all_tags
       @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post
+    end
+
+    if params[:page]
+      @page = Page.find(params[:page])
     end
 
     if @post.published 
@@ -131,7 +140,7 @@ class PostsController < ApplicationController
       render text: ""
     else
       post.update_attributes(params[:post])
-      redirect_to page_path(page)
+      redirect_to post_path(post)
     end
 
   end

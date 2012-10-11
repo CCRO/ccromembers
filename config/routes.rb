@@ -1,6 +1,12 @@
 Ccromembers::Application.routes.draw do
   
   
+  resources :smart_lists do
+    member do 
+      get :duplicate
+    end
+  end
+
   get "call_manager/sms"
 
   get "call_manager/voice"
@@ -37,6 +43,8 @@ Ccromembers::Application.routes.draw do
   end
   
   resources :subscriptions
+
+  resources :tags
 
   resources :groups
 
@@ -91,6 +99,8 @@ Ccromembers::Application.routes.draw do
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'
 
+    match 'message_tag/:tag_name' => 'messages#index', as: 'tagged_messages'
+
 
 
     constraints(:host => 'polls.ccro.org') do
@@ -101,6 +111,7 @@ Ccromembers::Application.routes.draw do
     match 'page_archive' => 'pages#index', :defaults => { filter: 'archive' }, as: 'archive_pages'
     match 'page_drafts' => 'pages#index', :defaults => { filter: 'drafts' }, as: 'draft_pages'
     match 'my_page_drafts' => 'pages#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_pages'
+    match 'active_pages' => 'pages#index', :defaults => { filter: 'active' }, as: 'active_pages'
     match 'summit_page' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
     match 'shared_page/:token' => 'pages#show', as: 'shared_page'
 

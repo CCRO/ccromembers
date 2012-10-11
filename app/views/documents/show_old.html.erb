@@ -44,7 +44,7 @@
 
 <div class="modal hide fade" id="modal-add_comment">
   <div class="modal-header">
-    <a href="#" class="close">×</a>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>Add Comment</h3>
   </div>
   <%= form_for [@document, Comment.new( :version => @document.versions.last)] do |f| %>

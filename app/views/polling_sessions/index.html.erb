@@ -8,7 +8,7 @@
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-new-polling_session">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>New Polling Session</h3>
     </div>
     <div class="modal-body center">
@@ -46,3 +46,4 @@
 <br />
 
 <%= link_to 'New Polling session', new_polling_session_path %>
+|| <%= link_to 'Back to CCRO Site', posts_path %>

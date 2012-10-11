@@ -5,11 +5,23 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.not_archived.accessible_by(current_ability)
-    @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    if params[:tag_name]
+      @messages = Message.tagged_with(params[:tag_name]).not_archived.accessible_by(current_ability)
+      @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
-    @archived_messages = Message.archived.accessible_by(current_ability)
-    @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+      @archived_messages = Message.tagged_with(params[:tag_name]).archived.accessible_by(current_ability)
+      @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    else
+      @messages = Message.not_archived.accessible_by(current_ability)
+      @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+
+      @archived_messages = Message.archived.accessible_by(current_ability)
+      @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
+    end
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,8 +34,14 @@ class MessagesController < ApplicationController
   def show
     @message = Message.find(params[:id])
     @commentable = @message
+    @tag = @message.tags.pluck(:name).to_sentence if @message.tags.pluck(:name).present?
+    @all_tags = all_tags
     impressionist(@message)
     authorize! :read, @message
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
     
     respond_to do |format|
       format.html # show.html.erb

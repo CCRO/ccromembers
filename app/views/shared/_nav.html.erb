@@ -38,7 +38,7 @@
             <ul class="nav">
               <!-- Research Center Dropdown -->
               <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || params[:controller] == 'posts' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/documents"><i class="icon-book icon-white"></i> Resource Center</a></li>
-              <li><a href="/static/summit"><i class="icon-calendar icon-white"></i> Events</a></li>
+              <li><a href="/pages/17"><i class="icon-calendar icon-white"></i> Events</a></li>
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user.admin?) ? '/people' : '/static/comingsoon' %>"><i class="icon-user icon-white"></i> Directory</a></li>
             </ul>
          </div>

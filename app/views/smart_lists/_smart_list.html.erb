@@ -1,0 +1,37 @@
+<div class="container span9">
+	<div class="row-fluid">
+		<div class="span5">
+
+			<h1>
+			  <%= @smart_list.name %>
+			</h1>
+
+			<p>
+			  <b>Description:</b>
+			  <%= @smart_list.description %>
+			</p>
+		</div>
+	</div>
+	
+	<br>
+
+	<div class="row-fluid">
+		<table class="table table-bordered">
+			<% @list_items.each do |i| %>
+		  	<tr>
+		  		<th><%= i.name %></th>
+		  		<th><%= i.company.name if i.company %></th>
+		  	</tr>
+		  <% end %>	
+		</table>
+	<div>
+
+	<br>
+
+	<div class="row-fluid">
+		<div class="span9">
+			<%= link_to 'Edit this List', edit_smart_list_path(@smart_list) %> |
+			<%= link_to 'All Smart Lists', smart_lists_path %>
+		</div>
+	</div>
+</div>
