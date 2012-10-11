@@ -100,8 +100,7 @@
             </ul>
           <% end %>
             <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Summit Agenda', "/pages/8-summit-agenda" %></li>
-              <li><%= link_to 'Summit Application', "/pages/14-request-an-invitation" %></li> 
+              <li><%= link_to 'CCRO General Meeting', "/pages/17" %></li>
             </ul>
 
             <ul class="nav nav-tabs nav-stacked">
@@ -110,6 +109,7 @@
               <li><%= link_to 'Current Active Poll', "/polls/active" %></li>
             </ul>
           <center>
+            <% if false %>
             <%= link_to "/posts/97-ccro-risk-networking-summit-application" do %>
               <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
             <% end %>
@@ -139,6 +139,7 @@
             <% end %>
             <%= link_to "http://www.ze.com/" do %>
               <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/ZE_icon.png" %><br><br>
+            <% end %>
             <% end %>            
             
             <% if current_user && current_user.admin? %>
