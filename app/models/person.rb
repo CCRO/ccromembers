@@ -1,4 +1,6 @@
 class Person < ActiveRecord::Base
+  
+  serialize :browser_info
 
   has_many :subscriptions, :as => :owner
   # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
