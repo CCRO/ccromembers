@@ -82,6 +82,9 @@ class PostsController < ApplicationController
   
   def new
     @post = Post.new
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
   end
   
   def create
@@ -89,7 +92,11 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     
     @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your post preview!"
-    @post.owner = current_user
+    if params[:group_id]
+      @post.owner = Group.find(params[:group_id]) 
+    else
+      @post.owner ||= current_user
+    end
     @post.author = current_user
     @post.published = false
     @post.level ||= 'public'

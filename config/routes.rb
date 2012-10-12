@@ -48,6 +48,9 @@ Ccromembers::Application.routes.draw do
 
   resources :groups do
     resources :pages
+    resources :posts
+    resources :messages
+    resources :documents
   end
 
   match '/memberships' => 'memberships#toggle', :via => :post
