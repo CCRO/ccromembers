@@ -53,6 +53,9 @@ class MessagesController < ApplicationController
   # GET /messages/new.json
   def new
     @message = Message.new
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
 
     authorize! :read, Message
     
@@ -74,7 +77,11 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
-    @message.owner ||= default_company
+    if params[:group_id]
+      @message.owner = Group.find(params[:group_id]) 
+    else
+      @message.owner ||= default_company
+    end
     @message.archived = false
     @message.author = current_user
     @message.published_at ||= Time.now

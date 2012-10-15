@@ -43,6 +43,9 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     # @document.format = 'markdown'
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
     
     respond_to do |format|
       format.html # new.html.erb
@@ -61,7 +64,11 @@ class DocumentsController < ApplicationController
     @document = Document.new(params[:document])
     @document.generate_token
     @document.archived = false
-    @document.owner ||= default_company
+    if params[:group_id]
+      @document.owner = Group.find(params[:group_id]) 
+    else
+      @document.owner ||= default_company
+    end
     @document.author = current_user
 
     respond_to do |format|

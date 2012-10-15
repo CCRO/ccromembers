@@ -7,6 +7,9 @@ class Group < ActiveRecord::Base
 	is_impressionable
 
   has_many :pages, :as => :owner
+  has_many :posts, :as => :owner
+  has_many :messages, :as => :owner
+  has_many :documents, :as => :owner
   has_many :memberships
   has_many :people, :through => :memberships
 
