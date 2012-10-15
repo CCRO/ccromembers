@@ -6,7 +6,7 @@ module ApplicationHelper
   
   def gravatar_for user, options = {}
       email = user.email
-      options = {:alt => 'avatar', :class => 'avatar', :size => 160}.merge! options
+      options = {:alt => 'avatar', :class => 'avatar', :size => 50}.merge! options
       id = Digest::MD5::hexdigest email.strip.downcase
       url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s
       options.delete :size
@@ -17,7 +17,16 @@ module ApplicationHelper
     if user.avatar.present?
       image_tag user.avatar.thumb.url, options
     else
-      gravatar_for user
+      gravatar_for user, options
+    end
+  end
+
+  def sticker_for user, options = {}
+    content_tag :div, :style => 'width:250px; height: 50px; clear:both; margin: 5px; padding: 5px; border: 1px solid lightgrey; background-color: #EBEBEB;' do
+      avatar_for(user, :class => 'pull-left', style: 'padding-right: 5px;') +
+      link_to(user.name, user) +
+      content_tag(:br) +
+      user.company.name if user.company
     end
   end
   
