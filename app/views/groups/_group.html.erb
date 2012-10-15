@@ -1,0 +1,67 @@
+<% if params[:action] == 'show'%>
+
+  <div>
+    <article id="group-<%= group.id %>">
+      <p id="notice"><%= notice %></p>
+
+      <p>
+        <b>Name:</b>
+        <%= @group.name %>
+      </p>
+
+      People
+      <ul>
+        <% @group.memberships.each do |membership| %>
+        <li>
+          <%= sticker_for membership.person %>
+        </li>
+        <% end %>
+      </ul>
+
+      <%= link_to 'Edit', edit_group_path(@group) %> |
+      <%= link_to 'Back', groups_path %>
+    </article>
+  </div>
+
+  <% content_for :aside do %>
+    <div class="well">
+      <ul class="nav nav-list">
+        <% if @category.length > 0 %>
+          <li class="nav-header"><%= 'Working Group Pages' %></li>
+          <% @category.each do |p| %>
+            <li><%= link_to p.title.html_safe, page_path(p) %></li>
+          <% end %>
+        <% end %>
+        
+        <% if @articles.length > 0 %>
+          <li class="nav-header"> Working Group Articles </li>
+          <% @articles.each do |a| %>
+            <li><%= link_to a.title.html_safe, page_path(a) %></li>
+          <% end %>
+        <% end %>
+        
+        <% if @messages.length > 0 %>
+          <li class="nav-header"> Working Group Discussions </li>
+          <% @messages.each do |m| %>
+            <li><%= link_to m.subject.html_safe, messages_path(m) %></li>
+          <% end %>
+        <% end %>  
+      </ul>
+    </div>
+
+
+    <% if @smart_list  %>
+      <div class="well">
+        <ul class="nav nav-list"> 
+          <% @smart_list.each do |list| %>
+            <li class="nav-header"><%= list.name if list.name.present? %></li>
+            <% list.people.each do |person| %>
+              <li style="font-weight: lighter; padding-bottom: 10px;"><%= person.name if person.name.present? %><br>
+              <span style="font-weight: normal;"><%= person.company.name if person.company.present? %></span></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

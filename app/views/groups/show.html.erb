@@ -1,18 +1,29 @@
-<p id="notice"><%= notice %></p>
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	    <%= link_to group_path(@group), method: 'delete', :confirm => "Are you sure?" do %>
+	    	<i class="icon-trash"></i><br><p>Delete <br>group</p>
+	    <% end %>
+	  </li>
+		<li><%= link_to "#modal-share_link", 'data-toggle' => "modal" do %><i class="icon-link"></i><br /><p>Share <br>group</p><% end %></li>
+		<li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %><i class="icon-cog"></i><br /><p>group <br>Settings</p><% end %></li>
+	</ul>
+<% end %>
 
-<p>
-  <b>Name:</b>
-  <%= @group.name %>
-</p>
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-settings">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>group Settings</h3>
+    </div>
+    <div class="modal-body center">
+			<table cellpadding="10">
+			</table>
+    </div>
+    <div class="modal-footer">
+       <%= button_to 'Back to group', @group %>
+    </div>
+  </div>
+<% end %>
 
-People
-<ul>
-  <% @group.memberships.each do |membership| %>
-  <li>
-    <%= sticker_for membership.person %>
-  </li>
-  <% end %>
-</ul>
-
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%= render @group %>

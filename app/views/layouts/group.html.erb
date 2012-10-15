@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% if params[:action] == 'show' && @group.name.present? %>
+    <title>CCRO - <%= @group.name.html_safe %></title>
+  <% end %>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "style", :media => "all" %>
+  <%= stylesheet_link_tag "group", :media => "all" %>
+  <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= auto_discovery_link_tag(:rss, "http://ccro.dev/posts.rss") %>
+  <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
+</head>
+<body id="web_group">
+
+  <%= render 'shared/nav' %>
+
+<!--Body content (BEGIN)-->
+<%= render 'shared/browser_warning' %>
+  <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
+    <div id='fatty_basket' class="container">
+      <div id='fatty_nav'class="row">
+        <% unless current_user %>
+          <div id="login_tools" class="span5">  
+            <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
+              <%= hidden_field_tag :remember_me, '1' %>
+              <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+              <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+              <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+            <% end %>
+          </div>
+          <div id="login-subtext" class="pull-right">
+              <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %>
+           </div> 
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  
+  
+  <div class="container">
+    <div class="row">
+      <% unless params[:controller] == 'signups' %>
+        <section>
+          <%= yield :groups_header_image %>
+        </section>
+      <% end %>
+    </div>
+
+    <div class="row group">
+      <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
+               style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
+        <%= yield %>
+      </section>
+
+      <% unless params[:controller] == 'signups' %>  
+        <aside class="pull-right" style="width: 22%">
+
+          <% if params[:action] == 'index' %>
+            
+          <% end %>
+
+          <% if params[:action] == 'show'%>
+            <%= yield :aside %>
+          <% end %>
+          
+        </aside>
+      <% end %>
+    </div> 
+
+    <footer>
+      <%= render 'shared/footer' %>
+    </footer>
+  </div>
+
+<!--Body content (END)-->
+<%= render :partial => 'shared/ga' if Rails.env.production? %>
+</body>
+</html>

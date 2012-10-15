@@ -1,6 +1,9 @@
 class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
+
+  layout 'group'
+
   def index
     @groups = Group.all
 
@@ -14,6 +17,12 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
+
+    @category = @group.pages
+    @articles = @group.posts
+    @messages = @group.messages
+    @smart_list = @group.people
+
 
     respond_to do |format|
       format.html # show.html.erb

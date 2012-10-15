@@ -27,7 +27,7 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}  
       can :read, [Post, Page, Document], {level: 'committee', :published => true}  
-      can :read, [Document, Comment, Message, Survey, Page]
+      can :read, [Document, Comment, Message, Survey, Page, Group]
       can :read, [Post, Page, Document], :published => true
       can :read, Company, :id => user.company_id
       
