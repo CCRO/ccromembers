@@ -24,6 +24,16 @@
   </div>
 
   <% content_for :aside do %>
+    <% if current_user.level == 'admin' %>
+      <div class="well">
+        <ul class="nav nav-list">
+          <li><%= link_to 'New Page For this Group', new_group_page_path(@group) %></li>
+          <li><%= link_to 'New Article For this Group', new_group_post_path(@group) %></li>
+          <li><%= link_to 'New Discussion For this Group', new_group_message_path(@group) %></li>
+        </ul>
+      </div>
+    <% end %>
+
     <% if @category.length > 0 || @articles.length > 0 || @messages.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
