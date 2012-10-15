@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(:version => 20121011192758) do
     t.string   "mobile_phone"
     t.string   "last_browser"
     t.string   "last_platform"
+    t.text     "browser_info"
   end
 
   create_table "people_smart_lists", :id => false, :force => true do |t|
