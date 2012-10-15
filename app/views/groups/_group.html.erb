@@ -24,33 +24,35 @@
   </div>
 
   <% content_for :aside do %>
-    <div class="well">
-      <ul class="nav nav-list">
-        <% if @category.length > 0 %>
-          <li class="nav-header"><%= 'Working Group Pages' %></li>
-          <% @category.each do |p| %>
-            <li><%= link_to p.title.html_safe, page_path(p) %></li>
+    <% if @category.length > 0 || @articles.length > 0 || @messages.length > 0 %>
+      <div class="well">
+        <ul class="nav nav-list">
+          <% if @category.length > 0 %>
+            <li class="nav-header"><%= 'Working Group Pages' %></li>
+            <% @category.each do |p| %>
+              <li><%= link_to p.title.html_safe, page_path(p) %></li>
+            <% end %>
           <% end %>
-        <% end %>
-        
-        <% if @articles.length > 0 %>
-          <li class="nav-header"> Working Group Articles </li>
-          <% @articles.each do |a| %>
-            <li><%= link_to a.title.html_safe, page_path(a) %></li>
+          
+          <% if @articles.length > 0 %>
+            <li class="nav-header"> Working Group Articles </li>
+            <% @articles.each do |a| %>
+              <li><%= link_to a.title.html_safe, page_path(a) %></li>
+            <% end %>
           <% end %>
-        <% end %>
-        
-        <% if @messages.length > 0 %>
-          <li class="nav-header"> Working Group Discussions </li>
-          <% @messages.each do |m| %>
-            <li><%= link_to m.subject.html_safe, messages_path(m) %></li>
-          <% end %>
-        <% end %>  
-      </ul>
-    </div>
+          
+          <% if @messages.length > 0 %>
+            <li class="nav-header"> Working Group Discussions </li>
+            <% @messages.each do |m| %>
+              <li><%= link_to m.subject.html_safe, messages_path(m) %></li>
+            <% end %>
+          <% end %>  
+        </ul>
+      </div>
+    <% end %>
 
 
-    <% if @smart_list %>
+    <% if @smart_list.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
           <li class="nav-header"> Working Group Members </li> 
