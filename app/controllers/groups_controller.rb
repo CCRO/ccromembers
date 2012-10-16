@@ -21,6 +21,7 @@ class GroupsController < ApplicationController
     @category = @group.pages
     @articles = @group.posts
     @messages = @group.messages
+    @group_document = @group.documents
     @smart_list = @group.people
 
 

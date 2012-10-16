@@ -27,8 +27,9 @@
     <% if current_user.level == 'admin' %>
       <div class="well">
         <ul class="nav nav-list">
-          <li><%= link_to 'New Page For this Group', new_group_page_path(@group) %></li>
-          <li><%= link_to 'New Article For this Group', new_group_post_path(@group) %></li>
+          <li><%= link_to 'New Document For this Group', new_group_document_path(@group) %></li>
+          <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page For this Group<% end %></li>
+          <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Article For this Group<% end %></li>
           <li><%= link_to 'New Discussion For this Group', new_group_message_path(@group) %></li>
         </ul>
       </div>
@@ -37,6 +38,13 @@
     <% if @category.length > 0 || @articles.length > 0 || @messages.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
+          <% if @group_document.length > 0 %>
+            <li class="nav-header"><%= 'Working Group Documents' %></li>
+            <% @group_document.each do |d| %>
+              <li><%= link_to d.title.html_safe, document_path(d) %></li>
+            <% end %>
+          <% end %>
+
           <% if @category.length > 0 %>
             <li class="nav-header"><%= 'Working Group Pages' %></li>
             <% @category.each do |p| %>

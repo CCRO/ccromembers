@@ -5,7 +5,6 @@
 	    	<i class="icon-trash"></i><br><p>Delete <br>group</p>
 	    <% end %>
 	  </li>
-		<li><%= link_to "#modal-share_link", 'data-toggle' => "modal" do %><i class="icon-link"></i><br /><p>Share <br>group</p><% end %></li>
 		<li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %><i class="icon-cog"></i><br /><p>group <br>Settings</p><% end %></li>
 	</ul>
 <% end %>
@@ -24,6 +23,43 @@
        <%= button_to 'Back to group', @group %>
     </div>
   </div>
+
+  <div class="modal hide fade" id="modal-new-page">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Page for Group</h3>
+    </div>
+    <div class="modal-body center">
+		<%= form_for Page.new do |f| %>
+	      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New group page name" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	      <%= f.hidden_field :owner_type, value: 'Group' %>
+	      <%= f.hidden_field :owner_id, value: @group.id %>
+	      <%= f.submit "Create new page", :class => "btn btn-primary" %>
+	    <% end %>
+    </div>
+    <div class="modal-footer">
+       <%= button_to 'Back to group', @group %>
+    </div>
+  </div>
+
+  <div class="modal hide fade" id="modal-new-post">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Article for Group</h3>
+    </div>
+    <div class="modal-body center">
+		<%= form_for Post.new do |f| %>
+	      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New group article name" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	      <%= f.hidden_field :owner_type, value: 'Group' %>
+	      <%= f.hidden_field :owner_id, value: @group.id %>
+			  <%= f.submit "Create new Article", :class => "btn btn-primary" %>  
+	    <% end %>
+    </div>
+    <div class="modal-footer">
+       <%= button_to 'Back to group', @group %>
+    </div>
+  </div>
+
 <% end %>
 
 <%= render @group %>
