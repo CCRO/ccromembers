@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
 
-    @category = @group.pages
+    @pages = @group.pages
     @articles = @group.posts
     @messages = @group.messages
     @group_document = @group.documents

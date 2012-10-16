@@ -35,20 +35,20 @@
       </div>
     <% end %>
 
-    <% if @category.length > 0 || @articles.length > 0 || @messages.length > 0 %>
+    <% if @pages.length > 0 || @articles.length > 0 || @messages.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
+
+          <% if @pages.length > 0 %>
+            <% @pages.each do |p| %>
+              <li><%= link_to p.title.html_safe, page_path(p) %></li>
+            <% end %>
+          <% end %>
+
           <% if @group_document.length > 0 %>
             <li class="nav-header"><%= 'Working Group Documents' %></li>
             <% @group_document.each do |d| %>
               <li><%= link_to d.title.html_safe, document_path(d) %></li>
-            <% end %>
-          <% end %>
-
-          <% if @category.length > 0 %>
-            <li class="nav-header"><%= 'Working Group Pages' %></li>
-            <% @category.each do |p| %>
-              <li><%= link_to p.title.html_safe, page_path(p) %></li>
             <% end %>
           <% end %>
           

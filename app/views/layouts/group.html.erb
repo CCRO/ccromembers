@@ -2,7 +2,7 @@
 <html>
 <head>
   <% if params[:action] == 'show' && @group.name.present? %>
-    <title>CCRO - <%= @group.name.html_safe %></title>
+    <title>CCRO - Group - <%= @group.name.html_safe %></title>
   <% end %>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
@@ -58,7 +58,7 @@
       </section>
 
       <% unless params[:controller] == 'signups' %>  
-        <aside class="pull-right" style="width: 22%">
+        <aside class="pull-right span3">
 
           <% if params[:action] == 'index' %>
             
