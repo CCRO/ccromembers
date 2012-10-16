@@ -24,7 +24,7 @@
   </div>
 
   <% content_for :aside do %>
-    <% if current_user.level == 'admin' %>
+    <% if current_user && current_user.level == 'admin' %>
       <div class="well">
         <ul class="nav nav-list">
           <li><%= link_to 'New Document For this Group', new_group_document_path(@group) %></li>
