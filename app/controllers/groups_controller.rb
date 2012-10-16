@@ -7,6 +7,8 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
 
+    authorize! :create, @group
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @groups }
@@ -23,6 +25,8 @@ class GroupsController < ApplicationController
     @messages = @group.messages
     @group_document = @group.documents
     @smart_list = @group.people
+
+    authorize! :read, @group
 
 
     respond_to do |format|
