@@ -15,7 +15,7 @@
 */
 
 @media print {
-  aside, header .pull-right, #about_author, footer {
+  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav {
     display: none !important;
   }
   
