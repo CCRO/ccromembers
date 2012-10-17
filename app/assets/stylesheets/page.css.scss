@@ -14,13 +14,17 @@
 */
 
 @media print {
-  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav {
+  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug {
     display: none !important;
   }
   
   body {
     margin: 0;
     padding: 0;
+  }
+
+  div.container {
+    margin-top: -20px;
   }
   
   div.page .btn-toolbar {
