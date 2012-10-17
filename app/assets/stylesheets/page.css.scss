@@ -438,7 +438,11 @@
     background: #098A03;
   }
 
-  .page img, .page .callout {
+  .page img {
+    margin: 10px;
+  }
+
+  .page img.callout, .page .callout {
     border: 1px solid lightGrey;
     background-color: white;
     padding: 10px;

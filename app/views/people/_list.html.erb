@@ -6,23 +6,23 @@
   <thead>
   <tr>
     <th>Name <%= link_to(people_path(:sort => 'name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-    <th>Role <%= link_to(people_path(:sort => 'role')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Level <%= link_to(people_path(:sort => 'level')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Company <%= link_to(people_path(:sort => 'company')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Email <%= link_to(people_path(:sort => 'email')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Mobile <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <th>Browser <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th></th>
   </tr>
   </thead>
   <tbody>
   <% @people.each do |person| %>
     <tr>
-      <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %></td>
-      <td><%= person.role if person.role %></td>
+      <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %><%= content_tag(:span, person.role, :class => "label label-important pull-right") if person.role %></td>
       <td><%= person.level if person.level %></td>
       <td><%= link_to person.company.name, person.company if person.company %></td>
       <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
       <td><%= status_icon(person.mobile_phone.present?) %> <%= number_to_phone(person.mobile_phone) || raw("<span class=\"badge badge-inverse\">PIN: #{person.pin_code}</span>") %> <%= link_to('send instructions', send_mobile_activation_person_path(person)) unless person.mobile_phone.present? %></td>
+      <td><%= last_browser_info_for_person(person)  %></td>
       <td>
         <div class="btn-group">
           <%= button_to 'Edit', edit_person_path(person) %>
