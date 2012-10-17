@@ -15,7 +15,7 @@
 */
 
 @media print {
-  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug, .post-footer {
+  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug, .post-footer, #post_comments {
     display: none !important;
   }
   
