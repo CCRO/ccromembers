@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   
-  layout 'blog'
-  
+  before_filter :lookup_group
+
+  layout :conditional_layout
+
   def index
     if params[:filter] 
       if params[:filter] == 'drafts'
@@ -47,6 +49,7 @@ class PostsController < ApplicationController
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
+
     if params['token']
       @post = Post.find_by_viewing_token(params[:token])
     else 
@@ -56,6 +59,14 @@ class PostsController < ApplicationController
       @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post
+    end
+
+    if @group
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
     end
 
     if params[:page]
@@ -105,7 +116,7 @@ class PostsController < ApplicationController
     authorize! :create, @post
     
     if @post.save
-      redirect_to post_path(@post)
+      redirect_to polymorphic_path([@group, @post])
     else
       flash[:notice] = "Please give your new draft a title."
       redirect_to draft_posts_path
@@ -129,7 +140,7 @@ class PostsController < ApplicationController
       post.lock(current_user)
       post.save
     end
-    redirect_to "/editor" + post_path(post)
+    redirect_to "/editor" + polymorphic_path([@group, post])
   end
 
   def update
@@ -147,7 +158,7 @@ class PostsController < ApplicationController
       render text: ""
     else
       post.update_attributes(params[:post])
-      redirect_to post_path(post)
+      redirect_to polymorphic_path([post.owner, post])
     end
 
   end
@@ -204,10 +215,23 @@ class PostsController < ApplicationController
     authorize! :destroy, @post
     
     if @post.destroy
-      redirect_to root_path
+      if @group
+        redirect_to @group
+      else
+        redirect_to root_path
+      end
+
     else
       redirect_to post_path(@post)
     end
+  end
+
+  def lookup_group
+    @group = Group.find(params[:group_id]) if params[:group_id]
+  end
+
+  def conditional_layout
+    (@group) ? 'group' : 'blog' 
   end
 
   def doc_raptor_send(options = { })

@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
 
-	layout 'page'
+  before_filter :lookup_group
+
+  layout :conditional_layout
   
   def index
     if params[:filter] 
@@ -49,14 +51,6 @@ class PagesController < ApplicationController
   end
   
   def show
-    @editors = []
-    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
-    @editors += Person.where(role: nil)
-
-    if params[:page]
-      @page = Page.find(params[:page])
-    end
-    
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 
@@ -76,9 +70,25 @@ class PagesController < ApplicationController
       authorize! :read, @page
     end
 
-    respond_to do |format|
-      format.html
-      format.pdf { doc_raptor_send }
+    @editors = []
+    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
+    @editors += Person.where(role: nil)
+
+    if @group
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+
+    if @page.owner_type == 'Group' && !@group
+      redirect_to polymorphic_path([@page.owner, @page])
+    else
+      respond_to do |format|
+        format.html
+        format.pdf { doc_raptor_send }
+      end
     end
   end
 
@@ -92,16 +102,14 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.new
-    if params[:group_id]
-      @owner = Group.find(params[:group_id])
-    end
+    @owner = @group if @group
   end
   
   def create
     @page = Page.new(params[:page])
     
     @page.body = "Here is the start of a new page!"
-    @page.owner = Group.find(params[:group_id]) if params[:group_id]
+    @page.owner = @group if @group
     @page.author = current_user
     @page.published = false
     @page.level ||= 'public'
@@ -110,7 +118,7 @@ class PagesController < ApplicationController
     authorize! :create, @page
     
     if @page.save
-      redirect_to page_path(@page)
+      redirect_to polymorphic_path([@group, @page])
     else
       flash[:notice] = "Please give your new draft a title."
       redirect_to draft_pages_path
@@ -146,7 +154,7 @@ class PagesController < ApplicationController
       page.title = params[:content][:page_title][:value]
       page.title = "Untitled" if page.title == "<br>" || page.title.blank?
       page.body = params[:content][:page_body][:value]
-      page.header_picture = params[:content][:pages_header_image][:value]
+      page.header_picture = params[:content][:pages_header_image][:value] if params[:content][:pages_header_image]
       page.author ||= current_user
       page.unlock
       page.save! 
@@ -210,10 +218,22 @@ class PagesController < ApplicationController
     authorize! :destroy, @page
     
     if @page.destroy
-      redirect_to draft_pages_path
+      if @group
+        redirect_to @group
+      else
+        redirect_to draft_pages_path
+      end
     else
       redirect_to page_path(@page)
     end
+  end
+
+  def lookup_group
+    @group = Group.find(params[:group_id]) if params[:group_id]
+  end
+
+  def conditional_layout
+    (@group) ? 'group' : 'page' 
   end
 
   def doc_raptor_send(options = { })

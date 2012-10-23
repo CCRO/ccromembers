@@ -1,7 +1,7 @@
 <% content_for :adminbar do %>
 	<ul>
 		<li>
-	      <%= link_to edit_page_path(@page), id: "edit_link", data: {save_url: mercury_update_page_path(@page)} do %>
+	      <%= link_to edit_page_path(@page), id: "edit_link", data: {save_url: polymorphic_path([@group, @page]) + "/mercury_update"} do %>
 	      <i class="icon-edit"></i><br><p>Edit page</p>
 	      <% end %>
 	    </li>
@@ -11,7 +11,7 @@
 	      <% end %>
 	    </li>
 		<li>
-	      <%= link_to page_path(@page), method: 'delete', :confirm => "Are you sure?" do %>
+	      <%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %>
 	      <i class="icon-trash"></i><br><p>Delete <br>page</p>
 	      <% end %>
 	    </li>

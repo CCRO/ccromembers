@@ -47,8 +47,12 @@ Ccromembers::Application.routes.draw do
   resources :tags
 
   resources :groups do
-    resources :pages
-    resources :posts
+    resources :pages do
+      member { post :mercury_update }
+    end
+    resources :posts do
+      member { post :mercury_update }
+    end
     resources :messages
     resources :documents
   end

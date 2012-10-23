@@ -8,7 +8,7 @@ module ApplicationHelper
       email = user.email
       options = {:alt => 'avatar', :class => 'avatar', :size => 50}.merge! options
       id = Digest::MD5::hexdigest email.strip.downcase
-      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s
+      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s + '&d=mm'
       options.delete :size
       image_tag url, options
   end
@@ -26,7 +26,7 @@ module ApplicationHelper
       avatar_for(user, :class => 'pull-left', style: 'padding-right: 5px;') +
       link_to(user.name, user) +
       tag("br", nil, true) + 
-      user.company.name if user.company
+      (user.company.name if user.company)
     end
   end
   

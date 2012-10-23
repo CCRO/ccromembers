@@ -82,6 +82,7 @@
   </article>
 </div>
 
+
 <% content_for :aside do %>
   <% if @tag && (@category.length > 1 && page.pages_enabled == true || @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true) %>
     <div class="well">
@@ -170,5 +171,5 @@
         </ul>
       </div>
     <% end %>
-  <% end %> 
+  <% end %>
 <% end %>
