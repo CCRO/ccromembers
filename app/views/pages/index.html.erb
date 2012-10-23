@@ -54,7 +54,19 @@
 					<% end %>
 						<strong><%= link_to (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None", page_path(page) %></strong>
 					</th>
-					<th><%= link_to page.owner.try(:name), page_path(page) if page.owner %></th>
+					<% if page.owner %> 
+						<th>
+							<%= form_for page, { :remote => true } do |f| %>
+	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name", page.owner.id), :include_blank => true, :class => 'submittable') %>
+	    				<% end %>
+	    			</th>
+					<% else %>
+						<th>
+							<%= form_for page, { :remote => true } do |f| %>
+	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name"), :include_blank => true, :class => 'submittable') %>
+	    				<% end %>
+	    			</th>
+    			<% end %>
 					<th><%= link_to page.title.html_safe, page_path(page)  %></th>
 					<th><strong><%= time_ago_in_words page.updated_at %> ago</strong></th>
 				</tr>

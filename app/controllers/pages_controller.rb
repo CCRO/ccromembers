@@ -26,6 +26,8 @@ class PagesController < ApplicationController
       end
     end
 
+    @groups = Group.all
+
     if params[:tag_name]
       @pages = Page.where(published: true).tagged_with(params[:tag_name])
     end
@@ -160,6 +162,14 @@ class PagesController < ApplicationController
       page.save! 
       render text: ""
     else
+      if params[:owner]
+        if params[:owner] == ""
+          page.owner = nil
+        else
+          page.owner = Group.find(params[:owner])
+        end
+        page.save
+      end
       page.update_attributes(params[:page])
       redirect_to page_path(page)
     end
