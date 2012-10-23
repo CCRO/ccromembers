@@ -21,8 +21,8 @@ layout 'twiml'
   end
 
   def voice
-    if Group.find_by_conf_phone(params['To'])
-      conf_room = Group.find_by_conf_phone(params['To']).name.parameterize
+    if Group.find_by_conf_phone(params['Called'])
+      conf_room = Group.find_by_conf_phone(params['Called']).name.parameterize
     else
       conf_room = "ccro-conference-room"
     end
