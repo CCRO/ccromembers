@@ -27,6 +27,7 @@
 <table class="table table-bordered table-striped">
   <tr>
     <th>Name</th>
+    <th>Conference line</th>
     <th></th>
     <th></th>
   </tr>
@@ -34,6 +35,7 @@
 <% @groups.each do |group| %>
   <tr>
     <td><%= link_to group.name, group %></td>
+    <td><%= group.conf_phone %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
