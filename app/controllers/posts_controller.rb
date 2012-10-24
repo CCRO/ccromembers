@@ -31,7 +31,10 @@ class PostsController < ApplicationController
     if params[:page]
       @page = Page.find(params[:page])
     end
-    
+
+    if @group
+      @posts = @group.posts  
+    end
     
     respond_to do |format|
       format.html
@@ -59,14 +62,6 @@ class PostsController < ApplicationController
       @category = Post.tagged_with(@tag)
       @commentable = @post
       authorize! :read, @post
-    end
-
-    if @group
-      @pages = @group.pages
-      @articles = @group.posts
-      @messages = @group.messages
-      @group_document = @group.documents
-      @smart_list = @group.people
     end
 
     if params[:page]
@@ -227,7 +222,14 @@ class PostsController < ApplicationController
   end
 
   def lookup_group
-    @group = Group.find(params[:group_id]) if params[:group_id]
+     if params[:group_id]
+      @group = Group.find(params[:group_id])
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
   end
 
   def conditional_layout

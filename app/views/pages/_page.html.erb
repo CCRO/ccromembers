@@ -161,7 +161,7 @@
      <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
       <div class="well">
         <ul class="nav nav-list">
-          <li class="nav-header"> Working Group Members </li> 
+          <li class="nav-header"> Related people </li> 
           <% @smart_list.each do |person| %>
             <%= sticker_for person %>
           <% end %>
