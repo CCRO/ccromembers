@@ -31,7 +31,11 @@
         <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
           <div id="post_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
         <% else %>
+          <% if @group %>
+          <%= link_to post.title.html_safe, polymorphic_path([@group, post]) %>
+          <% else %>
           <%= link_to post.title.html_safe, post_path(post)  %>
+          <% end %>
         <% end %>
         <div class="post_date"><%= short_date(post) %></div>
       </h1>

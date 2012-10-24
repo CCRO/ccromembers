@@ -22,6 +22,7 @@ class PostsController < ApplicationController
         @posts = Post.where(published: true).tagged_with("summit")
       end
     end
+
     if params[:tag_name]
       @posts = Post.where(published: true).tagged_with(params[:tag_name])
     end
@@ -33,7 +34,8 @@ class PostsController < ApplicationController
     end
 
     if @group
-      @posts = @group.posts  
+      @posts = @group.posts.order('updated_at DESC')
+      authorize! :read, @group 
     end
     
     respond_to do |format|

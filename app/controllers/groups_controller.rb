@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
 
-    authorize! :read, Group
+    authorize! :read, @group
 
     respond_to do |format|
       format.html # index.html.erb
