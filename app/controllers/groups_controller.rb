@@ -26,9 +26,7 @@ class GroupsController < ApplicationController
     @group_document = @group.documents
     @smart_list = @group.people
 
-    unless @smart_list.include?(current_user)
-      authorize! :read, @group
-    end
+    authorize! :read, @group
 
 
     respond_to do |format|
