@@ -40,7 +40,11 @@
         <div class="post_date"><%= short_date(post) %></div>
       </h1>
       
+      <% if post.owner_type == 'Group'%>
+      <h3 id="post_author">From The '<%= post.owner.try(:name) %>' Working Group</h3>
+      <% else %>
       <h3 id="post_author">by <%= post.author.try(:name) %></h3>
+      <% end %>
       
       <% if params[:filter] == 'drafts' %>
           <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>

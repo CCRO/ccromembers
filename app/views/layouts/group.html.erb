@@ -132,26 +132,28 @@
       <%= render 'shared/footer' %>
     </footer>
 
-    <div>
-      <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
-        <% if current_user.role == 'admin' %>
-        <div class="navbar navbar-fixed-bottom" style="margin-bottom: 92px; width: 100%; background-color: black;">
-          <% else %>
-          <div class="navbar navbar-fixed-bottom" style="background-color: black;">
-          <% end %>
-          <ul class="nav">
-            <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
-            <li class="divider-vertical"></li>
-            <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
-            <li class="divider-vertical"></li>
-            <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
-            <li class="divider-vertical"></li>
-            <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
-            <li class="divider-vertical"></li>
-          </ul>
-        </div>
-      <% end %>  
-    </div>
+    <% if params[:action] == 'show' %>
+      <div>
+        <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
+          <% if current_user.role == 'admin' %>
+          <div class="navbar navbar-fixed-bottom" style="margin-bottom: 92px; width: 100%; background-color: black;">
+            <% else %>
+            <div class="navbar navbar-fixed-bottom" style="background-color: black;">
+            <% end %>
+            <ul class="nav">
+              <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
+              <li class="divider-vertical"></li>
+              <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
+              <li class="divider-vertical"></li>
+              <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
+              <li class="divider-vertical"></li>
+              <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
+              <li class="divider-vertical"></li>
+            </ul>
+          </div>
+        <% end %>  
+      </div>
+    <% end %>
 
   </div>
 
