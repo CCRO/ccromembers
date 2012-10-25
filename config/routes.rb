@@ -1,6 +1,9 @@
 Ccromembers::Application.routes.draw do
   
+  get "doc_viewer/upload"
   
+  get "doc_viewer/view"
+
   resources :smart_lists do
     member do 
       get :duplicate
