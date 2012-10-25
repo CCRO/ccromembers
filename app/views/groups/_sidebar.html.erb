@@ -1,14 +1,3 @@
-    <% if current_user && current_user.level == 'admin' %>
-      <div class="well">
-        <ul class="nav nav-list">
-          <li><%= link_to 'New document For this group', new_group_document_path(@group) %></li>
-          <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New page for this group<% end %></li>
-          <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>Create a news item or update for this group<% end %></li>
-          <li><%= link_to 'New discussion For this group', new_group_message_path(@group) %></li>
-        </ul>
-      </div>
-    <% end %>
-
     <% if @pages && @pages.length > 0 || @articles && @articles.length > 0 || @messages && @messages.length > 0 || @group_document && @group_document.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
