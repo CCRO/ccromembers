@@ -116,7 +116,7 @@
       <% unless params[:controller] == 'signups' %>  
         <aside class="pull-right span3">
 
-          <% if params[:action] == 'index' && params[:controller] == 'posts'%>
+          <% if params[:action] == 'index' && params[:controller] == 'posts' || params[:action] == 'new' || 'edit' && params[:controller] == 'messages' %>
             <%= render :partial => 'groups/sidebar' %>
           <% end %>
 
@@ -140,7 +140,8 @@
             <% else %>
             <div class="navbar navbar-fixed-bottom" style="background-color: black;">
             <% end %>
-            <ul class="nav">
+            <ul class="nav pull-right">
+              <li class="divider-vertical"></li>
               <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
               <li class="divider-vertical"></li>
               <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
@@ -148,7 +149,6 @@
               <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
               <li class="divider-vertical"></li>
               <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
-              <li class="divider-vertical"></li>
             </ul>
           </div>
         <% end %>  

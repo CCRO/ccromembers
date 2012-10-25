@@ -2,6 +2,10 @@ class MessagesController < ApplicationController
 
   before_filter :require_user
 
+  before_filter :lookup_group
+
+  layout :conditional_layout
+
   # GET /messages
   # GET /messages.json
   def index
@@ -125,10 +129,40 @@ class MessagesController < ApplicationController
 
     authorize! :destory, @message
     
-    respond_to do |format|
-      format.html { redirect_to messages_url }
-      format.json { head :no_content }
+    if @group
+      redirect_to @group
+    else
+      respond_to do |format|
+        format.html { redirect_to messages_url }
+        format.json { head :no_content }
+      end
     end
+  end
+
+  def lookup_group
+    if params[:id]
+    @message = Message.find(params[:id])
+
+    if @message.owner && @message.owner_type == 'Group'
+      @group = @message.owner 
+    end
+  end
+
+    if params[:group_id] 
+      @group = Group.find(params[:group_id])
+    end
+
+    if @group
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+  end
+
+  def conditional_layout
+    (@group) ? 'group' : 'application' 
   end
 
   def archive

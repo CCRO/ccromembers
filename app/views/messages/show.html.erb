@@ -1,7 +1,7 @@
 <% content_for :adminbar do %>
 	<ul>
 		<li>
-	      <%= link_to edit_message_path(@message)  do %>
+	      <%= link_to edit_group_message_path(@group, @message)  do %>
 	      <i class="icon-edit"></i><br><p>Edit <br>message</p>
 	      <% end %>
 	    </li>
@@ -17,7 +17,7 @@
 		<% end %>
 	    </li>
 		<li>
-	      <%= link_to message_path(@message), method: 'delete', :confirm => "Are you sure?" do %>
+	      <%= link_to polymorphic_path([@group, @message]), method: 'delete', :confirm => "Are you sure?" do %>
 	      	<i class="icon-trash"></i><br><p>Delete <br>message</p>
 	      <% end %>
 	    </li>
@@ -52,7 +52,9 @@
   		<li class=""><%= link_to raw("&larr; Related Discussions"), tagged_messages_path(@tag, page: @page.id) %></li>
   		<li class=""><%= link_to raw("&larr; Back to #{@page.title}"), page_path(@page) %></li>
   	<% else %>
-    	<li class="previous"><%= link_to raw("&larr; Back to Discussions"), messages_url %></li>
+  		<% unless @group %>
+    		<li class="previous"><%= link_to raw("&larr; Back to Discussions"), messages_url %></li>
+    	<% end %>
     <% end %>
 </ul>
 
