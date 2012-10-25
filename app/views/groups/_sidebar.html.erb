@@ -1,10 +1,10 @@
     <% if current_user && current_user.level == 'admin' %>
       <div class="well">
         <ul class="nav nav-list">
-          <li><%= link_to 'New Document For this Group', new_group_document_path(@group) %></li>
-          <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page For this Group<% end %></li>
-          <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Article For this Group<% end %></li>
-          <li><%= link_to 'New Discussion For this Group', new_group_message_path(@group) %></li>
+          <li><%= link_to 'New document For this group', new_group_document_path(@group) %></li>
+          <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New page for this group<% end %></li>
+          <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>Create a news item or update for this group<% end %></li>
+          <li><%= link_to 'New discussion For this group', new_group_message_path(@group) %></li>
         </ul>
       </div>
     <% end %>
@@ -16,7 +16,13 @@
           <% if @pages && @pages.length > 0 %>
             <li class="nav-header"><%= 'Working Group Pages' %></li>
             <% @pages.each do |p| %>
-              <li><%= link_to p.title.html_safe, group_page_path(@group, p) %></li>
+              
+                  <% if @page && p.title == @page.title %>
+                    <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, p) do %><%= p.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+                  <% else %>
+                    <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
+                  <% end %>
+              </li>
             <% end %>
           <% end %>
 
