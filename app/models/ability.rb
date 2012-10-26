@@ -11,10 +11,15 @@ class Ability
     can :read, Group do |group|
         group.people.include? user
     end
-    can :manage, [Post, Document, Message, Page] do |object|
+
+    can [:edit, :destroy], [Post, Document, Message, Page] do |object|
       object.owner_type == "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
     
+    can [:create_in], Group do |group|
+      (group.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || group.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
+    end
+
     if user.basic?
       can :read, [PollingSession, Poll]
       can :read, Survey if user.id
