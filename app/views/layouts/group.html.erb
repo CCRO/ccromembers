@@ -138,7 +138,7 @@
             <% else %>
             <div class="navbar navbar-fixed-bottom" style="background-color: black;">
             <% end %>
-            <% if can? :manage, Post && @post %>
+            <% if(can? :manage, Post) && @post %>
               <ul class="nav pull-left">
                 <li><%= link_to edit_polymorphic_path([@group, @post]), id: "edit_link", data: {save_url: polymorphic_path([@group, @post]) + '/mercury_update'} do %>Edit Post<% end %></li>
                 <li class="divider-vertical"></li>
@@ -148,9 +148,9 @@
                 <li class="divider-vertical"></li>
               </ul>
             <% end %>
-            <% if can? :manage, Message && @message %>
+            <% if can?(:manage, Message) && @message %>
                 <ul class="nav pull-left">
-                  <li><%= link_to edit_group_message_path(@group, @message)  do %> Edit message <% end %></li>
+                  <li><%= link_to edit_polymorphic_path([@group, @message])  do %> Edit message <% end %></li>
                   <li class="divider-vertical"></li>
                   <li><%= link_to polymorphic_path([@group, @message]), method: 'delete', :confirm => "Are you sure?" do %>Delete message<% end %></li>
                   <li class="divider-vertical"></li>
