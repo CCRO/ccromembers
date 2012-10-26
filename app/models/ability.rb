@@ -12,7 +12,7 @@ class Ability
         group.people.include? user
     end
     can :manage, [Post, Document, Message, Page] do |object|
-      object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user)
+      object.owner_type = "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
     
     if user.basic?
