@@ -37,7 +37,14 @@
           <% if @messages && @messages.length > 0 %>
             <li class="nav-header"> Working Group Discussions </li>
             <% @messages.each do |m| %>
-              <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
+
+              <% if @message && m.subject == @message.subject %>
+                    <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, m) do %><%= m.subject + " " %><i class="icon-arrow-left"></i></li><% end %>
+                  <% else %>
+                    <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
+              <% end %>
+              
+
             <% end %>
           <% end %>  
         </ul>

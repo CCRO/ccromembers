@@ -116,11 +116,9 @@
       <% unless params[:controller] == 'signups' %>  
         <aside class="pull-right span3">
 
-          <% if params[:action] == 'index' && params[:controller] == 'posts' || params[:action] == 'new' || 'edit' && params[:controller] == 'messages' %>
+          <% if (params[:action] == 'index' && params[:controller] == 'posts' ) || ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages') %>
             <%= render :partial => 'groups/sidebar' %>
-          <% end %>
-
-          <% if params[:action] == 'show'%>
+          <% elsif params[:action] == 'show'%>
             <%= render :partial => 'groups/sidebar' %>
           <% end %>
           
@@ -141,14 +139,16 @@
             <div class="navbar navbar-fixed-bottom" style="background-color: black;">
             <% end %>
             <ul class="nav pull-right">
-              <li class="divider-vertical"></li>
-              <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
-              <li class="divider-vertical"></li>
-              <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
-              <li class="divider-vertical"></li>
-              <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
-              <li class="divider-vertical"></li>
-              <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
+              <% if current_user.role == 'admin' %>
+                <li class="divider-vertical"></li>
+                <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
+                <li class="divider-vertical"></li>
+                <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
+              <% end %>
+                <li class="divider-vertical"></li>
+                <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
+                <li class="divider-vertical"></li>
+                <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
             </ul>
           </div>
         <% end %>  
