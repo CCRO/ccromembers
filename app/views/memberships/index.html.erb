@@ -1,22 +1,18 @@
 <table class="table table-bordered table-striped">
-	<thead>
-		<tr>
-			<th style="vertical-align: middle; text-align: center;">Group Member</th>
-			<th style="vertical-align: middle; text-align: center;">Participant</th>
-			<th style="vertical-align: middle; text-align: center;">Coordinator</th>
-			<th style="vertical-align: middle; text-align: center;">Co-Chair</th>
-		</tr>
-	</thead>
 	<tbody>
 <% @memberships.each do |membership| %>
-<tr>
-	<%= form_for [@group, membership], :remote => true do %>
-	<td style="vertical-align: middle; text-align: center;"><%= sticker_for(membership.person) %></td>
-	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', '', !!membership.fuction.blank?, :class => 'submittable' %></td>
-	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', 'coordinator', !!(membership.fuction == 'coordinator'), :class => 'submittable' %></td>
-	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', 'chair', !!(membership.fuction == 'chair'), :class => 'submittable' %></td>
-	<% end %>
-</tr>
+	
+		<tr>
+			<td style="vertical-align: middle; text-align: center;"><%= sticker_for(membership.person) %></td>
+			<td style="vertical-align: middle; text-align: center;">
+				<%= form_for [@group, membership], { :remote => true , :html => {:class => ' form-inline '}} do |f| %>
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, '', :class => 'submittable' %> Participant <% end %> 
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'coordinator', :class => 'submittable' %> Coordinator <% end %> 
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'chair', :class => 'submittable' %> Chair <% end %> 
+				<% end %>
+			</td>
+		</tr>
+	
 <% end %>
 </tbody>
 </table>
