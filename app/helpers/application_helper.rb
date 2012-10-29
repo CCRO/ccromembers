@@ -8,7 +8,7 @@ module ApplicationHelper
       email = user.email
       options = {:alt => 'avatar', :class => 'avatar', :size => 50}.merge! options
       id = Digest::MD5::hexdigest email.strip.downcase
-      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s + '&d=mm'
+      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s + '&d=' + asset_path('avatar_placeholder_large.png')
       options.delete :size
       image_tag url, options
   end
