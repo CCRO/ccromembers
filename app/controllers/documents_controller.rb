@@ -7,12 +7,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    if current_user.admin?
-      @documents = Document.accessible_by(current_ability)
-    else
-      @documents = Document.published.accessible_by(current_ability)
-    end
-    
+    @documents = Document.all.delete_if { |document| cannot? :read, document }
 
     respond_to do |format|
       format.html # index.html.erb

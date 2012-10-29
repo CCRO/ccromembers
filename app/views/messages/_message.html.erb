@@ -14,7 +14,7 @@
 		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...').gsub("&nbsp;", " ") %>
 		<%= raw("<strong>Moderators: </strong>") + message.moderators.map { |m| m.person.name }.to_sentence if message.moderators.count > 0 %>
 	  </td>
-	<td class="span2"><strong><%= message.owner.name %></strong>
+	<td class="span3"><strong><%= message.owner.name %></strong>
 		<% if message.tags.pluck(:name).present? %><br>
           <span class="label label-inverse" style="margin-left: 0px;"> 
           	<%= message.tags.pluck(:name).to_sentence.upcase %>

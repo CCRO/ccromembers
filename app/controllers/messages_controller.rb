@@ -10,16 +10,16 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     if params[:tag_name]
-      @messages = Message.tagged_with(params[:tag_name]).not_archived.accessible_by(current_ability)
+      @messages = Message.tagged_with(params[:tag_name]).not_archived.delete_if { |message| cannot? :read, message }
       @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
-      @archived_messages = Message.tagged_with(params[:tag_name]).archived.accessible_by(current_ability)
+      @archived_messages = Message.tagged_with(params[:tag_name]).archived.delete_if { |message| cannot? :read, message }
       @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
     else
-      @messages = Message.not_archived.accessible_by(current_ability)
+      @messages = Message.not_archived.delete_if { |message| cannot? :read, message }
       @messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
 
-      @archived_messages = Message.archived.accessible_by(current_ability)
+      @archived_messages = Message.archived.delete_if { |message| cannot? :read, message }
       @archived_messages.sort! { |a,b| a.last_activity_time <=> b.last_activity_time }
     end
 

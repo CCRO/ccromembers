@@ -56,6 +56,7 @@ Ccromembers::Application.routes.draw do
     resources :posts do
       member { post :mercury_update }
     end
+    resources :memberships
     resources :messages
     resources :documents
   end

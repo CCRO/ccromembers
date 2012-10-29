@@ -1,0 +1,23 @@
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="vertical-align: middle; text-align: center;">Group Member</th>
+			<th style="vertical-align: middle; text-align: center;">Participant</th>
+			<th style="vertical-align: middle; text-align: center;">Coordinator</th>
+			<th style="vertical-align: middle; text-align: center;">Co-Chair</th>
+		</tr>
+	</thead>
+	<tbody>
+<% @memberships.each do |membership| %>
+<tr>
+	<%= form_for [@group, membership], :remote => true do %>
+	<td style="vertical-align: middle; text-align: center;"><%= sticker_for(membership.person) %></td>
+	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', '', !!membership.fuction.blank?, :class => 'submittable' %></td>
+	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', 'coordinator', !!(membership.fuction == 'coordinator'), :class => 'submittable' %></td>
+	<td style="vertical-align: middle; text-align: center;"><%= radio_button_tag 'membership[fuction]', 'chair', !!(membership.fuction == 'chair'), :class => 'submittable' %></td>
+	<% end %>
+</tr>
+<% end %>
+</tbody>
+</table>
+	

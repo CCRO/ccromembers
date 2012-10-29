@@ -77,13 +77,6 @@ class PagesController < ApplicationController
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
 
-    if @group
-      @pages = @group.pages
-      @articles = @group.posts
-      @messages = @group.messages
-      @group_document = @group.documents
-      @smart_list = @group.people
-    end
 
     if @page.owner_type == 'Group' && !@group
       redirect_to polymorphic_path([@page.owner, @page])
@@ -241,6 +234,15 @@ class PagesController < ApplicationController
 
   def lookup_group
     @group = Group.find(params[:group_id]) if params[:group_id]
+
+    if @group
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+
   end
 
   def conditional_layout

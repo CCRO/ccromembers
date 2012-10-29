@@ -7,7 +7,7 @@ class Ability
     can :read, [Post, Page], {level: 'public', published: true}
     can :create, Person
     can :read, Survey if user.id
-    
+   
     can :read, Group do |group|
         group.people.include? user
     end
