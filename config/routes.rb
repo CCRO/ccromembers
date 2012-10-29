@@ -50,6 +50,10 @@ Ccromembers::Application.routes.draw do
   resources :tags
 
   resources :groups do
+    member do
+      get 'permissions'
+    end
+ 
     resources :pages do
       member { post :mercury_update }
     end

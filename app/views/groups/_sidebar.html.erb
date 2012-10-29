@@ -56,12 +56,27 @@
 
 
     <% if @smart_list && @smart_list.length > 0 %>
+      <% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
+      <% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
       <div class="well">
         <ul class="nav nav-list">
-          <li class="nav-header"> Working Group Members </li> 
-          <% @smart_list.each do |person| %>
-            <%= sticker_for person %>
+          <% if @co_chairs.present? %>
+            <li class="nav-header"> Working Group Co-Chairs </li>
+            <% @co_chairs.each do |person| %>
+              <%= sticker_for person %>
+            <% end %>
+          <% end %>
+
+          <% if @coordinators.present? %>
+            <li class="nav-header"> Working Group Coordinators </li>
+            <% @coordinators.each do |person| %>
+              <%= sticker_for person %>
+            <% end %>
           <% end %>
         </ul>
+        <br>
+        <%= content_tag :div, :style => 'text-align: center;' do %>
+          <%= link_to "See all #{@group.memberships.length} participants.", group_memberships_path(@group) %>
+        <% end %>
       </div>
     <% end %>

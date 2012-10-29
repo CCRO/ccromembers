@@ -57,19 +57,21 @@ class PagesController < ApplicationController
       @page = Page.find_by_viewing_token(params[:token])
     else 
       @page = Page.find(params[:id])
-      @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
-      @all_tags = all_tags
-      if @page.published == true
-        @category = Page.where(published: true).tagged_with(@tag)
-        @articles = Post.where(published: true).tagged_with(@tag)
-      else
-        @category = Page.tagged_with(@tag)
-        @articles = Post.tagged_with(@tag)
+        @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
+        @all_tags = all_tags
+      unless @group
+        if @page.published == true
+          @category = Page.where(published: true).tagged_with(@tag)
+          @articles = Post.where(published: true).tagged_with(@tag)
+        else
+          @category = Page.tagged_with(@tag)
+          @articles = Post.tagged_with(@tag)
+        end
+        @messages = Message.tagged_with(@tag)
+        @smart_list = Array.new
+        @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
+        @commentable = @page
       end
-      @messages = Message.tagged_with(@tag)
-      @smart_list = Array.new
-      @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
-      @commentable = @page
       authorize! :read, @page
     end
 

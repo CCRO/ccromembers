@@ -35,6 +35,20 @@ class GroupsController < ApplicationController
     end
   end
 
+  def permissions
+    @group = Group.find(params[:id])
+    @memberships = @group.memberships
+
+    @pages = @group.pages
+    @articles = @group.posts
+    @messages = @group.messages
+    @group_document = @group.documents
+    @smart_list = @group.people
+
+    authorize! :manage, @group
+
+  end
+
   # GET /groups/new
   # GET /groups/new.json
   def new

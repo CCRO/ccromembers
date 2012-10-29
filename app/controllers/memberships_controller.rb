@@ -5,7 +5,11 @@ class MembershipsController < ApplicationController
   layout 'group'
 
   def index
-    @memberships = @group.memberships
+    @people = @group.people
+    @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person }
+    @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person }
+
+    @participants = @people - @co_chairs - @coordinators
   end
 
   def create

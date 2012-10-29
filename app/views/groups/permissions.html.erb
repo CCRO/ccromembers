@@ -1,0 +1,20 @@
+
+<table class="table table-bordered table-striped">
+	<tbody>
+<% @memberships.each do |membership| %>
+	
+		<tr>
+			<td><%= sticker_for(membership.person) %></td>
+			<td style="vertical-align: middle; text-align: center;">
+				<%= form_for [@group, membership], { :remote => true , :html => {:class => ' form-inline '}} do |f| %>
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, '', :class => 'submittable' %> Participant <% end %> 
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'coordinator', :class => 'submittable' %> Coordinator <% end %> 
+					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'chair', :class => 'submittable' %> Chair <% end %> 
+				<% end %>
+			</td>
+		</tr>
+	
+<% end %>
+</tbody>
+</table>
+	

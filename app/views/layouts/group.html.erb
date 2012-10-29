@@ -116,9 +116,12 @@
       <% unless params[:controller] == 'signups' %>  
         <aside class="pull-right span3">
 
-          <% if (params[:action] == 'index' && params[:controller] == 'posts' ) || ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages') %>
+          <% if ((params[:action] == 'index' && (params[:controller] == 'posts' || params[:controller] == 'memberships')) || 
+                 ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages')) %>
             <%= render :partial => 'groups/sidebar' %>
           <% elsif params[:action] == 'show'%>
+            <%= render :partial => 'groups/sidebar' %>
+          <% elsif params[:action] == 'permissions'%>
             <%= render :partial => 'groups/sidebar' %>
           <% end %>
           

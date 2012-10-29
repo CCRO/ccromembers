@@ -1,18 +1,32 @@
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	      <%= link_to permissions_group_path(@group) do %>
+	      <i class="icon-sitemap"></i><br><p>Group <br>Permissions</p>
+	      <% end %>
+	    </li>
+	</ul>
+
+<% end %>
+
 <table class="table table-bordered table-striped">
 	<tbody>
-<% @memberships.each do |membership| %>
+	<h2>Co-Chairs</h2>
+	<hr>
+<% @co_chairs.each do |person| %>
+	<%= sticker_for(person, :class => 'sticker-columns') %>
+<% end %>
 	
-		<tr>
-			<td style="vertical-align: middle; text-align: center;"><%= sticker_for(membership.person) %></td>
-			<td style="vertical-align: middle; text-align: center;">
-				<%= form_for [@group, membership], { :remote => true , :html => {:class => ' form-inline '}} do |f| %>
-					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, '', :class => 'submittable' %> Participant <% end %> 
-					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'coordinator', :class => 'submittable' %> Coordinator <% end %> 
-					<%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'chair', :class => 'submittable' %> Chair <% end %> 
-				<% end %>
-			</td>
-		</tr>
+	<h2>Coordinators</h2>
+	<hr>
+<% @coordinators.each do |person| %>
+	<%= sticker_for(person, :class => 'sticker-columns') %>
+<% end %>
 	
+	<h2>Participants</h2>
+	<hr>
+<% @participants.each do |person| %>
+	<%= sticker_for(person, :class => 'sticker-columns') %>
 <% end %>
 </tbody>
 </table>
