@@ -24,6 +24,14 @@ class Ability
       (group.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || group.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
 
+    can :comment_on, [Message] do |object|
+      if object.owner.present? && object.owner_type == 'Group'
+        object.owner.people.include? user
+      else
+        user.basic?
+      end
+    end
+    
     if user.basic?
       can :read, [PollingSession, Poll]
       can :read, Survey if user.id

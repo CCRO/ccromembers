@@ -1,7 +1,7 @@
 <% content_for :adminbar do %>
 	<ul>
 		<li>
-	      <%= link_to edit_group_message_path(@group, @message)  do %>
+	      <%= link_to edit_polymorphic_path([@group, @message])  do %>
 	      <i class="icon-edit"></i><br><p>Edit <br>message</p>
 	      <% end %>
 	    </li>
@@ -68,7 +68,7 @@
 	<%= raw @message.content %>
 	<br /><br />
 	 <h1 class="ribbon-left">Comments:</h1>
-	<%= render :partial => 'shared/comment_hidden_form' %>
+	<%= render :partial => 'shared/comment_hidden_form' if can? :comment_on, @message %>
     <%= render :partial => 'shared/comment', :collection => @message.comments.reverse %>
   </div>
 </div>
