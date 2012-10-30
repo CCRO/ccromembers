@@ -110,7 +110,11 @@ class PostsController < ApplicationController
     @post.level ||= 'public'
     @post.generate_token(:viewing_token)
     
-    authorize! :create, @post
+    if @post.owner_type == 'Group'
+      authorize! :create_in, @post.owner
+    else
+      authorize! :create, @post
+    end
     
     if @post.save
       redirect_to polymorphic_path([@group, @post])
@@ -167,7 +171,7 @@ class PostsController < ApplicationController
     authorize! :publish, @post
 
     @post.save 
-    redirect_to post_path(@post)
+    redirect_to polymorphic_path([@group, @post])
   end
 
   def restore

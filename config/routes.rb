@@ -55,10 +55,27 @@ Ccromembers::Application.routes.draw do
     end
  
     resources :pages do
-      member { post :mercury_update }
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
+      end
+
     end
     resources :posts do
-      member { post :mercury_update }
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
+      end
     end
     resources :memberships
     resources :messages

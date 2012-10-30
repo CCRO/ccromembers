@@ -75,17 +75,28 @@
             <span class="post-footer-heading">Updated: </span>
             <strong><%= time_ago_in_words post.updated_at %> ago</strong>
           </p>
-          <p>
-            <span class="post-footer-heading">Category: </span>
-            <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
-          </p>
+          
+            <p>
+              <% unless @group %>
+              <span class="post-footer-heading">Category: </span>
+              <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
+              <% else %>
+              <strong><span class="post-footer-heading">Author: </span></strong>
+              <% if post.author %>
+              <%= post.author.try(:name) %> <%= "-" + post.author.company.try(:name) if post.author.company %>
+              <% end %>
+              <% end%>
+            </p>
+          
         <hr class="hr-small-margin hr-dark">
       </div>
       <br />
     <div class="row">
       <% if can?(:edit, post) && (params[:action] == 'show' || (params[:action] == 'index' && params[:filter] != 'archive') ) %>
         <div id="post_management_controls" class="pull-right">
+        <% unless @group %>
          <% if @post %><a data-toggle="modal" href="#modal-share_link">share</a> | <% end %><%= link_to "duplicate", duplicate_post_path(post) %> | <%= link_to "claim ", claim_post_path(post) %> | <%= link_to "archive", post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+         <% end %>
         </div>
       <% end %>
       <% if ( params[:action]  == 'index' && params[:filter] == 'archive' ) %>

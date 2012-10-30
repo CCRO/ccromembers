@@ -59,6 +59,8 @@
   <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
   <%= stylesheet_link_tag "style", :media => "all" %>
   <%= stylesheet_link_tag "group", :media => "all" %>
+  <%= stylesheet_link_tag "messages", :media => "all" if params[:controller] == 'messages' %>
+  <%= stylesheet_link_tag "blog", :media => "all" if params[:controller] == 'posts' %>
   <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -106,7 +108,7 @@
                <% if @group %>
                 <div style="background-color: #fff; padding: 10px; border: 1px solid grey; box-shadow: 2px 2px 6px lightgrey;"> <h2><%= @group.name %> </h2></div><br>
               <%end %>
-        <% unless params[:controller] == 'posts' %>
+        <% unless ['posts', 'messages'].include? params[:controller] %>
           <div style="background-color: #fff; padding: 10px; border: 1px solid grey; box-shadow: 2px 2px 6px lightgrey;"><%= yield %></div>
         <% else %>
           <%= yield %>
@@ -133,7 +135,7 @@
       <%= render 'shared/footer' %>
     </footer>
 
-    <% if params[:action] == 'show' %>
+    <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') %>
       <div>
         <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
           <% if current_user.role == 'admin' %>
@@ -141,26 +143,30 @@
           <% else %>
             <div class="navbar navbar-fixed-bottom" style="background-color: black;">
           <% end %>
-            <% if(can? :manage, Post) && @post %>
               <ul class="nav pull-left">
+            <% if(can? :edit, @post) && @post %>
                 <li><%= link_to edit_polymorphic_path([@group, @post]), id: "edit_link", data: {save_url: polymorphic_path([@group, @post]) + '/mercury_update'} do %>Edit Post<% end %></li>
                 <li class="divider-vertical"></li>
+            <% end %>
+            <% if(can? :publish, @post) && @post %>
                 <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %>Delete Post<% end %></li>
                 <li class="divider-vertical"></li>
                 <li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %>Post Settings<% end %></li>
                 <li class="divider-vertical"></li>
-              </ul>
             <% end %>
-            <% if can?(:manage, Message) && @message %>
+              </ul>
                 <ul class="nav pull-left">
-                  <li><%= link_to edit_polymorphic_path([@group, @message])  do %> Edit message <% end %></li>
+            <% if(can? :edit, @message) && @message %>
+                  <li><%= link_to edit_polymorphic_path([@group, @message])  do %> Edit Discussion <% end %></li>
                   <li class="divider-vertical"></li>
-                  <li><%= link_to polymorphic_path([@group, @message]), method: 'delete', :confirm => "Are you sure?" do %>Delete message<% end %></li>
-                  <li class="divider-vertical"></li>
-                  <li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %>Message Settings<% end %></li>
-                  <li class="divider-vertical"></li>
-                </ul>
               <% end %>
+            <% if(can? :publish, @message) && @message %>
+                  <li><%= link_to polymorphic_path([@group, @message]), method: 'delete', :confirm => "Are you sure?" do %>Delete Discussion<% end %></li>
+                  <li class="divider-vertical"></li>
+                  <li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %>Discussion Settings<% end %></li>
+                  <li class="divider-vertical"></li>
+              <% end %>
+                </ul>
             <ul class="nav pull-right">
               <% if current_user.role == 'admin' %>
                 <li class="divider-vertical"></li>
@@ -174,7 +180,7 @@
               <% end %>
               <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
-                <li><%= link_to 'New discussion', new_group_message_path(@group) %></li>
+                <li><%= link_to 'New Discussions', new_group_message_path(@group) %></li>
               <% end %>
             </ul>
           </div>

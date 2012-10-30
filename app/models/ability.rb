@@ -16,7 +16,7 @@ class Ability
       object.owner_type == "Group" && object.owner.people.include?(user)
     end
 
-    can [:edit, :destroy], [Post, Document, Message, Page] do |object|
+    can [:edit, :destroy, :publish], [Post, Document, Message, Page] do |object|
       object.owner_type == "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
     

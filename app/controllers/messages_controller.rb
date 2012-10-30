@@ -90,8 +90,12 @@ class MessagesController < ApplicationController
     @message.author = current_user
     @message.published_at ||= Time.now
     
-    authorize! :create, @message
-    
+    if @message.owner_type == 'Group'
+      authorize! :create_in, @message.owner
+    else
+      authorize! :create, @message
+    end
+
     respond_to do |format|
       if @message.save
         format.html { redirect_to polymorphic_path([@group, @message]) }
@@ -125,9 +129,10 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.json
   def destroy
     @message = Message.find(params[:id])
-    @message.destroy
 
-    authorize! :destory, @message
+    authorize! :destroy, @message
+
+    @message.destroy
     
     if @group
       redirect_to @group

@@ -39,7 +39,7 @@
             <% @messages.each do |m| %>
 
               <% if @message && m.subject == @message.subject %>
-                    <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, m) do %><%= m.subject + " " %><i class="icon-arrow-left"></i></li><% end %>
+                    <li style="background-color: #E6E6E6;", class="active"><%= link_to group_message_path(@group, m) do %><%= m.subject + " " %><i class="icon-arrow-left"></i></li><% end %>
                   <% else %>
                     <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
               <% end %>

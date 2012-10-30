@@ -10,7 +10,7 @@ class MembershipsController < ApplicationController
     @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person }
 
     @participants = @people - @co_chairs - @coordinators
-    authorize! :manage, @group
+    authorize! :read, @group
   end
 
   def create

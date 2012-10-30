@@ -47,28 +47,28 @@
       <td>
       <% if can?(:publish, @post) && params[:action] == 'show' %>
             
-            <div class="control-group radio inline" >
-              <b>Level</b>
-              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
-                <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
-                <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
-                <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-                <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
-              <% end %>
-              <b>Commenting</b>
-              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
-                <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
-                <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
-              <% end %>
-            </div>
+        <div class="control-group radio inline" >
+          <b>Level</b>
+          <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+            <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+            <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+            <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+            <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
           <% end %>
+          <b>Commenting</b>
+          <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+            <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
+            <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
+          <% end %>
+        </div>
+      <% end %>
 </td>
     <td valign="top">
       <% if can?(:publish, @post) && params[:action] == 'show' %>
             
             <% unless params[:mercury_frame] %>
               <div >
-                <%= form_for @post, { :remote => true } do |f| %>
+                <%= form_for [@group, @post], { :remote => true } do |f| %>
                   <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                   <b>Assign this post to: </b>
                   <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
@@ -93,7 +93,7 @@
     </table>
     </div>
     <div class="modal-footer">
-       <%= button_to 'Back to Post', @post %>
+       <%= button_to 'Back to Post', polymorphic_path([@group, @post]) %>
     </div>
   </div>
 
