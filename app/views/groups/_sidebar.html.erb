@@ -1,17 +1,25 @@
     <% if @pages && @pages.length > 0 || @articles && @articles.length > 0 || @messages && @messages.length > 0 || @group_document && @group_document.length > 0 %>
       <div class="well">
         <ul class="nav nav-list">
-
+          <li class="nav-header"><%= 'Working Group Pages' %></li>
+          <% unless @page || @message || params[:controller] == 'posts' %>
+          <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group dashboard <i class="icon-arrow-left"></i></li><% end %>
+          <% else %>
+          <li><%= link_to "Group dashboard", @group %></li>
+          <% end %>
           <% if @pages && @pages.length > 0 %>
-            <li class="nav-header"><%= 'Working Group Pages' %></li>
             <% @pages.each do |p| %>
-              
                   <% if @page && p.title == @page.title %>
                     <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, p) do %><%= p.title + " " %><i class="icon-arrow-left"></i></li><% end %>
                   <% else %>
                     <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
                   <% end %>
               </li>
+            <% end %>
+            <% if params[:controller] == 'posts' %>
+            <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group) do %>News and updates <i class="icon-arrow-left"></i></li><% end %>
+            <% else %>
+            <li><%= link_to "News and updates", group_posts_path(@group) %></li>
             <% end %>
           <% end %>
 
@@ -22,17 +30,6 @@
             <% end %>
           <% end %>
 
-
-          <% if false%>
-          
-            <% if @articles && @articles.length > 0 %>
-              <li class="nav-header"> Working Group Articles </li>
-              <% @articles.each do |a| %>
-                <li><%= link_to a.title.html_safe, polymorphic_path([@group, a]) %></li>
-              <% end %>
-            <% end %>
-
-          <% end %>
           
           <% if @messages && @messages.length > 0 %>
             <li class="nav-header"> Working Group Discussions </li>
@@ -48,9 +45,6 @@
             <% end %>
           <% end %>  
         </ul>
-      </div>
-      <div class="well">
-        <%= link_to 'Group News and Updates', group_posts_path(@group), class: 'btn' %>
       </div>
     <% end %>
 

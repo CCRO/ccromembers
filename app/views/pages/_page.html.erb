@@ -84,11 +84,11 @@
 
 
 <% content_for :aside do %>
-  <% if @tag && (@category.length > 1 && page.pages_enabled == true || @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true) %>
+  <% if @tag && (@category && @category.length > 1 && page.pages_enabled == true || @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true) %>
     <div class="well">
       <ul class="nav nav-list">
         
-        <% if @category.length > 1 && page.pages_enabled == true %>
+        <% if @category && @category.length > 1 && page.pages_enabled == true %>
           <li class="nav-header"><%= 'Related Pages' %></li>
           <% @category.each do |p| %>
             <% if p.title == page.title.html_safe %>
@@ -101,7 +101,7 @@
           <% end %>
         <% end %>  
         
-        <% if @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true %>
+        <% if @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true %>
           <li class="nav-header"> Other resources </li>
         <% end %>
         
