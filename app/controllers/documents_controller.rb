@@ -145,7 +145,7 @@ class DocumentsController < ApplicationController
     
     response = DocRaptor.create(options)
     if response.code == 200
-      send_data response, :filename => "#{options[:name]}.#{ext}", :disposition => ‘inline’, :type => ext
+      send_data response, :filename => "#{options[:name]}.#{ext}", :type => ext
     else
       render :inline => response.body, :status => response.code
     end
