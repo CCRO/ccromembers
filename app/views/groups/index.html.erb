@@ -28,6 +28,9 @@
   <tr>
     <th>Name</th>
     <th>Conference line</th>
+    <th style="text-align: center;">Pages</th>
+    <th style="text-align: center;">Discussions</th>
+    <th style="text-align: center;">Posts</th>
     <th></th>
     <th></th>
     <th></th>
@@ -37,6 +40,9 @@
   <tr>
     <td><%= link_to group.name, group %></td>
     <td><%= group.conf_phone %></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.pages.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
     <td><%= link_to 'Permissions', permissions_group_path(group) %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
