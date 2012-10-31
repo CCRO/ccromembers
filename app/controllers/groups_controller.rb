@@ -25,7 +25,8 @@ class GroupsController < ApplicationController
     @messages = @group.messages
     @group_document = @group.documents
     @smart_list = @group.people
-
+    @group_resources = (@pages + @articles + @messages).sort_by(&:updated_at).reverse
+    
     authorize! :read, @group
 
 

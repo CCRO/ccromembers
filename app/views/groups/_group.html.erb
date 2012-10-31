@@ -4,6 +4,19 @@
   <div>
     <article id="group-<%= group.id %>">
       <p id="notice"><%= notice %></p>
+      <ul>
+	      <% @group_resources.each do |i| %>
+	      	<% if i.respond_to? :name %>
+	      		<li><%= i.name %> : <%= time_ago_in_words(i.updated_at) %></li>
+	      	<% elsif i.respond_to? :title %>
+	      		<li><%= i.title %> : <%= time_ago_in_words(i.updated_at) %></li>
+	      	<% elsif i.respond_to? :content %>
+      			<li><%= raw i.content %> : <%= time_ago_in_words(i.updated_at) %></li>
+	      	<% elsif i.respond_to? :subject %>
+	      		<li><%= i.subject %> : <%= time_ago_in_words(i.updated_at) %></li>
+	      	<% end %>
+	      <% end %>
+	  </ul>
 
       
      

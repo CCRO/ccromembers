@@ -12,5 +12,6 @@ class Group < ActiveRecord::Base
   has_many :documents, :as => :owner
   has_many :memberships
   has_many :people, :through => :memberships
+  has_many :comments, :through => :messages, :as => :commentable
 
 end
