@@ -4,23 +4,131 @@
   <div>
     <article id="group-<%= group.id %>">
       <p id="notice"><%= notice %></p>
-      <ul>
-	      <% @group_resources.each do |i| %>
-	      	<% if i.respond_to? :name %>
-	      		<li><%= i.name %> : <%= time_ago_in_words(i.updated_at) %></li>
-	      	<% elsif i.respond_to? :title %>
-	      		<li><%= i.title %> : <%= time_ago_in_words(i.updated_at) %></li>
-	      	<% elsif i.respond_to? :content %>
-      			<li><%= raw i.content %> : <%= time_ago_in_words(i.updated_at) %></li>
-	      	<% elsif i.respond_to? :subject %>
-	      		<li><%= i.subject %> : <%= time_ago_in_words(i.updated_at) %></li>
-	      	<% end %>
-	      <% end %>
-	  </ul>
+      
+		  <div class="accordion" id="accordion1">
+		  	<div class="accordion-group">
+			    <div class="accordion-heading" style="position: relative;">
+			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#phone_info" ><span class="label label-important">Conference Line</span> <%= @group.conf_phone %>
+			      	<div class="pull-right">Expand this section to see your personal pin code.</div>
+			      </a>
+			    </div>
+			    <div id="phone_info" class="accordion-body collapse">
+			      <div class="accordion-inner">
+			      	<%= current_user.name %>, your personal pin is: <%= current_user.pin_code %>.	Your personal pin code is your password for all conference calls. For ease of use you can validate your phone by texting your pin code to 281-815-4177. Once this is done you will no longer be asked for your pin code when calling in on CCRO conferences. 
+			      </div>
+			    </div>
+		  	</div>
 
-      
-     
-      
+		  	<div class="accordion-group">
+			    <div class="accordion-heading" style="position: relative;">
+			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#chairs_coordinators" ><span class="label label-inverse">Group Leadership</span> Co-Chairs and Coordinators </a>
+			      <div class="pull-right" style="position: absolute; top: 10px; right: 15px;"> <%= link_to "See all #{@group.memberships.length} participants", group_memberships_path(@group) %> </div>
+			    </div>
+			    <div id="chairs_coordinators" class="accordion-body collapse in">
+			      <div class="accordion-inner">
+			      	<% if @co_chairs.length > 1 %>
+			        <h2>Co-Chairs</h2>
+			        <% else %>
+			        <h2>Chair</h2>
+			        <% end %>
+								<% @co_chairs.each do |person| %>
+									<%= sticker_for(person, :class => 'sticker-columns') %>
+								<% end %>
+							<hr style="clear:both; padding-top:10px;">
+							<% if @coordinators.length > 1 %>
+			        <h2 style="padding-top:10px;">Coordinators</h2>
+			        <% else %>
+			        <h2>Coordinator</h2>
+			        <% end %>
+							
+								<% @coordinators.each do |person| %>
+									<%= sticker_for(person, :class => 'sticker-columns') %>
+								<% end %>
+			      </div>
+			    </div>
+		  	</div>
+
+		  	<% @group_resources.each do |i| %>
+		  		<% if i.class == Post %>
+				  	<div class="accordion-group">
+					    <div class="accordion-heading">
+					    	<% this_href = '#post' + i.id.to_s %>
+					    	<% this_id = 'post' + i.id.to_s %>
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
+					        <span class="label label-info">UPDATE</span> <%= i.title%>
+					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      </a>
+					    </div>
+					    <div id=<%= this_id %> class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <%=raw i.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, i])  %></b>
+					      </div>
+					    </div>
+				  	</div>
+				  <% end %>
+
+				  <% if i.class == Page %>
+				  	<div class="accordion-group">
+					    <div class="accordion-heading">
+					    	<% this_href = '#page' + i.id.to_s %>
+					    	<% this_id = 'page' + i.id.to_s %>
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
+					        <span class="label label-success">PAGE</span> <%= i.title%>
+					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      </a>
+					    </div>
+					    <div id=<%= this_id %> class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <%= i.body.html_safe %>
+					      </div>
+					    </div>
+				  	</div>
+				  <% end %>
+
+				  <% if i.class == Message %>
+				  	<div class="accordion-group">
+					    <div class="accordion-heading">
+					    	<% this_href = '#message' + i.id.to_s %>
+					    	<% this_id = 'message' + i.id.to_s %>
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
+					        <span class="label label-warning">DISCUSSION</span> <%= i.subject%>
+					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      </a>
+					    </div>
+					    <div id=<%= this_id %> class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <%= i.content.html_safe %>
+					        <br><%= link_to "Go to this Discussion", polymorphic_path([@group, i]) %>
+					      </div>
+					    </div>
+				  	</div>
+				  <% end %>
+
+				  <% if i.class == Comment %>
+				  	<div class="accordion-group">
+					    <div class="accordion-heading">
+					    	<% this_href = '#comment' + i.id.to_s %>
+					    	<% this_id = 'comment' + i.id.to_s %>
+					    	<% author = Person.where(id: i.author_id).first %>
+					    	<% message = Message.where(id: i.commentable_id).first %>
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
+					        <span class="label label">COMMENT</span> From: <%= author.name %> on '<%= message.subject %>'
+					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      </a>
+					    </div>
+					    <div id=<%= this_id %> class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <%= i.content.html_safe %>
+					        <br><%= link_to "See this whole Discussion", polymorphic_path([@group, message]) %>
+					      </div>
+					    </div>
+				  	</div>
+				  <% end %>
+
+
+
+				<% end %>
+			</div>
     </article>
   </div>
 

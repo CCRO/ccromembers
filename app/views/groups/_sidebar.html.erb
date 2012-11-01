@@ -1,4 +1,4 @@
-    <% if @pages && @pages.length > 0 || @articles && @articles.length > 0 || @messages && @messages.length > 0 || @group_document && @group_document.length > 0 %>
+
       <div class="well">
         <ul class="nav nav-list">
           <li class="nav-header"><%= 'Working Group Pages' %></li>
@@ -16,6 +16,7 @@
                 <% end %>
               </li>
             <% end %>
+          <% end %>
 
 
             <% if @articles && @articles.length > 0 %>
@@ -25,7 +26,7 @@
                 <li><%= link_to "News and updates", group_posts_path(@group) %></li>
               <% end %>
             <% end %>
-          <% end %>
+          
 
           <% if @group_document && @group_document.length > 0 %>
             <li class="nav-header"><%= 'Working Group Documents' %></li>
@@ -50,31 +51,3 @@
           <% end %>  
         </ul>
       </div>
-    <% end %>
-
-
-    <% if @smart_list && @smart_list.length > 0 %>
-      <% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
-      <% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
-      <div class="well">
-        <ul class="nav nav-list">
-          <% if @co_chairs.present? %>
-            <li class="nav-header"> Working Group Co-Chairs </li>
-            <% @co_chairs.each do |person| %>
-              <%= sticker_for person %>
-            <% end %>
-          <% end %>
-
-          <% if @coordinators.present? %>
-            <li class="nav-header"> Working Group Coordinators </li>
-            <% @coordinators.each do |person| %>
-              <%= sticker_for person %>
-            <% end %>
-          <% end %>
-        </ul>
-        <br>
-        <%= content_tag :div, :style => 'text-align: center;' do %>
-          <%= link_to "See all #{@group.memberships.length} participants.", group_memberships_path(@group) %>
-        <% end %>
-      </div>
-    <% end %>
