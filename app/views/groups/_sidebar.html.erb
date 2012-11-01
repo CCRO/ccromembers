@@ -2,7 +2,7 @@
       <div class="well">
         <ul class="nav nav-list">
           <li class="nav-header"><%= 'Working Group Pages' %></li>
-          <% unless @page || @message || params[:controller] == 'posts' %>
+          <% unless @page || @message || params[:controller] == 'posts'|| params[:controller] == 'attachments' %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group dashboard <i class="icon-arrow-left"></i></li><% end %>
           <% else %>
           <li><%= link_to "Group dashboard", @group %></li>
