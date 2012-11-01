@@ -24,11 +24,12 @@ class GroupsController < ApplicationController
     @articles = @group.posts
     @messages = @group.messages
     @comments = @group.comments
+    @attachments = @group.attachments
     @group_document = @group.documents
     @smart_list = @group.people
     @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person }
     @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person }
-    @group_resources = (@pages + @articles + @messages + @comments).sort_by(&:updated_at).reverse
+    @group_resources = (@pages + @articles + @messages + @comments + @attachments).sort_by(&:updated_at).reverse
     
     authorize! :read, @group
 

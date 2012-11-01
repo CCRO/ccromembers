@@ -8,7 +8,7 @@
 		  <div class="accordion" id="accordion1">
 		  	<div class="accordion-group">
 			    <div class="accordion-heading" style="position: relative;">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#phone_info" ><span class="label label-important">Conference Line</span> <%= number_to_phone @group.conf_phone %>
+			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#phone_info" ><span class="label label-inverse">Conference Line</span> <%= number_to_phone @group.conf_phone %>
 			      	<div class="pull-right">Expand this section to see your personal pin code.</div>
 			      </a>
 			    </div>
@@ -80,6 +80,25 @@
 					    <div id=<%= this_id %> class="accordion-body collapse">
 					      <div class="accordion-inner">
 					        <%= i.body.html_safe %>
+					      </div>
+					    </div>
+				  	</div>
+				  <% end %>
+
+				  <% if i.class == Attachment %>
+				  	<div class="accordion-group">
+					    <div class="accordion-heading">
+					    	<% this_href = '#attachment' + i.id.to_s %>
+					    	<% this_id = 'attachment' + i.id.to_s %>
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
+					        <span class="label label-important">DOCUMENT</span> <%= i.title%>
+					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      </a>
+					    </div>
+					    <div id=<%= this_id %> class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <%= i.description %>
+					        <br><%= link_to "Work on this Document", polymorphic_path([@group, i]) %>
 					      </div>
 					    </div>
 				  	</div>
