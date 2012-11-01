@@ -1,5 +1,5 @@
 Ccromembers::Application.routes.draw do
-  
+
   get "doc_viewer/upload"
   
   get "doc_viewer/view"
@@ -80,6 +80,7 @@ Ccromembers::Application.routes.draw do
     resources :memberships
     resources :messages
     resources :documents
+    resources :attachments
   end
 
   match '/memberships' => 'memberships#toggle', :via => :post

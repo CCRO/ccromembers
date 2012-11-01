@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031202518) do
+ActiveRecord::Schema.define(:version => 20121101161320) do
+
+  create_table "attachments", :force => true do |t|
+    t.string   "file"
+    t.string   "crocodoc_uuid"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "title"
+    t.text     "description"
+    t.string   "content_type"
+    t.string   "file_size"
+    t.boolean  "archived"
+  end
+
+  add_index "attachments", ["author_id"], :name => "index_attachments_on_author_id"
+  add_index "attachments", ["owner_id"], :name => "index_attachments_on_owner_id"
 
   create_table "comments", :force => true do |t|
     t.string   "subject"

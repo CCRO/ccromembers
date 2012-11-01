@@ -1,0 +1,16 @@
+<% content_for :adminbar do %>
+  <ul>
+    <li>
+        <%= link_to new_group_attachment_path() do %>
+        <i class="icon-upload"></i><br><p>Upload File<br>page</p>
+        <% end %>
+      </li>
+  </ul>
+<% end %>
+
+<div class="row-fluid">
+  <div id="content" class="span12">    
+    <%= render @attachments %>
+    <br />
+ </div>
+</div>

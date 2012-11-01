@@ -39,6 +39,10 @@ module ApplicationHelper
     end      
   end
 
+  def file_icon(extension, size = 'small', options = {})
+    image_tag asset_path("file_icons/32px/#{extension}.png"), options
+  end
+
   def button_to(*args, &block)
     if args[2] && args[2][:class]
       args[2][:class] = 'btn ' + args[2][:class]
