@@ -27,6 +27,13 @@
               <% end %>
             <% end %>
           
+            <% if @group.attachments && @group.attachments.length > 0 %>
+              <% if params[:controller] == 'attachments' %>
+                <li style="background-color: #E6E6E6;", class="active"><%= link_to group_attachments_path(@group) do %>File Uploads <i class="icon-arrow-left"></i></li><% end %>
+              <% else %>
+                <li><%= link_to "File Uploads", group_attachments_path(@group) %></li>
+              <% end %>
+            <% end %>
 
           <% if @group_document && @group_document.length > 0 %>
             <li class="nav-header"><%= 'Working Group Documents' %></li>

@@ -125,7 +125,9 @@
             <%= render :partial => 'groups/sidebar' %>
           <% elsif params[:action] == 'permissions'%>
             <%= render :partial => 'groups/sidebar' %>
-          <% end %>
+          <% elsif params[:controller] == 'attachments'%>
+            <%= render :partial => 'groups/sidebar' %>
+           <% end %>
           
         </aside>
       <% end %>
@@ -181,6 +183,10 @@
               <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
                 <li><%= link_to 'New Discussions', new_group_message_path(@group) %></li>
+              <% end %>
+              <% if can? :create_in, @group %>
+                <li class="divider-vertical"></li>
+                <li><%= link_to 'New File Upload', new_group_attachment_path(@group) %></li>
               <% end %>
             </ul>
           </div>
