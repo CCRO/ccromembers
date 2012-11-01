@@ -19,7 +19,7 @@ class AttachmentsController < ApplicationController
             'id' => current_user.id,
             'name' => current_user.name
         },
-        'filter' => (can? :create_id, @group) ? 'all' : current_user.id,
+        'filter' => 'all', # (can? :create_in, @group) ? 'all' : current_user.id
         'is_admin' => current_user.admin?,
         'is_downloadable' => false,
         'is_copyprotected' => false,
@@ -71,6 +71,15 @@ class AttachmentsController < ApplicationController
 
   def lookup_group
     @group = Group.find(params[:group_id])
+
+    if @group
+      @pages = @group.pages
+      @articles = @group.posts
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+
   end
   
   def conditional_layout

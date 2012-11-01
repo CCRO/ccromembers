@@ -8,7 +8,7 @@
 		  <div class="accordion" id="accordion1">
 		  	<div class="accordion-group">
 			    <div class="accordion-heading" style="position: relative;">
-			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#phone_info" ><span class="label label-inverse">Conference Line</span> <%= @group.conf_phone %>
+			      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#phone_info" ><span class="label label-inverse">Conference Line</span> <%= number_to_phone @group.conf_phone %>
 			      	<div class="pull-right">Expand this section to see your personal pin code.</div>
 			      </a>
 			    </div>
