@@ -175,8 +175,6 @@
                 <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
                 <li class="divider-vertical"></li>
                 <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
-              <% end %>
-              <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
                 <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
               <% end %>
@@ -186,7 +184,7 @@
               <% end %>
               <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
-                <li><%= link_to 'New File Upload', new_group_attachment_path(@group) %></li>
+                <li><%= link_to 'New File Upload ', new_group_attachment_path(@group) %></li>
               <% end %>
             </ul>
           </div>
