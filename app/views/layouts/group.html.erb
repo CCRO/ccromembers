@@ -103,7 +103,7 @@
     </div>
 
     <div class="row group">
-      <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
+      <section class="<%= (params[:controller] == 'signups') || (params[:controller] == 'groups' && params[:action] == 'index') ? '' : 'span9' %>"
                style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
                <% if @group %>
                 <div style="background-color: #fff; padding: 10px; border: 1px solid grey; box-shadow: 2px 2px 6px lightgrey;"> <h2><%= @group.name %> </h2></div><br>
@@ -175,8 +175,6 @@
                 <li><%= link_to 'New Document', new_group_document_path(@group) %></li>
                 <li class="divider-vertical"></li>
                 <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New Page<% end %></li>
-              <% end %>
-              <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
                 <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New Update or News Item<% end %></li>
               <% end %>
@@ -186,7 +184,7 @@
               <% end %>
               <% if can? :create_in, @group %>
                 <li class="divider-vertical"></li>
-                <li><%= link_to 'New File Upload', new_group_attachment_path(@group) %></li>
+                <li><%= link_to 'New File Upload ', new_group_attachment_path(@group) %></li>
               <% end %>
             </ul>
           </div>
