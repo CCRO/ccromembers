@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :require_admin, :except => ['new', 'create', 'show']
+  before_filter :require_admin, :except => ['new', 'create', 'show', 'su']
   # GET /people
   # GET /people.json
   def index
@@ -51,6 +51,23 @@ class PeopleController < ApplicationController
 
     authorize! :edit, @person
     
+  end
+
+  # GET /people/1/edit
+  def su
+    @su_user = Person.find(params[:id])
+    @original_user = Person.find(session[:user_id])
+
+    logger.info "SU ATTEMPT: " + @original_user.name + " is trying to su to " + @su_user.name
+
+    if @original_user == @su_user
+      session.delete(:su_user_id)
+    else
+       authorize! :su, @original_user
+       session[:su_user_id] = @su_user.id
+    end
+
+    redirect_to root_path
   end
 
   # POST /people

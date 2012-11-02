@@ -197,6 +197,7 @@ Ccromembers::Application.routes.draw do
       member do
         get :resend_activation
         get :send_mobile_activation
+        get :su
       end
       resources :subscriptions
   end
