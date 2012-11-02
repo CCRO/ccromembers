@@ -17,7 +17,7 @@
   <ul class="nav nav-list">
     <li class="nav-header"><%= 'Working Group Pages' %></li>
     <% unless @page || @message || params[:controller] == 'posts'|| params[:controller] == 'attachments' %>
-      <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group Activity <i class="icon-arrow-left"></i></li><% end %>
+      <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group dashboard <i class="icon-arrow-left"></i></li><% end %>
     <% else %>
       <li><%= link_to "Group Activity", @group %></li>
     <% end %>
@@ -72,7 +72,7 @@
 
 <% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
 <% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
-<% if (@co_chairs && @co_chairs.length > 0) && (@coordinators && @coordinators.length > 0) %>
+<% if (@co_chairs && @co_chairs.length > 0) || (@coordinators && @coordinators.length > 0) %>
   <div class="well">
     <ul class="nav nav-list" style="padding-left:0px;">
       <% if @co_chairs && (@co_chairs.length > 0 && @co_chairs.length < 2) %>
