@@ -33,7 +33,7 @@ class Post < ActiveRecord::Base
   end
 
   def unlock
-    self.locked, self.locker, self.locked_at = nil, nil, nil
+    self.locked, self.locked_at = nil, nil
   end
 
   def share_by_email(email_list, my_subject, short_message, sender)
