@@ -64,7 +64,7 @@ class AttachmentsController < ApplicationController
   def destroy
     @attachment = Attachment.find(params[:id])
 
-    @attachement.destroy
+    @attachment.destroy
 
     redirect_to group_attachments_path(@group)
   end
