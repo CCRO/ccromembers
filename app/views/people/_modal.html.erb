@@ -3,6 +3,23 @@
   <h3><%= @person.name%></h3>
 </div>
 <div class="modal-body ">
-    <%= @person.email %><br />
+    <table cellpadding="10">
+    <tr>
+      <td>
+      <ul class="thumbnails">
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <%= avatar_for @person %>
+          </a>
+        </li>
+      </ul>
+    </td>
+    <td valign="top">
+      <p>Company: <%= @person.company.name if @person.company %><br />
+      Role: <%= @person.role.capitalize if @person.role %><br />
+      Email: <%= mail_to @person.email %><br />
+    </td>
+    </tr>
+    </table>
 </div>
-<div class="modal-footer"><%= button_to 'View Full Profile', @person, :class => 'btn-primary' %></div>
+<div class="modal-footer"><%= button_to "Login as #{@person.name}", su_person_path(@person) if can? :su, @person %> <%= button_to 'View Full Profile', @person, :class => 'btn-primary' %></div>

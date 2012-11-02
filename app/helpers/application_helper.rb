@@ -25,7 +25,7 @@ module ApplicationHelper
     options[:class] ||= ""
     content_tag :div, {:class => 'sticker ' + options[:class]} do
       avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
-      link_to(user.name, user) +
+      link_to_person(user.name, user) +
       tag("br", nil, true) + 
       (user.company.name if user.company)
     end
