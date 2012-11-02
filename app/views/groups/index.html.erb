@@ -41,7 +41,7 @@
 <% @groups.each do |group| %>
   <tr>
     <td><%= link_to group.name, group %></td>
-    <td><%= group.conf_phone %></td>
+    <td><%= number_to_phone group.conf_phone %></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.people.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.pages.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span> <span class="badge badge-success"><%= group.comments.count %></span></td>
