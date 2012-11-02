@@ -1,4 +1,4 @@
 <div style="clear:both; padding-bottom: 10px;">
   <%= file_icon attachment.extension, nil, :class => 'pull-left' %>
-  <p><strong><%= link_to attachment.title, group_attachment_path(@group, attachment) %></strong> - <%= attachment.description %> <small><%= number_to_human_size attachment.file_size %></small></p>
+  <p><strong><%= link_to attachment.title, group_attachment_path(@group, attachment) %></strong> - <%= attachment.description %> <small><%= number_to_human_size attachment.file_size %></small> <%= link_to 'edit', edit_group_attachment_path(@group, attachment) %> <%= link_to 'delete', group_attachment_path(@group, attachment), :method => 'delete', :confirm => "Are you sure you want to delete?" %></p>
 </div>
