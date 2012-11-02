@@ -4,6 +4,24 @@
 	</ul>
 <% end %>
 
+<% content_for :modal_settings do %>
+<div class="modal hide fade" id="modal-new-post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>New Post</h3>
+  </div>
+  <div class="modal-body center">
+  <%= form_for Post.new do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+</div>
+  <div class="modal-footer">
+    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+  </div>
+  <% end %>
+</div>
+
+<% end %>
+
 <% if @posts.present? %>
 	<%= render @posts %>
 <% else %>

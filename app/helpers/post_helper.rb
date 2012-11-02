@@ -1,5 +1,6 @@
 module PostHelper
   def publish_toggle(object) 
+      object.owner = nil if object.owner_type == 'Person'
       html = "<div class=\"btn-group\">"
   		html += link_to "Published", polymorphic_path([object.owner, object], :action => 'publish', :published=> false ), {:class =>'btn btn-success'} if object.published?
   		html += link_to "Published", polymorphic_path([object.owner, object], :action => 'publish', :published=> true ), {:class =>'btn disabled'} unless object.published?
