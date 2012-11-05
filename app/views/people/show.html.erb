@@ -45,6 +45,8 @@
 <h2>Working Group Involvement</h2>
 <% unless @person.memberships.present? %>
   <p><%= @person.name + " is not involved with any working groups at this time."%></p>
+<% else %>
+  <br>
 <% end %>
 
 <ul class="nav">

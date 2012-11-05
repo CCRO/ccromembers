@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
     @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
     @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
     @people = Person.accessible_by(current_ability) unless @people
-    authorize! :read, @person
+    authorize! :read, Person
     
     respond_to do |format|
       format.html # index.html.erb
