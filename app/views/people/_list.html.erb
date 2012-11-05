@@ -2,6 +2,7 @@
 <div class="pull-right"><%= button_to(new_person_path, :class => 'btn') do %><i class="icon-plus"></i> New Person<% end %></div>
 <br /><br />
 <% end %>
+ <% if current_user && current_user.admin? %>
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
@@ -43,3 +44,64 @@
   <% end %>
   </tbody>
 </table>
+<% else %>
+
+<content>
+
+  <% @people.each do |person| %>
+    <% if person.level == "committee" || person.name == "Bob Anderson" %>
+      <div class="well pull-left" style="height:110px; width:40%; margin-left:30px;">
+            <%= avatar_for(person, :class => 'pull-left', style: 'width: 100px; padding-right:10px') %>
+            <h2 style="padding"><%= link_to person.name, person %></h2>
+            <strong><%= person.company.name %></strong><br>
+            <%= person.email %>
+      </div>
+    <% end %>
+  <% end %>
+</content>
+
+<% if false %>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Name <%= link_to(people_path(:sort => 'name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <th>Company <%= link_to(people_path(:sort => 'company')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <th>Email <%= link_to(people_path(:sort => 'email')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @people.each do |person| %>
+    <% if person.level == "committee" || person.level == "admin" %>
+      <tr>
+        <td><span class="badge badge"><%= person.groups.count %></span> <%= link_to person.name, person %></td>
+        <td><%= link_to person.company.name, person.company if person.company %></td>
+        <td><%= person.email %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+<br>
+
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Name <%= link_to(people_path(:sort => 'name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <th>Company <%= link_to(people_path(:sort => 'company')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <th>Email <%= link_to(people_path(:sort => 'email')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @people.each do |person| %>
+    <% unless person.level == "committee" || person.level == "admin" %>
+      <tr>
+        <td><span class="badge badge"><%= person.groups.count %></span> <%= link_to person.name, person %></td>
+        <td><%= link_to person.company.name, person.company if person.company %></td>
+        <td><%= person.email %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+<% end %>
+<% end %>
