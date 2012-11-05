@@ -101,6 +101,8 @@ GEM
       thor (>= 0.13.6)
     formatador (0.2.3)
     google_visualr (2.1.2)
+    highrise (3.0.3)
+      activeresource (~> 3.0)
     hike (1.2.1)
     hirb (0.6.2)
     htmlentities (4.3.1)
@@ -260,6 +262,7 @@ DEPENDENCIES
   font-awesome-rails
   foreman
   google_visualr
+  highrise
   hirb
   htmlentities
   impressionist

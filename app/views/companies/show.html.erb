@@ -3,6 +3,18 @@
   <li><a href="/companies">Companies</a> <span class="divider">/</span></li>
   <li class="active"><%= link_to @company.name, @company %></li>
 </ul>
+<% if @possible_highrises && can?(:manage, @company) %>
+  <% @possible_highrises.each do |possible_highrise| %>
+    <div class="alert alert-block alert-info">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <h4>Highrise Match Detected!</h4>
+         Is this company <%= possible_highrise.name %>?
+         <br> <br>
+         <%= link_to("Yes, link this company.", company_path(@person, company: {:highrise_id => possible_highrise.id }), :class => 'btn', :method => :put, :confirm => "Are you sure?") %>
+    </div>
+  <% end %>
+<% end %>
+
 <% if can? :manage, @company %>
 	<div class="btn-group pull-right">
 	  <%= link_to('Highrise', highrise_url(@company), :class => 'btn') unless @company.highrise_id.blank? %>

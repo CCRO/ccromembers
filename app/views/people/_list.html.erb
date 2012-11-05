@@ -17,7 +17,7 @@
   <tbody>
   <% @people.each do |person| %>
     <tr>
-      <td><%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %><%= content_tag(:span, person.role, :class => "label label-important pull-right") if person.role %></td>
+      <td><%= status_icon(person.highrise_id.present?) %> <%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %><%= content_tag(:span, person.role, :class => "label label-important pull-right") if person.role %></td>
       <td><%= person.level if person.level %></td>
       <td><%= link_to person.company.name, person.company if person.company %></td>
       <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
