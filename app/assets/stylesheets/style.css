@@ -408,3 +408,11 @@ text-decoration: none;
   float: left;
   clear: none;
 }
+
+.link-group {
+  background-color: #E9E9E9;
+padding: 3px 7px;
+border-radius: 4px;
+font-size: .85em;
+color: #C9C9C9;
+}
