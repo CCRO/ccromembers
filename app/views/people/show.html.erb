@@ -12,21 +12,25 @@
    </ul>
 <h2><%= @person.name %></h2>
 
+<% if @person.company.present?%>
 <p>
   <b>Company:</b>
   <%= @person.company.name if @person.company %>
 </p>
+<% end %>
 
 <p>
   <b>Email:</b>
   <%= @person.email %>
 </p>
+
+<% if current_user.admin? %>
 <p>
-  <% if current_user.admin? %>
   <b>Verifed:</b>
   <%= @person.verified %>
-  <% end %>
 </p>
+<% end %>
+
 <p>
   <% if @person.bio.present?  %>
     <b>Bio:</b>
@@ -41,7 +45,6 @@
 <h2>Working Group Involvement</h2>
 <% Group.all.each do |group| %>
   <%= form_for Membership.new, :method => 'post', :remote => true do %>
-    
     <%= hidden_field_tag :group_id, group.id %>
     <%= hidden_field_tag :person_id, @person.id %>
     <% if can? :manage, group %>
@@ -51,11 +54,11 @@
       <% if @person.groups.where(:id => group.id).present? %>
         <% membership = Membership.where(group_id: group.id, person_id: @person.id).first%>
         <% if membership.fuction == nil %>
-          <%= "Participating in: '#{group.name}'" %>
+          <%= link_to "Participating in: '#{group.name}'", @group %>
         <% elsif membership.fuction == 'chair' %>
-          <%= "Chairing: '#{group.name}'" %>
+          <%= link_to "Chairing: '#{group.name}'", @group %>
         <% elsif membership.fuction == 'coordinator' %>
-          <%= "Coordinating for: '#{group.name}'" %>
+          <%= link_to "Coordinating for: '#{group.name}'", @group %>
         <% end %>
       <% end %>
     <% end %>
