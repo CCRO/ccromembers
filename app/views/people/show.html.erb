@@ -46,6 +46,7 @@
 <% unless @person.memberships.present? %>
   <%= @person.name + " is not involved with any working groups at this time."%>
 <% end %>
+<ul class="nav">
 <% Group.all.each do |group| %>
   <%= form_for Membership.new, :method => 'post', :remote => true do %>
     <%= hidden_field_tag :group_id, group.id %>
@@ -55,18 +56,19 @@
     <%= group.name %>
     <% else%>
       <% if @person.groups.where(:id => group.id).present? %>
-        <% membership = Membership.where(group_id: group.id, person_id: @person.id).first%>
+        <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
         <% if membership.fuction == nil %>
-          <%= link_to "Participating in: '#{group.name}'", @group %>
+          <li><%= link_to "Participating in: '#{group.name}'", @group %></li>
         <% elsif membership.fuction == 'chair' %>
-          <%= link_to "Chairing: '#{group.name}'", @group %>
+          <li><%= link_to "Chairing: '#{group.name}'", @group %></li>
         <% elsif membership.fuction == 'coordinator' %>
-          <%= link_to "Coordinating for: '#{group.name}'", @group %>
+          <li><%= link_to "Coordinating for: '#{group.name}'", @group %></li>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
+</ul>
 <hr>
 <%= link_to 'Edit', edit_person_path(@person) %> | <% if current_user.role == 'admin' %><%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | <% end %>  
 <%= link_to 'Back', people_path %>
