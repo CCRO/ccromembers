@@ -19,7 +19,21 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     @person = Person.find(params[:id])
-    @group_memberships = Group.pluck(:id).zip(Group.pluck(:id).map { |group_id| (@person.groups.where(:id => group_id).present?) ? 1 : 0 }) 
+    @group_memberships = Group.pluck(:id).zip(Group.pluck(:id).map { |group_id| (@person.groups.where(:id => group_id).present?) ? 1 : 0 })
+
+    if @person.highrise_id.present?
+      if !@person.highrise_cached_at || @person.highrise_cached_at > 2.hours.ago
+        @highrise = Highrise::Person.find(@person.highrise_id) 
+        @person.highrise_cache = @highrise
+        @person.highrise_cached_at = Time.now
+        @person.save
+      else
+        @highrise = @person.highrise_cache
+      end
+    else
+      @possible_highrises = Highrise::Person.find_all_across_pages(:params => { :email => @person.email})
+    end
+
     authorize! :read, @person
     
     respond_to do |format|
@@ -107,7 +121,7 @@ class PeopleController < ApplicationController
     
     respond_to do |format|
       if @person.update_attributes(params[:person])
-        format.html { redirect_to @person, notice: 'Person was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Person was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
