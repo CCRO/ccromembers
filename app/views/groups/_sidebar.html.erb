@@ -72,7 +72,7 @@
 
 <% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
 <% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
-<% if (@co_chairs && @co_chairs.length > 0) && (@coordinators && @coordinators.length > 0) %>
+<% if (@co_chairs && @co_chairs.length > 0) || (@coordinators && @coordinators.length > 0) %>
   <div class="well">
     <ul class="nav nav-list" style="padding-left:0px;">
       <% if @co_chairs && (@co_chairs.length > 0 && @co_chairs.length < 2) %>
