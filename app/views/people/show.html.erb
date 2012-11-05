@@ -44,8 +44,9 @@
 <br>
 <h2>Working Group Involvement</h2>
 <% unless @person.memberships.present? %>
-  <%= @person.name + " is not involved with any working groups at this time."%>
+  <p><%= @person.name + " is not involved with any working groups at this time."%></p>
 <% end %>
+
 <ul class="nav">
 <% Group.all.each do |group| %>
   <%= form_for Membership.new, :method => 'post', :remote => true do %>

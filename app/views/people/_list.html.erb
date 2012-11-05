@@ -2,7 +2,7 @@
 <div class="pull-right"><%= button_to(new_person_path, :class => 'btn') do %><i class="icon-plus"></i> New Person<% end %></div>
 <br /><br />
 <% end %>
- <% if current_user.admin? %>
+ <% if current_user && current_user.admin? %>
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
