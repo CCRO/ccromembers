@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :require_admin, :except => ['new', 'create', 'show', 'su']
+  #before_filter :require_admin, :except => ['new', 'create', 'show', 'su']
   # GET /people
   # GET /people.json
   def index

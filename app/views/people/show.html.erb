@@ -10,46 +10,60 @@
        </a>
      </li>
    </ul>
-<p>
-	
-  <b>Name:</b>
-  <%= @person.name %>
-</p>
+<h2><%= @person.name %></h2>
 
+<% if @person.company.present?%>
 <p>
   <b>Company:</b>
   <%= @person.company.name if @person.company %>
 </p>
+<% end %>
 
 <p>
   <b>Email:</b>
   <%= @person.email %>
 </p>
+
+<% if current_user.admin? %>
 <p>
   <b>Verifed:</b>
   <%= @person.verified %>
 </p>
+<% end %>
+
 <p>
-  <b>Bio:</b>
-  <%= @person.bio %>
+  <% if @person.bio.present?  %>
+    <b>Bio:</b>
+    <%= @person.bio %>
+  <% elsif @person.id == current_user.id %>
+    <b>Bio:</b>
+    <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+  <% end %>
 </p>
 
-<h2>Working Groups</h2>
-<hr>
+<br>
+<h2>Working Group Involvement</h2>
 <% Group.all.each do |group| %>
   <%= form_for Membership.new, :method => 'post', :remote => true do %>
-    
     <%= hidden_field_tag :group_id, group.id %>
     <%= hidden_field_tag :person_id, @person.id %>
     <% if can? :manage, group %>
     <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
-    <% else%>
-      <%= status_icon(@person.groups.where(:id => group.id).present?)%>
-    <% end %>
-    
     <%= group.name %>
-
+    <% else%>
+      <% if @person.groups.where(:id => group.id).present? %>
+        <% membership = Membership.where(group_id: group.id, person_id: @person.id).first%>
+        <% if membership.fuction == nil %>
+          <%= link_to "Participating in: '#{group.name}'", @group %>
+        <% elsif membership.fuction == 'chair' %>
+          <%= link_to "Chairing: '#{group.name}'", @group %>
+        <% elsif membership.fuction == 'coordinator' %>
+          <%= link_to "Coordinating for: '#{group.name}'", @group %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
+<hr>
 <%= link_to 'Edit', edit_person_path(@person) %> | <%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | 
 <%= link_to 'Back', people_path %>
