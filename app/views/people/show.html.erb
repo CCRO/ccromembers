@@ -61,11 +61,11 @@
       <% if @person.groups.where(:id => group.id).present? %>
         <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
         <% if membership.fuction == nil %>
-          <li><%= link_to "Participating in: '#{group.name}'", @group %></li>
+          <li><%= link_to "Participating in: '#{group.name}'", group %></li>
         <% elsif membership.fuction == 'chair' %>
-          <li><%= link_to "Chairing: '#{group.name}'", @group %></li>
+          <li><%= link_to "Chairing: '#{group.name}'", group %></li>
         <% elsif membership.fuction == 'coordinator' %>
-          <li><%= link_to "Coordinating for: '#{group.name}'", @group %></li>
+          <li><%= link_to "Coordinating for: '#{group.name}'", group %></li>
         <% end %>
       <% end %>
     <% end %>
