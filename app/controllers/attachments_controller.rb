@@ -74,7 +74,8 @@ class AttachmentsController < ApplicationController
 
     if @group
       @pages = @group.pages
-      @articles = @group.posts
+      @total_articles = @group.posts
+      @articles = @total_articles.limit(3)
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people

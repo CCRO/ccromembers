@@ -74,6 +74,10 @@ class PostsController < ApplicationController
       impressionist(@post)
     end
 
+    if @group
+      @article = @post
+    end
+
     respond_to do |format|
       format.html
       format.pdf { doc_raptor_send }
@@ -231,7 +235,8 @@ class PostsController < ApplicationController
      if params[:group_id]
       @group = Group.find(params[:group_id])
       @pages = @group.pages
-      @articles = @group.posts
+      @total_articles = @group.posts
+      @articles = @total_articles.limit(3)
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people

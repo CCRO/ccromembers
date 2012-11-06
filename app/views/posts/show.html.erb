@@ -27,7 +27,7 @@
     <h3>New Post</h3>
   </div>
   <div class="modal-body center">
-  <%= form_for Post.new do |f| %>
+  <%= form_for [@group, Post.new] do |f| %>
     <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 </div>
   <div class="modal-footer">

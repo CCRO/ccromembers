@@ -1,5 +1,5 @@
-
-<% if params[:action] == 'show'%>
+<% if params[:action] == 'show_activity'%>
+<h2>Showing Recent Group Activity</h2>
   <div>
     <article id="group-<%= group.id %>">
       <p id="notice"><%= notice %></p>
@@ -14,10 +14,10 @@
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
 					      	<% if i.created_at == i.updated_at %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-warning">DISCUSSION</span> "<%= strip_tags i.subject %>" was created by: <%= author.name %> 
+					      		<span class="label label-warning">DISCUSSION</span> <strong>"<%= strip_tags i.subject %>"</strong> was created by: <i><%= author.name %></i> 
 					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      	<% else %>
-					      		<span class="label label-warning">DISCUSSION</span> "<%= strip_tags i.subject%>" has been updated 
+					      		<span class="label label-warning">DISCUSSION</span> <strong>"<%= strip_tags i.subject%>"</strong> has been updated 
 					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      	<% end %>
 					      </a>
@@ -40,15 +40,15 @@
 					      	<% time_shift = i.created_at + 37000 %>
 					      	<% if i.updated_at < time_shift %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-info">UPDATE</span> "<%= strip_tags i.title %>" was created by: <%= author.name %> 
+					      		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> was created by: <i><%= author.name %></i>
 					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      	<% else %>
 					      		<% updator = Person.find(i.locker_id) if i.locker_id %>
 					      		<% if updator %>
-						      		<span class="label label-info">UPDATE</span> "<%= strip_tags i.title %>" was updated by: <%= updator.name %> 
+						      		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> was updated by: <i><%= updator.name %> </i>
 						        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					        	<% else %>
-					        		<span class="label label-info">UPDATE</span> "<%= strip_tags i.title %>" has been updated
+					        		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> has been updated
 						        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					        	<% end %>
 					      	<% end %>
@@ -71,15 +71,15 @@
 					      	<% time_shift = i.created_at + 75000 %>
 					      	<% if i.updated_at < time_shift %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-success">PAGE</span> "<%= strip_tags i.title%>" was created by: <%= author.name %>
+					      		<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i>
 					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      	<% else %>
 					      		<% updator = Person.find(i.locker_id) if i.locker_id %>
 					      		<% if updator %>
-					      			<span class="label label-success">PAGE</span> "<%= strip_tags i.title%>" was updated by: <%= updator.name %>
+					      			<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> was updated by: <i><%= updator.name %></i>
 					        		<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					        	<% else %>
-					        		<span class="label label-success">PAGE</span> "<%= strip_tags i.title%>" has been updated
+					        		<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> has been updated
 					        		<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					        	<% end %>
 				        	<% end %>
@@ -100,7 +100,7 @@
 					    	<% this_id = 'attachment' + i.id.to_s %>
 					    	<% author = Person.find(i.author_id)%>
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %>>
-					        <span class="label label-important">DOCUMENT</span> "<%= strip_tags i.title%>" was created by: <%= author.name %>
+					        <span class="label label-important">DOCUMENT</span> <strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i>
 					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      </a>
 					    </div>
@@ -121,7 +121,7 @@
 					    	<% author = Person.where(id: i.author_id).first %>
 					    	<% message = Message.where(id: i.commentable_id).first %>
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
-					        <span class="label label">COMMENT</span> From: <%= author.name %> on "<%= strip_tags message.subject %>"
+					        <span class="label label">COMMENT</span> <strong>"<%= strip_tags message.subject %>"</strong> From: <i><%= author.name %></i>
 					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
 					      </a>
 					    </div>

@@ -1,0 +1,12 @@
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	    <%= link_to group_path(@group), method: 'delete', :confirm => "Are you sure?" do %>
+	    	<i class="icon-trash"></i><br><p>Delete <br>group</p>
+	    <% end %>
+	  </li>
+		<li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %><i class="icon-cog"></i><br /><p>group <br>Settings</p><% end %></li>
+	</ul>
+<% end %>
+
+<%= render @group %>

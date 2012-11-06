@@ -16,10 +16,10 @@
 
   <ul class="nav nav-list">
     <li class="nav-header"><%= 'Working Group Pages' %></li>
-    <% unless @page || @message || params[:controller] == 'posts'|| params[:controller] == 'attachments' %>
-      <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group Activity <i class="icon-arrow-left"></i></li><% end %>
+    <% unless @article || @page || @message || params[:controller] == 'attachments' %>
+      <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group News and Updates <i class="icon-arrow-left"></i></li><% end %>
     <% else %>
-      <li><%= link_to "Group Activity", @group %></li>
+      <li><%= link_to "Group News and Updates", @group %></li>
     <% end %>
 
     <% if @pages && @pages.length > 0 %>
@@ -32,20 +32,12 @@
         </li>
       <% end %>
     <% end %>
-
-    <% if @articles && @articles.length > 0 %>
-      <% if params[:controller] == 'posts' %>
-        <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group) do %>News and updates <i class="icon-arrow-left"></i></li><% end %>
-      <% else %>
-        <li><%= link_to "News and updates", group_posts_path(@group) %></li>
-      <% end %>
-    <% end %>
   
     <% if @group.attachments && @group.attachments.length > 0 %>
       <% if params[:controller] == 'attachments' %>
         <li style="background-color: #E6E6E6;", class="active"><%= link_to group_attachments_path(@group) do %>File Uploads <i class="icon-arrow-left"></i></li><% end %>
       <% else %>
-        <li><%= link_to "File Uploads", group_attachments_path(@group) %></li>
+        <li><%= link_to "Files", group_attachments_path(@group) %></li>
       <% end %>
     <% end %>
 
@@ -65,6 +57,20 @@
         <% else %>
           <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
         <% end %>
+      <% end %>
+    <% end %>
+
+    <% if @articles && @articles.length > 0 %>
+      <li class="nav-header"> News and Update Items </li>
+      <% @articles.each do |m| %>
+        <% if @article && m.id == @article.id %>
+          <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+        <% else %>
+          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+        <% end %>
+      <% end %>
+      <% if @total_articles.length > 3 %>
+        <li><i><%= link_to "See all #{@total_articles.length} articles" , @group %></i></li>
       <% end %>
     <% end %>
   </ul>
@@ -99,3 +105,5 @@
     </ul>
   </div>
 <% end %>
+
+<span class="btn" style="width:90%; margin-bottom: 20px; margin-left: 0px; padding-right:15px;"><%= link_to 'Group Activity', show_activity_group_path(@group) %></span>

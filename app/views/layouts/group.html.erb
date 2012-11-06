@@ -119,7 +119,7 @@
         <aside class="pull-right span3">
 
           <% if ((params[:action] == 'index' && (params[:controller] == 'posts' || params[:controller] == 'memberships')) || 
-                 ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages')) %>
+                 ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages')) || params[:action] == 'show_activity' %>
             <%= render :partial => 'groups/sidebar' %>
           <% elsif params[:action] == 'show'%>
             <%= render :partial => 'groups/sidebar' %>
@@ -137,7 +137,7 @@
       <%= render 'shared/footer' %>
     </footer>
 
-    <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') %>
+    <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') || (params[:controller] == 'posts' && params[:action] == 'index')%>
       <div>
         <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
           <% if current_user.role == 'admin' %>

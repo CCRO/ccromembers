@@ -19,9 +19,15 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
+    redirect_to group_posts_path(@group)
+  end
+
+  def show_activity
+    @group = Group.find(params[:id])
 
     @pages = @group.pages
-    @articles = @group.posts
+    @total_articles = @group.posts
+    @articles = @total_articles.limit(3)
     @messages = @group.messages
     @comments = @group.comments
     @attachments = @group.attachments
