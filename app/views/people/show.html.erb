@@ -9,7 +9,7 @@
     <div class="alert alert-block alert-info">
       <button type="button" class="close" data-dismiss="alert">×</button>
       <h4>Highrise Match Detected!</h4>
-         Is this person <%= possible_highrise.first_name + " " + possible_highrise.last_name %> which is the <%= possible_highrise.title %> from <%= possible_highrise.company_name %>?
+         Is this person <%= possible_highrise.try(:first_name) + " " + possible_highrise.try(:last_name) %> which is the <%= possible_highrise.try(:title) %> from <%= possible_highrise.try(:company_name) %>?
          <br> <br>
          <%= link_to("Yes, link this profile.", person_path(@person, person: {:highrise_id => possible_highrise.id }), :class => 'btn', :method => :put, :confirm => "Are you sure?") %>
     </div>
