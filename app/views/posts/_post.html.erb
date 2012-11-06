@@ -83,7 +83,7 @@
               <% else %>
               <strong><span class="post-footer-heading">Author: </span></strong>
               <% if post.author %>
-              <%= post.author.try(:name) %> <%= "-" + post.author.company.try(:name) if post.author.company %>
+              <%= link_to post.author.try(:name), post.author %> <%= "- " + post.author.company.try(:name) if post.author.company %>
               <% end %>
               <% end%>
             </p>
@@ -115,16 +115,17 @@
   </article>
 </div>
 
-
-<% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
-  <div id="about_author" class="">
-    <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
-      <%= avatar_for post.author %>
-      <h5><%= post.author.name %></h5>
-      <p><%= post.author.company.name %></p>
+<% unless @group %>
+  <% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
+    <div id="about_author" class="">
+      <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
+        <%= avatar_for post.author %>
+        <h5><%= post.author.name %></h5>
+        <p><%= post.author.company.name %></p>
+      </div>
+      <h3>About the author</h3>
+      <p><%= post.author.bio %></p>
+      <div style="clear: both"></div> 
     </div>
-    <h3>About the author</h3>
-    <p><%= post.author.bio %></p>
-    <div style="clear: both"></div> 
-  </div>
   <% end %>
+<% end %>
