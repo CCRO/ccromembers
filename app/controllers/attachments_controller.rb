@@ -2,8 +2,7 @@ class AttachmentsController < ApplicationController
 
   before_filter :lookup_group
 
-  layout :conditional_layout, :except => :show
-  layout 'attachment_viewer', :only => :show
+  layout :conditional_layout
 
   def index
     @attachments = @group.attachments 
@@ -85,7 +84,11 @@ class AttachmentsController < ApplicationController
   end
   
   def conditional_layout
-    (@group) ? 'group' : 'application' 
+    if params[:action] == 'show'
+      'attachment_viewer'
+    else
+      (@group) ? 'group' : 'application' 
+    end
   end
 
 
