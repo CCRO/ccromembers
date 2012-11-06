@@ -23,7 +23,9 @@ class DocumentsController < ApplicationController
       @document = Document.find_by_viewing_token(params[:token])
     else 
       @document = Document.find(params[:id])
-      authorize! :read, @document
+
+      message = "You do not have access to the document <strong>'#{@document.title}'</strong> at this time. If you are interested in viewing this document, please let us know."
+      authorize! :read, @document, :message => message.html_safe
     end
 
     # @document.update_viewer_uuid!

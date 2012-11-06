@@ -99,7 +99,9 @@ class ApplicationController < ActionController::Base
     session[:access_denied_return_url] = request.url
     subject = exception.subject.attributes.delete_if { |key,value| value.to_s.length > 128 } if exception.subject.class.name == 'Post'
     session[:access_denied_subject] = subject
-    redirect_to exceptions_accessdenied_path()
+    redirect_to exceptions_accessdenied_path(), :alert => exception.message
+    session[:exception_on_type] = exception.subject.class.name
+    session[:exception_on_id] = exception.subject.id
 
     # case exception.subject.class.name
     # when 'Post'

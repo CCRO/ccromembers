@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
 
-    authorize! :read, @group
+    authorize! :read, Group , :message => "You do not have the access to view all groups in this manner."
 
     respond_to do |format|
       format.html # index.html.erb
@@ -19,6 +19,10 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
+
+    message = "You do not have access to the working group <strong>'#{@group.name}'</strong> at this time. If you are interested in joining this group, please let us know."
+    authorize! :read, @group, :message => message.html_safe
+
     redirect_to group_posts_path(@group)
   end
 
@@ -37,7 +41,8 @@ class GroupsController < ApplicationController
     @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person }
     @group_resources = (@pages + @articles + @messages + @comments + @attachments).sort_by(&:updated_at).reverse
     
-    authorize! :read, @group
+    message = "You do not have the access needed to see the activities for the working group: <strong>#{@group.name}</strong>. If you are interested in joining this group, please let us know."
+    authorize! :read, @group, :message => message.html_safe
 
 
     respond_to do |format|
@@ -56,7 +61,9 @@ class GroupsController < ApplicationController
     @group_document = @group.documents
     @smart_list = @group.people
 
-    authorize! :manage, @group
+
+    message = "You are unable to set the permissions for the working group: <strong>#{@group.name}</strong>."
+    authorize! :manage, @group, :message => message.html_safe
 
   end
 

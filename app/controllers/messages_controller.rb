@@ -41,7 +41,9 @@ class MessagesController < ApplicationController
     @tag = @message.tags.pluck(:name).to_sentence if @message.tags.pluck(:name).present?
     @all_tags = all_tags
     impressionist(@message)
-    authorize! :read, @message
+
+    message = "You do not have access to the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in joining this discussion, please let us know."
+    authorize! :read, @message, :message => message.html_safe
 
     if params[:page]
       @page = Page.find(params[:page])
@@ -61,6 +63,7 @@ class MessagesController < ApplicationController
       @owner = Group.find(params[:group_id])
     end
 
+    message = "You do not have access needed to start a new discussion at this time. If you are interested in joining this discussion, please let us know."
     authorize! :read, Message
     
     respond_to do |format|
@@ -73,7 +76,8 @@ class MessagesController < ApplicationController
   def edit
     @message = Message.find(params[:id])
 
-    authorize! :edit, @message
+    message = "You do not have access needed to edit the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in editing this discussion, please let us know."
+    authorize! :edit, @message, :message => message.html_safe
     
   end
 
@@ -91,9 +95,11 @@ class MessagesController < ApplicationController
     @message.published_at ||= Time.now
     
     if @message.owner_type == 'Group'
-      authorize! :create_in, @message.owner
+      message = "You do not have access needed to create the discussion <strong>'#{@message.subject}'</strong> for this working group at this time. If you are still interested in creating this discussion, please let us know."
+      authorize! :create_in, @message.owner, :message => message.html_safe
     else
-      authorize! :create, @message
+      message = "You do not have access needed to create the discussion <strong>'#{@message.subject}'</strong> at this time. If you are still interested in creating this discussion, please let us know."
+      authorize! :create, @message, :message => message.html_safe
     end
 
     respond_to do |format|
@@ -112,7 +118,8 @@ class MessagesController < ApplicationController
   def update
     @message = Message.find(params[:id])
 
-    authorize! :edit, @message
+    message = "You do not have access needed to update the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in updating this discussion, please let us know."
+    authorize! :edit, @message, :message => message.html_safe
     
     respond_to do |format|
       if @message.update_attributes(params[:message])
@@ -130,7 +137,8 @@ class MessagesController < ApplicationController
   def destroy
     @message = Message.find(params[:id])
 
-    authorize! :destroy, @message
+    message = "You do not have access needed to delete the discussion <strong>'#{@message.subject}'</strong> at this time. If you are still interested in deleting this discussion, please let us know."
+    authorize! :destroy, @message, :message => message.html_safe
 
     @message.destroy
     
@@ -172,19 +180,23 @@ class MessagesController < ApplicationController
   end
 
   def archive
-    message = Message.find(params[:id])
-    authorize! :destory, message
+    @message = Message.find(params[:id])
 
-    message.archive
+    message = "You do not have access needed to archive the discussion <strong>'#{@message.subject}'</strong> at this time. If you are still interested in archiving this discussion, please let us know."
+    authorize! :destory, @message, :message => message.html_safe
+
+    @message.archive
 
     redirect_to message
   end
 
   def unarchive
-    message = Message.find(params[:id])
-    authorize! :destory, message
+    @message = Message.find(params[:id])
 
-    message.unarchive
+    message = "You do not have access needed to unarchive the discussion <strong>'#{@message.subject}'</strong> at this time. If you are still interested in unarchiving this discussion, please let us know."
+    authorize! :destory, @message, :message => message.html_safe
+
+    @message.unarchive
 
     redirect_to message
   end

@@ -72,7 +72,9 @@ class PagesController < ApplicationController
         @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
         @commentable = @page
       end
-      authorize! :read, @page
+
+      message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+      authorize! :read, @page, :message => message.html_safe
     end
 
     @editors = []
@@ -92,7 +94,8 @@ class PagesController < ApplicationController
 
   def share
     page = Page.find(params[:id])
-    authorize! :read, page
+    message = "You are unable to share the page: <strong>#{@page.title}</strong>. The access level needed to share this page is #{@page.level}, your access level is currently #{current_user.level}."
+    authorize! :read, page, :message => message.html_safe
     page.share_by_email(params[:email_list], current_user)
     redirect_to page
   end
@@ -112,8 +115,8 @@ class PagesController < ApplicationController
     @page.published = false
     @page.level ||= 'public'
     @page.generate_token(:viewing_token)
-    
-    authorize! :create, @page
+    message = "You are unable to create the page: <strong>#{@page.title}</strong> at this time. If you are interested in creating this page, please let us know."
+    authorize! :create, @page, :message => message.html_safe
     
     if @page.save
       redirect_to polymorphic_path([@group, @page])
@@ -125,8 +128,8 @@ class PagesController < ApplicationController
   
   def claim
     page = Page.find(params[:id])
-    
-    authorize! :edit, page
+    message = "You are unable to claim the page: <strong>#{@page.title}</strong> at this time."
+    authorize! :edit, page, :message => message.html_safe
     
     page.author = current_user
     page.save
@@ -146,7 +149,8 @@ class PagesController < ApplicationController
   def update
     page = Page.find(params[:id])
 
-    authorize! :edit, page
+    message = "You are unable to update the page: <strong>#{@page.title}</strong> at this time."
+    authorize! :edit, page, :message => message.html_safe
     
     if params[:content]
       page.title = params[:content][:page_title][:value]
@@ -175,8 +179,8 @@ class PagesController < ApplicationController
   def publish
     @page = Page.find(params[:id])
     @page.published = params[:published]
-
-    authorize! :publish, @page
+    message = "You do not have the access needed to publish the page: <strong>#{@page.title}</strong> at this time. If you are interested in publishing this page, please let us know."
+    authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
     redirect_to page_path(@page)
@@ -201,8 +205,8 @@ class PagesController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
-
-    authorize! :create, @duplicate
+    message = "You do not have the access needed to duplicate the page: <strong>#{@page.title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
+    authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
     redirect_to page_path(@duplicate)
@@ -211,8 +215,8 @@ class PagesController < ApplicationController
   def reset_token
     @page = Page.find(params[:id])
     @page.generate_token(:viewing_token)
-
-    authorize! :publish, @page
+    message = "You do not have the access needed to reset the token for the page: <strong>#{@page.title}</strong> at this time. If you are still interested in reseting the token for this page, please let us know."
+    authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
     redirect_to page_path(@page)
@@ -220,8 +224,8 @@ class PagesController < ApplicationController
   
   def destroy
     @page = Page.find(params[:id])
-    
-    authorize! :destroy, @page
+    message = "You do not have the access needed to destroy the page: <strong>#{@page.title}</strong> at this time. If you are still interested in destroying this page, please let us know."
+    authorize! :destroy, @page, :message => message.html_safe
     
     if @page.destroy
       if @group
