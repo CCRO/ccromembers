@@ -96,7 +96,8 @@ class Person < ActiveRecord::Base
   end
   
   def title
-    self.highrise_cache.title? ? self.highrise_cache.title : 'Unknown Title'
+    #self.highrise_cache.title? ? self.highrise_cache.title : 'Unknown Title'
+    'Unknown Title'
   end
 
   def company_name
