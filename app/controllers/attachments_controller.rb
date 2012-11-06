@@ -2,7 +2,8 @@ class AttachmentsController < ApplicationController
 
   before_filter :lookup_group
 
-  layout :conditional_layout
+  layout :conditional_layout, :except => :show
+  layout 'attachment_viewer', :only => :show
 
   def index
     @attachments = @group.attachments 
@@ -13,7 +14,7 @@ class AttachmentsController < ApplicationController
     
     @attachment.get_crocodoc_uuid! if @attachment.crocodoc_uuid.blank?
 
-    session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
+    @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
         'is_editable' => can?(:comment_on, @attachment),
         'user' => {
             'id' => current_user.id,
@@ -28,7 +29,7 @@ class AttachmentsController < ApplicationController
     })
 
     respond_to do |format|
-      format.html { redirect_to "https://crocodoc.com/view/" + session_key } 
+      format.html # { redirect_to "https://crocodoc.com/view/" + session_key } 
     end
   end
 
