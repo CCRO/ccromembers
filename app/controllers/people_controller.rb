@@ -22,14 +22,14 @@ class PeopleController < ApplicationController
     @group_memberships = Group.pluck(:id).zip(Group.pluck(:id).map { |group_id| (@person.groups.where(:id => group_id).present?) ? 1 : 0 })
 
     if @person.highrise_id.present?
-      if !@person.highrise_cached_at || @person.highrise_cached_at > 2.hours.ago
-        @highrise = Highrise::Person.find(@person.highrise_id) 
-        @person.highrise_cache = @highrise
-        @person.highrise_cached_at = Time.now
-        @person.save
-      else
-        @highrise = @person.highrise_cache
-      end
+      # if !@person.highrise_cached_at || @person.highrise_cached_at > 2.hours.ago
+      #   @highrise = Highrise::Person.find(@person.highrise_id) 
+      #   @person.highrise_cache = @highrise
+      #   @person.highrise_cached_at = Time.now
+      #   @person.save
+      # else
+      #   @highrise = @person.highrise_cache
+      # end
     else
       @possible_highrises = Highrise::Person.find_all_across_pages(:params => { :email => @person.email})
     end
