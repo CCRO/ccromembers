@@ -35,7 +35,9 @@ class PostsController < ApplicationController
 
     if @group
       @posts = @group.posts.order('updated_at DESC')
-      authorize! :read, @group 
+
+      message = "You are unable to view news and updates for the working group: <strong>#{@group.name}</strong>. If you are still interested in viewing news and updates for this group, please let us know."
+      authorize! :read, @group, :message => message.html_safe
     end
     
     respond_to do |format|
@@ -63,7 +65,9 @@ class PostsController < ApplicationController
       @all_tags = all_tags
       @category = Post.tagged_with(@tag)
       @commentable = @post
-      authorize! :read, @post
+
+      message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+      authorize! :read, @post, :message => message.html_safe
     end
 
     if params[:page]
@@ -86,7 +90,10 @@ class PostsController < ApplicationController
 
   def share
     post = Post.find(params[:id])
-    authorize! :read, post
+    
+    message = "You are unable to share the post: <strong>#{@post.title}</strong>. The access level needed to share this post is #{@post.level}, your access level is currently #{current_user.level}."
+    authorize! :read, post, :message => message.html_safe
+
     post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
     redirect_to post
   end
@@ -115,9 +122,13 @@ class PostsController < ApplicationController
     @post.generate_token(:viewing_token)
     
     if @post.owner_type == 'Group'
-      authorize! :create_in, @post.owner
+      message = "You are unable to create the post: <strong>#{@post.title}</strong> for this group."
+      authorize! :create_in, @post.owner, :message => message.html_safe
+
     else
-      authorize! :create, @post
+      message = "You are unable to create the post: <strong>#{@post.title}</strong>."
+      authorize! :create, @post, :message => message.html_safe
+
     end
     
     if @post.save
@@ -130,8 +141,9 @@ class PostsController < ApplicationController
   
   def claim
     post = Post.find(params[:id])
-    
-    authorize! :edit, post
+
+    message = "You are unable to claim the post: <strong>#{@post.title}</strong> at this time."
+    authorize! :edit, post, :message => message.html_safe
     
     post.author = current_user
     post.save
@@ -151,7 +163,8 @@ class PostsController < ApplicationController
   def update
     post = Post.find(params[:id])
 
-    authorize! :edit, post
+    message = "You are unable to update the post: <strong>#{@post.title}</strong> at this time."
+    authorize! :edit, post, :message => message.html_safe
     
     if params[:content]
       post.title = params[:content][:post_title][:value]
@@ -172,7 +185,8 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.published = params[:published]
 
-    authorize! :publish, @post
+    message = "You do not have the access needed to publish the post: <strong>#{@post.title}</strong> at this time. If you are still interested in publishing this post, please let us know."
+    authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
     redirect_to polymorphic_path([@group, @post])
@@ -198,7 +212,8 @@ class PostsController < ApplicationController
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
 
-    authorize! :create, @duplicate
+    message = "You do not have the access needed to duplicate the post: <strong>#{@post.title}</strong> at this time. If you are still interested in duplicating this post, please let us know."
+    authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
     redirect_to post_path(@duplicate)
@@ -208,7 +223,8 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.generate_token(:viewing_token)
 
-    authorize! :publish, @post
+    message = "You do not have the access needed to reset the token for the post: <strong>#{@post.title}</strong> at this time. If you are still interested in reseting the token for this post, please let us know."
+    authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
     redirect_to post_path(@post)
@@ -217,7 +233,8 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     
-    authorize! :destroy, @post
+    message = "You do not have the access needed to destroy the post: <strong>#{@post.title}</strong> at this time. If you are still interested in destroying this post, please let us know."
+    authorize! :destroy, @post, :message => message.html_safe
     
     if @post.destroy
       if @group
