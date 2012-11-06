@@ -26,26 +26,24 @@ class DocumentsController < ApplicationController
       authorize! :read, @document
     end
 
-    @document.update_viewer_uuid!
+    # @document.update_viewer_uuid!
 
-    session_key = Crocodoc::Session.create(@document.viewer_uuid, {
-        'is_editable' => true,
-        'user' => {
-            'id' => current_user.id,
-            'name' => current_user.name
-        },
-        'filter' => 'all',
-        'is_admin' => true,
-        'is_downloadable' => true,
-        'is_copyprotected' => false,
-        'is_demo' => false,
-        'sidebar' => 'visible'
-    })
-    
-    
+    # session_key = Crocodoc::Session.create(@document.viewer_uuid, {
+    #     'is_editable' => true,
+    #     'user' => {
+    #         'id' => current_user.id,
+    #         'name' => current_user.name
+    #     },
+    #     'filter' => 'all',
+    #     'is_admin' => true,
+    #     'is_downloadable' => true,
+    #     'is_copyprotected' => false,
+    #     'is_demo' => false,
+    #     'sidebar' => 'visible'
+    # })
 
     respond_to do |format|
-      format.html { redirect_to "https://crocodoc.com/view/" + session_key } # show.html.erb
+      format.html #{ redirect_to "https://crocodoc.com/view/" + session_key } # show.html.erb
       format.pdf { doc_raptor_send }
       format.json { render json: @document, :options => {:except => [:body], :methods => [:preview]} }
       format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} } 
