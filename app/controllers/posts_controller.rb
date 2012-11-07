@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   
+  include ActionView::Helpers::TextHelper
+
   before_filter :lookup_group
 
   layout :conditional_layout
@@ -66,10 +68,11 @@ class PostsController < ApplicationController
       @category = Post.tagged_with(@tag)
       @commentable = @post
 
+      post_title = strip_tags @post.title
       if current_user 
-        message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
       else
-        message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}. You are currently not logged in."
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}. You are currently not logged in."
       end
       authorize! :read, @post, :message => message.html_safe
     end
@@ -94,11 +97,11 @@ class PostsController < ApplicationController
 
   def share
     post = Post.find(params[:id])
-
+    post_title = strip_tags post.title
     if current_user
-      message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."  
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."  
     else
-      message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}. You are currently not logged in."
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this post is #{post.level}. You are currently not logged in."
     end
     
     authorize! :read, post, :message => message.html_safe
@@ -131,11 +134,13 @@ class PostsController < ApplicationController
     @post.generate_token(:viewing_token)
     
     if @post.owner_type == 'Group'
-      message = "You are unable to create the post: <strong>#{@post.title}</strong> for this group."
+      post_title = strip_tags @post.title
+      message = "You are unable to create the post: <strong>#{post_title}</strong> for this group."
       authorize! :create_in, @post.owner, :message => message.html_safe
 
     else
-      message = "You are unable to create the post: <strong>#{@post.title}</strong>."
+      post_title = strip_tags @post.title
+      message = "You are unable to create the post: <strong>#{post_title}</strong>."
       authorize! :create, @post, :message => message.html_safe
 
     end
@@ -150,8 +155,8 @@ class PostsController < ApplicationController
   
   def claim
     post = Post.find(params[:id])
-
-    message = "You are unable to claim the post: <strong>#{post.title}</strong> at this time."
+    post_title = strip_tags post.title
+    message = "You are unable to claim the post: <strong>#{post_title}</strong> at this time."
     authorize! :edit, post, :message => message.html_safe
     
     post.author = current_user
@@ -171,8 +176,9 @@ class PostsController < ApplicationController
 
   def update
     post = Post.find(params[:id])
+    post_title = strip_tags post.title
 
-    message = "You are unable to update the post: <strong>#{post.title}</strong> at this time."
+    message = "You are unable to update the post: <strong>#{post_title}</strong> at this time."
     authorize! :edit, post, :message => message.html_safe
     
     
@@ -196,8 +202,9 @@ class PostsController < ApplicationController
   def publish
     @post = Post.find(params[:id])
     @post.published = params[:published]
+    post_title = strip_tags @post.title
 
-    message = "You do not have the access needed to publish the post: <strong>#{@post.title}</strong> at this time. If you are still interested in publishing this post, please let us know."
+    message = "You do not have the access needed to publish the post: <strong>#{post_title}</strong> at this time. If you are still interested in publishing this post, please let us know."
     authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
@@ -223,8 +230,9 @@ class PostsController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
+    post_title = strip_tags post.title
 
-    message = "You do not have the access needed to duplicate the post: <strong>#{@post.title}</strong> at this time. If you are still interested in duplicating this post, please let us know."
+    message = "You do not have the access needed to duplicate the post: <strong>#{post_title}</strong> at this time. If you are still interested in duplicating this post, please let us know."
     authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
@@ -234,8 +242,9 @@ class PostsController < ApplicationController
   def reset_token
     @post = Post.find(params[:id])
     @post.generate_token(:viewing_token)
+    post_title = strip_tags @post.title
 
-    message = "You do not have the access needed to reset the token for the post: <strong>#{@post.title}</strong> at this time. If you are still interested in reseting the token for this post, please let us know."
+    message = "You do not have the access needed to reset the token for the post: <strong>#{post_title}</strong> at this time. If you are still interested in reseting the token for this post, please let us know."
     authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
@@ -244,8 +253,9 @@ class PostsController < ApplicationController
   
   def destroy
     @post = Post.find(params[:id])
+    post_title = strip_tags @post.title
     
-    message = "You do not have the access needed to destroy the post: <strong>#{@post.title}</strong> at this time. If you are still interested in destroying this post, please let us know."
+    message = "You do not have the access needed to destroy the post: <strong>#{post_title}</strong> at this time. If you are still interested in destroying this post, please let us know."
     authorize! :destroy, @post, :message => message.html_safe
     
     if @post.destroy

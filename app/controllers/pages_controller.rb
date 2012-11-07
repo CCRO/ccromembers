@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
 
+  include ActionView::Helpers::TextHelper
+
   before_filter :lookup_group
 
   layout :conditional_layout
@@ -72,10 +74,12 @@ class PagesController < ApplicationController
         @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
         @commentable = @page
       end
+      page_title = strip_tags @page.title
+
       if current_user
-        message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+        message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
       else
-        message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}. You are currently not logged in."
+        message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}. You are currently not logged in."
       end
       authorize! :read, @page, :message => message.html_safe
     end
@@ -97,10 +101,11 @@ class PagesController < ApplicationController
 
   def share
     page = Page.find(params[:id])
+    page_title = strip_tags page.title
     if current_user
-      message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
     else
-      message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
     end
     authorize! :read, page, :message => message.html_safe
     page.share_by_email(params[:email_list], current_user)
@@ -122,7 +127,8 @@ class PagesController < ApplicationController
     @page.published = false
     @page.level ||= 'public'
     @page.generate_token(:viewing_token)
-    message = "You are unable to create the page: <strong>#{@page.title}</strong> at this time. If you are interested in creating this page, please let us know."
+    page_title = strip_tags @page.title
+    message = "You are unable to create the page: <strong>#{page_title}</strong> at this time. If you are interested in creating this page, please let us know."
     authorize! :create, @page, :message => message.html_safe
     
     if @page.save
@@ -135,7 +141,8 @@ class PagesController < ApplicationController
   
   def claim
     page = Page.find(params[:id])
-    message = "You are unable to claim the page: <strong>#{page.title}</strong> at this time."
+    page_title = strip_tags page.title
+    message = "You are unable to claim the page: <strong>#{page_title}</strong> at this time."
     authorize! :edit, page, :message => message.html_safe
     
     page.author = current_user
@@ -155,8 +162,8 @@ class PagesController < ApplicationController
 
   def update
     page = Page.find(params[:id])
-
-    message = "You are unable to update the page: <strong>#{page.title}</strong> at this time."
+    page_title = strip_tags page.title
+    message = "You are unable to update the page: <strong>#{page_title}</strong> at this time."
     authorize! :edit, page, :message => message.html_safe
     
     if params[:content]
@@ -186,7 +193,8 @@ class PagesController < ApplicationController
   def publish
     @page = Page.find(params[:id])
     @page.published = params[:published]
-    message = "You do not have the access needed to publish the page: <strong>#{@page.title}</strong> at this time. If you are interested in publishing this page, please let us know."
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to publish the page: <strong>#{page_title}</strong> at this time. If you are interested in publishing this page, please let us know."
     authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
@@ -212,7 +220,8 @@ class PagesController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
-    message = "You do not have the access needed to duplicate the page: <strong>#{page.title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
+    page_title = strip_tags page.title
+    message = "You do not have the access needed to duplicate the page: <strong>#{page_title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
     authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
@@ -222,7 +231,8 @@ class PagesController < ApplicationController
   def reset_token
     @page = Page.find(params[:id])
     @page.generate_token(:viewing_token)
-    message = "You do not have the access needed to reset the token for the page: <strong>#{@page.title}</strong> at this time. If you are still interested in reseting the token for this page, please let us know."
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to reset the token for the page: <strong>#{page_title}</strong> at this time. If you are still interested in reseting the token for this page, please let us know."
     authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
@@ -231,7 +241,8 @@ class PagesController < ApplicationController
   
   def destroy
     @page = Page.find(params[:id])
-    message = "You do not have the access needed to destroy the page: <strong>#{@page.title}</strong> at this time. If you are still interested in destroying this page, please let us know."
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to destroy the page: <strong>#{page_title}</strong> at this time. If you are still interested in destroying this page, please let us know."
     authorize! :destroy, @page, :message => message.html_safe
     
     if @page.destroy
