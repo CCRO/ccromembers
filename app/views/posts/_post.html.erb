@@ -49,7 +49,7 @@
       <% if params[:filter] == 'drafts' %>
           <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
             <div id="post_preview" class='drafts'>
-              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', post %></b>
+              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
             </div>
           <% else %>
             <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
@@ -57,7 +57,7 @@
       <% else %>
           <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
             <div id="post_preview">
-              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', post %></b>
+              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
             </div>
           <% else %>
             <% if is_editing? %>
