@@ -137,7 +137,7 @@
       <%= render 'shared/footer' %>
     </footer>
 
-    <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') || (params[:controller] == 'posts' && params[:action] == 'index')%>
+    <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') || (params[:controller] == 'posts' && params[:action] == 'index') || params[:controller] == 'attachments'%>
       <div>
         <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
           <% if current_user.role == 'admin' %>

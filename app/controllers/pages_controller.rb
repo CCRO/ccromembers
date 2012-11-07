@@ -243,6 +243,7 @@ class PagesController < ApplicationController
 
     if @group
       @pages = @group.pages
+      @attachments = @group.attachments
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)
       @messages = @group.messages

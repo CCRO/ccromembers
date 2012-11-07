@@ -252,6 +252,7 @@ class PostsController < ApplicationController
      if params[:group_id]
       @group = Group.find(params[:group_id])
       @pages = @group.pages
+      @attachments = @group.attachments
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)
       @messages = @group.messages
