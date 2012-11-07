@@ -66,7 +66,11 @@ class PostsController < ApplicationController
       @category = Post.tagged_with(@tag)
       @commentable = @post
 
-      message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+      if current_user 
+        message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+      else
+        message = "You are unable to view the post: <strong>#{@post.title}</strong>. The access level needed to view this post is #{@post.level}. You are currently not logged in."
+      end
       authorize! :read, @post, :message => message.html_safe
     end
 
@@ -90,8 +94,13 @@ class PostsController < ApplicationController
 
   def share
     post = Post.find(params[:id])
+
+    if current_user
+      message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."  
+    else
+      message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}. You are currently not logged in."
+    end
     
-    message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."
     authorize! :read, post, :message => message.html_safe
 
     post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)

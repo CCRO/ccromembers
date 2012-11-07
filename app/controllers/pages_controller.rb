@@ -72,8 +72,11 @@ class PagesController < ApplicationController
         @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
         @commentable = @page
       end
-
-      message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+      if current_user
+        message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+      else
+        message = "You are unable to view the page: <strong>#{@page.title}</strong>. The access level needed to view this page is #{@page.level}. You are currently not logged in."
+      end
       authorize! :read, @page, :message => message.html_safe
     end
 
@@ -94,7 +97,11 @@ class PagesController < ApplicationController
 
   def share
     page = Page.find(params[:id])
-    message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
+    if current_user
+      message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
+    else
+      message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
+    end
     authorize! :read, page, :message => message.html_safe
     page.share_by_email(params[:email_list], current_user)
     redirect_to page
