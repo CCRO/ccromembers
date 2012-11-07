@@ -94,7 +94,7 @@ class PagesController < ApplicationController
 
   def share
     page = Page.find(params[:id])
-    message = "You are unable to share the page: <strong>#{@page.title}</strong>. The access level needed to share this page is #{@page.level}, your access level is currently #{current_user.level}."
+    message = "You are unable to share the page: <strong>#{page.title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
     authorize! :read, page, :message => message.html_safe
     page.share_by_email(params[:email_list], current_user)
     redirect_to page
@@ -128,7 +128,7 @@ class PagesController < ApplicationController
   
   def claim
     page = Page.find(params[:id])
-    message = "You are unable to claim the page: <strong>#{@page.title}</strong> at this time."
+    message = "You are unable to claim the page: <strong>#{page.title}</strong> at this time."
     authorize! :edit, page, :message => message.html_safe
     
     page.author = current_user
@@ -149,7 +149,7 @@ class PagesController < ApplicationController
   def update
     page = Page.find(params[:id])
 
-    message = "You are unable to update the page: <strong>#{@page.title}</strong> at this time."
+    message = "You are unable to update the page: <strong>#{page.title}</strong> at this time."
     authorize! :edit, page, :message => message.html_safe
     
     if params[:content]
@@ -205,7 +205,7 @@ class PagesController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
-    message = "You do not have the access needed to duplicate the page: <strong>#{@page.title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
+    message = "You do not have the access needed to duplicate the page: <strong>#{page.title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
     authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 

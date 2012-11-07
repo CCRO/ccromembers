@@ -91,7 +91,7 @@ class PostsController < ApplicationController
   def share
     post = Post.find(params[:id])
     
-    message = "You are unable to share the post: <strong>#{@post.title}</strong>. The access level needed to share this post is #{@post.level}, your access level is currently #{current_user.level}."
+    message = "You are unable to share the post: <strong>#{post.title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."
     authorize! :read, post, :message => message.html_safe
 
     post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
@@ -142,7 +142,7 @@ class PostsController < ApplicationController
   def claim
     post = Post.find(params[:id])
 
-    message = "You are unable to claim the post: <strong>#{@post.title}</strong> at this time."
+    message = "You are unable to claim the post: <strong>#{post.title}</strong> at this time."
     authorize! :edit, post, :message => message.html_safe
     
     post.author = current_user
@@ -163,8 +163,9 @@ class PostsController < ApplicationController
   def update
     post = Post.find(params[:id])
 
-    message = "You are unable to update the post: <strong>#{@post.title}</strong> at this time."
+    message = "You are unable to update the post: <strong>#{post.title}</strong> at this time."
     authorize! :edit, post, :message => message.html_safe
+    
     
     if params[:content]
       post.title = params[:content][:post_title][:value]
@@ -178,6 +179,8 @@ class PostsController < ApplicationController
       post.update_attributes(params[:post])
       redirect_to polymorphic_path([post.owner, post])
     end
+
+
 
   end
   
