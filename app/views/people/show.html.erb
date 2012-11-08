@@ -68,7 +68,7 @@
     <%= hidden_field_tag :person_id, @person.id %>
     <% if can? :manage, group %>
     <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
-    <%= group.name %>
+    <%= link_to group.name, group %>
     <% else%>
       <% if @person.groups.where(:id => group.id).present? %>
         <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
