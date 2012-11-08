@@ -95,23 +95,31 @@
       
       <% unless params[:controller] == 'signups' %>  
       	<aside class="span3">
-          <% if can? :create, Post %>
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Drafts', draft_posts_path() %></li>
-              <li><%= link_to 'My Drafts', my_draft_posts_path() %></li>
-              <li><%= link_to 'Archived Posts', archive_posts_path() %></li>
-            </ul>
-          <% end %>
 
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'CCRO General Meeting', "/pages/17" %></li>
-            </ul>
+          <ul class="nav nav-tabs nav-stacked">
+            <li class="nav-header">CCRO Upcoming events</li>
+            <li><%= link_to 'CCRO General Meeting', "/pages/17" %></li>
+          </ul>
 
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'Middle Office Survey', "/surveys/10" %></li>
-              <li><%= link_to 'Short Governance Survey', "/surveys/11" %></li>
-              <li><%= link_to 'Current Active Poll', "/polls/active" %></li>
-            </ul>
+          <ul class="nav nav-tabs nav-stacked">
+              <li class="nav-header">CCRO Working Groups</li>
+              <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+              <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
+              <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
+              <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
+              <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
+              <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
+              <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
+              <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
+              <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
+          </ul>
+
+          <ul class="nav nav-tabs nav-stacked">
+            <li class="nav-header">CCRO Active Surveys and Polls</li>
+            <li><%= link_to 'Middle Office Survey', "/surveys/10" %></li>
+            <li><%= link_to 'Short Governance Survey', "/surveys/11" %></li>
+            <li><%= link_to 'Current Active Poll', "/polls/active" %></li>
+          </ul>
           <center>
 
             <% if false %>
