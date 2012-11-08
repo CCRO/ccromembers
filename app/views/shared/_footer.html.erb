@@ -51,6 +51,7 @@
       Mobile: <%= current_user.mobile_phone || raw("Text <b>#{current_user.pin_code}</b> to 281-815-4177 to verify.") %><br />
       Access Token: <%= raw '&bull;' * current_user.access_token.length %> <%= clippy(current_user.access_token) %></p>
       PIN Code: <b><%= current_user.pin_code %></b></p>
+      <%= link_to 'change back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %>
 	  </td>
 	  </tr>
 	  </table>
@@ -64,10 +65,10 @@
 
 <%= yield :modal_settings %>
 
-  <% if @post %>
+  <% if @post && @post.id %>
     <div class="modal hide fade" id="modal-share_link">
       <div class="modal-header">
-        <h1><%= @post.title.html_safe %></h1>
+        <h1><%= @post.title.html_safe if @post.title %></h1>
       </div>
       <div class="modal-body center">
         <h2>Share this post:</h2>

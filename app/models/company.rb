@@ -3,7 +3,10 @@ class Company < ActiveRecord::Base
   has_many :subscriptions, :as => :owner
 
   has_many :people
-  has_many :documents, :as => :owner 
+  has_many :documents, :as => :owner
+  has_many :pages, :as => :owner 
+  has_many :posts, :as => :owner 
+  has_many :messages, :as => :owner  
 
   belongs_to :primary_contact, :class_name => 'Person', :foreign_key => 'primary_person_id'
   belongs_to :billing_contact, :class_name => 'Person', :foreign_key => 'billing_person_id'

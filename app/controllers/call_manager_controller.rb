@@ -21,12 +21,19 @@ layout 'twiml'
   end
 
   def voice
+    if Group.find_by_conf_phone(params['Called'])
+      @group = Group.find_by_conf_phone(params['Called'])
+      conf_room = @group.name.parameterize
+    else
+      conf_room = "ccro-conference-room"
+    end
+
   	twiml = Twilio::TwiML::Response.new do |r|
   		if Person.find_by_mobile_phone(params['Caller'])
   			@person = Person.find_by_mobile_phone(params['Caller'])
-  			r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
+  			r.Say "hello #{@person.name}! You will be placed into the #{@group.try(:name) if @group} conference room.", :voice => 'woman'
         r.Dial do
-          r.Conference "700"
+          r.Conference conf_room
         end
 		  else 
         unless params['Digits']
@@ -37,9 +44,9 @@ layout 'twiml'
         else
           if Person.find_by_pin_code(params['Digits'])
             @person = Person.find_by_pin_code(params['Digits'])
-            r.Say "hello #{@person.name}! You will be placed into the coference.", :voice => 'woman'
+            r.Say "hello #{@person.name}! You will be placed into the #{@group.try(:name)  if @group} conference room.", :voice => 'woman'
             r.Dial do
-              r.Conference "700"
+              r.Conference conf_room
             end
           else
             r.Say "Unknown PIN. Goodbye.", :voice => 'woman' 

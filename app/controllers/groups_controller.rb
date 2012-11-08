@@ -1,8 +1,13 @@
 class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
+
+  layout 'group'
+
   def index
     @groups = Group.all
+
+    authorize! :read, Group , :message => "You do not have the access to view all groups in this manner."
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,10 +20,51 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
 
+    message = "You do not have access to the working group <strong>'#{@group.name}'</strong> at this time. If you are interested in joining this group, please let us know."
+    authorize! :read, @group, :message => message.html_safe
+
+    redirect_to group_posts_path(@group)
+  end
+
+  def show_activity
+    @group = Group.find(params[:id])
+
+    @pages = @group.pages
+    @total_articles = @group.posts
+    @articles = @total_articles.limit(3)
+    @messages = @group.messages
+    @comments = @group.comments
+    @attachments = @group.attachments
+    @group_document = @group.documents
+    @smart_list = @group.people
+    @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person }
+    @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person }
+    @group_resources = (@pages + @articles + @messages + @comments + @attachments).sort_by(&:updated_at).reverse
+    
+    message = "You do not have the access needed to see the activities for the working group: <strong>#{@group.name}</strong>. If you are interested in joining this group, please let us know."
+    authorize! :read, @group, :message => message.html_safe
+
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @group }
     end
+  end
+
+  def permissions
+    @group = Group.find(params[:id])
+    @memberships = @group.memberships
+
+    @pages = @group.pages
+    @articles = @group.posts
+    @messages = @group.messages
+    @group_document = @group.documents
+    @smart_list = @group.people
+
+
+    message = "You are unable to set the permissions for the working group: <strong>#{@group.name}</strong>."
+    authorize! :manage, @group, :message => message.html_safe
+
   end
 
   # GET /groups/new

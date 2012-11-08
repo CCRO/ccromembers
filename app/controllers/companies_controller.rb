@@ -18,6 +18,10 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
     @people = @company.people
 
+  unless @company.highrise_id.present?
+    @possible_highrises = Highrise::Company.find_all_across_pages(:params => { :name => @company.name})
+  end
+
     authorize! :read, @company
 
     respond_to do |format|
@@ -74,7 +78,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Company was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

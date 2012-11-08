@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910211231) do
+ActiveRecord::Schema.define(:version => 20121105194844) do
+
+  create_table "attachments", :force => true do |t|
+    t.string   "file"
+    t.string   "crocodoc_uuid"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "author_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "title"
+    t.text     "description"
+    t.string   "content_type"
+    t.string   "file_size"
+    t.boolean  "archived"
+  end
+
+  add_index "attachments", ["author_id"], :name => "index_attachments_on_author_id"
+  add_index "attachments", ["owner_id"], :name => "index_attachments_on_owner_id"
 
   create_table "comments", :force => true do |t|
     t.string   "subject"
@@ -62,8 +80,8 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.datetime "published_at"
     t.integer  "owner_id"
     t.string   "owner_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.string   "format"
     t.integer  "author_id"
     t.boolean  "archived"
@@ -71,12 +89,15 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.boolean  "published"
     t.string   "viewing_token"
     t.string   "level"
+    t.string   "viewer_uuid"
+    t.datetime "viewer_uuid_updated_at"
   end
 
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "conf_phone"
   end
 
   create_table "images", :force => true do |t|
@@ -115,6 +136,14 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "person_id"
+    t.string   "fuction"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "mercury_images", :force => true do |t|
@@ -158,7 +187,7 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.text     "header"
     t.text     "body"
     t.integer  "owner_id"
-    t.integer  "owner_type"
+    t.string   "owner_type"
     t.integer  "author_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
@@ -200,6 +229,9 @@ ActiveRecord::Schema.define(:version => 20120910211231) do
     t.string   "mobile_phone"
     t.string   "last_browser"
     t.string   "last_platform"
+    t.text     "browser_info"
+    t.text     "highrise_cache"
+    t.datetime "highrise_cached_at"
   end
 
   create_table "people_smart_lists", :id => false, :force => true do |t|

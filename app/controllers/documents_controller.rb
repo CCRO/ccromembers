@@ -7,12 +7,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    if current_user.admin?
-      @documents = Document.accessible_by(current_ability)
-    else
-      @documents = Document.published.accessible_by(current_ability)
-    end
-    
+    @documents = Document.all.delete_if { |document| cannot? :read, document }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,11 +23,30 @@ class DocumentsController < ApplicationController
       @document = Document.find_by_viewing_token(params[:token])
     else 
       @document = Document.find(params[:id])
-      authorize! :read, @document
+
+      message = "You do not have access to the document <strong>'#{@document.title}'</strong> at this time. If you are interested in viewing this document, please let us know."
+      authorize! :read, @document, :message => message.html_safe
     end
 
+    # @document.update_viewer_uuid!
+
+    # session_key = Crocodoc::Session.create(@document.viewer_uuid, {
+    #     'is_editable' => true,
+    #     'user' => {
+    #         'id' => current_user.id,
+    #         'name' => current_user.name
+    #     },
+    #     'filter' => 'all',
+    #     'is_admin' => true,
+    #     'is_downloadable' => true,
+    #     'is_copyprotected' => false,
+    #     'is_demo' => false,
+    #     'sidebar' => 'visible'
+    # })
+
     respond_to do |format|
-      format.html # show.html.erb
+      format.html #{ redirect_to "https://crocodoc.com/view/" + session_key } # show.html.erb
+      format.pdf { doc_raptor_send }
       format.json { render json: @document, :options => {:except => [:body], :methods => [:preview]} }
       format.xml { render xml: @document, :options => {:except => [:body], :methods => [:preview]} } 
     end
@@ -43,6 +57,9 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     # @document.format = 'markdown'
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
     
     respond_to do |format|
       format.html # new.html.erb
@@ -61,7 +78,11 @@ class DocumentsController < ApplicationController
     @document = Document.new(params[:document])
     @document.generate_token
     @document.archived = false
-    @document.owner ||= default_company
+    if params[:group_id]
+      @document.owner = Group.find(params[:group_id]) 
+    else
+      @document.owner ||= default_company
+    end
     @document.author = current_user
 
     respond_to do |format|
@@ -108,6 +129,25 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to documents_url }
       format.json { head :no_content }
+    end
+  end
+
+    def doc_raptor_send(options = { })
+    default_options = { 
+      :name             => "CCRO-" + @document.permalink,
+      :document_type    => request.format.to_sym,
+      :test             => ! Rails.env.production?,
+      :strict           => false
+    }
+    options = default_options.merge(options)
+    options[:document_content] ||= render_to_string
+    ext = options[:document_type].to_sym
+    
+    response = DocRaptor.create(options)
+    if response.code == 200
+      send_data response, :filename => "#{options[:name]}.#{ext}", :type => ext
+    else
+      render :inline => response.body, :status => response.code
     end
   end
 end

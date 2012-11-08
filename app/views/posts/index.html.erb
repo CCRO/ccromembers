@@ -1,29 +1,32 @@
 <% content_for :adminbar do %>
 	<ul>
-		<li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %><i class="icon-asterisk"></i><br><p>New Post</p><% end %></li>
+		<li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %><i class="icon-asterisk"></i><br><p>New<br>Post</p><% end %></li>
+    <li><%= link_to draft_posts_path() do %><i class="icon-file"></i><br><p>Drafts</p><% end %></li>
+    <li><%= link_to my_draft_posts_path() do %><i class="icon-paste"></i><br><p>My<br>Drafts</p><% end %></li>
+    <li><%= link_to archive_posts_path() do %><i class="icon-hdd"></i><br><p>Archived<br>Posts</p><% end %></li>
 	</ul>
 <% end %>
 
 <% content_for :modal_settings do %>
-  <div class="modal hide fade" id="modal-new-post">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>New Post</h3>
-    </div>
-    <div class="modal-body center">
-	  <%= form_for Post.new do |f| %>
-	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	</div>
-    <div class="modal-footer">
-	    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
-    </div>
-	  <% end %>
+<div class="modal hide fade" id="modal-new-post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>New Post</h3>
   </div>
+  <div class="modal-body center">
+  <%= form_for [@group, Post.new] do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+</div>
+  <div class="modal-footer">
+    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+  </div>
+  <% end %>
+</div>
 
 <% end %>
 
 <% if @posts.present? %>
 	<%= render @posts %>
 <% else %>
-	<h1>You do not currently have any drafts. </h1><h2>Good job, everything is published! Or you need to get to work.</h2>
+	<h1>You do not currently have any blog posts or news items.</h1>
 <% end %>

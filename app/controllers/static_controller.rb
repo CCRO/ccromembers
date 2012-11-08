@@ -12,4 +12,7 @@ class StaticController < ApplicationController
 
   def summit
   end
+
+  def welcome
+  end
 end

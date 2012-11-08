@@ -1,0 +1,1 @@
+Crocodoc.api_token = ENV['CROCODOC_API_TOKEN']

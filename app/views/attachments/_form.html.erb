@@ -1,0 +1,45 @@
+<%= form_for([@group, @attachment], :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
+  <% if @attachment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@attachment.errors.count, "error") %> prohibited this attachment from being saved:</h2>
+
+      <ul>
+      <% @attachment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <fieldset>
+    <legend>Upload File</legend>
+    <div class="control-group">
+      <%= f.label :file, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.file_field :file %>
+      <%= f.hidden_field :file_cache %>     
+        <p class="help-block">Upload a file as a *.doc, *.pdf, *.xls, or *.ppt.</p>
+      </div>
+    </div>
+  </fieldset>
+    <fieldset>
+    <legend>Optional Metadata</legend>
+    <div class="control-group">
+      <%= f.label :title, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title %>
+      </div>
+    </div>  
+    <div class="control-group">
+      <%= f.label :description, :class => 'control-label' %>
+      <div class="controls">
+      <%= f.text_area :description, :class => 'span6', :rows => '8' %>
+      <p class="help-block">The description will show on the file listing under the title.</p>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>
+  </div>
+  
+<% end %>

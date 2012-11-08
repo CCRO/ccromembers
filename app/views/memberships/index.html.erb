@@ -1,0 +1,35 @@
+<% content_for :adminbar do %>
+	<ul>
+		<li>
+	      <%= link_to permissions_group_path(@group) do %>
+	      <i class="icon-sitemap"></i><br><p>Group <br>Permissions</p>
+	      <% end %>
+	    </li>
+	</ul>
+
+<% end %>
+
+<table class="table table-bordered table-striped">
+	<tbody>
+	<h2>Co-Chairs</h2>
+	<% @co_chairs.each do |person| %>
+		<%= sticker_for(person, :class => 'sticker-columns') %>
+	<% end %>
+	<hr style="clear:both; padding-top:10px;">
+		
+	<h2 style="padding-top:20px;">Coordinators</h2>
+		
+	<% @coordinators.each do |person| %>
+		<%= sticker_for(person, :class => 'sticker-columns') %>
+	<% end %>
+	<hr style="clear:both; padding-top:10px;">
+		
+	<h2 style="padding-top:20px; ">Participants</h2>
+		
+	<% @participants.each do |person| %>
+		<%= sticker_for(person, :class => 'sticker-columns') %>
+	<% end %>
+	<hr style="clear:both; padding-top:10px;">
+</tbody>
+</table>
+	

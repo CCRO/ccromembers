@@ -2,58 +2,73 @@
   <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
 </div>
 
-<div id="login" class="row-fluid">
-
-    <div id="login_tools" class="hero-unit span12">  
-    <h1 style="margin-bottom: 50px;"> Login as existing user:</h1>
-      <%= form_tag  :sessions, :class => "form-inline" do %>
-        <%= hidden_field_tag :remember_me, '1' %>
-        <%= text_field_tag :email, '', :class => "input-xlarge", :placeholder => "Email" %>
-        <%= password_field_tag :password, '', :class => "input-xlarge", :placeholder => "Password" %>
-        <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-      <% end %>
-    </div> 
-
-</div>
-
-<div id="signup" class="row-fluid">
-  <div class="hero-unit span6">
-    <h1>Basic (Free)</h1>
-    <p>
-     <ul>
-        <li>Access to select articles and other content develop by the CCRO</li>
-        <li>Monthly digest email</li>
-        <li>Participate in selected CCRO sponsored surveys</li>
-      </ul>
-    <p>
-      <%= link_to "Get started &nbsp;&rarr;".html_safe, new_person_path,  :class => "btn btn-success btn-large" %>
-    </p>
-  </div>
-  <div class="hero-unit span6 ">
-    <h1>Pro ($75/mo)</h1>
-    <p>
-    <ul>
-      <li>All benefits included with basic subscriber access plus:</li>
-      <li>Access to all articles and other content developed specifically for Pro subscribers</li>
-      <li>Early access to select articles before released to the other subscribers</li>
-      <li>Monthly Risk Chief newsletter - summarizing the CCRO’s priority topics</li>
-      <li>Participate in and view real-time reports from CCRO sponsored surveys</li>
-      <li>Discounted CCRO White Paper access</li>
-    </ul>
-    <p>
-      <%= link_to "Get started &nbsp;&rarr;".html_safe, pro_signups_path,  :class => "btn btn-success btn-large" %>
-    </p>
-  </div>
-</div>
-
-<div id="contact" class="row-fluid">
-
+<% if current_user %>
+  
+  <div id="contact" class="row-fluid">
     <div class="hero-unit span12">  
-    <h1 style="margin-bottom: 50px;">Need help?</h1>
+    <h1 style="margin-bottom: 30px;">Need help?</h1>
     <h2>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</h2>
+    <% if flash[:alert] %>
+      <p><%= flash[:alert] %></p>
+    <% else %>
+      <p>You do not currently have access to <%= session[:url_return_to] %>.</p>
+    <% end %>
+    <%= link_to "Back", :back, class: 'btn btn-success btn-large', style: 'width: 100px; height:20px; margin-top:20px' %>
     </div> 
+  </div>
 
-</div>
+<% else %>
+  <div id="login" class="row-fluid">
+    <div id="login_tools" class="hero-unit span12">  
+      <h1 style="margin-bottom: 50px;"> Login as existing user:</h1>
+        <%= form_tag  :sessions, :class => "form-inline" do %>
+          <%= hidden_field_tag :remember_me, '1' %>
+          <%= text_field_tag :email, '', :class => "input-xlarge", :placeholder => "Email" %>
+          <%= password_field_tag :password, '', :class => "input-xlarge", :placeholder => "Password" %>
+          <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+        <% end %>
+        <p>You are not logged in to the website. Please login to continue.</p>
+      <p>Dont have a login? <%= link_to 'register here', register_path %></p> 
+      </div>
+    </div>
+
+  <% if false %>  
+    <div id="signup" class="row-fluid">
+      <div class="hero-unit span6">
+        <h1>Basic (Free)</h1>
+        <p>
+          <ul>
+            <li>Access to select articles and other content develop by the CCRO</li>
+            <li>Monthly digest email</li>
+            <li>Participate in selected CCRO sponsored surveys</li>
+          </ul>
+        <p><%= link_to "Get started &nbsp;&rarr;".html_safe, new_person_path,  :class => "btn btn-success btn-large" %></p>
+      </div>
+
+      <div class="hero-unit span6 ">
+        <h1>Pro ($75/mo)</h1>
+        <p>
+        <ul>
+          <li>All benefits included with basic subscriber access plus:</li>
+          <li>Access to all articles and other content developed specifically for Pro subscribers</li>
+          <li>Early access to select articles before released to the other subscribers</li>
+          <li>Monthly Risk Chief newsletter - summarizing the CCRO’s priority topics</li>
+          <li>Participate in and view real-time reports from CCRO sponsored surveys</li>
+          <li>Discounted CCRO White Paper access</li>
+        </ul>
+        <p><%= link_to "Get started &nbsp;&rarr;".html_safe, pro_signups_path,  :class => "btn btn-success btn-large" %></p>
+      </div>
+    </div>
+  <% end %>
+
+    <div id="contact" class="row-fluid">
+      <div class="hero-unit span12">
+      <h1 style="margin-bottom: 50px;">Need help?</h1>
+      <h2>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</h2>
+      </div> 
+    </div>
+  
+<% end %>
 
 <style>
 body {

@@ -3,6 +3,35 @@
   <h3><%= @person.name%></h3>
 </div>
 <div class="modal-body ">
-    <%= @person.email %><br />
+    <table cellpadding="10">
+    <tr>
+      <td>
+      <ul class="thumbnails">
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <%= avatar_for @person %>
+          </a>
+        </li>
+      </ul>
+    </td>
+    <td valign="top">
+      <p><%= @person.title %> at <%= @person.company_name %><br />
+      Role: <%= @person.role.capitalize if @person.role %><br />
+      Email: <%= mail_to @person.email %><br />
+    </td>
+    </tr>
+    </table>
+<% if @possible_highrises %>
+  <% @possible_highrises.each do |possible_highrise| %>
+  <div class="alert alert-block alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4>Highrise Match Detected!</h4>
+       Is this person <%= possible_highrise.first_name + " " + possible_highrise.last_name %> which is the <%= possible_highrise.title %> from <%= possible_highrise.company_name %>?
+       <br> <br>
+       <%= link_to("Yes, link this profile.", person_path(@person, person: {:highrise_id => possible_highrise.id }), :class => 'btn', :method => :put, :confirm => "Are you sure?") %>
+  </div>
+<% end %>
+<% end %>
+
 </div>
-<div class="modal-footer"><%= button_to 'View Full Profile', @person, :class => 'btn-primary' %></div>
+<div class="modal-footer"><%= button_to "Login as #{@person.name}", su_person_path(@person) if can? :su, @person %> <%= button_to 'View Full Profile', @person, :class => 'btn-primary' %></div>

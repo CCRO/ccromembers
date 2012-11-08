@@ -6,7 +6,32 @@ class Ability
         
     can :read, [Post, Page], {level: 'public', published: true}
     can :create, Person
+    can :read, Person
     can :read, Survey if user.id
+   
+    can :read, Group do |group|
+        group.people.include? user
+    end
+
+    can :read, [Document, Message, Page, Post] do |object|
+      object.owner_type == "Group" && object.owner.people.include?(user)
+    end
+
+    can [:edit, :destroy, :publish], [Post, Document, Message, Page] do |object|
+      object.owner_type == "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
+    end
+    
+    can [:create_in], Group do |group|
+      (group.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || group.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
+    end
+
+    can :comment_on, [Message, Attachment] do |object|
+      if object.owner.present? && object.owner_type == 'Group'
+        object.owner.people.include? user
+      else
+        user.basic?
+      end
+    end
     
     if user.basic?
       can :read, [PollingSession, Poll]
@@ -27,7 +52,7 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}  
       can :read, [Post, Page, Document], {level: 'committee', :published => true}  
-      can :read, [Document, Comment, Message, Survey, Page]
+      can :read, [Document, Comment, Message, Survey, Page, Group], :published => true
       can :read, [Post, Page, Document], :published => true
       can :read, Company, :id => user.company_id
       

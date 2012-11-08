@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   
   serialize :browser_info
+  serialize :highrise_cache, Highrise::Person
 
   has_many :subscriptions, :as => :owner
   # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
@@ -14,6 +15,9 @@ class Person < ActiveRecord::Base
   
   belongs_to :company 
   has_many :documents, :as => :owner 
+
+  has_many :memberships
+  has_many :groups, :through => :memberships
 
   # has_many :observed_messages, :through => :observer
   # has_many :moderated_messages, :through => :moderator
@@ -91,6 +95,15 @@ class Person < ActiveRecord::Base
     self.role == 'moderator'
   end
   
+  def title
+    # self.highrise_cache.title? ? self.highrise_cache.title : 'Unknown Title'
+    'Unknown Title'
+  end
+
+  def company_name
+    self.company.try(:name) || 'Unknown Company'
+  end
+
   def to_xml(options={})
     options.merge!(:except => [:password_digest, :access_token, :created_at, :updated_at], :include => [:company => {:only => [:name]}])
     super(options)

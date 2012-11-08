@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
   
-  layout 'blog'
-  
+  include ActionView::Helpers::TextHelper
+
+  before_filter :lookup_group
+
+  layout :conditional_layout
+
   def index
     if params[:filter] 
       if params[:filter] == 'drafts'
@@ -20,6 +24,7 @@ class PostsController < ApplicationController
         @posts = Post.where(published: true).tagged_with("summit")
       end
     end
+
     if params[:tag_name]
       @posts = Post.where(published: true).tagged_with(params[:tag_name])
     end
@@ -29,7 +34,13 @@ class PostsController < ApplicationController
     if params[:page]
       @page = Page.find(params[:page])
     end
-    
+
+    if @group
+      @posts = @group.posts.order('updated_at DESC')
+
+      message = "You are unable to view news and updates for the working group: <strong>#{@group.name}</strong>. If you are still interested in viewing news and updates for this group, please let us know."
+      authorize! :read, @group, :message => message.html_safe
+    end
     
     respond_to do |format|
       format.html
@@ -47,6 +58,7 @@ class PostsController < ApplicationController
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
+
     if params['token']
       @post = Post.find_by_viewing_token(params[:token])
     else 
@@ -55,7 +67,14 @@ class PostsController < ApplicationController
       @all_tags = all_tags
       @category = Post.tagged_with(@tag)
       @commentable = @post
-      authorize! :read, @post
+
+      post_title = strip_tags @post.title
+      if current_user 
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+      else
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}. You are currently not logged in."
+      end
+      authorize! :read, @post, :message => message.html_safe
     end
 
     if params[:page]
@@ -66,6 +85,10 @@ class PostsController < ApplicationController
       impressionist(@post)
     end
 
+    if @group
+      @article = @post
+    end
+
     respond_to do |format|
       format.html
       format.pdf { doc_raptor_send }
@@ -74,7 +97,15 @@ class PostsController < ApplicationController
 
   def share
     post = Post.find(params[:id])
-    authorize! :read, post
+    post_title = strip_tags post.title
+    if current_user
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this post is #{post.level}, your access level is currently #{current_user.level}."  
+    else
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this post is #{post.level}. You are currently not logged in."
+    end
+    
+    authorize! :read, post, :message => message.html_safe
+
     post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
     redirect_to post
   end
@@ -82,6 +113,9 @@ class PostsController < ApplicationController
   
   def new
     @post = Post.new
+    if params[:group_id]
+      @owner = Group.find(params[:group_id])
+    end
   end
   
   def create
@@ -89,16 +123,30 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     
     @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your post preview!"
-    @post.owner = current_user
+    if params[:group_id]
+      @post.owner = Group.find(params[:group_id]) 
+    else
+      @post.owner ||= current_user
+    end
     @post.author = current_user
     @post.published = false
     @post.level ||= 'public'
     @post.generate_token(:viewing_token)
     
-    authorize! :create, @post
+    if @post.owner_type == 'Group'
+      post_title = strip_tags @post.title
+      message = "You are unable to create the post: <strong>#{post_title}</strong> for this group."
+      authorize! :create_in, @post.owner, :message => message.html_safe
+
+    else
+      post_title = strip_tags @post.title
+      message = "You are unable to create the post: <strong>#{post_title}</strong>."
+      authorize! :create, @post, :message => message.html_safe
+
+    end
     
     if @post.save
-      redirect_to post_path(@post)
+      redirect_to polymorphic_path([@group, @post])
     else
       flash[:notice] = "Please give your new draft a title."
       redirect_to draft_posts_path
@@ -107,8 +155,9 @@ class PostsController < ApplicationController
   
   def claim
     post = Post.find(params[:id])
-    
-    authorize! :edit, post
+    post_title = strip_tags post.title
+    message = "You are unable to claim the post: <strong>#{post_title}</strong> at this time."
+    authorize! :edit, post, :message => message.html_safe
     
     post.author = current_user
     post.save
@@ -122,13 +171,16 @@ class PostsController < ApplicationController
       post.lock(current_user)
       post.save
     end
-    redirect_to "/editor" + post_path(post)
+    redirect_to "/editor" + polymorphic_path([@group, post])
   end
 
   def update
     post = Post.find(params[:id])
+    post_title = strip_tags post.title
 
-    authorize! :edit, post
+    message = "You are unable to update the post: <strong>#{post_title}</strong> at this time."
+    authorize! :edit, post, :message => message.html_safe
+    
     
     if params[:content]
       post.title = params[:content][:post_title][:value]
@@ -140,19 +192,23 @@ class PostsController < ApplicationController
       render text: ""
     else
       post.update_attributes(params[:post])
-      redirect_to post_path(post)
+      redirect_to polymorphic_path([post.owner, post])
     end
+
+
 
   end
   
   def publish
     @post = Post.find(params[:id])
     @post.published = params[:published]
+    post_title = strip_tags @post.title
 
-    authorize! :publish, @post
+    message = "You do not have the access needed to publish the post: <strong>#{post_title}</strong> at this time. If you are still interested in publishing this post, please let us know."
+    authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
-    redirect_to post_path(@post)
+    redirect_to polymorphic_path([@group, @post])
   end
 
   def restore
@@ -174,8 +230,10 @@ class PostsController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
+    post_title = strip_tags post.title
 
-    authorize! :create, @duplicate
+    message = "You do not have the access needed to duplicate the post: <strong>#{post_title}</strong> at this time. If you are still interested in duplicating this post, please let us know."
+    authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
     redirect_to post_path(@duplicate)
@@ -184,8 +242,10 @@ class PostsController < ApplicationController
   def reset_token
     @post = Post.find(params[:id])
     @post.generate_token(:viewing_token)
+    post_title = strip_tags @post.title
 
-    authorize! :publish, @post
+    message = "You do not have the access needed to reset the token for the post: <strong>#{post_title}</strong> at this time. If you are still interested in reseting the token for this post, please let us know."
+    authorize! :publish, @post, :message => message.html_safe
 
     @post.save 
     redirect_to post_path(@post)
@@ -193,14 +253,38 @@ class PostsController < ApplicationController
   
   def destroy
     @post = Post.find(params[:id])
+    post_title = strip_tags @post.title
     
-    authorize! :destroy, @post
+    message = "You do not have the access needed to destroy the post: <strong>#{post_title}</strong> at this time. If you are still interested in destroying this post, please let us know."
+    authorize! :destroy, @post, :message => message.html_safe
     
     if @post.destroy
-      redirect_to root_path
+      if @group
+        redirect_to @group
+      else
+        redirect_to root_path
+      end
+
     else
       redirect_to post_path(@post)
     end
+  end
+
+  def lookup_group
+     if params[:group_id]
+      @group = Group.find(params[:group_id])
+      @pages = @group.pages
+      @attachments = @group.attachments
+      @total_articles = @group.posts
+      @articles = @total_articles.limit(3)
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+  end
+
+  def conditional_layout
+    (@group) ? 'group' : 'blog' 
   end
 
   def doc_raptor_send(options = { })

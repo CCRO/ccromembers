@@ -1,6 +1,9 @@
 Ccromembers::Application.routes.draw do
+
+  get "doc_viewer/upload"
   
-  
+  get "doc_viewer/view"
+
   resources :smart_lists do
     member do 
       get :duplicate
@@ -46,7 +49,42 @@ Ccromembers::Application.routes.draw do
 
   resources :tags
 
-  resources :groups
+  resources :groups do
+    member do
+      get 'permissions'
+      get 'show_activity'
+    end
+ 
+    resources :pages do
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
+      end
+
+    end
+    resources :posts do
+      member do 
+        post :mercury_update
+        get :publish
+        get :claim
+        get :reset_token
+        get :duplicate
+        get :restore
+        post :share
+      end
+    end
+    resources :memberships
+    resources :messages
+    resources :documents
+    resources :attachments
+  end
+
+  match '/memberships' => 'memberships#toggle', :via => :post
 
     namespace :mercury do
       resources :images
@@ -160,6 +198,7 @@ Ccromembers::Application.routes.draw do
       member do
         get :resend_activation
         get :send_mobile_activation
+        get :su
       end
       resources :subscriptions
   end

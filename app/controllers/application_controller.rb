@@ -73,6 +73,7 @@ class ApplicationController < ActionController::Base
   helper_method :is_editing?
      
   def current_user
+    current_user ||= Person.find_by_id(session[:su_user_id]) if session[:su_user_id]
     current_user ||= Person.find_by_id(session[:user_id]) if session[:user_id]
   end
   helper_method :current_user
@@ -98,7 +99,7 @@ class ApplicationController < ActionController::Base
     session[:access_denied_return_url] = request.url
     subject = exception.subject.attributes.delete_if { |key,value| value.to_s.length > 128 } if exception.subject.class.name == 'Post'
     session[:access_denied_subject] = subject
-    redirect_to exceptions_accessdenied_path()
+    redirect_to exceptions_accessdenied_path(), :alert => exception.message
 
     # case exception.subject.class.name
     # when 'Post'

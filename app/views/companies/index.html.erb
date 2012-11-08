@@ -20,7 +20,7 @@
       <tbody>
       <% @companies.each do |company| %>
         <tr>
-          <td><%= link_to company.name, company %></td>
+          <td><%= status_icon(company.highrise_id.present?) %> <%= link_to company.name, company %></td>
           <td><%= company.level %></td>
           <td><%= link_to_person company.primary_contact.name, company.primary_contact if company.primary_contact %></td>
           <td><%= link_to company.billing_contact.name, company.billing_contact if company.billing_contact %></td>

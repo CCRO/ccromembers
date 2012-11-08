@@ -1,4 +1,3 @@
-
 class Document < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   default_url_options[:host] = 'ccromembers.dev'
@@ -15,6 +14,9 @@ class Document < ActiveRecord::Base
   default_scope :order => 'updated_at DESC'
   scope :published, :conditions => { :published => true },
                           :order => 'published_at DESC'
+
+  before_save :update_viewer_uuid
+
   def preview
     self.body.split(' ')[0..100].join(' ')
   end
@@ -69,6 +71,27 @@ class Document < ActiveRecord::Base
 
   def permalink
     "#{id}-#{title.parameterize}"
+  end
+
+  def update_viewer_uuid
+    if self.viewer_uuid_updated_at.blank? || self.viewer_uuid_updated_at < self.updated_at
+      begin
+        logger.info "PDF URL: " + document_url(self, :format => 'pdf')
+        uuid = Crocodoc::Document.upload(document_url(self, :format => 'pdf'))
+        self.viewer_uuid = uuid
+        self.viewer_uuid_updated_at = Time.now
+      rescue CrocodocError => e
+        puts 'failed :('
+        puts '  Error Code: ' + e.code
+        puts '  Error Message: ' + e.message
+      end
+      logger.info "UUID: " + uuid
+    end
+  end
+
+  def update_viewer_uuid!
+    self.update_viewer_uuid
+    self.save
   end
 
   def generate_token(column = :viewing_token)

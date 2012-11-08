@@ -1,7 +1,11 @@
 <ul class="pager">
-  <li class="previous">
-    <%= link_to raw("&larr; Back to Discussions"), messages_url %>
-  </li>
+	<% unless @group %>
+	  <li class="previous">
+	  	
+	    <%= link_to raw("&larr; Back to Discussions"), messages_url %>
+
+	  </li>
+  <% end %>
 </ul>
 <div id="message_content_border">
   <div id="message_content_box">

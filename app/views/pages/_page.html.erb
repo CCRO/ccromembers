@@ -82,25 +82,26 @@
   </article>
 </div>
 
+
 <% content_for :aside do %>
-  <% if @tag && (@category.length > 1 && page.pages_enabled == true || @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true) %>
+  <% if @tag && (@category && @category.length > 1 && page.pages_enabled == true || @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true) %>
     <div class="well">
       <ul class="nav nav-list">
         
-        <% if @category.length > 1 && page.pages_enabled == true %>
-          <li class="nav-header"><%= 'Related Pages' %></li>
+        <% if @category && @category.length > 1 && page.pages_enabled == true %>
+          <li class="nav-header"><%= 'Related Articles' %></li>
           <% @category.each do |p| %>
             <% if p.title == page.title.html_safe %>
               <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
                 <%= p.title + " " %><i class="icon-arrow-left"></i>
               <% end %></li>
             <% else %>
-              <li><%= link_to p.title.html_safe, page_path(p) %></li>
+              <li><%= link_to strip_tags(p.title), page_path(p) %></li>
             <% end %>
           <% end %>
         <% end %>  
         
-        <% if @articles.length > 0 && page.articles_enabled == true || @messages.length > 0 && page.discussions_enabled == true %>
+        <% if @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true %>
           <li class="nav-header"> Other resources </li>
         <% end %>
         
@@ -108,16 +109,16 @@
           <li class="btn-group">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                </span><i class="icon-share-alt"></i>Related Articles
+                </span><i class="icon-share-alt"></i>Related News and Updates
               </a>
               <ul class="dropdown-menu pull-right">
                 <li>
                   <%= link_to tagged_posts_path(@tag, page: page.id) do %>
-                    <i class="icon-share-alt"></i> All Related Articles
+                    <i class="icon-share-alt"></i> All Related News and Updates
                   <% end %>
                 </li>
                 <% @articles.each do |a| %>
-                  <li><%= link_to a.title.html_safe, post_path(a, page: page.id) %></li>
+                  <li><%= link_to strip_tags(a.title), post_path(a, page: page.id) %></li>
                 <% end %>
               </ul>
             </li>
@@ -140,11 +141,11 @@
                   <li>
                     <% if a.archived == false %>
                       <%= link_to message_path(a, page: page.id) do %>
-                        <i class="icon-comment"></i><%= a.subject.html_safe %>
+                        <i class="icon-comment"></i><%= strip_tags(a.subject) %>
                       <% end %>
                     <% else %>
                       <%= link_to message_path(a) do %>
-                        <i class="icon-inbox"></i><%= a.subject.html_safe %>
+                        <i class="icon-inbox"></i><%= strip_tags(a.subject) %>
                       <% end %>
                     <% end %>
                   </li>
@@ -157,18 +158,15 @@
     </div>
 
 
-    <% if @smart_list && page.smart_lists_enabled == true %>
+     <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
       <div class="well">
-        <ul class="nav nav-list"> 
-          <% @smart_list.each do |list| %>
-            <li class="nav-header"><%= list.name if list.name.present? %></li>
-            <% list.people.each do |person| %>
-              <li style="font-weight: lighter; padding-bottom: 10px;"><%= person.name if person.name.present? %><br>
-              <span style="font-weight: normal;"><%= person.company.name if person.company.present? %></span></li>
-            <% end %>
+        <ul class="nav nav-list">
+          <li class="nav-header"> Related people </li> 
+          <% @smart_list.each do |person| %>
+            <%= sticker_for person %>
           <% end %>
         </ul>
       </div>
     <% end %>
-  <% end %> 
+  <% end %>
 <% end %>

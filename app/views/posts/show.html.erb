@@ -1,7 +1,7 @@
 <% content_for :adminbar do %>
 	<ul>
 		<li>
-	      <%= link_to edit_post_path(@post), id: "edit_link", data: {save_url: mercury_update_post_path(@post)} do %>
+	      <%= link_to edit_polymorphic_path([@group, @post]), id: "edit_link", data: {save_url: polymorphic_path([@group, @post]) + '/mercury_update'} do %>
 	      <i class="icon-edit"></i><br><p>Edit Post</p>
 	      <% end %>
 	    </li>
@@ -11,7 +11,7 @@
 	      <% end %>
 	    </li>
 		<li>
-	      <%= link_to post_path(@post), method: 'delete', :confirm => "Are you sure?" do %>
+	      <%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %>
 	      <i class="icon-trash"></i><br><p>Delete <br>Post</p>
 	      <% end %>
 	    </li>
@@ -21,39 +21,54 @@
 <% end %>
 
 <% content_for :modal_settings do %>
+<div class="modal hide fade" id="modal-new-post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>New Post</h3>
+  </div>
+  <div class="modal-body center">
+  <%= form_for [@group, Post.new] do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+</div>
+  <div class="modal-footer">
+    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+  </div>
+  <% end %>
+</div>
+  
   <div class="modal hide fade" id="modal-settings">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3>Post Settings</h3>
     </div>
     <div class="modal-body center">
-	<table cellpadding="10">
-		<tr>
-			<td>
-			<% if can?(:publish, @post) && params[:action] == 'show' %>
+  <table cellpadding="10">
+    <tr>
+      <td>
+      <% if can?(:publish, @post) && params[:action] == 'show' %>
             
-            <div class="control-group radio inline" >
-              <b>Level</b>
-              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
-                <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
-                <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
-                <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-                <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
-              <% end %>
-              <b>Commenting</b>
-              <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
-                <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
-                <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
-              <% end %>
-            </div>
+        <div class="control-group radio inline" >
+          <b>Level</b>
+          <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+            <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+            <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+            <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+            <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
           <% end %>
+          <b>Commenting</b>
+          <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+            <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
+            <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
+          <% end %>
+        </div>
+      <% end %>
 </td>
-	  <td valign="top">
-	  	<% if can?(:publish, @post) && params[:action] == 'show' %>
+    <td valign="top">
+      <% if can?(:publish, @post) && params[:action] == 'show' %>
             
             <% unless params[:mercury_frame] %>
               <div >
-                <%= form_for @post, { :remote => true } do |f| %>
+                <%= form_for [@group, @post], { :remote => true } do |f| %>
                   <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                   <b>Assign this post to: </b>
                   <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
@@ -65,8 +80,8 @@
 
         <% end %>
 
-	  </td>
-	  </tr>
+    </td>
+    </tr>
     <tr>
       <td class="Hero">
       <%= form_for @post, { :remote => true } do |f| %>
@@ -75,14 +90,13 @@
         <% end %>
     </td>  
     </tr>
-	  </table>
+    </table>
     </div>
     <div class="modal-footer">
-       <%= button_to 'Back to Post', @post %>
+       <%= button_to 'Back to Post', polymorphic_path([@group, @post]) %>
     </div>
   </div>
 
 <% end %>
-
 
 <%= render @post %>

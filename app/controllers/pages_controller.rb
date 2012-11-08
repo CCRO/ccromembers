@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
 
-	layout 'page'
+  include ActionView::Helpers::TextHelper
+
+  before_filter :lookup_group
+
+  layout :conditional_layout
   
   def index
     if params[:filter] 
@@ -23,10 +27,17 @@ class PagesController < ApplicationController
         @pages = Page.where(:published => true).order('published_at DESC')
       end
     end
+
+    @groups = Group.all
+
     if params[:tag_name]
       @pages = Page.where(published: true).tagged_with(params[:tag_name])
     end
     
+    if params[:group_id]
+      @pages = Group.find(params[:group_id]).pages.order('updated_at DESC')
+    end
+
     @pages ||= Page.order('published_at DESC')
     authorize! :create, @page
     
@@ -44,42 +55,61 @@ class PagesController < ApplicationController
   end
   
   def show
-    @editors = []
-    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
-    @editors += Person.where(role: nil)
-
-    if params[:page]
-      @page = Page.find(params[:page])
-    end
-    
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 
       @page = Page.find(params[:id])
-      @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
-      @all_tags = all_tags
-      if @page.published == true
-        @category = Page.where(published: true).tagged_with(@tag)
-        @articles = Post.where(published: true).tagged_with(@tag)
-      else
-        @category = Page.tagged_with(@tag)
-        @articles = Post.tagged_with(@tag)
+        @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
+        @all_tags = all_tags
+      unless @group
+        if @page.published == true
+          @category = Page.where(published: true).tagged_with(@tag)
+          @articles = Post.where(published: true).tagged_with(@tag)
+        else
+          @category = Page.tagged_with(@tag)
+          @articles = Post.tagged_with(@tag)
+        end
+        @messages = Message.tagged_with(@tag)
+        @smart_list = Array.new
+        @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
       end
-      @messages = Message.tagged_with(@tag)
-      @smart_list = SmartList.tagged_with(@tag) if SmartList.tagged_with(@tag).present?
+
       @commentable = @page
-      authorize! :read, @page
+      
+      page_title = strip_tags @page.title
+
+      if current_user
+        message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+      else
+        message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}. You are currently not logged in."
+      end
+      authorize! :read, @page, :message => message.html_safe
     end
 
-    respond_to do |format|
-      format.html
-      format.pdf { doc_raptor_send }
+    @editors = []
+    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
+    @editors += Person.where(role: nil)
+
+
+    if @page.owner_type == 'Group' && !@group
+      redirect_to polymorphic_path([@page.owner, @page])
+    else
+      respond_to do |format|
+        format.html
+        format.pdf { doc_raptor_send }
+      end
     end
   end
 
   def share
     page = Page.find(params[:id])
-    authorize! :read, page
+    page_title = strip_tags page.title
+    if current_user
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
+    else
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
+    end
+    authorize! :read, page, :message => message.html_safe
     page.share_by_email(params[:email_list], current_user)
     redirect_to page
   end
@@ -87,22 +117,24 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.new
+    @owner = @group if @group
   end
   
   def create
     @page = Page.new(params[:page])
     
     @page.body = "Here is the start of a new page!"
-    @page.owner = current_user
+    @page.owner = @group if @group
     @page.author = current_user
     @page.published = false
     @page.level ||= 'public'
     @page.generate_token(:viewing_token)
-    
-    authorize! :create, @page
+    page_title = strip_tags @page.title
+    message = "You are unable to create the page: <strong>#{page_title}</strong> at this time. If you are interested in creating this page, please let us know."
+    authorize! :create, @page, :message => message.html_safe
     
     if @page.save
-      redirect_to page_path(@page)
+      redirect_to polymorphic_path([@group, @page])
     else
       flash[:notice] = "Please give your new draft a title."
       redirect_to draft_pages_path
@@ -111,8 +143,9 @@ class PagesController < ApplicationController
   
   def claim
     page = Page.find(params[:id])
-    
-    authorize! :edit, page
+    page_title = strip_tags page.title
+    message = "You are unable to claim the page: <strong>#{page_title}</strong> at this time."
+    authorize! :edit, page, :message => message.html_safe
     
     page.author = current_user
     page.save
@@ -131,19 +164,28 @@ class PagesController < ApplicationController
 
   def update
     page = Page.find(params[:id])
-
-    authorize! :edit, page
+    page_title = strip_tags page.title
+    message = "You are unable to update the page: <strong>#{page_title}</strong> at this time."
+    authorize! :edit, page, :message => message.html_safe
     
     if params[:content]
       page.title = params[:content][:page_title][:value]
       page.title = "Untitled" if page.title == "<br>" || page.title.blank?
       page.body = params[:content][:page_body][:value]
-      page.header_picture = params[:content][:pages_header_image][:value]
+      page.header_picture = params[:content][:pages_header_image][:value] if params[:content][:pages_header_image]
       page.author ||= current_user
       page.unlock
       page.save! 
       render text: ""
     else
+      if params[:owner]
+        if params[:owner] == ""
+          page.owner = nil
+        else
+          page.owner = Group.find(params[:owner])
+        end
+        page.save
+      end
       page.update_attributes(params[:page])
       redirect_to page_path(page)
     end
@@ -153,8 +195,9 @@ class PagesController < ApplicationController
   def publish
     @page = Page.find(params[:id])
     @page.published = params[:published]
-
-    authorize! :publish, @page
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to publish the page: <strong>#{page_title}</strong> at this time. If you are interested in publishing this page, please let us know."
+    authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
     redirect_to page_path(@page)
@@ -179,8 +222,9 @@ class PagesController < ApplicationController
     @duplicate.locker_id = nil
     @duplicate.locked_at = nil
     @duplicate.tag_list = nil
-
-    authorize! :create, @duplicate
+    page_title = strip_tags page.title
+    message = "You do not have the access needed to duplicate the page: <strong>#{page_title}</strong> at this time. If you are still interested in duplicating this page, please let us know."
+    authorize! :create, @duplicate, :message => message.html_safe
 
     @duplicate.save 
     redirect_to page_path(@duplicate)
@@ -189,8 +233,9 @@ class PagesController < ApplicationController
   def reset_token
     @page = Page.find(params[:id])
     @page.generate_token(:viewing_token)
-
-    authorize! :publish, @page
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to reset the token for the page: <strong>#{page_title}</strong> at this time. If you are still interested in reseting the token for this page, please let us know."
+    authorize! :publish, @page, :message => message.html_safe
 
     @page.save 
     redirect_to page_path(@page)
@@ -198,14 +243,38 @@ class PagesController < ApplicationController
   
   def destroy
     @page = Page.find(params[:id])
-    
-    authorize! :destroy, @page
+    page_title = strip_tags @page.title
+    message = "You do not have the access needed to destroy the page: <strong>#{page_title}</strong> at this time. If you are still interested in destroying this page, please let us know."
+    authorize! :destroy, @page, :message => message.html_safe
     
     if @page.destroy
-      redirect_to draft_pages_path
+      if @group
+        redirect_to @group
+      else
+        redirect_to draft_pages_path
+      end
     else
       redirect_to page_path(@page)
     end
+  end
+
+  def lookup_group
+    @group = Group.find(params[:group_id]) if params[:group_id]
+
+    if @group
+      @pages = @group.pages
+      @attachments = @group.attachments
+      @total_articles = @group.posts
+      @articles = @total_articles.limit(3)
+      @messages = @group.messages
+      @group_document = @group.documents
+      @smart_list = @group.people
+    end
+
+  end
+
+  def conditional_layout
+    (@group) ? 'group' : 'page' 
   end
 
   def doc_raptor_send(options = { })

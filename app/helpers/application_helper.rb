@@ -6,9 +6,9 @@ module ApplicationHelper
   
   def gravatar_for user, options = {}
       email = user.email
-      options = {:alt => 'avatar', :class => 'avatar', :size => 160}.merge! options
+      options = {:alt => 'avatar', :class => 'avatar', :size => 50}.merge! options
       id = Digest::MD5::hexdigest email.strip.downcase
-      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s
+      url = 'http://www.gravatar.com/avatar/' + id + '.jpg?s=' + options[:size].to_s + '&d=' + asset_path('avatar_placeholder_large.png')
       options.delete :size
       image_tag url, options
   end
@@ -17,7 +17,17 @@ module ApplicationHelper
     if user.avatar.present?
       image_tag user.avatar.thumb.url, options
     else
-      gravatar_for user
+      gravatar_for user, options
+    end
+  end
+
+  def sticker_for user, options = {}
+    options[:class] ||= ""
+    content_tag :div, {:class => 'sticker ' + options[:class]} do
+      avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
+      link_to_person(user.name, user) +
+      tag("br", nil, true) + 
+      (user.company.name if user.company)
     end
   end
   
@@ -27,6 +37,10 @@ module ApplicationHelper
     else
       content_tag :i, nil, :class => "icon-remove", :style => "color: red;"
     end      
+  end
+
+  def file_icon(extension, size = 'small', options = {})
+    image_tag asset_path("file_icons/32px/#{extension}.png"), options
   end
 
   def button_to(*args, &block)
