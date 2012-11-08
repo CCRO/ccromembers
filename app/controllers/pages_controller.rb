@@ -72,8 +72,10 @@ class PagesController < ApplicationController
         @messages = Message.tagged_with(@tag)
         @smart_list = Array.new
         @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
-        @commentable = @page
       end
+
+      @commentable = @page
+      
       page_title = strip_tags @page.title
 
       if current_user
