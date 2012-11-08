@@ -21,7 +21,7 @@
   </div>
 
   <ul class="nav nav-list">
-    <li class="nav-header"><%= 'Working Group Pages' %></li>
+    <li class="nav-header"><%= 'Working Group Information' %></li>
     <% unless @article || @page || @message || params[:controller] == 'attachments' %>
       <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group News and Updates <i class="icon-arrow-left"></i></li><% end %>
     <% else %>
