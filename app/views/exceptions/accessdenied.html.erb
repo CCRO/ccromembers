@@ -13,6 +13,7 @@
     <% else %>
       <p>You do not currently have access to <%= session[:url_return_to] %>.</p>
     <% end %>
+    <%= link_to "Back", :back, class: 'btn btn-success btn-large', style: 'width: 100px; height:20px; margin-top:20px' %>
     </div> 
   </div>
 
