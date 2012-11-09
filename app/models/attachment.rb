@@ -43,7 +43,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def extension
-    self.file.file.url.split(".").last
+    self.file.file.url.split(".").last if self.file
   end
 
   def get_crocodoc_uuid!
