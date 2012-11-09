@@ -1,7 +1,7 @@
 <div style="clear:both; padding-bottom: 20px;">
   <hr>
   <%= file_icon attachment.extension, nil, :class => 'pull-left' %>
-  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, group_attachment_path(@group, attachment) %></strong> - <%= attachment.description %> 
+  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, group_attachment_path(@group, attachment), target: "_blank" %></strong> - <%= attachment.description %> 
     <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>Uploaded by: <%= attachment.author.try(:name) %></small> 
     <br><br>
     <span class="link-group">
