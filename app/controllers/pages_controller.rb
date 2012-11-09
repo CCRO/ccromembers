@@ -39,8 +39,24 @@ class PagesController < ApplicationController
     end
 
     @pages ||= Page.order('published_at DESC')
-    authorize! :create, @page
+
+    if params[:sort] == 'Category'
+      @pages.keep_if { |a| a.tags.pluck(:name).present? }
+      @pages.sort! { |a,b| a.tags.pluck(:name).first.downcase <=> b.tags.pluck(:name).first.downcase }
+    end
+
+    if params[:sort] == 'Owner'
+      @pages.keep_if { |a| a.owner.present? }
+      @pages.sort! { |a,b| a.owner.name.downcase <=> b.owner.name.downcase }
+    end
+
+    if params[:sort] == 'Name'
+      @pages.sort! { |a,b| a.title.downcase <=> b.title.downcase }
+    end
+
+
     
+    authorize! :create, @page
     
     respond_to do |format|
       format.html
@@ -128,6 +144,7 @@ class PagesController < ApplicationController
     @page.author = current_user
     @page.published = false
     @page.level ||= 'public'
+    @page.position = @page.id
     @page.generate_token(:viewing_token)
     page_title = strip_tags @page.title
     message = "You are unable to create the page: <strong>#{page_title}</strong> at this time. If you are interested in creating this page, please let us know."

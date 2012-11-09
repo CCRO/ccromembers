@@ -39,9 +39,9 @@
 	<% if params[:action] == 'index' %>
 		<table class="table">
 			<tr>
-				<th class="span1">Category:</th>
-				<th class="span1">Owner:</th>
-				<th class="span3">Name:</th>
+				<th class="span1">Category:<%= link_to(pages_path(:sort => 'Category')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span1">Owner:<%= link_to(pages_path(:sort => 'Owner')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span3">Name:<%= link_to(pages_path(:sort => 'Name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
 				<th class="span1">Updated at:</th>
 			</tr>
 				<% @pages.each do |page| %>
