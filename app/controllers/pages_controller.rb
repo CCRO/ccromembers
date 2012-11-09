@@ -46,8 +46,7 @@ class PagesController < ApplicationController
     end
 
     if params[:sort] == 'Owner'
-      @pages.keep_if { |a| a.owner.present? }
-      @pages.sort! { |a,b| a.position <=> b.position }
+      @pages.keep_if { |a| a.owner.present? && a.owner.class.name == 'Group' }
       @pages.sort! { |a,b| a.owner.name.downcase <=> b.owner.name.downcase }
     end
 
