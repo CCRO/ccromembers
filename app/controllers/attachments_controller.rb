@@ -18,6 +18,7 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.find(params[:id])
     
     @attachment.get_crocodoc_uuid! if @attachment.crocodoc_uuid.blank?
+    @attachment.content = Crocodoc::Download.text(uuid) if @attachment.content.blank?
 
     @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
         'is_editable' => can?(:comment_on, @attachment),

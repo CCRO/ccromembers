@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
     indexes :id,           :index    => :not_analyzed
     indexes :name,        :analyzer => 'snowball', :boost => 100
     indexes :company_name,        :as => 'company_name', :analyzer => 'snowball', :boost => 50
+    indexes :level,        :as => 'level', :analyzer => 'snowball', :boost => 75
     indexes :email,      :analyzer => 'snowball', :boost => 2
     indexes :bio,      :analyzer => 'snowball'
     indexes :created_at, :type => 'date', :include_in_all => false
