@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105194844) do
+ActiveRecord::Schema.define(:version => 20121109170312) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20121105194844) do
     t.string   "content_type"
     t.string   "file_size"
     t.boolean  "archived"
+    t.text     "content"
   end
 
   add_index "attachments", ["author_id"], :name => "index_attachments_on_author_id"
@@ -205,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20121105194844) do
     t.boolean  "articles_enabled",    :default => true
     t.boolean  "discussions_enabled", :default => true
     t.boolean  "smart_lists_enabled", :default => true
+    t.string   "position"
   end
 
   create_table "people", :force => true do |t|

@@ -1,4 +1,19 @@
 class Person < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  mapping do
+    indexes :id,           :index    => :not_analyzed
+    indexes :name,        :analyzer => 'snowball', :boost => 100
+    indexes :company_name,        :as => 'company_name', :analyzer => 'snowball', :boost => 50
+    indexes :email,      :analyzer => 'snowball', :boost => 2
+    indexes :bio,      :analyzer => 'snowball'
+    indexes :created_at, :type => 'date', :include_in_all => false
+  end
+
+  after_save do
+    update_index
+  end
   
   serialize :browser_info
   serialize :highrise_cache, Highrise::Person
@@ -190,14 +205,5 @@ class Person < ActiveRecord::Base
   def lowercase_email
     self.email = self.email.downcase
   end
-
-  def self.search(search)
-    if search
-      where('name LIKE ?', "%#{search}%")
-    else
-      scoped
-    end
-  end
-
 
 end
