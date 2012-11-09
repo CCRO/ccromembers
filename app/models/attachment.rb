@@ -19,7 +19,7 @@ class Attachment < ActiveRecord::Base
     indexes :title,        :analyzer => 'snowball', :boost => 100
     indexes :description,      :analyzer => 'snowball', :boost => 50
     indexes :author,        :as => 'author_name', :analyzer => 'snowball', :boost => 25
-    indexes :file_ext,        :as => 'extension', :analyzer => 'snowball', :boost => 25
+    # indexes :file_ext,        :as => 'extension', :analyzer => 'snowball', :boost => 25
     indexes :content,      :analyzer => 'snowball'
     indexes :created_at, :type => 'date', :include_in_all => false
   end
