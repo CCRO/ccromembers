@@ -1,12 +1,13 @@
-<div style="clear:both; padding-bottom: 20px;">
+<div class="attachment" style="clear:both; padding-bottom: 20px;">
   <hr>
   <%= file_icon attachment.extension, nil, :class => 'pull-left' %>
-  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, group_attachment_path(@group, attachment) %></strong> - <%= attachment.description %> 
-    <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>Uploaded by: <%= attachment.author.try(:name) %></small> 
+  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, polymorphic_path([@group, attachment]), target: "_blank" %></strong> - <%= attachment.description %> 
+    <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>
+    Uploaded: <%= time_ago_in_words attachment.try(:created_at) %> ago by <%= attachment.author.try(:name) || "Unknown Source" %></small> 
     <br><br>
     <span class="link-group">
-        <%= link_to 'Edit', edit_group_attachment_path(@group, attachment) if can? :edit, attachment %> | 
-        <%= link_to 'Delete', group_attachment_path(@group, attachment), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
+        <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) if can? :edit, attachment %> | 
+        <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
     </span>
   </p>
 </div>

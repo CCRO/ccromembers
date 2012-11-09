@@ -45,6 +45,7 @@ gem 'mobile-fu'
 gem 'twilio-ruby'
 gem 'marginalia'
 gem 'highrise'
+gem 'tire'
 
 # Gems used only for assets and not required
 # in production environments by default.

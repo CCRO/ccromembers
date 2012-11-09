@@ -5,7 +5,9 @@ class AttachmentsController < ApplicationController
   layout :conditional_layout
 
   def index
-    @attachments = @group.attachments 
+    @attachments = @group.attachments if @group
+
+    @attachments ||= Attachment.where(:owner_type => nil)
   end
 
   def show
@@ -40,11 +42,11 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.new(params[:attachment])
 
     @attachment.author = current_user
-    @attachment.owner = @group
+    @attachment.owner = @group if @group
 
     @attachment.save
 
-    redirect_to group_attachments_path(@group)
+    redirect_to polymorphic_path([@group, :attachments])
   end
 
   def edit
@@ -58,7 +60,7 @@ class AttachmentsController < ApplicationController
 
     @attachment.save
 
-    redirect_to group_attachments_path(@group)
+    redirect_to polymorphic_path([@group, :attachments])
   end
 
   def destroy
@@ -66,11 +68,11 @@ class AttachmentsController < ApplicationController
 
     @attachment.destroy
 
-    redirect_to group_attachments_path(@group)
+    redirect_to polymorphic_path([@group, :attachments])
   end
 
   def lookup_group
-    @group = Group.find(params[:group_id])
+    @group = Group.find(params[:group_id]) if params[:group_id]
 
     if @group
       @pages = @group.pages

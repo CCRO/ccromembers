@@ -419,3 +419,9 @@ border-radius: 4px;
 font-size: .85em;
 color: #C9C9C9;
 }
+
+body#attachments_index .attachment {
+clear: none !important;
+float: left;
+width: 50%;
+}
