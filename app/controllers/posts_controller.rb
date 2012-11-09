@@ -273,7 +273,7 @@ class PostsController < ApplicationController
   def lookup_group
      if params[:group_id]
       @group = Group.find(params[:group_id])
-      @pages = @group.pages
+      @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
       @attachments = @group.attachments
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)

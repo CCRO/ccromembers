@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(:version => 20121109170312) do
     t.boolean  "articles_enabled",    :default => true
     t.boolean  "discussions_enabled", :default => true
     t.boolean  "smart_lists_enabled", :default => true
-    t.string   "position"
+    t.integer  "position"
   end
 
   create_table "people", :force => true do |t|

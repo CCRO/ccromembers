@@ -28,9 +28,7 @@ class Attachment < ActiveRecord::Base
   
   def get_crocodoc_uuid
     begin
-      logger.info "Crocodoc Token: " + ENV['CROCODOC_API_TOKEN']
-      logger.info "PDF URL: " + self.file.url
-      uuid = Crocodoc::Document.upload(self.file.url)
+      uuid = Crocodoc::Document.upload(self.file.try(url))
       self.crocodoc_uuid = uuid
       self.content = Crocodoc::Download.text(uuid)
    rescue CrocodocError => e
@@ -38,13 +36,12 @@ class Attachment < ActiveRecord::Base
       puts '  Error Code: ' + e.code
       puts '  Error Message: ' + e.message
     end
-    # logger.info "UUID: " + uuid
   end
 
   def author_name
     self.author.try(:name)
   end
-  
+
   def extension
     self.file.file.url.split(".").last
   end
