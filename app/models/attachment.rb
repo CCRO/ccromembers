@@ -6,6 +6,8 @@ class Attachment < ActiveRecord::Base
 
   before_save :update_asset_attributes
   
+  default_scope order('created_at DESC')
+  
   def get_crocodoc_uuid
     begin
       logger.info "Crocodoc Token: " + ENV['CROCODOC_API_TOKEN']
