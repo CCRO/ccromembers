@@ -55,7 +55,7 @@ class PagesController < ApplicationController
     end
 
     if params[:sort] == 'Position'
-      @pages.order('position DESC')
+      @pages.sort! { |a,b| a.position <=> b.position }
     end
 
 
