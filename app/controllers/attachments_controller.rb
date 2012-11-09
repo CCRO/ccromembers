@@ -5,9 +5,13 @@ class AttachmentsController < ApplicationController
   layout :conditional_layout
 
   def index
-    @attachments = @group.attachments if @group
-
-    @attachments ||= Attachment.where(:owner_type => nil)
+    if params[:search]
+      @attachments = Attachment.find(@group.attachments.search(params[:search] + '*').map(&:id)) if @group
+      @attachments ||= Attachment.find(Attachment.where(:owner_type => nil).search(params[:search] + '*').map(&:id))
+    else
+      @attachments = @group.attachments if @group
+      @attachments ||= Attachment.where(:owner_type => nil)
+    end
   end
 
   def show
