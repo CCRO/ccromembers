@@ -166,7 +166,7 @@ class MessagesController < ApplicationController
     end
 
     if @group
-      @pages = @group.pages
+      @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
       @attachments = @group.attachments
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)

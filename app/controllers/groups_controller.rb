@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
   def show_activity
     @group = Group.find(params[:id])
 
-    @pages = @group.pages
+    @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
     @total_articles = @group.posts
     @articles = @total_articles.limit(3)
     @messages = @group.messages
@@ -55,7 +55,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @memberships = @group.memberships
 
-    @pages = @group.pages
+    @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
     @articles = @group.posts
     @messages = @group.messages
     @group_document = @group.documents
