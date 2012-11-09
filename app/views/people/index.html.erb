@@ -1,11 +1,19 @@
 <div class="row-fluid">
   <div id="" class="span12">
 
-    <ul class="breadcrumb">
+    <ul class="breadcrumb pull-left span8">
       <li><a href="#">Directory</a> <span class="divider">/</span></li>
-      <li class="active"><a href="/people">People</a></li>
+      <% unless params[:search] %>
+        <li class="active"><a href="/people">People</a></li>
+      <% else %>
+        <li><a href="/people">People</a> <span class="divider">/</span></li>
+        <li class="active"></a>Search: <%= params[:search] %></li>        
+      <% end %>
     </ul>
-    
+    <form action="/people" class="form-search pull-right">
+      <input type="text" name="search" class="input-medium search-query" placeholder="<%= params[:search] %>">
+      <button type="submit" class="btn">Search</button>
+    </form>
     <%= render :partial => 'list', :object => @people %>
 
     <br />

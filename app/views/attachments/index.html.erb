@@ -10,7 +10,12 @@
 
 <div class="row-fluid">
   <div id="content" class="span12" style="padding: 20px;"> 
-    <h2><%= @group ? "Working Group File Library" : 'CCRO File Library' %> </h2>  
+    <h2 class="pull-left"><%= @group ? "Working Group File Library" : 'CCRO File Library' %> </h2>
+    <form action="<%= polymorphic_path([@group, :attachments]) %>" class="form-search pull-right">
+      <input type="text" name="search" class="input-medium search-query" placeholder="<%= params[:search] %>">
+      <button type="submit" class="btn">Search</button>
+    </form>
+    <br  style="clear:both;">
     <%= render @attachments %>
     <br />
  </div>
