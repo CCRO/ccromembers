@@ -42,7 +42,7 @@
 				<th class="span1">Category:<%= link_to(pages_path(:sort => 'Category')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
 				<th class="span1">Owner:<%= link_to(pages_path(:sort => 'Owner')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
 				<th class="span3">Name:<%= link_to(pages_path(:sort => 'Name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-				<th class="span1">Updated at:</th>
+				<th class="span1">Position:<%= link_to(pages_path(:sort => 'Position')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
 			</tr>
 				<% @pages.each do |page| %>
 				<tr>
@@ -68,7 +68,7 @@
 	    			</th>
     			<% end %>
 					<th><%= link_to page.title.html_safe, page_path(page)  %></th>
-					<th><strong><%= time_ago_in_words page.updated_at %> ago</strong></th>
+					<th style="text-align: center;"><strong><%= page.position %> </strong></th>
 				</tr>
 				<% end %>
 		</table>

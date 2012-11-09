@@ -54,6 +54,10 @@ class PagesController < ApplicationController
       @pages.sort! { |a,b| a.title.downcase <=> b.title.downcase }
     end
 
+    if params[:sort] == 'Position'
+      @pages.order('position DESC')
+    end
+
 
     
     authorize! :create, @page
