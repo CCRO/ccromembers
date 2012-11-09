@@ -1,7 +1,7 @@
 <% content_for :adminbar do %>
   <ul>
     <li>
-        <%= link_to new_group_attachment_path() do %>
+        <%= link_to new_polymorphic_path([@group, Attachment.new]) do %>
         <i class="icon-upload"></i><br><p>Upload File<br>page</p>
         <% end %>
       </li>
