@@ -35,12 +35,32 @@ class PagesController < ApplicationController
     end
     
     if params[:group_id]
-      @pages = Group.find(params[:group_id]).pages.order('updated_at DESC')
+      @pages = Group.find(params[:group_id]).pages.order('position DESC')
     end
 
-    @pages ||= Page.order('published_at DESC')
-    authorize! :create, @page
+    @pages ||= Page.order('position DESC')
+
+    if params[:sort] == 'Category'
+      @pages.keep_if { |a| a.tags.pluck(:name).present? }
+      @pages.sort! { |a,b| a.tags.pluck(:name).first.downcase <=> b.tags.pluck(:name).first.downcase }
+    end
+
+    if params[:sort] == 'Owner'
+      @pages.keep_if { |a| a.owner.present? && a.owner.class.name == 'Group' }
+      @pages.sort! { |a,b| a.owner.name.downcase <=> b.owner.name.downcase }
+    end
+
+    if params[:sort] == 'Name'
+      @pages.sort! { |a,b| a.title.downcase <=> b.title.downcase }
+    end
+
+    if params[:sort] == 'Position'
+      @pages.sort! { |a,b| a.position <=> b.position }
+    end
+
+
     
+    authorize! :create, @page
     
     respond_to do |format|
       format.html
@@ -63,10 +83,10 @@ class PagesController < ApplicationController
         @all_tags = all_tags
       unless @group
         if @page.published == true
-          @category = Page.where(published: true).tagged_with(@tag)
+          @category = Page.where(published: true).tagged_with(@tag).sort! { |a,b| a.position <=> b.position }
           @articles = Post.where(published: true).tagged_with(@tag)
         else
-          @category = Page.tagged_with(@tag)
+          @category = Page.tagged_with(@tag).sort! { |a,b| a.position <=> b.position }
           @articles = Post.tagged_with(@tag)
         end
         @messages = Message.tagged_with(@tag)
@@ -128,6 +148,7 @@ class PagesController < ApplicationController
     @page.author = current_user
     @page.published = false
     @page.level ||= 'public'
+    @page.position = @page.id
     @page.generate_token(:viewing_token)
     page_title = strip_tags @page.title
     message = "You are unable to create the page: <strong>#{page_title}</strong> at this time. If you are interested in creating this page, please let us know."
@@ -185,6 +206,9 @@ class PagesController < ApplicationController
           page.owner = Group.find(params[:owner])
         end
         page.save
+      end
+      if params[:position]
+        page.position = params[:position][0].to_i
       end
       page.update_attributes(params[:page])
       redirect_to page_path(page)
@@ -262,7 +286,7 @@ class PagesController < ApplicationController
     @group = Group.find(params[:group_id]) if params[:group_id]
 
     if @group
-      @pages = @group.pages
+      @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
       @attachments = @group.attachments
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)

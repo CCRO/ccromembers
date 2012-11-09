@@ -19,7 +19,7 @@ class Attachment < ActiveRecord::Base
     indexes :title,        :analyzer => 'snowball', :boost => 100
     indexes :description,      :analyzer => 'snowball', :boost => 50
     indexes :author,        :as => 'author_name', :analyzer => 'snowball', :boost => 25
-    indexes :file_ext,        :as => 'extension', :analyzer => 'snowball', :boost => 25
+    # indexes :file_ext,        :as => 'extension', :analyzer => 'snowball', :boost => 25
     indexes :content,      :analyzer => 'snowball'
     indexes :created_at, :type => 'date', :include_in_all => false
   end
@@ -28,8 +28,6 @@ class Attachment < ActiveRecord::Base
   
   def get_crocodoc_uuid
     begin
-      logger.info "Crocodoc Token: " + ENV['CROCODOC_API_TOKEN']
-      logger.info "PDF URL: " + self.file.url
       uuid = Crocodoc::Document.upload(self.file.url)
       self.crocodoc_uuid = uuid
       self.content = Crocodoc::Download.text(uuid)
@@ -38,15 +36,14 @@ class Attachment < ActiveRecord::Base
       puts '  Error Code: ' + e.code
       puts '  Error Message: ' + e.message
     end
-    # logger.info "UUID: " + uuid
   end
 
   def author_name
     self.author.try(:name)
   end
-  
+
   def extension
-    self.file.file.url.split(".").last
+    self.file.file.url.split(".").last if self.file
   end
 
   def get_crocodoc_uuid!
