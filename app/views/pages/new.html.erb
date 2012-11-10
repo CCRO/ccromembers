@@ -1,4 +1,5 @@
 <%= form_for [@owner, @page] do |f| %>
   <%= f.label :title %> <%= f.text_field :title %>
+  <%= f.hidden_field :position, :value => 1 %>
   <%= f.submit %>
 <% end %>

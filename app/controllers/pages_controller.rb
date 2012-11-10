@@ -138,6 +138,7 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     @owner = @group if @group
+    @page.position = 1
   end
   
   def create
