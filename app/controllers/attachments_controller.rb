@@ -5,15 +5,20 @@ class AttachmentsController < ApplicationController
   layout :conditional_layout
 
   def index
-    @attachments = @group.attachments if @group
-
-    @attachments ||= Attachment.where(:owner_type => nil)
+    if params[:search]
+      @attachments = Attachment.find(@group.attachments.search(params[:search] + '*').map(&:id)) if @group
+      @attachments ||= Attachment.find(Attachment.where(:owner_type => nil).search(params[:search] + '*').map(&:id))
+    else
+      @attachments = @group.attachments if @group
+      @attachments ||= Attachment.where(:owner_type => nil)
+    end
   end
 
   def show
     @attachment = Attachment.find(params[:id])
     
     @attachment.get_crocodoc_uuid! if @attachment.crocodoc_uuid.blank?
+    @attachment.content = Crocodoc::Download.text(uuid) if @attachment.content.blank?
 
     @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
         'is_editable' => can?(:comment_on, @attachment),
