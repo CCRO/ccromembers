@@ -84,7 +84,7 @@ class AttachmentsController < ApplicationController
     @group = Group.find(params[:group_id]) if params[:group_id]
 
     if @group
-      @pages = @group.pages
+      @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
       @total_articles = @group.posts
       @articles = @total_articles.limit(3)
       @messages = @group.messages

@@ -13,6 +13,7 @@
     <div class="modal-body center">
 	  <%= form_for Page.new do |f| %>
 	    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New page title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	    <%= f.hidden_field :position, :value => 1 %>
 	</div>
     <div class="modal-footer">
 	    <%= f.submit "Create new draft", :class => "btn btn-primary" %>
