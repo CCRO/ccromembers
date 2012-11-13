@@ -78,7 +78,7 @@
         <% end %>
       <% end %>
       <% if @total_attachments.length > 3 %>
-        <li><i><%= link_to "See all #{@total_attachments.length} articles" , @group %></i></li>
+        <li><i><%= link_to "See all #{@total_attachments.length} uploads" , group_attachments_path(@group) %></i></li>
       <% end %>
     <% end %>
 
