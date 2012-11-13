@@ -12,6 +12,8 @@ class AttachmentsController < ApplicationController
       @attachments = @group.attachments if @group
       @attachments ||= Attachment.where(:owner_type => nil)
     end
+
+    @attachments.keep_if { |attachment| can? :read, attachment }
   end
 
   def show
@@ -43,14 +45,20 @@ class AttachmentsController < ApplicationController
 
   def new
     @attachment = Attachment.new
+
+    authorize! :create, Attachment
+
   end
 
   def create
+    params[:attachment][:options] = OpenStruct.new( params[:attachment][:options] )
+
     @attachment = Attachment.new(params[:attachment])
 
     @attachment.author = current_user
     @attachment.owner = @group if @group
 
+    authorize! :create, Attachment
     @attachment.save
 
     redirect_to polymorphic_path([@group, :attachments])
@@ -58,10 +66,15 @@ class AttachmentsController < ApplicationController
 
   def edit
     @attachment = Attachment.find(params[:id])
+    authorize! :edit, @attachment
+
   end
 
   def update
     @attachment = Attachment.find(params[:id])
+
+    authorize! :edit, @attachment
+
 
     params[:attachment][:options] = OpenStruct.new( params[:attachment][:options] )
 
@@ -74,6 +87,8 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @attachment = Attachment.find(params[:id])
+
+    authorize! :destory, @attachment
 
     @attachment.destroy
 
