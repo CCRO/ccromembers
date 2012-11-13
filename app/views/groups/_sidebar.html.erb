@@ -67,18 +67,16 @@
     <% end %>
 
     <% if @attachments && @attachments.length > 0 %>
-      <% @total_attachments = @attachments %>
-      <% @attachments = @attachments.limit(3) %>
       <li class="nav-header"> Files and Attachments </li>
-      <% @attachments.each do |m| %>
+      <% @group.attachments.limit(3).each do |m| %>
         <% if @attachment && m.id == @attachment.id %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
         <% else %>
           <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
         <% end %>
       <% end %>
-      <% if @total_attachments.length > 3 %>
-        <li><i><%= link_to "See all #{@total_attachments.length} uploads" , group_attachments_path(@group) %></i></li>
+      <% if @group.attachments.length > 3 %>
+        <li><i><%= link_to "See all #{@group.attachments.length} uploads" , group_attachments_path(@group) %></i></li>
       <% end %>
     <% end %>
 
