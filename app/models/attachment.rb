@@ -7,6 +7,8 @@ class Attachment < ActiveRecord::Base
 
   mount_uploader :file, FileUploader
 
+  serialize :options, OpenStruct
+
   before_save :update_asset_attributes
   
   after_save do
@@ -15,7 +17,7 @@ class Attachment < ActiveRecord::Base
 
   mapping do
     indexes :id,           :index    => :not_analyzed
-    indexes :uuid,           :index    => :not_analyzed
+    indexes :crocodoc_uuid,           :index    => :not_analyzed
     indexes :title,        :analyzer => 'snowball', :boost => 100
     indexes :description,      :analyzer => 'snowball', :boost => 50
     indexes :author,        :as => 'author_name', :analyzer => 'snowball', :boost => 25
@@ -51,6 +53,14 @@ class Attachment < ActiveRecord::Base
     self.save
   end
 
+  def downloadable?
+    options.downloadable == "1"
+  end
+
+  def commentable?
+    options.commentable == "1"
+  end
+  
   private
 
   def update_asset_attributes

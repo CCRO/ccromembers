@@ -10,8 +10,25 @@
       </ul>
     </div>
   <% end %>
+  <% if @attachment.file.present? %>
   <fieldset>
-    <legend>Upload File</legend>
+    <legend>Current File</fieldset>
+    <div class="control-group">
+      <%= f.label :file, :class => 'control-label' %>
+      <div class="controls">
+        <%= link_to @attachment.file.file.url %>
+      </div>
+    </div> 
+    <div class="control-group">
+      <%= f.label :crocodoc_uuid, :class => 'control-label' %>
+      <div class="controls">
+        <%= @attachment.crocodoc_uuid %>
+      </div>
+    </div> 
+  </fieldset>
+  <% end %>
+  <fieldset>
+    <legend><%= (@attachment.file.present?) ? 'Replace' : 'Upload' %> File</legend>
     <div class="control-group">
       <%= f.label :file, :class => 'control-label' %>
       <div class="controls">
@@ -28,7 +45,21 @@
       <div class="controls">
         <%= f.text_field :title %>
       </div>
+    </div> 
+    <%= f.fields_for :options, @attachment.options do |options| %>
+    <div class="control-group">
+      <%= options.label :downloadable, :class => 'control-label' %>
+      <div class="controls">
+        <%= options.check_box :downloadable %>
+      </div>
     </div>  
+    <div class="control-group">
+      <%= options.label :commentable, :class => 'control-label' %>
+      <div class="controls">
+        <%= options.check_box :commentable  %>
+      </div>
+    </div>
+    <% end %>  
     <div class="control-group">
       <%= f.label :description, :class => 'control-label' %>
       <div class="controls">
