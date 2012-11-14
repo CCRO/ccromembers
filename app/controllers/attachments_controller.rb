@@ -46,8 +46,11 @@ class AttachmentsController < ApplicationController
   def new
     @attachment = Attachment.new
 
-    authorize! :create, Attachment
-
+    if @group
+      authorize! :create_in, @group
+    else
+      authorize! :create, Attachment
+    end
   end
 
   def create
@@ -58,7 +61,12 @@ class AttachmentsController < ApplicationController
     @attachment.author = current_user
     @attachment.owner = @group if @group
 
-    authorize! :create, Attachment
+    if @group
+      authorize! :create_in, @group
+    else
+      authorize! :create, Attachment
+    end
+
     @attachment.save
 
     redirect_to polymorphic_path([@group, :attachments])

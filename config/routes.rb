@@ -4,6 +4,10 @@ Ccromembers::Application.routes.draw do
   
   get "doc_viewer/view"
 
+  constraints(CanAccessRoute) do
+    match "/delayed_job" => DelayedJobWeb, :anchor => false
+  end
+  
   resources :attachments, :path => 'files'
   
   resources :smart_lists do
