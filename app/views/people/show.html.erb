@@ -36,7 +36,7 @@
   <%= @person.email %>
 </p>
 
-<% if current_user.admin? %>
+<% if current_user && current_user.admin? %>
 <p>
   <b>Verifed:</b>
   <%= @person.verified %>
@@ -85,5 +85,5 @@
 <% end %>
 </ul>
 <hr>
-<%= link_to 'Edit', edit_person_path(@person) %> | <% if current_user.role == 'admin' %><%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | <% end %>  
+<%= link_to 'Edit', edit_person_path(@person) %> | <% if current_user && current_user.role == 'admin' %><%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | <% end %>  
 <%= link_to 'Back', people_path %>
