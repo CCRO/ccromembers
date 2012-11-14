@@ -12,23 +12,27 @@ class AttachmentsController < ApplicationController
       @attachments = @group.attachments if @group
       @attachments ||= Attachment.where(:owner_type => nil)
     end
+
+    @attachments.keep_if { |attachment| can? :read, attachment }
   end
 
   def show
     @attachment = Attachment.find(params[:id])
     
     @attachment.get_crocodoc_uuid! if @attachment.crocodoc_uuid.blank?
-    @attachment.content = Crocodoc::Download.text(uuid) if @attachment.content.blank?
+    @attachment.content = Crocodoc::Download.text(@attachment.crocodoc_uuid) if @attachment.content.blank?
+
+    authorize! :read, @attachment
 
     @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
-        'is_editable' => can?(:comment_on, @attachment),
+        'is_editable' => @attachment.commentable? && can?(:comment_on, @attachment),
         'user' => {
             'id' => current_user.id,
             'name' => current_user.name
         },
-        'filter' => 'all', # (can? :create_in, @group) ? 'all' : current_user.id
+        'filter' => (@attachment.commentable? || current_user.admin?) ? 'all' : 'none', # (can? :create_in, @group) ? 'all' : current_user.id
         'is_admin' => current_user.admin?,
-        'is_downloadable' => false,
+        'is_downloadable' => @attachment.downloadable?,
         'is_copyprotected' => false,
         'is_demo' => false,
         'sidebar' => 'visible'
@@ -41,14 +45,20 @@ class AttachmentsController < ApplicationController
 
   def new
     @attachment = Attachment.new
+
+    authorize! :create, Attachment
+
   end
 
   def create
+    params[:attachment][:options] = OpenStruct.new( params[:attachment][:options] )
+
     @attachment = Attachment.new(params[:attachment])
 
     @attachment.author = current_user
     @attachment.owner = @group if @group
 
+    authorize! :create, Attachment
     @attachment.save
 
     redirect_to polymorphic_path([@group, :attachments])
@@ -56,10 +66,17 @@ class AttachmentsController < ApplicationController
 
   def edit
     @attachment = Attachment.find(params[:id])
+    authorize! :edit, @attachment
+
   end
 
   def update
     @attachment = Attachment.find(params[:id])
+
+    authorize! :edit, @attachment
+
+
+    params[:attachment][:options] = OpenStruct.new( params[:attachment][:options] )
 
     @attachment.update_attributes(params[:attachment])
 
@@ -70,6 +87,8 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @attachment = Attachment.find(params[:id])
+
+    authorize! :destory, @attachment
 
     @attachment.destroy
 
