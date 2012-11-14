@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
 
-    authorize! :read, Group , :message => "You do not have the access to view all groups in this manner."
+    authorize! :read, @groups , :message => "You do not have the access to view all groups in this manner."
 
     respond_to do |format|
       format.html # index.html.erb
