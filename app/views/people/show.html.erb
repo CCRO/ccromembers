@@ -47,7 +47,7 @@
   <% if @person.bio.present?  %>
     <b>Bio:</b>
     <%= @person.bio %>
-  <% elsif @person.id == current_user.id %>
+  <% elsif @person == current_user %>
     <b>Bio:</b>
     <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
   <% end %>
