@@ -10,7 +10,6 @@ group :development do
   gem 'hirb'
   gem 'foreman'
   gem 'rails-footnotes'
-  gem 'taps'
 end
 
 group :production do
@@ -47,6 +46,7 @@ gem 'marginalia'
 gem 'highrise'
 gem 'tire'
 gem "delayed_job_web"
+gem 'sinatra', ">= 1.3.0"
 
 # Gems used only for assets and not required
 # in production environments by default.
