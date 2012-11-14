@@ -13,7 +13,7 @@ class Ability
         group.people.include? user
     end
 
-    can :read, [Document, Message, Page, Post] do |object|
+    can :read, [Document, Message, Page, Post, File] do |object|
       object.owner_type == "Group" && object.owner.people.include?(user)
     end
 
