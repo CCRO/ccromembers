@@ -8,12 +8,13 @@ class Freshbooks
   
   def get_client_amount_outstanding(freshbooks_id)
     setup
-    fbinvoices = FreshBooks::Client.get(freshbooks_id).invoices
-    @amount_outstanding = 0
-    fbinvoices.each do |i|
-      @amount_outstanding += i.amount_outstanding
+    if fbinvoices = FreshBooks::Client.get(freshbooks_id).try(:invoices)
+      @amount_outstanding = 0
+      fbinvoices.each do |i|
+        @amount_outstanding += i.amount_outstanding
+      end
+      @amount_outstanding
     end
-    @amount_outstanding
   end
   
   def get_client_list
