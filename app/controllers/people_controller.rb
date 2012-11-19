@@ -10,8 +10,6 @@ class PeopleController < ApplicationController
       @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
       @people = Person.accessible_by(current_ability) unless @people
     end
-
-    authorize! :read, @people
     
     respond_to do |format|
       format.html # index.html.erb
