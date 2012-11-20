@@ -39,7 +39,7 @@
               <!-- Research Center Dropdown -->
               <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || params[:controller] == 'groups' || params[:controller] == 'posts' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/pages/23-about-ccro-working-groups"><i class="icon-book icon-white"></i> Resource Center</a></li>
               
-              <li><a href="/pages/17"><i class="icon-calendar icon-white"></i> Events</a></li>
+              <li><a href="/pages/45"><i class="icon-calendar icon-white"></i> Events</a></li>
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
               <li><a href="/pages/2-about-the-ccro-who-we-are"><i class="icon-bullhorn icon-white"></i> About The CCRO</a></li>
             </ul>
