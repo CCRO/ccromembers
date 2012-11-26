@@ -4,6 +4,7 @@
   <li class="active"><%= link_to @person.name, @person %></li>
 </ul>
 
+
 <% if @possible_highrises && can?(:manage, @person) %>
   <% @possible_highrises.each do |possible_highrise| %>
     <div class="alert alert-block alert-info">
