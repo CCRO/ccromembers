@@ -10,7 +10,7 @@ class AttachmentsController < ApplicationController
       @attachments ||= Attachment.find(Attachment.where(:owner_type => nil).search(params[:search] + '*').map(&:id))
     else
       @attachments = @group.attachments if @group
-      @attachments ||= Attachment.where(:owner_type => nil)
+      @attachments ||= Attachment.all
     end
 
     @attachments.keep_if { |attachment| can? :read, attachment }

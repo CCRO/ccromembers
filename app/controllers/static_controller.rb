@@ -14,5 +14,10 @@ class StaticController < ApplicationController
   end
 
   def welcome
+
+    
+    respond_to do |format|
+      format.html
+    end
   end
 end

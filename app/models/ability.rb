@@ -56,6 +56,7 @@ class Ability
       can :read, [Group, Message, Comment, Survey]
       can :read, [Post, Page, Document], :published => true
       can :read, Company, :id => user.company_id
+      can :read, Attachment
       
       if user.primary_contact? || user.billing_contact?
         can :edit, Person, :company_id => user.company_id
