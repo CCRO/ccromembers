@@ -56,7 +56,8 @@ class GroupsController < ApplicationController
     @memberships = @group.memberships
 
     @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-    @articles = @group.posts
+    @total_articles = @group.posts
+    @articles = @total_articles.limit(3)
     @messages = @group.messages
     @group_document = @group.documents
     @smart_list = @group.people
