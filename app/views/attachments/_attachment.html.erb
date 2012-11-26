@@ -8,9 +8,11 @@
     <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>
     Uploaded: <%= time_ago_in_words attachment.try(:created_at) %> ago by <%= attachment.author.try(:name) || "Unknown Source" %></small> 
     <br><br>
-    <span class="link-group">
-        <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) if can? :edit, attachment %> | 
-        <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
-    </span>
+    <% if can? :edit, attachment %>
+      <span class="link-group">
+          <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) if can? :edit, attachment %> | 
+          <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
+      </span>
+    <% end %>
   </p>
 </div>
