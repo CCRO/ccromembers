@@ -1,7 +1,10 @@
 <div class="attachment" style="clear:both; padding-bottom: 20px;">
   <hr>
   <%= file_icon attachment.extension, nil, :class => 'pull-left' %>
-  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, polymorphic_path([@group, attachment]), target: "_blank" %></strong> - <%= attachment.description %> 
+  <p style="margin-left: 40px;"><strong><%= link_to attachment.title, polymorphic_path([@group, attachment]), target: "_blank" %></strong> - <%= attachment.description %>
+    <% if attachment.owner && attachment.owner_type == "Group"%> 
+      <br><small><stong><%= link_to "From Working Group: #{attachment.owner.name}", attachment.owner %></strong></small>
+    <% end %>
     <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>
     Uploaded: <%= time_ago_in_words attachment.try(:created_at) %> ago by <%= attachment.author.try(:name) || "Unknown Source" %></small> 
     <br><br>
