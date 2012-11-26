@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3><%= @person.name%></h3>
+  <h3><%= @person.name%> <%= content_tag(:span, @person.role.capitalize, :class => "label label-important") if @person.role %></h3> 
 </div>
 <div class="modal-body ">
     <table cellpadding="10">
@@ -16,8 +16,8 @@
     </td>
     <td valign="top">
       <p><%= @person.title %> at <%= @person.company_name %><br />
-      Role: <%= @person.role.capitalize if @person.role %><br />
-      Email: <%= mail_to @person.email %><br />
+      Email: <%= mail_to @person.email %><br /><br />
+      <%= truncate(@person.try(:bio), :length => 250, :separator => ' ', :omission => ' ...') %>
     </td>
     </tr>
     </table>
