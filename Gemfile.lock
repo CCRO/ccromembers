@@ -73,6 +73,7 @@ GEM
       json (~> 1.1)
       rest-client (~> 1.4)
     daemons (1.1.8)
+    dalli (2.5.0)
     delayed_job (3.0.3)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.2)
@@ -268,6 +269,7 @@ DEPENDENCIES
   chargify_api_ares
   coffee-rails (~> 3.2.1)
   crocodoc
+  dalli
   delayed_job_active_record
   delayed_job_web
   doc_raptor
