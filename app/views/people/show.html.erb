@@ -67,7 +67,7 @@
   <%= form_for Membership.new, :method => 'post', :remote => true do %>
     <%= hidden_field_tag :group_id, group.id %>
     <%= hidden_field_tag :person_id, @person.id %>
-    <% if can? :manage, group || (can? :edit, @person && @person.committee?)  %>
+    <% if can?(:manage, group) || (can?(:edit, @person) && @person.committee?)  %>
     <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
     <%= link_to group.name, group %>
     <% else%>
@@ -86,5 +86,5 @@
 <% end %>
 </ul>
 <hr>
-<%= link_to 'Edit', edit_person_path(@person) %> | <% if current_user && current_user.role == 'admin' %><%= link_to 'Subscriptions', person_subscriptions_path(@person) %> | <% end %>  
+<%= link_to 'Edit', edit_person_path(@person) %> | <% if can? :edit, @person %><%= link_to 'Subscriptions', person_subscriptions_path(@person) if can? :manage, @person %> | <% end %>  
 <%= link_to 'Back', people_path %>
