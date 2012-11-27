@@ -40,7 +40,7 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', published: true}
       can :create, Comment
       can [:edit, :destroy], [Post, Document, Comment, Message, Page], :author_id => user.id
-      can :manage, Person, :id => user.id
+      can :edit, Person, :id => user.id
     end
     
     if user.pro?
