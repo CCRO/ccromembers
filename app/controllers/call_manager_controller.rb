@@ -35,6 +35,11 @@ layout 'twiml'
         r.Dial do
           r.Conference conf_room
         end
+      elsif params['Caller'] == '2818254871'
+        r.Say "Entering #{@group.try(:name) if @group} conference room as host.", :voice => 'woman'
+        r.Dial  :record => 'true' do
+          r.Conference conf_room, :beep => 'false', :waitUrl => ''
+        end        
 		  else 
         unless params['Digits']
     			r.Say 'You are calling from an unknown number.', :voice => 'woman'
@@ -45,6 +50,11 @@ layout 'twiml'
           if Person.find_by_pin_code(params['Digits'])
             @person = Person.find_by_pin_code(params['Digits'])
             r.Say "hello #{@person.name}! You will be placed into the #{@group.try(:name)  if @group} conference room.", :voice => 'woman'
+            r.Dial do
+              r.Conference conf_room
+            end
+          elsif params['Digits'] == '7000'
+            r.Say "hello Guest! You will be placed into the #{@group.try(:name)  if @group} conference room.", :voice => 'woman'
             r.Dial do
               r.Conference conf_room
             end
