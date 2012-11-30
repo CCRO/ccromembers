@@ -14,7 +14,11 @@ class Ability
     end
 
     can :read, [Document, Message, Page, Post, Attachment] do |object|
-      object.owner_type == "Group" && object.owner.people.include?(user)
+      if object.owner.class.name == "Group" 
+        object.owner.people.include?(user)
+      else
+        false
+      end
     end
 
     can [:edit, :destroy, :publish], [Post, Document, Message, Page] do |object|
@@ -40,7 +44,7 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', published: true}
       can :create, Comment
       can [:edit, :destroy], [Post, Document, Comment, Message, Page], :author_id => user.id
-      can :manage, Person, :id => user.id
+      can :edit, Person, :id => user.id
     end
     
     if user.pro?

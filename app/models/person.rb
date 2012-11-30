@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
   end
   
   serialize :browser_info
-  serialize :highrise_cache, Highrise::Person
+  serialize :highrise_cache
 
   has_many :subscriptions, :as => :owner
   # has_many :active_subscriptions, :as => :owner, :class_name => 'Subscriptions', :conditions => { :active => true }
@@ -112,8 +112,10 @@ class Person < ActiveRecord::Base
   end
   
   def title
-    # self.highrise_cache.title? ? self.highrise_cache.title : 'Unknown Title'
-    'Unknown Title'
+    if self.highrise_id.present?
+      title = Highrise::Person.find(self.highrise_id).title
+    end
+    title != nil ? title : 'Unknown Title'
   end
 
   def company_name

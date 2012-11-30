@@ -35,7 +35,7 @@ class PeopleController < ApplicationController
       #   @highrise = @person.highrise_cache
       # end
     else
-      #@possible_highrises = Highrise::Person.find_all_across_pages(:params => { :email => @person.email}) #this is breaking things?
+      @possible_highrises = Highrise::Person.find_all_across_pages(:params => { :email => @person.email}) #this is breaking things?
     end
 
     authorize! :read, @person
