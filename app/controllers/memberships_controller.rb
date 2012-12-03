@@ -34,6 +34,19 @@ class MembershipsController < ApplicationController
     authorize! :manage, @group
 
     @membership.save
+
+    respond_to do |format|
+      if @membership.save
+        format.html { redirect_to group_path(@group), notice: 'Group was successfully updated.' }
+        format.json { head :no_content }
+        format.js { render nothing: true, status: 200 }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @membership.errors, status: :unprocessable_entity }
+      end
+    end
+
+
   end
 
   def destroy
