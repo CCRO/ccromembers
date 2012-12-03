@@ -80,7 +80,7 @@ class Person < ActiveRecord::Base
   end
   
   def committee?
-    self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership']).present?
+    self.subscriptions.active.pluck(:product).include? 'committee' || (self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership']).present?)
   end
 
   def pro?
