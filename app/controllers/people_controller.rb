@@ -7,6 +7,7 @@ class PeopleController < ApplicationController
       @people = Person.find(Person.accessible_by(current_ability).search(params[:search] + '*').map(&:id))
     else
       @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
+      @people = Person.accessible_by(current_ability).sort { |a, b| a.level <=> b.level } if params[:sort] == 'level' && !@people
       @people = Person.order(params[:sort]).accessible_by(current_ability) if params[:sort] && !@people
       @people = Person.accessible_by(current_ability) unless @people
     end
