@@ -53,7 +53,7 @@ layout 'twiml'
             r.Dial do
               r.Conference conf_room
             end
-          elsif params['Digits'] == '7000'
+          elsif params['Digits'] == '7100'
             r.Say "hello Guest! You will be placed into the #{@group.try(:name)  if @group} conference room.", :voice => 'woman'
             r.Dial do
               r.Conference conf_room
