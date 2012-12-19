@@ -19,8 +19,14 @@
 <body id="blog">
 
 <% if current_user   %>
-  <%= render 'shared/nav' %>
-  <%= render 'shared/browser_warning' %>
+  <div style margin-bottom: 100px;>
+    <div style="margin-bottom: 100px;">
+      <%= render 'shared/nav' %>
+    </div>
+    <div id="warning_message" style="margin-bottom: 20px;">
+      <%= render 'shared/browser_warning' %>
+    </div>
+  </div>
 <% else %>
 
 <!--Body content (BEGIN)-->
@@ -178,3 +184,11 @@
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>
+
+<script>
+
+  $("#warning_close").click(function () {
+  $("#warning_message").toggle(['slow']);
+  });
+
+</script>
