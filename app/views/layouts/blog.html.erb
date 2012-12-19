@@ -18,15 +18,16 @@
 </head>
 <body id="blog">
 
-<% if can? :read, Post, {level: 'committee', :published => true}   %>
+<% if current_user   %>
   <%= render 'shared/nav' %>
-<% end %>
+  <%= render 'shared/browser_warning' %>
+<% else %>
 
 <!--Body content (BEGIN)-->
-<%= render 'shared/browser_warning' %>
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
     <div id='fatty_basket' class="container">
       <div id='fatty_nav'class="row">
+
         <div id="logo" class="span3">
           <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
         </div>
@@ -88,7 +89,7 @@
       </div>
     </div>
   </header>
-  
+<% end %>  
 
   <div class="container">
     <div class="row">

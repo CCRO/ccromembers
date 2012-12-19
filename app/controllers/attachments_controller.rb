@@ -7,7 +7,7 @@ class AttachmentsController < ApplicationController
   def index
     if params[:search]
       @attachments = Attachment.find(@group.attachments.search(params[:search] + '*').map(&:id)) if @group
-      @attachments ||= Attachment.find(Attachment.where(:owner_type => nil).search(params[:search] + '*').map(&:id))
+      @attachments ||= Attachment.find(Attachment.search(params[:search] + '*').map(&:id))
     else
       @attachments = @group.attachments if @group
       @attachments ||= Attachment.all
