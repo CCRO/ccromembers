@@ -1,6 +1,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name = "viewport" content = "user-scalable=no, width=device-width">
 
+<div id="warning_message" style="margin-bottom: 20px;">
+  <%= render 'shared/browser_warning' %>
+</div>
+
 <div class="span4 offset4">
   <center><%= image_tag "ccro_long.png", :width => '250', style: 'padding-top: 20px;' %></center><br />
   
@@ -29,3 +33,11 @@
     <div class="actions"><%= submit_tag "Log In", :class => "btn" %> <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %></div>
   <% end%>
 </div>
+
+<script>
+
+  $("#warning_close").click(function () {
+  $("#warning_message").toggle(['slow']);
+  });
+
+</script>
