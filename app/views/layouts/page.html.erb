@@ -14,9 +14,11 @@
 </head>
 <body id="web_page">
 
-<% if can? :read, Page, {level: 'committee', :published => true}   %>
-  <%= render 'shared/nav' %>
-<% end %>
+<% if current_user   %>
+  <div id="navholder" style="margin-bottom: 150px;">
+    <%= render 'shared/nav' %>
+  </div>
+<% else %>
 
 <!--Body content (BEGIN)-->
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
@@ -68,7 +70,7 @@
     </div>
   </header>
 
-  
+  <% end %>
   
   <div class="container">
     <div class="row">
