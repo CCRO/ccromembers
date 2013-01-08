@@ -8,7 +8,9 @@
 	</ul>
 
 <% end %>
-
+<% if can? :manage, @group %>
+	<%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') %>
+<% end %>
 <table class="table table-bordered table-striped">
 	<tbody>
 	<h2>Co-Chairs</h2>

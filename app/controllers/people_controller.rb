@@ -12,9 +12,19 @@ class PeopleController < ApplicationController
       @people = Person.accessible_by(current_ability) unless @people
     end
     
+    if params[:format] = 'csv'
+      csv_data = CSV.generate() do |csv|
+        csv << ['name', 'email', 'company', 'level']
+        @people.each do |person|
+          csv << [person.name, person.email, person.company_name, person.level] # person.attributes.values_at(*column_names)
+        end
+      end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @people }
+      format.csv { send_data csv_data }
       format.xml { render xml: @people }
     end
   end
