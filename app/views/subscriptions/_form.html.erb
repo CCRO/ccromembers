@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :product %>
-    <% if @subscription.owner_type == "Company" %>
+    <% if @owner.class.name == "Company" %>
     <% subscription_types = [['Company Membership', "company_member"], ['Leader Company', "leadership"]] %>
     <% else %>
     <% subscription_types = [['Basic', "basic"], ['Pro', 'pro'], ['Individual Subscriber', "individual_subscriber"], ['Individual Membership', "individual_member"]] %>

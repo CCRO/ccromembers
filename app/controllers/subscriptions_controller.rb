@@ -77,7 +77,7 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.update_attributes(params[:subscription])
-        format.html { redirect_to @subscription, notice: 'Subscription was successfully updated.' }
+        format.html { redirect_to @subscription.owner, notice: 'Subscription was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
