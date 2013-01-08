@@ -82,6 +82,10 @@ class Person < ActiveRecord::Base
       'basic'
     end
   end
+
+  def committee?
+    self.individual_member? || self.company_member? || self.leadership? || self.admin?
+  end
   
   def leadership?
     unless self.company.nil?

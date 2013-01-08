@@ -17,74 +17,116 @@
   <% end %>
 <% end %>
 
- 	<ul class="thumbnails">
-     <li class="span2">
-       <a href="#" class="thumbnail">
-         <%= avatar_for @person %>
-       </a>
-     </li>
-   </ul>
-<h2><%= @person.name %></h2>
+<div class="content span12">
+  <div class="row">
+    
+    <div class="span5">
+     	<ul class="thumbnails">
+         <li class="span2">
+           <a href="#" class="thumbnail">
+             <%= avatar_for @person %>
+           </a>
+         </li>
+       </ul>
+      <h2><%= @person.name %></h2>
 
-<% if @person.company.present?%>
-<p>
-  <p><%= @person.title %> at <%= @person.company_name %><br />
-</p>
-<% end %>
+      <% if @person.company.present?%>
+      <p>
+        <p><%= @person.title %> at <%= @person.company_name %><br />
+      </p>
+      <% end %>
 
-<p>
-  <b>Email:</b>
-  <%= @person.email %>
-</p>
+      <p>
+        <b>Email:</b>
+        <%= @person.email %>
+      </p>
 
-<% if current_user && current_user.admin? %>
-<p>
-  <b>Verifed:</b>
-  <%= @person.verified %>
-</p>
-<% end %>
+      <% if current_user && current_user.admin? %>
+      <p>
+        <b>Verifed:</b>
+        <%= @person.verified %>
+      </p>
+      <% end %>
 
-<p>
-  <% if @person.bio.present?  %>
-    <b>Bio:</b>
-    <%= @person.bio %>
-  <% elsif @person == current_user %>
-    <b>Bio:</b>
-    <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
-  <% end %>
-</p>
+      <p>
+        <% if @person.bio.present?  %>
+          <b>Bio:</b>
+          <%= @person.bio %>
+        <% elsif @person == current_user %>
+          <b>Bio:</b>
+          <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+        <% end %>
+      </p>
 
-<br>
-<h2>Working Group Involvement</h2>
-<% unless @person.memberships.present? %>
-  <p><%= @person.name + " is not involved with any working groups at this time."%></p>
-<% else %>
-  <br>
-<% end %>
+      <br>
+      <h2>Working Group Involvement</h2>
+      <% unless @person.memberships.present? %>
+        <p><%= @person.name + " is not involved with any working groups at this time."%></p>
+      <% else %>
+        <br>
+      <% end %>
 
-<ul class="nav">
-<% Group.all.each do |group| %>
-  <%= form_for Membership.new, :method => 'post', :remote => true do %>
-    <%= hidden_field_tag :group_id, group.id %>
-    <%= hidden_field_tag :person_id, @person.id %>
-    <% if can?(:manage, group) || (can?(:edit, @person) && @person.committee?)  %>
-    <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
-    <%= link_to group.name, group %>
-    <% else%>
-      <% if @person.groups.where(:id => group.id).present? %>
-        <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
-        <% if membership.fuction == nil %>
-          <li><%= link_to "Participating in: '#{group.name}'", group %></li>
-        <% elsif membership.fuction == 'chair' %>
-          <li><%= link_to "Chairing: '#{group.name}'", group %></li>
-        <% elsif membership.fuction == 'coordinator' %>
-          <li><%= link_to "Coordinating for: '#{group.name}'", group %></li>
+      <ul class="nav">
+      <% Group.all.each do |group| %>
+        <%= form_for Membership.new, :method => 'post', :remote => true do %>
+          <%= hidden_field_tag :group_id, group.id %>
+          <%= hidden_field_tag :person_id, @person.id %>
+          <% if can?(:manage, group) || (can?(:edit, @person) && @person.committee?)  %>
+          <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
+          <%= link_to group.name, group %>
+          <% else%>
+            <% if @person.groups.where(:id => group.id).present? %>
+              <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
+              <% if membership.fuction == nil %>
+                <li><%= link_to "Participating in: '#{group.name}'", group %></li>
+              <% elsif membership.fuction == 'chair' %>
+                <li><%= link_to "Chairing: '#{group.name}'", group %></li>
+              <% elsif membership.fuction == 'coordinator' %>
+                <li><%= link_to "Coordinating for: '#{group.name}'", group %></li>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-</ul>
-<hr>
-<%= link_to 'Edit', edit_person_path(@person) %> | <% if can? :edit, @person %><%= link_to 'Subscriptions', person_subscriptions_path(@person) if can? :manage, @person %> | <% end %>  
-<%= link_to 'Back', people_path %>
+      </ul>
+    </div>
+
+    <div class="span7">
+      <% if can? :manage, @subscriptions %>
+        <h2><%= "Subscriptions for #{@person.name}"%></h2>
+
+        <br>
+
+        <table class="table table-bordered">
+          <tr>
+            <th class="span2">Subscription Holder</th>
+            <th class="span2">Subscription Type</th>
+            <th class="span2">Active?</th>
+            <th class="span1"></th>
+          </tr>
+
+          <% @subscriptions.each do |subscription| %>
+            <tr>
+              <% if subscription.owner_type == "Person" %>
+                <td><%= @person.name %></td>
+              <% else %>
+                <td><%= @person.company.name %></td>
+              <% end %>
+              <td><%= subscription.product %></td>
+              <td><%= subscription.active %></td>
+              <td style="text-align: center;"><%= link_to 'Update', edit_subscription_path(subscription), class: "btn btn-large", style: "padding-left:50px; padding-right:50px;" %></td>
+            </tr>
+          <% end %>
+        </table>
+        <%= link_to 'New Subscription', new_polymorphic_path([@person, :subscription]), class: "btn" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <hr>
+    <%= link_to 'Edit', edit_person_path(@person) %> | <% if can? :edit, @person %><%= link_to 'Subscriptions', person_subscriptions_path(@person) if can? :manage, @person %> | <% end %>  
+    <%= link_to 'Back', people_path %>
+  </div>
+</div>
+
+

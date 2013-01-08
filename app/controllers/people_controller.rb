@@ -24,6 +24,10 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
     @group_memberships = Group.pluck(:id).zip(Group.pluck(:id).map { |group_id| (@person.groups.where(:id => group_id).present?) ? 1 : 0 })
+    @subscriptions = Subscription.where(owner_type: 'Person', owner_id: params[:id])
+    if @person.company != nil
+    @subscriptions += Subscription.where(owner_type: 'Company', owner_id: @person.company.id)
+    end
 
     
     if @person.highrise_id.present?

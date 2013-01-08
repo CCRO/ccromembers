@@ -13,23 +13,28 @@
 
   <div class="field">
     <%= f.label :product %>
-    <% subscription_types = [['Basic', "basic"], ['Pro', 'pro'], ['Individual Subscriber', "individual_subscriber"], ['Individual Membership', "individual_member"], ['Company Membership', "company_member"], ['Leader Company', "leadership"]] %>
+    <% if @subscription.owner_type == "Company" %>
+    <% subscription_types = [['Company Membership', "company_member"], ['Leader Company', "leadership"]] %>
+    <% else %>
+    <% subscription_types = [['Basic', "basic"], ['Pro', 'pro'], ['Individual Subscriber', "individual_subscriber"], ['Individual Membership', "individual_member"]] %>
+    <% end %>
     <%= select_tag('subscription[product]', options_for_select(subscription_types, :selected => @subscription.product), :include_blank => true) %>
   </div>
-  
-  <div class="field">
-    <%= f.label :payment_method %>
-    <%= f.text_field :payment_method %><br><br>
-  </div>
-  <div class="field">
-    <%= f.label :payment_id %>
-    <%= f.text_field :payment_id %><br><br>
-  </div>
+  <% if false %>
+    <div class="field">
+      <%= f.label :payment_method %>
+      <%= f.text_field :payment_method %><br><br>
+    </div>
+    <div class="field">
+      <%= f.label :payment_id %>
+      <%= f.text_field :payment_id %><br><br>
+    </div>
+  <% end %>
   <div class="field">
     <%= f.label :active %>
     <%= f.check_box :active %><br><br>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update Subscription", class: "btn" %>
   </div>
 <% end %>

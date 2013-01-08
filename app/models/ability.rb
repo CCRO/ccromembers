@@ -8,6 +8,7 @@ class Ability
     can :create, Person
     can :read, Person
     can :read, Survey if user.id
+    cannot :manage, Subscription
    
     can :read, Group do |group|
         group.people.include? user

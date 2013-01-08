@@ -1,7 +1,9 @@
 class SubscriptionsController < ApplicationController
+  load_and_authorize_resource
   # GET /subscriptions 
   # GET /subscriptions.json
   def index
+    @subscriptions = nil #the load_and_authorize_resource cancan method is loading all the subscriptions and we want to start with a clean slate here.
     if params[:company_id]
       @owner = Company.find(params[:company_id])
       @subscriptions = Subscription.where(owner_type: 'Company', owner_id: params[:company_id])
@@ -59,7 +61,7 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
-        format.html { redirect_to polymorphic_path([@subscription.owner, :subscriptions]), notice: 'Subscription was successfully created.' }
+        format.html { redirect_to @subscription.owner, notice: 'Subscription was successfully created.' }
         format.json { render json: @subscription, status: :created, location: @subscription }
       else
         format.html { render action: "new" }
