@@ -23,8 +23,8 @@
           <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
         <% elsif post.level == 'pro' && params[:action] == 'index' %>
           <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
-        <% elsif post.level == 'committee' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
+        <% elsif post.level == 'individual_member' || post.level == 'company_member' || post.level == 'leadership' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Committee</h1>
         <% end %>
   
       <h1 class="post_title">

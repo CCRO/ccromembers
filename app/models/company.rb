@@ -15,21 +15,21 @@ class Company < ActiveRecord::Base
   after_initialize :first_is_admin
   
   def level
-    if self.committee_leadership?
-      'committee-leadership'
-    elsif self.committee?
-      'committee'
+    if self.leadership?
+      'leadership'
+    elsif self.company?
+      'company'
     else
       ''
     end
   end
 
-  def committee?
-    self.subscriptions.active.pluck(:product).include? 'committee'
+  def leadership?
+    self.subscriptions.active.pluck(:product).include? 'leadership'
   end
 
-  def committee_leadership?
-    self.subscriptions.active.pluck(:product).include? 'committee-leadership'
+  def company?
+    self.subscriptions.active.pluck(:product).include? 'company'
   end
  
   def update_balance!

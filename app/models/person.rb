@@ -68,27 +68,43 @@ class Person < ActiveRecord::Base
   def level
     if self.admin?
       'admin'
-    elsif self.committee?
-      'committee'
-    elsif self.participant?
-      'participant'
-   elsif self.pro?
+    elsif self.leadership?
+      'leadership'
+    elsif self.company_member?
+      'company'
+    elsif self.individual_member?
+      'individual_member'
+    elsif self.individual_subscriber?
+      'individual_subscriber'
+    elsif self.pro?
       'pro'
     else
       'basic'
     end
   end
   
-  def committee?
-    self.subscriptions.active.pluck(:product).include?('committee') || (self.company && (self.company.subscriptions.active.pluck(:product) & ['committee', 'committee-leadership']).present?)
+  def leadership?
+    unless self.company.nil?
+      self.company.subscriptions.active.pluck(:product).include? 'leadership'
+    end               
+  end
+  
+  def company_member?
+    unless self.company.nil?
+      self.company.subscriptions.active.pluck(:product).include? 'company_member'
+    end 
+  end
+
+  def individual_member?
+    self.subscriptions.active.pluck(:product).include? 'individual_member'
+  end
+
+  def individual_subscriber?
+    self.subscriptions.active.pluck(:product).include? 'individual_subscriber'
   end
 
   def pro?
     self.subscriptions.active.pluck(:product).include? 'pro'
-  end
-  
-  def participant?
-    self.subscriptions.active.pluck(:product).include? 'participant'
   end
   
   def basic?
@@ -109,6 +125,10 @@ class Person < ActiveRecord::Base
   
   def moderator?
     self.role == 'moderator'
+  end
+
+  def company?
+    self.company.nil?
   end
   
   def title

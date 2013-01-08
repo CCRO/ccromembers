@@ -39,7 +39,10 @@
               <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
               <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
               <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
-              <%= f.radio_button :level, "committee", :class => 'submittable' %><%= f.label :level, 'Committee' %>
+              <%= f.radio_button :level, "individual_subscriber", :class => 'submittable' %><%= f.label :level, 'Individual Subscriber' %>
+              <%= f.radio_button :level, "individual_member", :class => 'submittable' %><%= f.label :level, 'Individual Member' %>
+              <%= f.radio_button :level, "company_member", :class => 'submittable' %><%= f.label :level, 'Company Member' %>
+              <%= f.radio_button :level, "leadership", :class => 'submittable' %><%= f.label :level, 'Leadership' %>
             <% end %>
             <b>Commenting</b>
             <%= form_for @page, { :remote => true, :class => 'radio inline' } do |f| %>
