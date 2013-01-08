@@ -11,6 +11,20 @@ class MembershipsController < ApplicationController
 
     @participants = @people - @co_chairs - @coordinators
     authorize! :read, @group
+
+    if params[:format] = 'csv'
+      csv_data = CSV.generate() do |csv|
+        csv << ['name', 'email', 'company', 'level']
+        @people.each do |person|
+          csv << [person.name, person.email, person.company_name, person.level] # person.attributes.values_at(*column_names)
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.csv { send_data csv_data }
+    end
   end
 
   def create
