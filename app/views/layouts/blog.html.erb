@@ -18,15 +18,24 @@
 </head>
 <body id="blog">
 
-<% if can? :read, Post, {level: 'committee', :published => true}   %>
-  <%= render 'shared/nav' %>
-<% end %>
+<% if current_user   %>
+  <div style margin-bottom: 100px;>
+    <div style="margin-bottom: 100px;">
+      <%= render 'shared/nav' %>
+    </div>
+      <% if params[:action] == 'index' %>
+        <div id="warning_message" style="margin-bottom: 20px;">
+          <%= render 'shared/browser_warning' %>
+        </div>
+      <% end %>
+  </div>
+<% else %>
 
 <!--Body content (BEGIN)-->
-<%= render 'shared/browser_warning' %>
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
     <div id='fatty_basket' class="container">
       <div id='fatty_nav'class="row">
+
         <div id="logo" class="span3">
           <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
         </div>
@@ -88,7 +97,7 @@
       </div>
     </div>
   </header>
-  
+<% end %>  
 
   <div class="container">
     <div class="row">
@@ -177,3 +186,11 @@
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>
+
+<script>
+
+  $("#warning_close").click(function () {
+  $("#warning_message").toggle(['slow']);
+  });
+
+</script>
