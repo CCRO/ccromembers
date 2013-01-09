@@ -5,16 +5,24 @@
       <div id="logo" class="span3">
         <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
       </div>
-      <div class="span4">
+      <div class="span4" style="margin-left: 0px; width: 460px;">
         <ul id="nav_links">
-          <li><%= link_to 'Home', posts_path %></li>
-          <li><%= link_to 'About', "/pages/2-about-the-ccro-who-we-are" %></li>
-          <li><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
-          <li><%= link_to 'CCRO Working Groups', '/pages/23-about-ccro-working-groups' %></li>
+          <li padding-left: 10px;><%= link_to 'Home', posts_path %></li>
+          <li padding-left: 10px;><%= link_to 'About', "/pages/2-about-the-ccro-who-we-are" %></li>
+          
+          <li class="dropdown" padding-left: 10px;>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">File Library<i class="icon-caret-down"></i></a> 
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li style="padding-right:0px;"><%= link_to 'Local File Library', attachments_path %></li>
+              <li style="padding-right:0px;"><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
+            </ul>
+          </li>
+
+          <li padding-left: 10px;><%= link_to 'CCRO Working Groups', '/pages/23-about-ccro-working-groups' %></li>
         </ul>
       </div>
 
-      <div id="login_tools" class="span5">  
+      <div id="login_tools" class="span5" style="width: 410px;">  
         <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
           <%= hidden_field_tag :remember_me, '1' %>
           <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
