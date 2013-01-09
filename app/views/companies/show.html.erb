@@ -35,7 +35,7 @@
 
 
 <% if can? :manage, @subscriptions %>
-  <h2><%= "Subscriptions for #{@company.name}"%></h2>
+  <h3><%= "Subscriptions for #{@company.name}"%></h3>
 
   <br>
 
@@ -62,7 +62,8 @@
 <hr> 
 
 
-<h2><%= "Participants from #{@company.name}"%></h2>
+<h3><%= "Participants from #{@company.name}"%></h3>
+<br>
 <%= render :partial => 'people/list', :object => @people %>
 
 <%= link_to 'Back', companies_path %>
