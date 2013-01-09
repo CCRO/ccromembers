@@ -71,7 +71,7 @@ class Person < ActiveRecord::Base
     elsif self.leadership?
       'leadership'
     elsif self.company_member?
-      'company'
+      'company_member'
     elsif self.individual_member?
       'individual_member'
     elsif self.individual_subscriber?

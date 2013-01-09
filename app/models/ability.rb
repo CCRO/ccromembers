@@ -69,11 +69,9 @@ class Ability
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
       can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}  
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
-      can :read, [Document, Page, Post], :published => true
-      can :read, [Group, Message, Comment, Survey]
-      can :read, [Post, Page, Document], :published => true
-      can :read, Company, :id => user.company_id
       can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member']}
+      can :read, [Group, Message, Comment, Survey]
+      can :read, Company, :id => user.company_id
       
       if user.primary_contact? || user.billing_contact?
         can :edit, Person, :company_id => user.company_id
@@ -87,12 +85,10 @@ class Ability
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
       can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}  
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}
-      can :read, [Post, Page, Document], {level: 'company_member', :published => true}   
-      can :read, [Document, Page, Post], :published => true
-      can :read, [Group, Message, Comment, Survey]
-      can :read, [Post, Page, Document], :published => true
-      can :read, Company, :id => user.company_id
+      can :read, [Post, Page, Document], {level: 'company_member', :published => true}  
       can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member']}
+      can :read, [Group, Message, Comment, Survey]
+      can :read, Company, :id => user.company_id
       
       if user.primary_contact? || user.billing_contact?
         can :edit, Person, :company_id => user.company_id
@@ -107,12 +103,10 @@ class Ability
       can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
       can :read, [Post, Page, Document], {level: 'company_member', :published => true}
-      can :read, [Post, Page, Document], {level: 'leadership', :published => true}   
-      can :read, [Document, Page, Post], :published => true
+      can :read, [Post, Page, Document], {level: 'leadership', :published => true}
+      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member', 'leadership']}   
       can :read, [Group, Message, Comment, Survey]
-      can :read, [Post, Page, Document], :published => true
       can :read, Company, :id => user.company_id
-      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member', 'leadership']}
       
       if user.primary_contact? || user.billing_contact?
         can :edit, Person, :company_id => user.company_id
