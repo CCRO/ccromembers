@@ -105,12 +105,6 @@
       <% unless params[:controller] == 'signups' %>  
       	<aside class="span3">
 
-          <ul class="nav nav-tabs nav-stacked">
-            <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Upcoming events</li>
-            <li><%= link_to 'CCRO General Meeting', "/pages/45" %></li>
-            <li><%= link_to 'Upcoming Conference Calls', tagged_posts_path('Conference Calls') %></li>
-            
-          </ul>
 
           <ul class="nav nav-tabs nav-stacked">
               <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
@@ -124,6 +118,13 @@
               <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
               <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
           </ul>
+
+          <% if false %>
+          <ul class="nav nav-tabs nav-stacked">
+            <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Upcoming events</li>
+            <li><%= link_to 'Upcoming Conference Calls', tagged_posts_path('Conference Calls') %></li>
+          </ul>
+          <% end %>
 
           <ul class="nav nav-tabs nav-stacked">
             <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Active Surveys and Polls</li>
