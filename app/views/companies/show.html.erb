@@ -16,25 +16,53 @@
 <% end %>
 
 <% if can? :manage, @company %>
-	<div class="btn-group pull-right">
-	  <%= link_to('Highrise', highrise_url(@company), :class => 'btn') unless @company.highrise_id.blank? %>
-	  <%= link_to('Freshbooks', freshbooks_url(@company), :class => 'btn') unless @company.freshbooks_id.blank? %>
-	  <%= link_to raw('<i class="icon-pencil"></i>'), edit_company_url(@company), :class => 'btn' %>
-	  <%= link_to raw('<i class="icon-remove"></i>'), @company, :method => 'delete', :class => 'btn', :confirm => "Are you sure you want to delete #{@company.name}?" %>
-	</div>
+  <div class="btn-group pull-right">
+    <%= link_to('Highrise', highrise_url(@company), :class => 'btn') unless @company.highrise_id.blank? %>
+    <%= link_to('Freshbooks', freshbooks_url(@company), :class => 'btn') unless @company.freshbooks_id.blank? %>
+    <%= link_to raw('<i class="icon-pencil"></i>'), edit_company_url(@company), :class => 'btn' %>
+    <%= link_to raw('<i class="icon-remove"></i>'), @company, :method => 'delete', :class => 'btn', :confirm => "Are you sure you want to delete #{@company.name}?" %>
+  </div>
 <% end %>
 
-  <h2><%= @company.name %></h2><span class="badge badge-inverse"><%= @company.role %></span> 
-  <% if @company.billing_status == 'active' %>
-  <span class="badge badge-success"><%= @company.billing_status %></span>
-  <% else %>
-  <span class="badge badge-error"><%= @company.billing_status %></span>
-  <% end %>
-  <span class="badge badge-inverse"><%= number_to_currency @company.balance %></span>
-  <hr />
+<h2><%= @company.name %></h2><span class="badge badge-inverse"><%= @company.role %></span> 
+<% if @company.billing_status == 'active' %>
+<span class="badge badge-success"><%= @company.billing_status %></span>
+<% else %>
+<span class="badge badge-error"><%= @company.billing_status %></span>
+<% end %>
+<span class="badge badge-inverse"><%= number_to_currency @company.balance %></span>
+<hr />
 
+
+<% if can? :manage, @subscriptions %>
+  <h2><%= "Subscriptions for #{@company.name}"%></h2>
+
+  <br>
+
+  <table class="table table-bordered">
+    <tr>
+      <th class="span2">Subscription Holder</th>
+      <th class="span2">Subscription Type</th>
+      <th class="span2">Active?</th>
+      <th class="span1"></th>
+    </tr>
+
+    <% @subscriptions.each do |subscription| %>
+      <tr>
+        <td><%= @company.name %></td>
+        <td><%= subscription.product %></td>
+        <td><%= subscription.active %></td>
+        <td style="text-align: center;"><%= link_to 'Update', edit_subscription_path(subscription), class: "btn btn-large", style: "padding-left:50px; padding-right:50px;" %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= link_to 'New Subscription', new_polymorphic_path([@company, :subscription]), class: "btn" %>
+<% end %>
+
+<hr> 
+
+
+<h2><%= "Participants from #{@company.name}"%></h2>
 <%= render :partial => 'people/list', :object => @people %>
 
-
-<%= link_to 'Edit', edit_company_path(@company) %> | <%= link_to 'Subscriptions', company_subscriptions_path(@company) %> |
 <%= link_to 'Back', companies_path %>
