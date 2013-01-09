@@ -15,62 +15,22 @@
 <body id="web_page">
 
 <% if current_user   %>
-  <div id="navholder" style="margin-bottom: 150px;">
-    <%= render 'shared/nav' %>
+  <div style margin-bottom: 100px;>
+    <div style="margin-bottom: 100px;">
+      <%= render 'shared/nav' %>
+    </div>
+      <% if params[:action] == 'index' %>
+        <div id="warning_message" style="margin-bottom: 20px;">
+          <%= render 'shared/browser_warning' %>
+        </div>
+      <% end %>
   </div>
 <% else %>
 
 <!--Body content (BEGIN)-->
-  <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
-    <div id='fatty_basket' class="container">
-      <div id='fatty_nav'class="row">
-        <div id="logo" class="span3">
-          <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
-        </div>
-        <div class="span4">
-          <ul id="nav_links">
-            <li><%= link_to 'Home', posts_path %></li>
-            <li><%= link_to 'About', "/pages/2-about-the-ccro-who-we-are" %></li>
-            <li><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
-            <li><%= link_to 'CCRO Working Groups', '/pages/23-about-ccro-working-groups' %></li>
-          </ul>
-        </div>
+  <%= render 'shared/public_nav' %>
+<% end %>  
 
-        
-          <% if current_user %>
-            <div class="btn-toolbar pull-right">
-              <div class="btn-group">
-                <% if can? :create, Page %>
-                  <%= link_to draft_pages_path, :class => 'btn' do %>  
-                    <i class="icon-list-alt"></i> Manage Page drafts
-                  <% end %>
-                <% end %>
-              </div>
-              <div class="btn-group">
-                <%= link_to current_user.name, current_user, :class => 'btn' %>
-                <%= link_to logout_path, :class => 'btn' do %>
-                  <i class="icon-off"></i>
-                <% end %>
-             </div>
-            </div>
-          <% else %>
-            <div id="login_tools" class="span5">  
-              <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
-                <%= hidden_field_tag :remember_me, '1' %>
-                <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
-                <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
-                <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-              <% end %>
-            </div>
-            <div id="login-subtext" class="pull-right">
-                <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %>
-             </div> 
-          <% end %>
-      </div>
-    </div>
-  </header>
-
-  <% end %>
   
   <div class="container">
     <div class="row">
