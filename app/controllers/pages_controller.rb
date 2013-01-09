@@ -79,8 +79,8 @@ class PagesController < ApplicationController
       @page = Page.find_by_viewing_token(params[:token])
     else 
       @page = Page.find(params[:id])
-        @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
-        @all_tags = all_tags
+      @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
+      @all_tags = all_tags
       unless @group
         if @page.published == true
           @category = Page.where(published: true).tagged_with(@tag).sort! { |a,b| a.position <=> b.position }

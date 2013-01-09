@@ -17,19 +17,19 @@ class Company < ActiveRecord::Base
   def level
     if self.leadership?
       'leadership'
-    elsif self.company?
-      'company'
+    elsif self.company_member?
+      'company_member'
     else
-      ''
+      'none'
     end
   end
 
   def leadership?
-    self.subscriptions.active.pluck(:product).include? 'leadership'
+    self.subscriptions.active.pluck(:product).include? 'leadership'             
   end
-
-  def company?
-    self.subscriptions.active.pluck(:product).include? 'company'
+  
+  def company_member?
+    self.subscriptions.active.pluck(:product).include? 'company_member'
   end
  
   def update_balance!

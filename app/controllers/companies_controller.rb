@@ -16,6 +16,7 @@ class CompaniesController < ApplicationController
   # GET /people/1.json
   def show
     @company = Company.find(params[:id])
+    @subscriptions = Subscription.where(owner_type: 'Company', owner_id: @company.id)
     @people = @company.people
 
   unless @company.highrise_id.present?

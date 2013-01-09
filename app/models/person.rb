@@ -71,7 +71,7 @@ class Person < ActiveRecord::Base
     elsif self.leadership?
       'leadership'
     elsif self.company_member?
-      'company'
+      'company_member'
     elsif self.individual_member?
       'individual_member'
     elsif self.individual_subscriber?
@@ -81,6 +81,10 @@ class Person < ActiveRecord::Base
     else
       'basic'
     end
+  end
+
+  def committee?
+    self.individual_member? || self.company_member? || self.leadership? || self.admin?
   end
   
   def leadership?
