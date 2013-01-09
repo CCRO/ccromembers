@@ -24,7 +24,7 @@
   </div>
 <% end %>
 
-<h2><%= @company.name %></h2><span class="badge badge-inverse"><%= @company.role %></span> 
+<h2><%= @company.name %></h2><span class="badge badge-inverse"><%= @company.level %></span> 
 <% if @company.billing_status == 'active' %>
 <span class="badge badge-success"><%= @company.billing_status %></span>
 <% else %>
