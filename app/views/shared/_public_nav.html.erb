@@ -1,0 +1,46 @@
+<header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
+  <div id='fatty_basket' class="container">
+    <div id='fatty_nav'class="row">
+
+      <div id="logo" class="span3">
+        <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
+      </div>
+      <div class="span4">
+        <ul id="nav_links">
+          <li><%= link_to 'Home', posts_path %></li>
+          <li><%= link_to 'About', "/pages/2-about-the-ccro-who-we-are" %></li>
+          <li><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
+          <li><%= link_to 'CCRO Working Groups', '/pages/23-about-ccro-working-groups' %></li>
+        </ul>
+      </div>
+
+      <div id="login_tools" class="span5">  
+        <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
+          <%= hidden_field_tag :remember_me, '1' %>
+          <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+          <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+          <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
+        <% end %>
+      </div> 
+      <div id="login-subtext" class="pull-right">
+        <%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %>
+     </div> 
+    </div>
+    <% if params[:controller] == 'posts' && params[:action] == 'index'%>
+      <div id="header_expanded" class="row">
+        <div id="promo_video" class="span8">
+          <img id="video" src="https://s3.amazonaws.com/ccro_static/empty_office.png" width="770" height="432" frameborder="0" >
+        </div>
+        <div id="header_promo" class="span4">
+          <h1>Committee of Chief Risk Officers:</h1>
+          <p>Advancing Best Practices for Energy Companies</p>
+          <p>
+            <% unless params[:controller] == 'signups' %>  
+              <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
+            <% end %> 
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</header>

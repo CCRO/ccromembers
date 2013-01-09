@@ -69,6 +69,21 @@
     </div>
   </fieldset>
 
+  <fieldset>
+    <legend>Level for File</legend>
+    <div class="control-group">
+      <div class="control-group radio inline" >
+        <%= f.radio_button :level, "public" %><%= f.label :level, 'Public' %>
+        <%= f.radio_button :level, "basic" %><%= f.label :level, 'Basic' %>
+        <%= f.radio_button :level, "pro" %><%= f.label :level, 'Pro' %>
+        <%= f.radio_button :level, "individual_subscriber" %><%= f.label :level, 'Individual Subscriber' %>
+        <%= f.radio_button :level, "individual_member" %><%= f.label :level, 'Individual Member' %>
+        <%= f.radio_button :level, "company_member" %><%= f.label :level, 'Company Member' %>
+        <%= f.radio_button :level, "leadership" %><%= f.label :level, 'Leadership' %>
+      </div>
+    </div>
+  </fieldset>
+
   <div class="actions">
     <%= f.submit nil, :class => 'btn' %> or <%= link_to 'back', :back %>
   </div>
