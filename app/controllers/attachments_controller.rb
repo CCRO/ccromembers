@@ -13,7 +13,7 @@ class AttachmentsController < ApplicationController
       @attachments ||= Attachment.all
     end
 
-    @attachments.keep_if { |attachment| can? :read, attachment }
+    # @attachments.keep_if { |attachment| can? :read, attachment }
   end
 
   def show
