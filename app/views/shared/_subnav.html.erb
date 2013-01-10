@@ -4,6 +4,7 @@
   <div class="subnav-inner">
     <div class="container">
     <ul class="nav nav-pills">
+
       <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
           Directory: 
@@ -12,11 +13,12 @@
         <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
         <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
       <% end %>
-      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' %>
-      <div class="navbar-text pull-left">
-        Resource Center: 
-      </div>
-      <li class="divider-vertical"></li>
+
+      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' || params[:controller] == 'static' || params[:controller] == 'exceptions' %>
+        <div class="navbar-text pull-left">
+          Resource Center: 
+        </div>
+        <li class="divider-vertical"></li>
         <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
         <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
         <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
@@ -27,6 +29,7 @@
             <% end %>
           </ul>
         </li>
+        
         <!-- <li <%= 'class=active' if params[:controller] == 'documents' %>><a href="/documents">Documents</a></li> -->
         <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
       <% end %>

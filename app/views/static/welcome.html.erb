@@ -1,1 +1,18 @@
-Welcome to the CCRO
+<head>
+  <title>CCRO - <%= "CCRO" %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+  <%= stylesheet_link_tag "style", :media => "all" %>
+  <%= stylesheet_link_tag "blog", :media => "all" %>
+  <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
+</head>
+<body id="blog">
+  <div class="row-fluid">
+    <div class="hero-unit span12" style="background-color:lightBlue;">
+      <h1>Welcome to the CCRO!</h1>
+      <p> The feature you are trying to access is being developed right now! Please stay tuned.
+      <p>
+      </p>
+    </div>
+  </div>
+</body>
