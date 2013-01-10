@@ -19,19 +19,19 @@
     <div style="margin-bottom: 100px;">
       <%= render 'shared/nav' %>
     </div>
-      <% if params[:action] == 'index' %>
-        <div id="warning_message" style="margin-bottom: 20px;">
-          <%= render 'shared/browser_warning' %>
-        </div>
-      <% end %>
+    <% if params[:action] == 'index' %>
+      <div id="warning_message" style="margin-bottom: 20px;">
+        <%= render 'shared/browser_warning' %>
+      </div>
+    <% end %>
   </div>
 <% else %>
+<div>
+  <%= render 'shared/public_nav' %>
+</div>
+<% end %>
 
 <!--Body content (BEGIN)-->
-  <%= render 'shared/public_nav' %>
-<% end %>  
-
-  
   <div class="container">
     <div class="row">
       <% unless params[:controller] == 'signups' %>
