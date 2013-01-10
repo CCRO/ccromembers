@@ -1,3 +1,6 @@
+<% @about_pages = Page.where(published: true).tagged_with("about").sort! { |a,b| a.position <=> b.position } %>
+<% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
+
 <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> " style="overflow:visible;;">
   <div id='fatty_basket' class="container">
     <div id='fatty_nav'class="row">
@@ -8,7 +11,15 @@
       <div class="span4" style="margin-left: 0px; width: 460px; position: relative; z-index: 1000;">
         <ul id="nav_links">
           <li padding-left: 10px;><%= link_to 'Home', posts_path %></li>
-          <li padding-left: 10px;><%= link_to 'About', "/pages/2-about-the-ccro-who-we-are" %></li>
+          
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <% @about_pages.each do |p| %>
+                <li style="padding-right:0px;"><%= link_to p.title, p %></li>
+              <% end %>
+            </ul>
+          </li>
           
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">File Library<i class="icon-caret-down"></i></a>
@@ -18,7 +29,14 @@
             </ul>
           </li>
 
-          <li padding-left: 10px;><%= link_to 'CCRO Working Groups', '/pages/23-about-ccro-working-groups' %></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">CCRO Working Groups<i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <% @group_pages.each do |p| %>
+                <li style="padding-right:0px;"><%= link_to p.title, p %></li>
+              <% end %>
+            </ul>
+          </li>
         </ul>
       </div>
 

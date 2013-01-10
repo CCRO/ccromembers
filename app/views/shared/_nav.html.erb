@@ -1,3 +1,4 @@
+  <% @about_pages = Page.where(published: true).tagged_with("about").sort! { |a,b| a.position <=> b.position } %>
   <% if current_user %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -43,7 +44,16 @@
               
               <li><a href="/pages/45"><i class="icon-calendar icon-white"></i> Events</a></li>
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
-              <li><a href="/pages/2-about-the-ccro-who-we-are"><i class="icon-bullhorn icon-white"></i> About The CCRO</a></li>
+              
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bullhorn icon-white"></i>About The CCRO</i></a>
+                <ul class="dropdown-menu">
+                  <% @about_pages.each do |p| %>
+                    <li style="padding-right:0px;"><%= link_to p.title, p %></li>
+                  <% end %>
+                </ul>
+              </li>
+
             </ul>
          </div>
         <div class="navbar-text pull-right">
