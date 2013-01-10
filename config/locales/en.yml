@@ -18,6 +18,10 @@ en:
       session:
         email: 'Username or Email'
         password: 'Password'
+      attachment:
+        level: 'Viewing Level'
+        comment_level: 'Comment Level'
+        download_level: 'Download Level'
   time:
       formats:
         default: "%A, %B %e, %Y %l:%M %p"

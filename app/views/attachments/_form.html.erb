@@ -72,7 +72,8 @@
   <fieldset>
     <legend>Level for File</legend>
     <div class="control-group">
-      <div class="control-group radio inline" >
+      <%= f.label :level, :class => 'control-label' %>
+      <div class="controls radio inline" >
         <%= f.radio_button :level, "public" %><%= f.label :level, 'Public' %>
         <%= f.radio_button :level, "basic" %><%= f.label :level, 'Basic' %>
         <%= f.radio_button :level, "pro" %><%= f.label :level, 'Pro' %>
@@ -80,6 +81,30 @@
         <%= f.radio_button :level, "individual_member" %><%= f.label :level, 'Individual Member' %>
         <%= f.radio_button :level, "company_member" %><%= f.label :level, 'Company Member' %>
         <%= f.radio_button :level, "leadership" %><%= f.label :level, 'Leadership' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :comment_level, :class => 'control-label' %>
+      <div class="controls radio inline" >
+        <%= f.radio_button :comment_level, "public" %><%= f.label :comment_level, 'Public' %>
+        <%= f.radio_button :comment_level, "basic" %><%= f.label :comment_level, 'Basic' %>
+        <%= f.radio_button :comment_level, "pro" %><%= f.label :comment_level, 'Pro' %>
+        <%= f.radio_button :comment_level, "individual_subscriber" %><%= f.label :comment_level, 'Individual Subscriber' %>
+        <%= f.radio_button :comment_level, "individual_member" %><%= f.label :comment_level, 'Individual Member' %>
+        <%= f.radio_button :comment_level, "company_member" %><%= f.label :comment_level, 'Company Member' %>
+        <%= f.radio_button :comment_level, "leadership" %><%= f.label :comment_level, 'Leadership' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :download_level, :class => 'control-label' %>
+      <div class="controls radio inline" >
+        <%= f.radio_button :download_level, "public" %><%= f.label :download_level, 'Public' %>
+        <%= f.radio_button :download_level, "basic" %><%= f.label :download_level, 'Basic' %>
+        <%= f.radio_button :download_level, "pro" %><%= f.label :download_level, 'Pro' %>
+        <%= f.radio_button :download_level, "individual_subscriber" %><%= f.label :download_level, 'Individual Subscriber' %>
+        <%= f.radio_button :download_level, "individual_member" %><%= f.label :download_level, 'Individual Member' %>
+        <%= f.radio_button :download_level, "company_member" %><%= f.label :download_level, 'Company Member' %>
+        <%= f.radio_button :download_level, "leadership" %><%= f.label :download_level, 'Leadership' %>
       </div>
     </div>
   </fieldset>

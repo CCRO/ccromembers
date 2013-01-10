@@ -32,7 +32,7 @@ class AttachmentsController < ApplicationController
         },
         'filter' => (@attachment.commentable? || current_user.admin?) ? 'all' : 'none', # (can? :create_in, @group) ? 'all' : current_user.id
         'is_admin' => current_user.admin?,
-        'is_downloadable' => @attachment.downloadable?,
+        'is_downloadable' => (@attachment.downloadable? && can?(:download, @attachment)),
         'is_copyprotected' => false,
         'is_demo' => false,
         'sidebar' => 'visible'
