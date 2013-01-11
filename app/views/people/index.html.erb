@@ -14,10 +14,12 @@
       <input type="text" name="search" class="input-medium search-query" placeholder="<%= params[:search] %>">
       <button type="submit" class="btn">Search</button>
     </form>
-    <% if params[:search] %>
-      <%= link_to('export CSV', url_for(:only_path => false, search: params[:search], :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
-    <% else %>
-      <%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+    <% if current_user %>
+      <% if params[:search] %>
+        <%= link_to('export CSV', url_for(:only_path => false, search: params[:search], :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+      <% else %>
+        <%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+      <% end %>
     <% end %>
     <%= render :partial => 'list', :object => @people %>
 
