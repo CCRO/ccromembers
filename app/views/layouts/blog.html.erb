@@ -35,90 +35,73 @@
   <%= render 'shared/public_nav' %>
 <% end %>  
 <!--Body content (BEGIN)-->
-  <div class="container">
-    <div class="row">
-      
-      <% unless params[:controller] == 'signups' %>  
-      	<aside class="span3">
+  <% if browser.ie8? %>
+    <div class="container">
+          <div style="width:270px;">
+            <% unless params[:controller] == 'signups' %>  
+              <aside class="span3">
+                <ul class="nav nav-tabs nav-stacked">
+                    <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                    <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                    <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
+                    <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
+                    <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
+                    <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
+                    <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
+                    <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
+                    <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
+                    <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
+                </ul>
+                <% if current_user && current_user.admin? %>
+                  <%= image_tag "http://placehold.it/300x250" %><br><br>
+                  <%= image_tag "http://placehold.it/300x600" %>
+                <% end %>
+              </aside>
+            <% end %>
+          </div>
+          <div style="width:870px; float:right;">
+            <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
+              <%= yield %>
+            </section>
+          </div>
+      <footer>
+        <%= render 'shared/footer' %>
+      </footer>
+    </div>
+  <% else %>
 
-
-          <ul class="nav nav-tabs nav-stacked">
-              <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
-              <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
-              <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
-              <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
-              <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
-              <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
-              <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
-              <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
-              <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
-              <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
-          </ul>
-
-          <% if false %>
-          <ul class="nav nav-tabs nav-stacked">
-            <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Upcoming events</li>
-            <li><%= link_to 'Upcoming Conference Calls', tagged_posts_path('Conference Calls') %></li>
-          </ul>
-          <% end %>
-
-          <ul class="nav nav-tabs nav-stacked">
-            <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Active Surveys and Polls</li>
-            <li><%= link_to 'Middle Office Survey', "/surveys/10" %></li>
-            <li><%= link_to 'Short Governance Survey', "/surveys/11" %></li>
-            <li><%= link_to 'Current Active Poll', "/polls/active" %></li>
-          </ul>
-          <center>
-
-            <% if false %>
-            <%= link_to "/posts/122-ccro-summit-a-big-success" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/462/Screen_Shot_2012-07-16_at_9.22.05_AM.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.riskadvisory.com/index.html" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/556/sasLogo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.riskadvisory.com/index.html" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/sasLogo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://v3.ccro.org/directory/7" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/557/galwayLogo.png" %><br><br>
-            <% end %>  
-            <%= link_to "http://v3.ccro.org/directory/1371" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/structureLogo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.mre-consulting.com/" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/MRE_logo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.metricstream.com/" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/metricStream.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.sapient.com/en-us/about-sapient.html" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/sapient_logo.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.fea.com//" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/FEA.png" %><br><br>
-            <% end %>
-            <%= link_to "http://www.ze.com/" do %>
-              <%= image_tag "https://s3.amazonaws.com/ccro_static/summit/ZE_icon.png" %><br><br>
-            <% end %>
-            <% end %>            
-            
+    <div class="container">
+      <div class="row">
+        <% unless params[:controller] == 'signups' %>  
+        	<aside class="span3">
+            <ul class="nav nav-tabs nav-stacked">
+                <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
+                <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
+                <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
+                <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
+                <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
+                <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
+                <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
+                <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
+            </ul>
             <% if current_user && current_user.admin? %>
               <%= image_tag "http://placehold.it/300x250" %><br><br>
               <%= image_tag "http://placehold.it/300x600" %>
             <% end %>
-          </center>
-        </aside>
-      <% end %>
-
-      <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
-            <%= yield %>
-      </section>
-    </div>  
+          </aside>
+        <% end %>
+        <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
+          <%= yield %>
+        </section>
+      </div>
       <footer>
         <%= render 'shared/footer' %>
       </footer>
-  </div>
+    </div>
+  <% end %>
+
 <!--Body content (END)-->
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
