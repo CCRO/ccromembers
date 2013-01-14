@@ -78,7 +78,8 @@
         <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
           <div id="post_preview">
             <% if browser.ie8? %>
-              <%=raw post.body.split('[---MORE---]').first.html_safe + " ..." %>
+              <% junk = strip_tags(post.body.split('[---MORE---]').first) %>
+              <%=raw junk + " ..." %>
             <% else %>
               <%=raw post.body.split('[---MORE---]').first + " ..." %>
             <% end %>
