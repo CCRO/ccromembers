@@ -77,7 +77,11 @@
         <!-- index published -->
         <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
           <div id="post_preview">
-            <%=raw post.body.split('[---MORE---]').first + " ..." %>
+            <% if browser.ie8? %>
+              <%=raw post.body.split('[---MORE---]').first.html_safe + " ..." %>
+            <% else %>
+              <%=raw post.body.split('[---MORE---]').first + " ..." %>
+            <% end %>
             <b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
           </div>
         <% else %>
