@@ -37,7 +37,7 @@
 <!--Body content (BEGIN)-->
   <% if browser.ie8? %>
     <div class="container">
-          <div style="width:270px; float:left;">
+          <div style="width:30%; float:left;">
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">
                 <ul class="nav nav-tabs nav-stacked">
@@ -59,7 +59,7 @@
               </aside>
             <% end %>
           </div>
-          <div style="width:870px; float:right;">
+          <div style="width:65%; float:right;">
             <%= yield %>
           </div>
       <footer>
