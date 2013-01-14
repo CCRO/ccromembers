@@ -25,7 +25,7 @@
 
 <!-- Post Container: start showing the post here - Give the post its 'page' box -->
 <div class="page drop-shadow lifted<%= "watermark-draft" unless post.published? %>">
-  <div id="post-<%= post.id %>">
+  <article id="post-<%= post.id %>">
       
     <!-- Post Flag: index mode. put the flag on.  -->  
     <% if post.level == 'basic' && params[:action] == 'index' %>
@@ -117,7 +117,7 @@
       <hr class="hr-small-margin hr-dark">
     </div>
     <br />
-    
+
     <!-- Post Sub Footer: Only for admins - right-side -->
     <div class="row">
       <% if can?(:edit, post) && (params[:action] == 'show' || (params[:action] == 'index' && params[:filter] != 'archive') ) %>
@@ -149,7 +149,7 @@
         <%= render :partial => 'shared/comment', :collection => post.comments.reverse %>
       <% end %>
     </div>
-  </div>
+  </article>
 </div>
 
 
