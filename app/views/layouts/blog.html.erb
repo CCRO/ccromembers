@@ -17,25 +17,23 @@
   <%= auto_discovery_link_tag(:atom, "/posts.atom", :title => "CCRO Atom Feed") %>
 </head>
 <body id="blog">
-
-<% if current_user   %>
-  <div style margin-bottom: 100px;>
-    <div style="margin-bottom: 100px;">
-      <%= render 'shared/nav' %>
-    </div>
-      <% if params[:action] == 'index' %>
-        <div id="warning_message" style="margin-bottom: 20px;">
-          <%= render 'shared/browser_warning' %>
-        </div>
-      <% end %>
-  </div>
-<% else %>
-
-
-  <%= render 'shared/public_nav' %>
-<% end %>  
 <!--Body content (BEGIN)-->
   <% if browser.ie8? %>
+    <% if current_user   %>
+      <div style margin-bottom: 100px;>
+        <div>
+          <%= render 'shared/nav' %>
+        </div>
+          <% if params[:action] == 'index' %>
+            <div id="warning_message" style="margin-bottom: 20px;">
+              <%= render 'shared/browser_warning' %>
+            </div>
+          <% end %>
+      </div>
+    <% else %>
+      <%= render 'shared/public_nav' %>
+    <% end %>  
+
     <div class="container">
           <div style="width:30%; float:left;">
             <% unless params[:controller] == 'signups' %>  
@@ -67,6 +65,21 @@
       </footer>
     </div>
   <% else %>
+
+    <% if current_user   %>
+      <div style margin-bottom: 100px;>
+        <div style="margin-bottom: 100px;">
+          <%= render 'shared/nav' %>
+        </div>
+          <% if params[:action] == 'index' %>
+            <div id="warning_message" style="margin-bottom: 20px;">
+              <%= render 'shared/browser_warning' %>
+            </div>
+          <% end %>
+      </div>
+    <% else %>
+      <%= render 'shared/public_nav' %>
+    <% end %>  
 
     <div class="container">
       <div class="row">
