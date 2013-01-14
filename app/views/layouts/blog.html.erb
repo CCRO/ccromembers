@@ -37,20 +37,20 @@
 <!--Body content (BEGIN)-->
   <% if browser.ie8? %>
     <div class="container">
-          <div style="width:270px; float:right;">
+          <div style="width:270px; float:left;">
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">
                 <ul class="nav nav-tabs nav-stacked">
-                    <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
-                    <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
-                    <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
-                    <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
-                    <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
-                    <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
-                    <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
-                    <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
-                    <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
-                    <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
+                  <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                  <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                  <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
+                  <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
+                  <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
+                  <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
+                  <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
+                  <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
+                  <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
+                  <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
                 </ul>
                 <% if current_user && current_user.admin? %>
                   <%= image_tag "http://placehold.it/300x250" %><br><br>
@@ -60,9 +60,7 @@
             <% end %>
           </div>
           <div style="width:870px; float:right;">
-            <section class="<%= (params[:controller] == 'signups') ? 'span12' : 'span9' %>">
-              <%= yield %>
-            </section>
+            <%= yield %>
           </div>
       <footer>
         <%= render 'shared/footer' %>
