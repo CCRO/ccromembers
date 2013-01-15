@@ -68,8 +68,19 @@
   <%= auto_discovery_link_tag(:atom, "http://ccro.dev/posts.atom") %>
 </head>
 <body id="web_group">
-
-  <%= render 'shared/nav' %>
+<% if current_user   %>
+    <div style="margin-bottom: 20px;">
+      <%= render 'shared/nav' %>
+    </div>
+    <% if params[:action] == 'index' %>
+      <div id="warning_message" style="margin-bottom: 20px;">
+        <%= render 'shared/browser_warning' %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <%= render 'shared/public_nav' %>
+<% end %>
 
 <!--Body content (BEGIN)-->
   <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> ">
