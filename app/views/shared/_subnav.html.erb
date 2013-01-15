@@ -14,7 +14,7 @@
         <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
       <% end %>
 
-      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' || params[:controller] == 'static' || params[:controller] == 'exceptions' %>
+      <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' || params[:controller] == 'static' || params[:controller] == 'exceptions' || params[:controller] == 'memberships'%>
         <div class="navbar-text pull-left">
           Resource Center: 
         </div>
