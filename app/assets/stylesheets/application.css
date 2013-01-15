@@ -17,63 +17,66 @@
 */
 
 body header.fatty {
-    padding: 0px 20px;
-    margin-bottom: 40px;
-    height: 100px;
-    background-color: 
-    #383838;
-    position: relative;
-  } 
+  padding: 0px 20px;
+  margin-bottom: 40px;
+  height: 100px;
+  background-color: 
+  #383838;
+  position: relative;
+} 
  
- body header.fatty #fatty_basket {
-    padding: 20px 0px;
-  } 
+body header.fatty #fatty_basket {
+  padding: 20px 0px;
+} 
 
 
-  body header.fatty #nav_links li{
-    display: inline;
-    padding-right: 20px;
-  }
-  body header.fatty #nav_links{
-    list-style: none;
-    font-weight: bold;
-    padding-top: 15px;
-  }
+body header.fatty #nav_links li{
+  display: inline;
+  padding-right: 20px;
+}
 
-  body header.fatty #login_tools{
-    padding-top: 10px;
-  }
+body header.fatty #nav_links{
+  list-style: none;
+  font-weight: bold;
+  padding-top: 15px;
+}
 
-  #header_expanded{
-    padding-top: 20px;
-  }
-  #login-subtext{
-    margin-top: -10px
-  }
+body header.fatty #login_tools{
+  padding-top: 10px;
+}
 
-  body header.fatty div#header_expanded div#header_promo {
-    line-height: 48px;
-  }
+#header_expanded{
+  padding-top: 20px;
+}
 
-  body header.fatty div#header_expanded h1 {
-    color: #5DAFFA;
-    font-size: 42px;
-    line-height: 42px;
-    padding-top: 10px;
-  }
+#login-subtext{
+  margin-top: -10px
+}
 
-  body header.fatty div#header_expanded p {
-    color: #FFFFFF;
-    font-size: 46px;
-    line-height: 46px;
-    padding-top: 20px;
-    font-weight: bold;
-  }
+body header.fatty div#header_expanded div#header_promo {
+  line-height: 48px;
+}
 
-  body header.fatty div#header_expanded a.btn {
-    font-weight: bold;
-  }
+body header.fatty div#header_expanded h1 {
+  color: #5DAFFA;
+  font-size: 42px;
+  line-height: 42px;
+  padding-top: 10px;
+}
 
-  body {
-    margin-top: 0;
-  }
+body header.fatty div#header_expanded p {
+  color: #FFFFFF;
+  font-size: 46px;
+  line-height: 46px;
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+body header.fatty div#header_expanded a.btn {
+  font-weight: bold;
+}
+
+body {
+  margin-top: 0;
+}
+
