@@ -19,38 +19,23 @@
 <body id="web_group">
 <!--Body content (BEGIN)-->
 <% if browser.ie8? %>
-  <% if current_user   %>
-      <div style="margin-bottom: 100px;">
-        <%= render 'shared/nav' %>
-      </div>
-      <% if params[:action] == 'index' %>
-        <div id="warning_message" style="margin-bottom: 20px;">
-          <%= render 'shared/browser_warning' %>
+  <div style="margin-bottom:-100px">
+    <% if current_user   %>
+        <div style="margin-bottom:100px;">
+          <%= render 'shared/nav' %>
         </div>
-      <% end %>
-    </div>
-  <% else %>
-  <div style="padding-bottom:100px;">
-    <%= render 'shared/public_nav' %>
-  </div>
-  <% end %>
-<% else %>
-  <% if current_user   %>
-      <div style="margin-bottom: 100px;">
-        <%= render 'shared/nav' %>
+        <% if params[:action] == 'index' %>
+          <div id="warning_message" style="margin-bottom: 20px;">
+            <%= render 'shared/browser_warning' %>
+          </div>
+        <% end %>
       </div>
-      <% if params[:action] == 'index' %>
-        <div id="warning_message" style="margin-bottom: 20px;">
-          <%= render 'shared/browser_warning' %>
-        </div>
-      <% end %>
+    <% else %>
+    <div style="padding-bottom:0px;">
+      <%= render 'shared/public_nav' %>
     </div>
-  <% else %>
-  <div style="padding-bottom:0px;">
-    <%= render 'shared/public_nav' %>
+    <% end %>
   </div>
-  <% end %>
-<% end %>
 
   <div class="container">
     <div class="row">
@@ -95,6 +80,70 @@
     <footer>
       <%= render 'shared/footer' %>
     </footer>
+<% else %>
+  <% if current_user   %>
+      <div style="margin-bottom: 100px;">
+        <%= render 'shared/nav' %>
+      </div>
+      <% if params[:action] == 'index' %>
+        <div id="warning_message" style="margin-bottom: 20px;">
+          <%= render 'shared/browser_warning' %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+  <div style="padding-bottom:0px;">
+    <%= render 'shared/public_nav' %>
+  </div>
+  <% end %>
+
+
+  <div class="container">
+    <div class="row">
+      <% unless params[:controller] == 'signups' %>
+        <section>
+          <%= yield :groups_header_image %>
+        </section>
+      <% end %>
+    </div>
+
+    <div class="row group">
+      <section class="<%= (params[:controller] == 'signups') || (params[:controller] == 'groups' && params[:action] == 'index') ? '' : 'span9' %>"
+              style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
+              <% if @group %>
+                <div style="background-color: #fff; padding: 10px; border: 1px solid grey; box-shadow: 2px 2px 6px lightgrey;"> <h2><%= @group.name %> </h2></div><br>
+              <%end %>
+        <% unless ['posts', 'messages'].include? params[:controller] %>
+          <div style="background-color: #fff; padding: 10px; border: 1px solid grey; box-shadow: 2px 2px 6px lightgrey;"><%= yield %></div>
+        <% else %>
+          <%= yield %>
+        <% end %>
+      </section>
+
+      <% unless params[:controller] == 'signups' %>  
+        <aside class="pull-right span3">
+
+          <% if ((params[:action] == 'index' && (params[:controller] == 'posts' || params[:controller] == 'memberships')) || 
+                 ((params[:action] == 'new' || 'edit') && params[:controller] == 'messages')) || params[:action] == 'show_activity' %>
+            <%= render :partial => 'groups/sidebar' %>
+          <% elsif params[:action] == 'show'%>
+            <%= render :partial => 'groups/sidebar' %>
+          <% elsif params[:action] == 'permissions'%>
+            <%= render :partial => 'groups/sidebar' %>
+          <% elsif params[:controller] == 'attachments'%>
+            <%= render :partial => 'groups/sidebar' %>
+           <% end %>
+          
+        </aside>
+      <% end %>
+    </div>
+
+    <footer>
+      <%= render 'shared/footer' %>
+    </footer>
+
+    <% end %>
+
     <% if params[:action] == 'show' || (params[:controller] == 'memberships' && params[:action] == 'index') || (params[:controller] == 'posts' && params[:action] == 'index') || params[:controller] == 'attachments'%>
       <% if current_user %>
         <div>
