@@ -126,3 +126,11 @@
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 </body>
 </html>
+
+<script>
+
+  $("#warning_close").click(function () {
+  $("#warning_message").toggle(['slow']);
+  });
+
+</script>

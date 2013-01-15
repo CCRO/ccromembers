@@ -8,12 +8,14 @@
       </div>
       <div id="group_phone_info" class="accordion-body collapse">
         <div class="accordion-inner">
-          <% if current_user.verified %>
-          <p><%= current_user.name %>, your personal pin is: <%= current_user.pin_code %>.</p>
-          <p>You have already validated the phone number: <%= number_to_phone current_user.mobile_phone %></p>
-          <p>You will no longer be asked for your pin code when calling in on CCRO conferences from the validated number.<p>
-          <% else %>
-          <%= current_user.name %>, your personal pin is: <%= current_user.pin_code %>. Your personal pin code is your password for all conference calls. For ease of use you can validate your phone by texting your pin code to 281-815-4177. Once this is done you will no longer be asked for your pin code when calling in on CCRO conferences.
+          <% if current_user %>
+            <% if current_user.verified %>
+            <p><%= current_user.name %>, your personal pin is: <%= current_user.pin_code %>.</p>
+            <p>You have already validated the phone number: <%= number_to_phone current_user.mobile_phone %></p>
+            <p>You will no longer be asked for your pin code when calling in on CCRO conferences from the validated number.<p>
+            <% else %>
+            <%= current_user.name %>, your personal pin is: <%= current_user.pin_code %>. Your personal pin code is your password for all conference calls. For ease of use you can validate your phone by texting your pin code to 281-815-4177. Once this is done you will no longer be asked for your pin code when calling in on CCRO conferences.
+            <% end %>
           <% end %> 
         </div>
       </div>
