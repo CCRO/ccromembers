@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
         cookies.permanent.signed[:auth_token] = user.auth_token
       end
       session[:user_id] = user.id
+      session[:warning_closed] = false
       user.browser_info = {name: browser.name, platform: browser.platform.to_s}
       user.save
       redirect_back_or_default root_url
@@ -44,5 +45,10 @@ class SessionsController < ApplicationController
     cookies.delete(:auth_token)
     session[:user_id] = nil
     redirect_back_or_default root_url, :flash => {:success => t(:logout_flash)}
+  end
+
+  def warning_closed
+    session[:warning_closed] = true
+    redirect_to :back
   end
 end

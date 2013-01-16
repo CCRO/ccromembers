@@ -9,7 +9,7 @@
 	<% end %>
 	<% if @messages.count > 0 %>
 
-		<% if browser.ie8? %>
+		<% if browser.ie8? || browser.ie7? %>
 			<div id="message_content_border">
 			  <div id="message_content_box">
 				  	<% if can? :create, Message %>

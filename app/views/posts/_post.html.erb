@@ -28,7 +28,7 @@
   <article id="post-<%= post.id %>">
       
     <!-- Post Flag: index mode. put the flag on.  -->
-    <% if browser.ie8? %>  
+    <% if browser.ie8? || browser.ie7? %>  
       <% if post.level == 'basic' && params[:action] == 'index' %>
         <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h2>
       <% elsif post.level == 'pro' && params[:action] == 'index' %>

@@ -67,7 +67,7 @@
     <hr />
 	<%= raw @message.content %>
 	<br /><br />
-    <% if browser.ie8? %>
+    <% if browser.ie8? || browser.ie7? %>
       <h1><i class="icon-comment"></i> Comments:</h1>
     <% else %>
 	    <h1 class="ribbon-left">Comments:</h1>

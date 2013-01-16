@@ -192,6 +192,7 @@ Ccromembers::Application.routes.draw do
   get 'reset_password/:perishable_token' => 'password_resets#edit', :as => :reset_password
   put 'reset_password/:perishable_token' => 'password_resets#update', :as => :reset_password
   get 'activation' => 'sessions#activation', :as => :activation
+  get 'warning_closed' => 'sessions#warning_closed', :as => :warning_closed
   post 'activate(/:activation_token)' => 'sessions#activate', :as => :activate
   get 'activate(/:activation_token)' => 'sessions#activate'
 
