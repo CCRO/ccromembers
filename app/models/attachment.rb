@@ -57,10 +57,21 @@ class Attachment < ActiveRecord::Base
     options.downloadable == "1"
   end
 
+  def download_text
+    content = Crocodoc::Download.text(crocodoc_uuid)
+  end
+
   def commentable?
     options.commentable == "1"
   end
   
+  def self.search(params)
+    tire.search do
+      query { string params[:query], default_operator: "AND" } if params[:query].present?
+      highlight :content
+    end
+  end
+
   private
 
   def update_asset_attributes
