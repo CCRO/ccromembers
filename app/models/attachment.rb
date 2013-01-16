@@ -63,8 +63,8 @@ class Attachment < ActiveRecord::Base
 
   def crocodoc_getstatus
     status = Crocodoc::Document.status(self.crocodoc_uuid)
-    self.crocodoc_status = status[:status]
-    self.crocodoc_viewable = status[:viewable]
+    self.crocodoc_status = status['status']
+    self.crocodoc_viewable = status['viewable']
     self
   end
 
