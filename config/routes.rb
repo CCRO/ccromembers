@@ -8,7 +8,12 @@ Ccromembers::Application.routes.draw do
     match "/delayed_job" => DelayedJobWeb, :anchor => false
   end
   
-  resources :attachments, :path => 'files'
+  resources :attachments, :path => 'files' do
+    collection do
+      get 'search/:query', :action => 'search'
+      post 'crocodoc_webhook'
+    end
+  end
   
   resources :smart_lists do
     member do 

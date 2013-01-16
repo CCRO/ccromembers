@@ -16,6 +16,11 @@ class AttachmentsController < ApplicationController
     # @attachments.keep_if { |attachment| can? :read, attachment }
   end
 
+  def search
+      @results = @group.attachments.search(params) if @group
+      @results ||= Attachment.search(params)
+  end
+
   def show
     @attachment = Attachment.find(params[:id])
     
@@ -23,6 +28,11 @@ class AttachmentsController < ApplicationController
     @attachment.content = Crocodoc::Download.text(@attachment.crocodoc_uuid) if @attachment.content.blank?
 
     authorize! :read, @attachment
+
+    unless current_user 
+      current_user = Person.new(first_name: 'Guest', last_name: 'User')
+      current_user.id = 0
+    end
 
     @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
         'is_editable' => @attachment.commentable? && can?(:comment_on, @attachment),
@@ -101,6 +111,18 @@ class AttachmentsController < ApplicationController
     @attachment.destroy
 
     redirect_to polymorphic_path([@group, :attachments])
+  end
+  
+  def crocodoc_webhook
+    Logger.info "CROCODOC_WEBHOOK: " + params.to_s 
+
+    if params[:event] == "document.status" && params[:status] == "DONE"
+      if attachment = Attachment.find_by_crocodoc_uuid(params[:uuid])
+        attachment.download_text.save
+      end
+    end
+
+
   end
 
   def lookup_group
