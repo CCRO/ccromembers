@@ -1,11 +1,12 @@
 <tr>
 	<td>
 		<% unless message.archived %>
-			<h1 class="pull-left" style="padding-right: 10px; margin-top: 3px;"><i class="icon-comment"></i></h1>
+			<h3 class="pull-left"><i class="icon-comment"></i></h3>
 		<% else %>
-			<h1 class="pull-left" style="padding-right: 10px; margin-top: 3px;"><i class="icon-inbox"></i></h1>
+			<h3 class="pull-left"><i class="icon-inbox"></i></h3>
 		<% end %>
-
+	</td>
+	<td>
 		<% if @page %>
 			<strong><%= link_to " " + message.subject, message_path(message, page: @page.id) %></strong> - 
 		<% else %>
@@ -13,7 +14,7 @@
 		<% end %>
 		<%= truncate(strip_tags(message.content), :length => 210, :separator => ' ', :omission => '...').gsub("&nbsp;", " ") %>
 		<%= raw("<strong>Moderators: </strong>") + message.moderators.map { |m| m.person.name }.to_sentence if message.moderators.count > 0 %>
-	  </td>
+	</td>
 	<td class="span3"><strong><%= message.owner.name %></strong>
 		<% if message.tags.pluck(:name).present? %><br>
           <span class="label label-inverse" style="margin-left: 0px;"> 

@@ -1,46 +1,67 @@
-<% if params[:tag_name] %>
-	<%= link_to messages_path, class: 'btn' do %>
-		<i class="icon-bullhorn"></i> See Unrelated Discussions
+<div style="margin-top:-20px;">
+	<% if params[:tag_name] %>
+		<%= link_to messages_path, class: 'btn' do %>
+			<i class="icon-bullhorn"></i> See Unrelated Discussions
+		<% end %>
+		<%= link_to page_path(@page), class: 'btn' do %>
+			<i class="icon-arrow-left"></i> Back to <%= @page.title %>
+		<% end %>
 	<% end %>
-	<%= link_to page_path(@page), class: 'btn' do %>
-		<i class="icon-arrow-left"></i> Back to <%= @page.title %>
+	<% if @messages.count > 0 %>
+
+		<% if browser.ie8? %>
+			<div id="message_content_border">
+			  <div id="message_content_box">
+				  	<% if can? :create, Message %>
+						<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
+					<% end %>
+					<% if params[:tag_name] %>
+						<h1 style="float:left;"><i class="icon-comment"></i> Active Related Discussions</h1>
+					<% else %>
+						<h1 style="float:left;"><i class="icon-comment"></i> Active Discussions</h1>
+					<% end %>
+					<table class="table messages">
+						<%= render @messages.reverse %>
+					</table>
+				</div>
+			</div>
+		<% else %>
+			<div id="message_content_border">
+			  <div id="message_content_box">
+				  	<% if can? :create, Message %>
+						<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
+					<% end %>
+					<% if params[:tag_name] %>
+						<h1 class="ribbon-left">Active Related Discussions</h1>
+					<% else %>
+						<h1 class="ribbon-left">Active Discussions</h1>
+					<% end %>
+					<table class="table messages">
+						<%= render @messages.reverse %>
+					</table>
+				</div>
+			</div>
+		<% end %>
+
 	<% end %>
-<% end %>
-<% if @messages.count > 0 %>
-	<div id="message_content_border">
-	  <div id="message_content_box">
-		  	<% if can? :create, Message %>
-				<%= link_to 'Start a new discussion', new_message_path, :class => 'btn pull-right' %>
-			<% end %>
-			<% if params[:tag_name] %>
-				<h1 class="ribbon-left">Active Related Discussions</h1>
-			<% else %>
-				<h1 class="ribbon-left">Active Discussions</h1>
-			<% end %>
-			<table class="table messages">
-				<%= render @messages.reverse %>
-			</table>
+	<% if @archived_messages.count > 0 %>
+		<div id="message_content_border">
+		  <div id="message_content_box">
+		  	<% if @archived_messages %>
 
+		  		<% if params[:tag_name] %>
+		  			<h1 style="float:left;"><i class="icon-inbox"></i> Archived Related Discussions</h1>
+				<% else %>
+					<h1 style="float:left;"><i class="icon-inbox"></i> Archived Discussions</h1>
+				<% end %>
+				
+
+				<table class="table messages">
+					<%= render @archived_messages.reverse %>
+				</table>
+				<% end %>
+			</div>
 		</div>
-	</div>
-<% end %>
-<% if @archived_messages.count > 0 %>
-	<div id="message_content_border">
-	  <div id="message_content_box">
-	  	<% if @archived_messages %>
-
-	  		<% if params[:tag_name] %>
-	  			<h2 class="ribbon-left">Archived Related Discussions</h2>
-			<% else %>
-				<h2 class="ribbon-left">Archived Discussions</h2>
-			<% end %>
-			
-
-			<table class="table messages">
-				<%= render @archived_messages.reverse %>
-			</table>
-			<% end %>
-		</div>
-	</div>
-<% end %>
+	<% end %>
+</div>
 	

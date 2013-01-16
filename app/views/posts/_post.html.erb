@@ -1,133 +1,194 @@
-<% if can?(:edit, post) && params[:action] == 'show' %>
-  <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
-    <% if post.locker == current_user %>
-      <span class="label">You are currently the editor of this post.</span>
-    <% else %>
-      <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Post is currently being edited by <%= post.locker.name %></span>
+<% if params[:action] == 'show' %>
+  <!-- For Editiors: Shows when a post is locked. -->
+  <% if can?(:edit, post) && params[:action] == 'show' %>
+    <% if post.locked? && ['show', 'edit'].include?(params[:action]) %>
+      <% if post.locker == current_user %>
+        <span class="label">You are currently the editor of this post.</span>
+      <% else %>
+        <span class="label label-<%= (is_editing?) ? 'important' : 'warning'  %>">Warning: Post is currently being edited by <%= post.locker.name %></span>
+      <% end %>
+      <br><br>
     <% end %>
-    <br><br>
+  <% end %>
+  <!-- if there is a @page instance var. This will make a link above the post back to that page. -->
+  <% if @page %>
+    <div style="padding-left: 10px;">
+      <%= link_to page_path(@page), class: 'btn' do %>
+        <i class="icon-arrow-left"></i> Back to <%= @page.title %>
+      <% end %>
+    </div>
+    <br>
   <% end %>
 <% end %>
-<% if @page %>
-<div style="padding-left: 10px;">
-  <%= link_to page_path(@page), class: 'btn' do %>
-    <i class="icon-arrow-left"></i> Back to <%= @page.title %>
-  <% end %>
-</div>
-  <br>
-<% end %>
-  <div class="page drop-shadow lifted <%= "watermark-draft" unless post.published? %>">
-    <article id="post-<%= post.id %>">
-        
-        <% if post.level == 'basic' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
-        <% elsif post.level == 'pro' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
-        <% elsif post.level == 'individual_member' || post.level == 'company_member' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Committee</h1>
-          <% elsif post.level == 'leadership' && params[:action] == 'index' %>
-          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Leadership</h1>
-        <% end %>
-  
-      <h1 class="post_title">
-        <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
-          <div id="post_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.title.html_safe %></div>
-        <% else %>
-          <% if @group %>
-          <%= link_to post.title.html_safe, polymorphic_path([@group, post]) %>
-          <% else %>
-          <%= link_to post.title.html_safe, post_path(post)  %>
-          <% end %>
-        <% end %>
-        
-      </h1>
-      
-      <% if post.owner_type == 'Group'%>
-      <h3 id="post_author">From The '<%= post.owner.try(:name) %>' Working Group</h3>
-      <% else %>
-      <h3 id="post_author">by <%= post.author.try(:name) %></h3>
-      <% end %>
-      
-      <% if params[:filter] == 'drafts' %>
-          <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
-            <div id="post_preview" class='drafts'>
-              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
-            </div>
-          <% else %>
-            <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>><%= post.body.html_safe unless params[:action] == 'draft' %></div>
-          <% end %>
-      <% else %>
-          <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
-            <div id="post_preview">
-              <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
-            </div>
-          <% else %>
-            <% if is_editing? %>
-              <div id="post_body" class="mercury-region" data-mercury="full" contentEditable><%= post.body.html_safe unless params[:action] == 'draft' %></div>
-            <% else %>
-              <div id="post_body" class="mercury-region" data-mercury="full"><%= post.body.gsub('[---MORE---]', '').html_safe unless params[:action] == 'draft' %></div>
-            <% end %>
-          <% end %>
-      <% end %>
-        
 
-      <div class="post-footer">
-        <hr class="hr-small-margin">
-          <p class="pull-right">
-            <span class="post-footer-heading">Updated: </span>
-            <strong><%= time_ago_in_words post.updated_at %> ago</strong>
-          </p>
-          
-            <p>
-              <% unless @group %>
-              <span class="post-footer-heading">Category: </span>
-              <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
-              <% else %>
-              <strong><span class="post-footer-heading">Author: </span></strong>
-              <% if post.author %>
-              <%= link_to post.author.try(:name), post.author %> <%= "- " + post.author.company.try(:name) if post.author.company %>
-              <% end %>
-              <% end%>
-            </p>
-          
-        <hr class="hr-small-margin hr-dark">
-      </div>
-      <br />
+
+
+<!-- Post Container: start showing the post here - Give the post its 'page' box -->
+<div class="page drop-shadow lifted<%= "watermark-draft" unless post.published? %>">
+  <article id="post-<%= post.id %>">
+      
+    <!-- Post Flag: index mode. put the flag on.  -->
+    <% if browser.ie8? %>  
+      <% if post.level == 'basic' && params[:action] == 'index' %>
+        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h2>
+      <% elsif post.level == 'pro' && params[:action] == 'index' %>
+        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h2>
+      <% elsif post.level == 'individual_member' || post.level == 'company_member' && params[:action] == 'index' %>
+        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Committee</h2>
+      <% elsif post.level == 'leadership' && params[:action] == 'index' %>
+        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Leadership</h2>
+      <% end %>
+    <% else %>
+      <% if post.level == 'basic' && params[:action] == 'index' %>
+        <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
+      <% elsif post.level == 'pro' && params[:action] == 'index' %>
+        <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= post.level.capitalize %></h1>
+      <% elsif post.level == 'individual_member' || post.level == 'company_member' && params[:action] == 'index' %>
+        <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Committee</h1>
+      <% elsif post.level == 'leadership' && params[:action] == 'index' %>
+        <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Leadership</h1>
+      <% end %>
+    <% end %>
+    
+    <!-- Post Title: make it editable some places, a link other places.  -->
+    <h1 class="post_title">
+      <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
+        <div id="post_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+          <%= post.title.html_safe %>
+        </div>
+      <% else %>
+        <% if @group %>
+          <%= link_to post.title.html_safe, polymorphic_path([@group, post]) %>
+        <% else %>
+          <%= link_to post.title.html_safe, post_path(post)  %>
+        <% end %>
+      <% end %>
+    </h1>
+    
+    <!-- Post Subtitle: author or group that owns this -->
+    <% if post.owner_type == 'Group'%>
+    <h3 id="post_author">From The '<%= post.owner.try(:name) %>' Working Group</h3>
+    <% else %>
+    <h3 id="post_author">by <%= post.author.try(:name) %></h3>
+    <% end %>
+    
+    <!-- Post Body:  -->
+    <% if params[:filter] == 'drafts' %>
+        <!-- index drafts -->
+        <% if params[:action] == 'index' && (post_counter >= 0 || cannot?(:read, post))  %>
+          <div id="post_preview" class='drafts'>
+            <%=raw post.body.split('[---MORE---]').first + " ..." %><b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
+          </div>
+        <% else %>
+        <!-- show drafts -->
+          <div id="post_body" class="mercury-region" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
+            <%= post.body.html_safe unless params[:action] == 'draft' %>
+          </div>
+        <% end %>
+    <% else %>
+        <!-- index published -->
+        <% if params[:action] == 'index' && (post_counter > 0 || cannot?(:read, post))  %>
+          <div id="post_preview">
+            <% if browser.ie8? %>
+              <% junk = strip_tags(post.body.split('[---MORE---]').first) %>
+              <%=raw junk + " ..." %>
+            <% else %>
+              <%=raw post.body.split('[---MORE---]').first + " ..." %>
+            <% end %>
+            <b><%= link_to 'continued', polymorphic_path([@group, post]) %></b>
+          </div>
+        <% else %>
+        <!-- show published -->
+          <% if is_editing? %>
+            <div id="post_body" class="mercury-region" data-mercury="full" contentEditable><%= post.body.html_safe unless params[:action] == 'draft' %></div>
+          <% else %>
+            <div id="post_body" class="mercury-region" data-mercury="full"><%= post.body.gsub('[---MORE---]', '').html_safe unless params[:action] == 'draft' %></div>
+          <% end %>
+        <% end %>
+    <% end %>
+      
+    <!-- Post Footer: -->
+    <div class="post-footer">
+      <hr class="hr-small-margin">
+
+      <!-- Post Footer: right-side -->
+      <p class="pull-right">
+        <span class="post-footer-heading">Updated: </span>
+        <strong><%= time_ago_in_words post.updated_at %> ago</strong>
+      </p>
+
+      <!-- Post Footer: left-side -->
+      <p>
+        <% unless @group %>
+          <span class="post-footer-heading">Category: </span>
+          <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
+        <% else %>
+          <strong><span class="post-footer-heading">Author: </span></strong>
+          <% if post.author %>
+            <%= link_to post.author.try(:name), post.author %>
+            <%= "- " + post.author.company.try(:name) if post.author.company %>
+          <% end %>
+        <% end%>
+      </p>
+
+      <hr class="hr-small-margin hr-dark">
+    </div>
+    <br />
+
+    <!-- Post Sub Footer: Only for admins - right-side -->
     <div class="row">
       <% if can?(:edit, post) && (params[:action] == 'show' || (params[:action] == 'index' && params[:filter] != 'archive') ) %>
         <div id="post_management_controls" class="pull-right">
-        <% unless @group %>
-         <% if @post %><a data-toggle="modal" href="#modal-share_link">share</a> | <% end %><%= link_to "duplicate", duplicate_post_path(post) %> | <%= link_to "claim ", claim_post_path(post) %> | <%= link_to "archive", post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
-         <% end %>
+          <% unless @group %>
+            <% if @post %>
+              <a data-toggle="modal" href="#modal-share_link">share</a> | 
+            <% end %>
+            <%= link_to "duplicate", duplicate_post_path(post) %> | 
+            <%= link_to "claim ", claim_post_path(post) %> | 
+            <%= link_to "archive", post_path(post), :method => 'delete', :confirm => "Are you sure?" %>
+          <% end %>
         </div>
       <% end %>
+      
+      <!-- Post Sub Footer: Only for admins, only for archived posts - right-side -->
       <% if ( params[:action]  == 'index' && params[:filter] == 'archive' ) %>
-          <%= link_to restore_post_path(post), class: 'btn pull-right' do %>
-              <i class="icon-magic"></i> Restore Post
-            <% end %>
+        <%= link_to restore_post_path(post), class: 'btn pull-right' do %>
+          <i class="icon-magic"></i> Restore Post
         <% end %>
+      <% end %>
     </div>
+
+    <!-- Post Comments: -->
     <div id="post_comments">
       <% if params[:action] == 'show' && post.commenting_enabled == true %>
+        <% if browser.ie8? %>
+          <h1><i class="icon-comment"></i> Comments:</h1>
+        <% else %>
           <h1 class="ribbon-left">Comments:</h1>
-          <%= render :partial => 'shared/comment_hidden_form' %>
-          <%= render :partial => 'shared/comment', :collection => post.comments.reverse %>
+        <% end %>
+        <%= render :partial => 'shared/comment_hidden_form' %>
+        <%= render :partial => 'shared/comment', :collection => post.comments.reverse %>
       <% end %>
     </div>
   </article>
 </div>
 
-<% unless @group %>
-  <% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
-    <div id="about_author" class="">
-      <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
-        <%= avatar_for post.author %>
-        <h5><%= post.author.name %></h5>
-        <p><%= post.author.company.name %></p>
+
+
+<!-- Post Bio: on show when not in a group. -->
+<% if params[:action] == 'show' %>
+  <% unless @group %>
+    <% if params[:action] == 'show' && post.author && post.author.respond_to?(:bio) && post.author.bio.present? %>
+      <div id="about_author" class="">
+        <div class="thumbnail pull-left" style="background-color: white; margin-right: 15px;">
+          <%= avatar_for post.author %>
+          <h5><%= post.author.name %></h5>
+          <p><%= post.author.company.name %></p>
+        </div>
+        <h3>About the author</h3>
+        <p><%= post.author.bio %></p>
+        <div style="clear: both"></div> 
       </div>
-      <h3>About the author</h3>
-      <p><%= post.author.bio %></p>
-      <div style="clear: both"></div> 
-    </div>
+    <% end %>
   <% end %>
 <% end %>
