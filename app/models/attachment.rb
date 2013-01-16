@@ -62,16 +62,16 @@ class Attachment < ActiveRecord::Base
   end
 
   def crocodoc_getstatus
-    status = Crocodoc::Document.status(crocodoc_uuid)
-    crocodoc_status = status[:status]
-    crocodoc_viewable = status[:viewable]
+    status = Crocodoc::Document.status(self.crocodoc_uuid)
+    self.crocodoc_status = status[:status]
+    self.crocodoc_viewable = status[:viewable]
+    self
   end
 
   def crocodoc_getstatus!
-    crocodoc_getstatus
-    save
+    self.crocodoc_getstatus.save
   end
-  
+
   def commentable?
     options.commentable == "1"
   end
