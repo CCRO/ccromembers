@@ -61,6 +61,17 @@ class Attachment < ActiveRecord::Base
     content = Crocodoc::Download.text(crocodoc_uuid)
   end
 
+  def crocodoc_getstatus
+    status = Crocodoc::Document.status(self.crocodoc_uuid)
+    self.crocodoc_status = status['status']
+    self.crocodoc_viewable = status['viewable']
+    self
+  end
+
+  def crocodoc_getstatus!
+    self.crocodoc_getstatus.save
+  end
+
   def commentable?
     options.commentable == "1"
   end
@@ -68,7 +79,7 @@ class Attachment < ActiveRecord::Base
   def self.search(params)
     tire.search do
       query { string params[:query], default_operator: "AND" } if params[:query].present?
-      highlight :content
+      highlight :description, :content
     end
   end
 

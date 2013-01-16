@@ -114,11 +114,18 @@ class AttachmentsController < ApplicationController
   end
   
   def crocodoc_webhook
-    Logger.info "CROCODOC_WEBHOOK: " + params.to_s 
+    logger.info "CROCODOC_WEBHOOK: " + params.to_s 
 
-    if params[:event] == "document.status" && params[:status] == "DONE"
+    if params[:event] == "document.status"
       if attachment = Attachment.find_by_crocodoc_uuid(params[:uuid])
-        attachment.download_text.save
+        attachment.crocodoc_status = params[:status]
+        attachment.crocodoc_viewable = params[:viewable]
+
+        if params[:status] == "DONE"
+            attachment.download_text
+        end
+
+        attachment.save
       end
     end
 
