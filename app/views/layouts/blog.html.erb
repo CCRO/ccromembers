@@ -18,23 +18,23 @@
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
-  <% if browser.ie8? %>
+  <% if browser.ie8? || browser.ie7? %>
     <% if current_user   %>
-      <div style margin-bottom: 100px;>
+      <div style="margin-bottom:20px;">
         <div>
           <%= render 'shared/nav' %>
         </div>
-          <% if params[:action] == 'index' %>
-            <div id="warning_message">
-              <%= render 'shared/browser_warning' %>
-            </div>
-          <% end %>
       </div>
+      <% if params[:action] == 'index' %>
+        <div id="warning_message" style="margin-bottom: 20px;">
+          <%= render 'shared/browser_warning' %>
+        </div>
+      <% end %>
     <% else %>
       <%= render 'shared/public_nav' %>
     <% end %>  
 
-    <div class="container" style="margin-top:20px;">
+    <div class="container">
           <div style="width:22%; float:left;">
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">

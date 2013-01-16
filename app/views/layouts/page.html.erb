@@ -14,7 +14,7 @@
 </head>
 <body id="web_page">
 <!--Body content (BEGIN)-->
-<% if browser.ie8? %>
+<% if browser.ie8? || browser.ie7? %>
   <% if current_user   %>
     <div style="margin-bottom: 20px;">
       <%= render 'shared/nav' %>

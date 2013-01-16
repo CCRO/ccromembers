@@ -1,18 +1,20 @@
 <% if browser && ( browser.ie6? || browser.ie7? || browser.ie8?) %>
-  <div style="height: 100%; padding: 20px 200px 0px 200px; background-color: lightblue; border-top: 1px solid darkblue; border-bottom: 1px solid darkblue;">
-    <table cellspacing="10">
-      <tr>
-        <td><i class="icon-cogs" style="font-size:75px; color: blue;"></i></td>
-        <td width="30"></td>
-        <td>
-          <h3>You're experience may not be the best due to an unsupported browser.</h3>
-          <p>The CCRO likes to practice what it preaches! - so our web developers use today's software industry best practices. Our website is highly interactive and requires a modern browser that supports new technologies such as HTML5, CSS 3, and Javascript. To assist our members we have supplied several alternatives on our <a style="text-decoration: underline;" href="/unsupported_browser">help page</a>. If you need any assistance you, or a member of your IT staff, can contact us at 281-825-4870.<p>
-        </td>
-      </tr>
-      <tr>
-        <td><td>
-        <td><p style="text-align:center;"><i class="icon-caret-up" style="color: blue;"></i> <%= link_to " close message", '#', id: "warning_close"%></p><td>
-      </tr>
-    </table>
-  </div>
+  <% unless session[:warning_closed] %>
+    <div style="height: 100%; padding: 20px 200px 0px 200px; background-color: lightblue; border-top: 1px solid darkblue; border-bottom: 1px solid darkblue;">
+      <table cellspacing="10">
+        <tr>
+          <td><i class="icon-cogs" style="font-size:75px; color: blue;"></i></td>
+          <td width="30"></td>
+          <td>
+            <h3>You're experience may not be the best due to an unsupported browser.</h3>
+            <p>The CCRO likes to practice what it preaches! - so our web developers use today's software industry best practices. Our website is highly interactive and requires a modern browser that supports new technologies such as HTML5, CSS 3, and Javascript. To assist our members we have supplied several alternatives on our <a style="text-decoration: underline;" href="/unsupported_browser">help page</a>. If you need any assistance you, or a member of your IT staff, can contact us at 281-825-4870.<p>
+          </td>
+        </tr>
+        <tr>
+          <td><td>
+          <td><p style="text-align:center;"><i class="icon-caret-up" style="color: blue;"></i> <%= link_to " close message", warning_closed_path, id: "warning_close"%></p><td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
 <% end %>
