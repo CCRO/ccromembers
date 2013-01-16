@@ -1,3 +1,4 @@
+
 <% @about_pages = Page.where(published: true).tagged_with("about").sort! { |a,b| a.position <=> b.position } %>
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
@@ -69,4 +70,3 @@
       </div>
     <% end %>
   </div>
-</header>
