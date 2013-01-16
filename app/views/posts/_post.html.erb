@@ -161,7 +161,11 @@
     <!-- Post Comments: -->
     <div id="post_comments">
       <% if params[:action] == 'show' && post.commenting_enabled == true %>
-        <h1 class="ribbon-left">Comments:</h1>
+        <% if browser.ie8? %>
+          <h1><i class="icon-comment"></i> Comments:</h1>
+        <% else %>
+          <h1 class="ribbon-left">Comments:</h1>
+        <% end %>
         <%= render :partial => 'shared/comment_hidden_form' %>
         <%= render :partial => 'shared/comment', :collection => post.comments.reverse %>
       <% end %>

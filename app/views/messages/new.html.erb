@@ -7,7 +7,12 @@
 </ul>
 <div id="message_content_border">
   <div id="message_content_box">
-		<h1 class="ribbon-left">New Discussion Topic</h1>
+		<% if browser.ie8? %>
+      <h1><i class="icon-comment"></i> New Discussion Topic:</h1>
+      <br>
+    <% else %>
+	    <h1 class="ribbon-left">New Discussion Topic</h1>
+    <% end %>
 			<%= render 'form' %>			
 		<br />
 	</div>

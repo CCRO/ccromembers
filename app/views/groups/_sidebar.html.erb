@@ -3,7 +3,16 @@
   <div class="accordion" id="accordion1">
     <div class="accordion-group">
       <div class="accordion-heading" style="position: relative;">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#group_phone_info" ><span class="label label-inverse">Conference Line</span> <%= number_to_phone @group.conf_phone %>
+        <% if browser.ie8? %>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#group_phone_info" >
+              <span class="label label-inverse">Conference Line</span> 
+              <br>
+              <%= number_to_phone @group.conf_phone %>
+          <% else %>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#group_phone_info" >
+              <span class="label label-inverse">Conference Line</span> <%= number_to_phone @group.conf_phone %>
+          <% end %>
+          <br><div style="margin-top:10px;, margin-right:20%;"><small>Get your PIN</small></div>
         </a>
       </div>
       <div id="group_phone_info" class="accordion-body collapse">
