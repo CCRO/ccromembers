@@ -78,7 +78,7 @@ class Attachment < ActiveRecord::Base
   
   def self.search(params)
     tire.search do
-      query { string params[:query], default_operator: "AND" } if params[:query].present?
+      query { string params[:q], default_operator: "AND" } if params[:q].present?
       highlight :description, :content
     end
   end

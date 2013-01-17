@@ -10,7 +10,7 @@ Ccromembers::Application.routes.draw do
   
   resources :attachments, :path => 'files' do
     collection do
-      get 'search/:query', :action => 'search'
+      get 'search'
       post 'crocodoc_webhook'
     end
   end
