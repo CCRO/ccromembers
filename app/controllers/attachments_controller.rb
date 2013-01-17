@@ -25,23 +25,22 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.find(params[:id])
     
     @attachment.get_crocodoc_uuid! if @attachment.crocodoc_uuid.blank?
-    @attachment.content = Crocodoc::Download.text(@attachment.crocodoc_uuid) if @attachment.content.blank?
 
     authorize! :read, @attachment
 
-    unless current_user 
-      current_user = Person.new(first_name: 'Guest', last_name: 'User')
-      current_user.id = 0
-    end
+    # logger.info "BEFORE USER: " + current_user.name
+    # current_user ||= Person.new(id: 0, first_name: 'Guest', last_name: 'User')
+
+    # logger.info "AFTER USER: " + current_user.name 
 
     @session_key = Crocodoc::Session.create(@attachment.crocodoc_uuid, {
         'is_editable' => @attachment.commentable? && can?(:comment_on, @attachment),
         'user' => {
-            'id' => current_user.id,
-            'name' => current_user.name
+            'id' => ((current_user) ? current_user.id : '0'),
+            'name' => ((current_user) ? current_user.name : "Guest User")
         },
-        'filter' => (@attachment.commentable? || current_user.admin?) ? 'all' : 'none', # (can? :create_in, @group) ? 'all' : current_user.id
-        'is_admin' => current_user.admin?,
+        'filter' => (@attachment.commentable? || ((current_user) ? current_user.admin? : false)) ? 'all' : 'none', # (can? :create_in, @group) ? 'all' : current_user.id
+        'is_admin' => ((current_user) ? current_user.admin? : false),
         'is_downloadable' => (@attachment.downloadable? && can?(:download, @attachment)),
         'is_copyprotected' => false,
         'is_demo' => false,
@@ -127,6 +126,8 @@ class AttachmentsController < ApplicationController
 
         attachment.save
       end
+
+      render status: 200
     end
 
 
