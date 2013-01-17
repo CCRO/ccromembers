@@ -25,9 +25,9 @@
       </div>
     <% end %>
   </div>
-<% else %>
-  <%= render 'shared/public_nav' %>
-<% end %>
+  <% else %>
+    <%= render 'shared/public_nav' %>
+  <% end %>
 
   <div class="container">
     <div class="row">
@@ -79,7 +79,9 @@
     <% end %>
   </div>
 <% else %>
-  <%= render 'shared/public_nav' %>
+  <div margin-bottom:20px;>
+      <%= render 'shared/public_nav' %>
+    </div>
 <% end %>
 
   <div class="container">
