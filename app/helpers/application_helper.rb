@@ -31,6 +31,17 @@ module ApplicationHelper
     end
   end
   
+  def star_rating(score, max_score)
+    content_tag :div, { id: 'star_ratings' } do
+      stars = Array.new
+      score.times { stars << content_tag(:i, nil, :class => "icon-star", :style => "color: black;") }
+      (max_score - score).times { stars << content_tag(:i, nil, :class => "icon-star-empty", :style => "color: black;") }
+      stars.join.html_safe
+      # content_tag(:i, nil, :class => "icon-star", :style => "color: black;") +
+      # content_tag(:i, nil, :class => "icon-star-empty", :style => "color: black;")
+    end
+  end
+
   def status_icon(condition)
     if condition
       content_tag :i, nil, :class => "icon-ok", :style => "color: green;"
