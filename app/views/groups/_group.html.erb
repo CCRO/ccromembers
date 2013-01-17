@@ -14,11 +14,17 @@
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
 					      	<% if i.created_at == i.updated_at %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-warning">DISCUSSION</span> <strong>"<%= strip_tags i.subject %>"</strong> was created by: <i><%= author.name %></i> 
-					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"<tr>
+					      		<td style="width:15%;"><span class="label label-warning">DISCUSSION</span></td>
+					      		<td style="width:70%;"><strong>"<%= strip_tags i.subject %>"</strong> was created by: <i><%= author.name %></i> </td>
+					        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+					        	</tr></table>
 					      	<% else %>
-					      		<span class="label label-warning">DISCUSSION</span> <strong>"<%= strip_tags i.subject%>"</strong> has been updated 
-					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      	<table style="width:100%;"<tr>
+					      		<td style="width:15%;"><span class="label label-warning">DISCUSSION</span></td>
+					      		<td style="width:70%;"><strong>"<%= strip_tags i.subject%>"</strong> has been updated </td>
+					        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+					        	</tr></table>
 					      	<% end %>
 					      </a>
 					    </div>
@@ -40,16 +46,25 @@
 					      	<% time_shift = i.created_at + 37000 %>
 					      	<% if i.updated_at < time_shift %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> was created by: <i><%= author.name %></i>
-					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+						      		<td style="width:15%;"><span class="label label-info">UPDATE</span></td>
+						      		<td style="width:70%;"><strong>"<%= strip_tags i.title %>"</strong> was created by: <i><%= author.name %></i></td>
+						        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					      	<% else %>
 					      		<% updator = Person.find(i.locker_id) if i.locker_id %>
 					      		<% if updator %>
-						      		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> was updated by: <i><%= updator.name %> </i>
-						        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+						      		<td style="width:15%;"><span class="label label-info">UPDATE</span></td>
+						      		<td style="width:70%;"><strong>"<%= strip_tags i.title %>"</strong> was updated by: <i><%= updator.name %></i></td>
+						        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					        	<% else %>
-					        		<span class="label label-info">UPDATE</span> <strong>"<%= strip_tags i.title %>"</strong> has been updated
-						        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+						      		<td style="width:15%;"><span class="label label-info">UPDATE</span></td>
+						      		<td style="width:70%;"><strong>"<%= strip_tags i.title %>"</strong><i>has been updated</i></td>
+						        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					        	<% end %>
 					      	<% end %>
 					      </a>
@@ -71,16 +86,25 @@
 					      	<% time_shift = i.created_at + 75000 %>
 					      	<% if i.updated_at < time_shift %>
 					      		<% author = Person.find(i.author_id)%>
-					      		<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i>
-					        	<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+					      		<td style="width:15%;"><span class="label label-success">PAGE</span></td>
+					      		<td style="width:70%;"><strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i></td>
+					        	<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					      	<% else %>
 					      		<% updator = Person.find(i.locker_id) if i.locker_id %>
 					      		<% if updator %>
-					      			<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> was updated by: <i><%= updator.name %></i>
-					        		<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+					      			<td style="width:15%;"><span class="label label-success">PAGE</span></td>
+					      			<td style="width:70%;"><strong>"<%= strip_tags i.title%>"</strong> was updated by: <i><%= updator.name %></i></td>
+					        		<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					        	<% else %>
-					        		<span class="label label-success">PAGE</span> <strong>"<%= strip_tags i.title%>"</strong> has been updated
-					        		<div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+					        		<td style="width:15%;"><span class="label label-success">PAGE</span></td>
+					        		<td style="width:70%;"><strong>"<%= strip_tags i.title%>"</strong> has been updated</td>
+					        		<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					        	<% end %>
 				        	<% end %>
 					      </a>
@@ -96,12 +120,16 @@
 				  <% if i.class == Attachment %>
 				  	<div class="accordion-group">
 					    <div class="accordion-heading">
+					      		
 					    	<% this_href = '#attachment' + i.id.to_s %>
 					    	<% this_id = 'attachment' + i.id.to_s %>
 					    	<% author = Person.find(i.author_id)%>
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %>>
-					        <span class="label label-important">DOCUMENT</span> <strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i>
-					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      	<table style="width:100%;"><tr>
+					        <td style="width:15%;"><span class="label label-important">DOCUMENT</span></td>
+					        <td style="width:70%;"><strong>"<%= strip_tags i.title%>"</strong> was created by: <i><%= author.name %></i></td>
+					        <td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					      </a>
 					    </div>
 					    <div id=<%= this_id %> class="accordion-body collapse">
@@ -121,8 +149,11 @@
 					    	<% author = Person.where(id: i.author_id).first %>
 					    	<% message = Message.where(id: i.commentable_id).first %>
 					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href=<%= this_href %> >
-					        <span class="label label">COMMENT</span> <strong>"<%= strip_tags message.subject %>"</strong> From: <i><%= author.name %></i>
-					        <div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div>
+					      		<table style="width:100%;"><tr>
+					       		 	<td style="width:15%;"><span class="label label">COMMENT</span></td>
+					        		<td style="width:70%;"><strong>"<%= strip_tags message.subject %>"</strong> From: <i><%= author.name %></i></td>
+					        		<td style="width:15%;"><div class="pull-right"><%= time_ago_in_words(i.updated_at) %> ago</div></td>
+						        </tr></table>
 					      </a>
 					    </div>
 					    <div id=<%= this_id %> class="accordion-body collapse">
