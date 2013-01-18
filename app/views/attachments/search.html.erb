@@ -30,8 +30,10 @@
             <h3><%= link_to result.title, attachment, class: "levels", "data-original-title" => "Viewing level: #{attachment.level}<br>
                                                                                                  Comment level: #{attachment.comment_level}<br>
                                                                                                  Download level: #{attachment.download_level}",trigger: "hover" %></h3>
-            <% else %>
+            <% elsif current_user %>
             <h3><%= link_to result.title, attachment %></h3>
+            <% else %>
+            <h3><%= result.title %></h3>
             <% end %>
             <h4></h4>
             <p><%= raw highlights.join(" ... ") %></p>
