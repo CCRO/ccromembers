@@ -18,9 +18,15 @@
     <br><br>
     <% if can? :edit, attachment %>
       <span class="link-group">
-          <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) if can? :edit, attachment %> | 
+          <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]), class: "edit_link", "data-original-title" => "Viewing level: #{attachment.level}<br>
+                                                                                                                         Comment level: #{attachment.comment_level}<br>
+                                                                                                                         Download level: #{attachment.download_level}",trigger: "hover" if can? :edit, attachment %> | 
           <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
       </span>
     <% end %>
   </p>
 </div>
+
+<script>
+$('.edit_link').tooltip('hide')
+</script>
