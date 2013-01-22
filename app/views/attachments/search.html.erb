@@ -26,8 +26,15 @@
     <% highlights << result.highlight.description if result.highlight.try(:description) %>
     <% highlights << result.highlight.content if result.highlight.try(:content) %>
     <tr>
-        <td>
+        <td><% if can? :edit, attachment %>
+            <h3><%= link_to result.title, attachment, class: "levels", "data-original-title" => "Viewing level: #{attachment.level}<br>
+                                                                                                 Comment level: #{attachment.comment_level}<br>
+                                                                                                 Download level: #{attachment.download_level}",trigger: "hover" %></h3>
+            <% elsif current_user %>
             <h3><%= link_to result.title, attachment %></h3>
+            <% else %>
+            <h3><%= result.title %></h3>
+            <% end %>
             <h4></h4>
             <p><%= raw highlights.join(" ... ") %></p>
         </td>
@@ -48,3 +55,7 @@
 <!--Body content-->
 </div>
 </div>
+
+<script>
+$('.levels').tooltip('hide')
+</script>
