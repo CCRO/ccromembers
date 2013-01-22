@@ -16,6 +16,36 @@ class AttachmentsController < ApplicationController
     # @attachments.keep_if { |attachment| can? :read, attachment }
   end
 
+  def report
+    authorize! :manage, Attachment
+
+    a = Attachment.all
+    @viewing_level_public = a.select {|a| a.level == "public"}
+    @viewing_level_basic = a.select {|a| a.level == "basic"}
+    @viewing_level_pro = a.select {|a| a.level == "pro"}
+    @viewing_level_individual_subscriber = a.select {|a| a.level == "individual_subscriber"}
+    @viewing_level_individual_member = a.select {|a| a.level == "individual_member"}
+    @viewing_level_company_member = a.select {|a| a.level == "company_member"}
+    @viewing_level_leadership = a.select {|a| a.level == "leadership"}
+
+    @comment_level_public = a.select {|a| a.comment_level == "public"}
+    @comment_level_basic = a.select {|a| a.comment_level == "basic"}
+    @comment_level_pro = a.select {|a| a.comment_level == "pro"}
+    @comment_level_individual_subscriber = a.select {|a| a.comment_level == "individual_subscriber"}
+    @comment_level_individual_member = a.select {|a| a.comment_level == "individual_member"}
+    @comment_level_company_member = a.select {|a| a.comment_level == "company_member"}
+    @comment_level_leadership = a.select {|a| a.comment_level == "leadership"}
+
+    @download_level_public = a.select {|a| a.download_level == "public"}
+    @download_level_basic = a.select {|a| a.download_level == "basic"}
+    @download_level_pro = a.select {|a| a.download_level == "pro"}
+    @download_level_individual_subscriber = a.select {|a| a.download_level == "individual_subscriber"}
+    @download_level_individual_member = a.select {|a| a.download_level == "individual_member"}
+    @download_level_company_member = a.select {|a| a.download_level == "company_member"}
+    @download_level_leadership = a.select {|a| a.download_level == "leadership"}
+
+  end
+
   def search
       @results = @group.attachments.search(params) if @group
       @results ||= Attachment.search(params)

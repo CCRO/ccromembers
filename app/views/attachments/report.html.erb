@@ -1,0 +1,292 @@
+<h1>CCRO File Permission Report</h1>
+
+<br>
+
+<table class="table table-bordered">
+  <tr>
+    <th><h2>Viewing Levels</h2></th>
+    <th><h2>Commenting Levels</h2></th>
+    <th><h2>Downloading Levels</h2><th>
+  </tr>
+  <tr>
+    <td>
+      <h3>Public</h3>
+
+      <% @viewing_level_public.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Public</h3>
+
+      <% @comment_level_public.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Public</h3>
+
+      <% @download_level_public.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <h3>Basic</h3>
+
+      <% @viewing_level_basic.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Basic</h3>
+
+      <% @comment_level_basic.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Basic</h3>
+
+      <% @download_level_basic.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <h3>Pro</h3>
+
+      <% @viewing_level_pro.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Pro</h3>
+
+      <% @comment_level_pro.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Pro</h3>
+
+      <% @download_level_pro.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <h3>Individual Subscriber</h3>
+
+      <% @viewing_level_individual_subscriber.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Individual Subscriber</h3>
+
+      <% @comment_level_individual_subscriber.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Individual Subscriber</h3>
+
+      <% @download_level_individual_subscriber.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <h3>Individual Member</h3>
+
+      <% @viewing_level_individual_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Individual Member</h3>
+
+      <% @comment_level_individual_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Individual Member</h3>
+
+      <% @download_level_individual_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <h3>Company Member</h3>
+
+      <% @viewing_level_company_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Company Member</h3>
+
+      <% @comment_level_company_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Company Member</h3>
+
+      <% @download_level_company_member.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <h3>Leadership</h3>
+
+      <% @viewing_level_leadership.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Leadership</h3>
+
+      <% @comment_level_leadership.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <h3>Leadership</h3>
+
+      <% @download_level_leadership.each do |a| %>
+        <table class-"table">
+          <tr>
+            <td class="span3"><%= link_to "#{a.title}", a %></td>
+            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+
+  </tr>
+
+</table>
+
+
