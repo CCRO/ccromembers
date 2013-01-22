@@ -27,6 +27,7 @@
     <% highlights << result.highlight.content if result.highlight.try(:content) %>
     <tr>
         <td><% if can? :edit, attachment %>
+            <%= image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;') if attachment.thumbnail.present? %>
             <h3><%= link_to result.title, attachment, class: "levels", "data-original-title" => "Viewing level: #{attachment.level}<br>
                                                                                                  Comment level: #{attachment.comment_level}<br>
                                                                                                  Download level: #{attachment.download_level}",trigger: "hover" %></h3>

@@ -7,3 +7,7 @@ CarrierWave.configure do |config|
   config.fog_directory  = 'ccromembers_assets'                     # required
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
 end
+
+class FilelessIO < StringIO
+    attr_accessor :original_filename
+end

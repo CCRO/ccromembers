@@ -6,6 +6,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :author, :class_name => 'Person'
 
   mount_uploader :file, FileUploader
+  mount_uploader :thumbnail, FileUploader
 
   serialize :options, OpenStruct
 
@@ -58,7 +59,16 @@ class Attachment < ActiveRecord::Base
   end
 
   def download_text
-    content = Crocodoc::Download.text(crocodoc_uuid)
+    self.content = Crocodoc::Download.text(self.crocodoc_uuid)
+    self.save
+  end
+
+  def download_thumbnail
+    io = FilelessIO.new(Crocodoc::Download.thumbnail(self.crocodoc_uuid))
+    io.original_filename = self.crocodoc_uuid + "_thumbnail.png"
+
+    self.thumbnail = io
+    self.save
   end
 
   def crocodoc_getstatus
