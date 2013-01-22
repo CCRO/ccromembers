@@ -1,10 +1,15 @@
 <% content_for :adminbar do %>
   <ul>
     <li>
-        <%= link_to new_polymorphic_path([@group, Attachment.new]) do %>
+      <%= link_to new_polymorphic_path([@group, Attachment.new]) do %>
         <i class="icon-upload"></i><br><p>Upload File<br>page</p>
-        <% end %>
-      </li>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to report_attachments_path do %>
+        <i class="icon-beaker"></i><br><p>Permissions<br>Report</p>
+      <% end %>
+    </li>
   </ul>
 <% end %>
 

@@ -277,4 +277,19 @@
   </tr>
 </table>
 
+<% content_for :adminbar do %>
+  <ul>
+    <li>
+      <%= link_to new_polymorphic_path([@group, Attachment.new]) do %>
+        <i class="icon-upload"></i><br><p>Upload File<br>page</p>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to attachments_path do %>
+        <i class="icon-external-link"></i><br><p>File<br>Library</p>
+      <% end %>
+    </li>
+  </ul>
+<% end %>
+
 
