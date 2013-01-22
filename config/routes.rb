@@ -93,7 +93,11 @@ Ccromembers::Application.routes.draw do
     resources :memberships
     resources :messages
     resources :documents
-    resources :attachments
+    resources :attachments do
+      collection do
+        get 'search'
+      end
+    end
   end
 
   match '/memberships' => 'memberships#toggle', :via => :post
