@@ -27,16 +27,18 @@
     <% highlights << result.highlight.content if result.highlight.try(:content) %>
     <tr>
         <td>
-          <%= image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;') if attachment.thumbnail.present? %>
+          <%= link_to attachment, :target => '_blank' do 
+            image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;') if attachment.thumbnail.present? 
+          end %>
           <% if can? :edit, attachment %>
-            <h3><%= link_to result.title, attachment %></h3>
+            <h3><%= link_to result.title, attachment, :target => '_blank' %></h3>
             <% elsif current_user %>
-            <h3><%= link_to result.title, attachment %></h3>
+            <h3><%= link_to result.title, attachment, :target => '_blank' %></h3>
             <% else %>
             <h3><%= result.title %></h3>
             <% end %>
             <h4></h4>
-            <p><%= raw highlights.join(" <br>...<br> ") %></p>
+            <p><%= raw highlights.join(" ...<br><br>... ") %></p>
         </td>
         <td width="250">
            <%= star_rating((result._score / (@results.max_score / 4) + 1).round, 5) %>
