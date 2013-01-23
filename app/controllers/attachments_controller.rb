@@ -84,6 +84,12 @@ class AttachmentsController < ApplicationController
 
   def new
     @attachment = Attachment.new
+    
+    if @group
+      @attachment.level = "group_only"
+      @attachment.comment_level = "group_only"
+      @attachment.download_level = "group_only"
+    end
 
     if @group
       authorize! :create_in, @group

@@ -16,9 +16,17 @@ class Ability
 
     can :read, Attachment, level: 'public'
 
-    can :read, [Document, Message, Page, Post, Attachment] do |object|
+    can :read, [Document, Message, Page, Post] do |object|
       if object.owner.class.name == "Group" 
         object.owner.people.include?(user)
+      else
+        false
+      end
+    end
+
+    can [:read, :comment_on, :download], Attachment do |object|
+      if object.owner.present? && object.owner_type == 'Group'
+        object.owner.people.include? user
       else
         false
       end
@@ -28,11 +36,11 @@ class Ability
       object.owner_type == "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
     
-    can [:create_in], Group do |group|
+    can :create_in, Group do |group|
       (group.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || group.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
 
-    can :comment_on, [Message, Attachment] do |object|
+    can :comment_on, Message do |object|
       if object.owner.present? && object.owner_type == 'Group'
         object.owner.people.include? user
       else
