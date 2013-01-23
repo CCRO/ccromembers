@@ -60,6 +60,11 @@ class Attachment < ActiveRecord::Base
 
   def download_text
     self.content = Crocodoc::Download.text(self.crocodoc_uuid)
+    self
+  end
+
+  def download_text!
+    self.download_text
     self.save
   end
 
@@ -68,6 +73,11 @@ class Attachment < ActiveRecord::Base
     io.original_filename = self.crocodoc_uuid + "_thumbnail.png"
 
     self.thumbnail = io
+    self
+  end
+
+  def download_thumbnail!
+    self.download_thumbnail
     self.save
   end
 
@@ -99,6 +109,11 @@ class Attachment < ActiveRecord::Base
     if file.present? && file_changed?
       self.content_type = file.file.content_type
       self.file_size = file.file.size
+    end
+
+    if self.crocodoc_uuid.present?
+      self.download_text
+      self.download_thumbnail
     end
   end
 end
