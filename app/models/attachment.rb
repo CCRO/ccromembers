@@ -100,5 +100,10 @@ class Attachment < ActiveRecord::Base
       self.content_type = file.file.content_type
       self.file_size = file.file.size
     end
+
+    if self.crocodoc_uuid.present?
+      self.download_text
+      self.download_thumbnail
+    end
   end
 end
