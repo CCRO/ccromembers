@@ -7,8 +7,9 @@
       		<h2>Forgot Password</h2>
       		<br />
       		<%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
-      		   <%= text_field_tag :email, params[:email], :placeholder => 'User Account Email' %>
-      		  <%= submit_tag "Reset Password", :class => 'btn' %>
+      		   Your Email: <%= text_field_tag :email, params[:email], :placeholder => 'User Account Email' %>
+      		  <p><br></p>
+            <%= submit_tag "Reset Password", :class => 'btn' %>
       		<% end %>
 			<div id="notices">
 				<% flash.each do |key, msg| %>
