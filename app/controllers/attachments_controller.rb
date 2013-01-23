@@ -137,6 +137,8 @@ class AttachmentsController < ApplicationController
 
     attachment.download_text
     attachment.download_thumbnail
+
+    attachment.save
    end
 
   def destroy
