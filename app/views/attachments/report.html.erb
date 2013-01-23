@@ -276,6 +276,37 @@
     </td>
   </tr>
 </table>
+<br>
+<br>
+
+<h1>CCRO Working Group Files</h1>
+
+<br>
+
+<% @groups.each do |g| %>
+  <table class="table table-bordered">
+    <tr>
+      <td>
+        <h2><%= "#{g.name}" %></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <% @group_attachments.each do |a| %>
+            <% if a.owner_id == g.id %>
+            <tr>
+              <td class="span5"><%= link_to "#{a.title}", a %></td>
+              <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]) %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+<% end %>
 
 <% content_for :adminbar do %>
   <ul>
@@ -291,5 +322,13 @@
     </li>
   </ul>
 <% end %>
+
+
+
+
+
+
+
+
 
 

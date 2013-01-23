@@ -20,6 +20,21 @@ class AttachmentsController < ApplicationController
     authorize! :manage, Attachment
 
     a = Attachment.all
+    @group_attachments = []
+    @groups = []
+
+    a.each do |a|
+      if a.owner_type == "Group"
+        @group_attachments << a
+
+        unless @groups.include?(a.owner)
+          @groups << a.owner
+        end
+      end
+    end
+
+    a.keep_if {|a| a.owner_type != "Group"}
+
     @viewing_level_public = a.select {|a| a.level == "public"}
     @viewing_level_basic = a.select {|a| a.level == "basic"}
     @viewing_level_pro = a.select {|a| a.level == "pro"}
