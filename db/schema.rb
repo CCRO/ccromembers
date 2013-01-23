@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117203607) do
+ActiveRecord::Schema.define(:version => 20130122202937) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130117203607) do
     t.string   "crocodoc_status"
     t.boolean  "crocodoc_viewable"
     t.string   "published"
+    t.string   "thumbnail"
   end
 
   add_index "attachments", ["author_id"], :name => "index_attachments_on_author_id"

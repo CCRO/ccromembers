@@ -132,6 +132,13 @@ class AttachmentsController < ApplicationController
     redirect_to polymorphic_path([@group, :attachments])
   end
 
+  def refresh
+    attachment = Attachment.find(params[:id])
+
+    attachment.download_text
+    attachment.download_thumbnail
+   end
+
   def destroy
     @attachment = Attachment.find(params[:id])
 
@@ -149,15 +156,16 @@ class AttachmentsController < ApplicationController
       if attachment = Attachment.find_by_crocodoc_uuid(params[:uuid])
         attachment.crocodoc_status = params[:status]
         attachment.crocodoc_viewable = params[:viewable]
+        attachment.save
 
         if params[:status] == "DONE"
             attachment.download_text
+            attachment.download_thumbnail
         end
 
-        attachment.save
       end
 
-      render status: 200
+      render status: 200, text: :none
     end
 
 
