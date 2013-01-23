@@ -48,6 +48,9 @@
             Published: <%= attachment.published %><br />
             <% end %>
             Size: <%= number_to_human_size attachment.file_size %><br />
+            <% if attachment.owner.present? %>
+            In group: <%= link_to attachment.owner.name, attachment.owner %><br />
+            <% end %>
 <!--             <span class="label label-important">Full Members</span><br />
         <span class="label label-important">Participating Members</span><br />
         <span class="label label-important">Subscribers</span><br /> -->

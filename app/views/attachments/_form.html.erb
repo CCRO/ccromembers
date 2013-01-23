@@ -25,6 +25,18 @@
         <%= @attachment.crocodoc_uuid %>
       </div>
     </div> 
+    <div class="control-group">
+      <%= f.label :crocodoc_status, :class => 'control-label' %>
+      <div class="controls">
+        <%= @attachment.crocodoc_status %>
+      </div>
+    </div> 
+    <div class="control-group">
+      <%= f.label :crocodoc_viewable, :class => 'control-label' %>
+      <div class="controls">
+        <%= @attachment.crocodoc_viewable %>
+      </div>
+    </div> 
   </fieldset>
   <% end %>
   <fieldset>
