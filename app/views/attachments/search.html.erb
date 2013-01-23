@@ -26,29 +26,35 @@
     <% highlights << result.highlight.description if result.highlight.try(:description) %>
     <% highlights << result.highlight.content if result.highlight.try(:content) %>
     <tr>
-        <td><% if can? :edit, attachment %>
-            <h3><%= link_to result.title, attachment, class: "levels", "data-original-title" => "Viewing level: #{attachment.level}<br>
-                                                                                                 Comment level: #{attachment.comment_level}<br>
-                                                                                                 Download level: #{attachment.download_level}",trigger: "hover" %></h3>
-            <% elsif current_user %>
-            <h3><%= link_to result.title, attachment %></h3>
-            <% else %>
-            <h3><%= result.title %></h3>
-            <% end %>
-            <h4></h4>
-            <p><%= raw highlights.join(" ... ") %></p>
-        </td>
-        <td width="250">
-           <%= star_rating((result._score / (@results.max_score / 4) + 1).round, 5) %>
-            <% if attachment.published.present? %>
-            Published: <%= attachment.published %><br />
-            <% end %>
-            Size: <%= number_to_human_size attachment.file_size %><br />
+      <td>
+        <% if can? :edit, attachment %>
+        <h3><%= link_to result.title, attachment %></h3>
+        
+        <% elsif current_user %>
+        <h3><%= link_to result.title, attachment %></h3>
+        <% else %>
+        <h3><%= result.title %></h3>
+        <% end %>
+        <h4></h4>
+        <p><%= raw highlights.join(" ... ") %></p>
+      </td>
+      <td width="250">
+       <%= star_rating((result._score / (@results.max_score / 4) + 1).round, 5) %>
+        <% if attachment.published.present? %>
+        Published: <%= attachment.published %><br />
+        <% end %>
+        Size: <%= number_to_human_size attachment.file_size %><br />
 <!--             <span class="label label-important">Full Members</span><br />
-            <span class="label label-important">Participating Members</span><br />
-            <span class="label label-important">Subscribers</span><br /> -->
-            </p>
-        </td>
+        <span class="label label-important">Participating Members</span><br />
+        <span class="label label-important">Subscribers</span><br /> -->
+        </p>
+        <% if can? :edit, attachment %>
+          <span class="link-group">
+            <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) %> | 
+            <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
+          </span>
+        <% end %>
+      </td>
     </tr>
     <% end %>
 </table>
