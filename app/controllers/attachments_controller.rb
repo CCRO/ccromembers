@@ -13,7 +13,7 @@ class AttachmentsController < ApplicationController
       @attachments ||= Attachment.all
     end
 
-    # @attachments.keep_if { |attachment| can? :read, attachment }
+    @attachments.delete_if { |attachment| attachment.archived? }
   end
 
   def report
@@ -148,9 +148,10 @@ class AttachmentsController < ApplicationController
 
     @attachment.update_attributes(params[:attachment])
 
+
     @attachment.save
 
-    redirect_to report_attachments_path
+    redirect_to :back
   end
 
   def refresh
@@ -167,7 +168,9 @@ class AttachmentsController < ApplicationController
 
     authorize! :destory, @attachment
 
-    @attachment.destroy
+    # @attachment.destroy
+    @attachment.archived = true
+    @attachment.save
 
     redirect_to report_attachments_path
   end

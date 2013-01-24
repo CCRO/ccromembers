@@ -9,6 +9,7 @@ class Attachment < ActiveRecord::Base
   mount_uploader :thumbnail, FileUploader
 
   serialize :options, OpenStruct
+  serialize :crocodoc_uuids, Array
 
   before_save :update_asset_attributes
   
@@ -33,7 +34,6 @@ class Attachment < ActiveRecord::Base
     begin
       uuid = Crocodoc::Document.upload(self.file.url)
       self.crocodoc_uuid = uuid
-      self.content = Crocodoc::Download.text(uuid)
    rescue CrocodocError => e
       puts 'failed :('
       puts '  Error Code: ' + e.code
@@ -107,11 +107,14 @@ class Attachment < ActiveRecord::Base
 
   def update_asset_attributes
     if file.present? && file_changed?
+      self.crocodoc_uuids << self.crocodoc_uuid
+      self.get_crocodoc_uuid
       self.content_type = file.file.content_type
       self.file_size = file.file.size
     end
 
     if self.crocodoc_uuid.present?
+      self.crocodoc_getstatus
       self.download_text
       self.download_thumbnail
     end
