@@ -74,8 +74,8 @@ class Person < ActiveRecord::Base
       'company_member'
     elsif self.individual_member?
       'individual_member'
-    elsif self.individual_subscriber?
-      'individual_subscriber'
+    elsif self.subscriber?
+      'subscriber'
     elsif self.pro?
       'pro'
     else
@@ -103,8 +103,8 @@ class Person < ActiveRecord::Base
     self.subscriptions.active.pluck(:product).include? 'individual_member'
   end
 
-  def individual_subscriber?
-    self.subscriptions.active.pluck(:product).include? 'individual_subscriber'
+  def subscriber?
+    self.subscriptions.active.pluck(:product).include? 'subscriber'
   end
 
   def pro?
