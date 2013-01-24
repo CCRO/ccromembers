@@ -37,6 +37,14 @@
         <%= @attachment.crocodoc_viewable %>
       </div>
     </div> 
+    <div class="control-group">
+      <%= f.label :crocodoc_uuids, :class => 'control-label' %>
+      <div class="controls">
+        <% @attachment.crocodoc_uuids.compact.each do |uuid| %>
+          <%= uuid %><br>
+        <% end %>
+      </div>
+    </div> 
   </fieldset>
   <% end %>
   <fieldset>
@@ -77,7 +85,14 @@
         <%= options.check_box :commentable  %>
       </div>
     </div>
-    <% end %>  
+    <% end %> 
+    <div class="control-group">
+      <%= f.label :archived, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :archived  %>
+      </div>
+    </div>
+ 
     <div class="control-group">
       <%= f.label :description, :class => 'control-label' %>
       <div class="controls">
