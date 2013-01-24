@@ -167,7 +167,8 @@ class AttachmentsController < ApplicationController
 
     authorize! :destory, @attachment
 
-    @attachment.destroy
+    # @attachment.destroy
+    @attachment.archived = true
 
     redirect_to polymorphic_path([@group, :attachments])
   end
