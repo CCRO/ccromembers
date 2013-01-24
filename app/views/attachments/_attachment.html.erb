@@ -9,9 +9,18 @@
         <%= attachment.title %> <i class="icon-lock"></i>
       <% end %>
     </strong>
-     - <%= attachment.description %>
-    <% if attachment.owner && attachment.owner_type == "Group"%> 
+    <% if can? :read, attachment %>
+        <span style="color: black;"> - <%= attachment.description %></span>
+      <% else %>
+        - <%= attachment.description %>
+      <% end %>
+    
+    <% if attachment.owner && attachment.owner_type == "Group"%>
+      <% if can? :read, attachment.owner %> 
       <br><small><stong><%= link_to "From Working Group: #{attachment.owner.name}", attachment.owner %></strong></small>
+      <% else %>
+      <br><small><stong><%= "From Working Group: #{attachment.owner.name}" %></strong></small>
+      <% end %>
     <% end %>
     <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>
     Uploaded: <%= time_ago_in_words attachment.try(:created_at) %> ago by <%= attachment.author.try(:name) || "Unknown Source" %></small> 
