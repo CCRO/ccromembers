@@ -34,7 +34,6 @@ class Attachment < ActiveRecord::Base
     begin
       uuid = Crocodoc::Document.upload(self.file.url)
       self.crocodoc_uuid = uuid
-      self.content = Crocodoc::Download.text(uuid)
    rescue CrocodocError => e
       puts 'failed :('
       puts '  Error Code: ' + e.code
