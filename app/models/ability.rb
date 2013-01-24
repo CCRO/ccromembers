@@ -69,23 +69,23 @@ class Ability
       can :download, Attachment, {download_level: ['basic', 'pro']}  
     end
 
-    if user.individual_subscriber?
+    if user.subscriber?
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
-      can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}
-      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber']}  
-      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'individual_subscriber']}  
-      can :download, Attachment, {download_level: ['basic', 'pro', 'individual_subscriber']}  
+      can :read, [Post, Page, Document], {level: 'subscriber', :published => true}
+      can :read, Attachment, {level: ['basic', 'pro', 'subscriber']}  
+      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber']}  
+      can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber']}  
     end
     
     if user.individual_member?
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
-      can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}  
+      can :read, [Post, Page, Document], {level: 'subscriber', :published => true}  
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
-      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member']}
-      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'individual_subscriber', 'individual_member']}
-      can :download, Attachment, {download_level: ['basic', 'pro', 'individual_subscriber', 'individual_member']}
+      can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member']}
+      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member']}
+      can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member']}
       can :read, [Group, Message, Comment, Survey]
       can :read, Company, :id => user.company_id
       
@@ -99,12 +99,12 @@ class Ability
     if user.company_member?
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
-      can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}  
+      can :read, [Post, Page, Document], {level: 'subscriber', :published => true}  
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}
       can :read, [Post, Page, Document], {level: 'company_member', :published => true}  
-      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member']}
-      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member']}
-      can :download, Attachment, {download_level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member']}
+      can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
+      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
+      can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
       can :read, [Group, Message, Comment, Survey]
       can :read, Company, :id => user.company_id
       
@@ -118,13 +118,13 @@ class Ability
     if user.leadership?
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}  
-      can :read, [Post, Page, Document], {level: 'individual_subscriber', :published => true}
+      can :read, [Post, Page, Document], {level: 'subscriber', :published => true}
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
       can :read, [Post, Page, Document], {level: 'company_member', :published => true}
       can :read, [Post, Page, Document], {level: 'leadership', :published => true}
-      can :read, Attachment, {level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member', 'leadership']}   
-      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member', 'leadership']}   
-      can :download, Attachment, {download_level: ['basic', 'pro', 'individual_subscriber', 'individual_member', 'company_member', 'leadership']}   
+      can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
+      can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
+      can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
       can :read, [Group, Message, Comment, Survey]
       can :read, Company, :id => user.company_id
       
@@ -138,7 +138,7 @@ class Ability
     if user.editor?
       can :read, [Post, Page], {level: 'basic', :published => true}
       can :read, [Post, Page], {level: 'pro', :published => true}  
-      can :read, [Post, Page], {level: 'individual_subscriber', :published => true}
+      can :read, [Post, Page], {level: 'subscriber', :published => true}
       can :read, [Post, Page], {level: 'individual_member', :published => true}
       can :read, [Post, Page], {level: 'company_member', :published => true}  
       can :read, [Post, Page], {level: 'leadership', :published => true}    

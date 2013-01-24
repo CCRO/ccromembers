@@ -38,7 +38,7 @@ class AttachmentsController < ApplicationController
     @viewing_level_public = a.select {|a| a.level == "public"}
     @viewing_level_basic = a.select {|a| a.level == "basic"}
     @viewing_level_pro = a.select {|a| a.level == "pro"}
-    @viewing_level_individual_subscriber = a.select {|a| a.level == "individual_subscriber"}
+    @viewing_level_subscriber = a.select {|a| a.level == "subscriber"}
     @viewing_level_individual_member = a.select {|a| a.level == "individual_member"}
     @viewing_level_company_member = a.select {|a| a.level == "company_member"}
     @viewing_level_leadership = a.select {|a| a.level == "leadership"}
@@ -46,7 +46,7 @@ class AttachmentsController < ApplicationController
     @comment_level_public = a.select {|a| a.comment_level == "public"}
     @comment_level_basic = a.select {|a| a.comment_level == "basic"}
     @comment_level_pro = a.select {|a| a.comment_level == "pro"}
-    @comment_level_individual_subscriber = a.select {|a| a.comment_level == "individual_subscriber"}
+    @comment_level_subscriber = a.select {|a| a.comment_level == "subscriber"}
     @comment_level_individual_member = a.select {|a| a.comment_level == "individual_member"}
     @comment_level_company_member = a.select {|a| a.comment_level == "company_member"}
     @comment_level_leadership = a.select {|a| a.comment_level == "leadership"}
@@ -54,7 +54,7 @@ class AttachmentsController < ApplicationController
     @download_level_public = a.select {|a| a.download_level == "public"}
     @download_level_basic = a.select {|a| a.download_level == "basic"}
     @download_level_pro = a.select {|a| a.download_level == "pro"}
-    @download_level_individual_subscriber = a.select {|a| a.download_level == "individual_subscriber"}
+    @download_level_subscriber = a.select {|a| a.download_level == "subscriber"}
     @download_level_individual_member = a.select {|a| a.download_level == "individual_member"}
     @download_level_company_member = a.select {|a| a.download_level == "company_member"}
     @download_level_leadership = a.select {|a| a.download_level == "leadership"}
@@ -150,7 +150,7 @@ class AttachmentsController < ApplicationController
 
     @attachment.save
 
-    redirect_to polymorphic_path([@group, :attachments])
+    redirect_to report_attachments_path
   end
 
   def refresh
@@ -170,7 +170,7 @@ class AttachmentsController < ApplicationController
     # @attachment.destroy
     @attachment.archived = true
 
-    redirect_to polymorphic_path([@group, :attachments])
+    redirect_to report_attachments_path
   end
   
   def crocodoc_webhook

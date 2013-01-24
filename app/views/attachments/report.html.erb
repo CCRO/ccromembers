@@ -16,9 +16,10 @@
         <% @viewing_level_public.each do |a| %>
           <tr>
             <td class="span5"><%= link_to "#{a.title}", a %></td>
-            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+            <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
           </tr>
         <% end %>
       </table>
@@ -30,9 +31,10 @@
         <% @comment_level_public.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
 
         <% end %>
@@ -45,9 +47,10 @@
         <% @download_level_public.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -61,9 +64,10 @@
         <% @viewing_level_basic.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -75,9 +79,10 @@
         <% @comment_level_basic.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -89,9 +94,10 @@
         <% @download_level_basic.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -105,9 +111,10 @@
         <% @viewing_level_pro.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -119,9 +126,10 @@
         <% @comment_level_pro.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -133,9 +141,10 @@
         <% @download_level_pro.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -146,12 +155,13 @@
       <h3>Subscriber</h3>
       
       <table class="table">
-        <% @viewing_level_individual_subscriber.each do |a| %>
+        <% @viewing_level_subscriber.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -160,12 +170,13 @@
       <h3>Subscriber</h3>
       
       <table class="table">
-        <% @comment_level_individual_subscriber.each do |a| %>
+        <% @comment_level_subscriber.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -174,12 +185,13 @@
       <h3>Subscriber</h3>
       
       <table class="table">
-        <% @download_level_individual_subscriber.each do |a| %>
+        <% @download_level_subscriber.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -193,9 +205,10 @@
         <% @viewing_level_individual_member.each do |a| %>
           <tr>
             <td class="span5"><%= link_to "#{a.title}", a %></td>
-            <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+            <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
           </tr>
         <% end %>
       </table>
@@ -207,9 +220,10 @@
         <% @comment_level_individual_member.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -221,9 +235,10 @@
         <% @download_level_individual_member.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -237,9 +252,10 @@
         <% @viewing_level_company_member.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -251,9 +267,10 @@
         <% @comment_level_company_member.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -265,9 +282,10 @@
         <% @download_level_company_member.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -281,9 +299,10 @@
         <% @viewing_level_leadership.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -295,9 +314,10 @@
         <% @comment_level_leadership.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -309,9 +329,10 @@
         <% @download_level_leadership.each do |a| %>
         <tr>
           <td class="span5"><%= link_to "#{a.title}", a %></td>
-          <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+          <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
         </tr>
         <% end %>
       </table>
@@ -339,9 +360,10 @@
             <% if a.owner_id == g.id %>
             <tr>
               <td class="span5"><%= link_to "#{a.title}", a %></td>
-              <td class="span2"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+              <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
                                                                                                                          Comment level: #{a.comment_level}<br>
                                                                                                                          Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
             </tr>
             <% end %>
           <% end %>
