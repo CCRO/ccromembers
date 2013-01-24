@@ -150,7 +150,7 @@ class AttachmentsController < ApplicationController
 
     @attachment.save
 
-    redirect_to polymorphic_path([@group, :attachments])
+    redirect_to report_attachments_path
   end
 
   def refresh
