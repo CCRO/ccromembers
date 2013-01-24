@@ -169,7 +169,7 @@ class AttachmentsController < ApplicationController
 
     @attachment.destroy
 
-    redirect_to polymorphic_path([@group, :attachments])
+    redirect_to report_attachments_path
   end
   
   def crocodoc_webhook
