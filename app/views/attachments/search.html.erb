@@ -49,7 +49,11 @@
             <% end %>
             Size: <%= number_to_human_size attachment.file_size %><br />
             <% if attachment.owner.present? %>
+            <% if can? :read, attachment.owner %> 
             In group: <%= link_to attachment.owner.name, attachment.owner %><br />
+            <% else %>
+            In group: <%= attachment.owner.name %><br />
+            <% end %>
             <% end %>
 <!--             <span class="label label-important">Full Members</span><br />
         <span class="label label-important">Participating Members</span><br />
