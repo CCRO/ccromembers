@@ -1,8 +1,12 @@
 class QuestionsController < ApplicationController
   def create
+    survey = Survey.find(params[:survey_id])
+    last_position = survey.questions.last.position
+
     @question = Question.create(params[:question])
     @question.survey = Survey.find(params[:survey_id])
     @question.update_attributes(params[:question])
+    @question.position = last_position + 1
     
     if @question.save
       render 'create', :locals => {question: @question}
