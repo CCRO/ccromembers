@@ -7,6 +7,7 @@ class QuestionsController < ApplicationController
     @question.survey = Survey.find(params[:survey_id])
     @question.update_attributes(params[:question])
     @question.position = last_position + 1
+    @survey = survey
     
     if @question.save
       render 'create', :locals => {question: @question}
@@ -15,6 +16,15 @@ class QuestionsController < ApplicationController
     end
   end
   
+  def show
+    @question = Question.find(params[:id])
+
+    logger.info "Editing: " + @question.to_s
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def destroy
     @question = Question.find(params[:id])
     survey = @question.survey
@@ -33,8 +43,8 @@ class QuestionsController < ApplicationController
   def destroy_response
     @question = Question.find(params[:id])
     
-    @question.possible_responses.delete_at(params[:response_id].to_i)
-    
+    @question.possible_responses.delete(params[:response_id])
+
     @question.save
     
     @response_id = params[:response_id].to_i
@@ -53,9 +63,10 @@ class QuestionsController < ApplicationController
     @response = params[:response_text]
     
     if @question.possible_responses
-      @question.possible_responses.push(params[:response_text]) if params[:response_text] && params[:response_text] != ""
+      index = (@question.possible_responses.to_a.last[0].to_i + 1).to_s
+      @question.possible_responses[index] = params[:response_text]
     else
-      @question.possible_responses = [params[:response_text]]
+      @question.possible_responses = {"0" => params[:response_text]}
     end
     
     @index = @question.possible_responses.index(@response)
@@ -68,6 +79,20 @@ class QuestionsController < ApplicationController
       end
     end
     
+  end
+
+  def update
+    @question = Question.find(params[:id])
+
+    respond_to do |format|
+      if @question.update_attributes(params[:question])
+        format.html { redirect_to edit_survey_path(@question.survey), notice: 'Question was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @question.errors, status: :unprocessable_entity }
+      end
+    end
   end
      
 end
