@@ -1,11 +1,13 @@
 <%= content_tag_for :li, question do %>
-<span class="handle"><i class="icon-move"></i></span><h2><%= question.prompt %><span class="delete_selector "><%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %></span></h2>
+<span class="handle"><i class="icon-move"></i></span><h2><%= question.prompt %><br>
+<span class="delete_selector "><%= link_to survey_question_path(question.survey, question), :remote => true, :rel => 'modal-question', 'data-controls-modal' =>  "modal-window", 'data-backdrop' => true, 'data-keyboard' => true, class: "btn btn-success" do %>Edit Question<% end %></span>
+<span class="delete_selector "><%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %></span></h2>
       
       <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
       <ul id="question_responses_<%= question.id %>" style="list-style: none;">
         <% if question.possible_responses.present? %>
           <% question.possible_responses.each_with_index do |response, index| %>
-            <li id="question_<%= question.id %>_response_<%= index %>"><input type="<%= question.response_type %>"> <%= response %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => index), :remote => true %></span></li>
+            <li id="question_<%= question.id %>_response_<%= response[0].to_i %>"><input type="<%= question.response_type %>"> <%= response[1] %> <span class="delete_selector"><%= link_to "Delete answer", destroy_response_survey_question_path(question.survey,question, :response_id => response[0].to_i), :remote => true %></span></li>
           <% end %>
         <% end %>
   
@@ -23,5 +25,5 @@
       
       <br>
       <br>
-      
 <% end %>
+

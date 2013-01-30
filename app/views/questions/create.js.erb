@@ -2,3 +2,10 @@ $('#questions').append('<%= escape_javascript(render :partial => 'questions/edit
 $("div#add_question #question_prompt").val("");
 $("div#add_question").hide();
 $("form#question_<%= question.id %> input[name=\"response_text\"]").focus();
+$modal = $('#modal-window');
+$modal.modal({backdrop: true, keyboard: true, show: false});
+$("a[rel=modal-question]").click(function(event) {
+  event.preventDefault();
+  $modal.modal('show');
+});
+    

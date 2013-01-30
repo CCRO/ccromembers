@@ -83,7 +83,7 @@ class SurveysController < ApplicationController
           data_table.new_column('number', 'Responses') 
 
           # Add Rows and Values 
-          data_table.add_rows(q.results)
+          data_table.add_rows(q.results[0].to_i)
     
           option = { width: 800, height: 480, title: q.prompt, :is3D => true }
         end

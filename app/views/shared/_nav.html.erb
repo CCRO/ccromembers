@@ -42,7 +42,14 @@
               <!-- Research Center Dropdown -->
               <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || params[:controller] == 'groups' || params[:controller] == 'posts' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/pages/23-about-ccro-working-groups"><i class="icon-book icon-white"></i> Resource Center</a></li>
               
-              <li><a href="http://ccro.org/pages/52-upcoming-events"><i class="icon-calendar icon-white"></i> Events</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-calendar icon-white"></i></i>Events</i></a>
+                <ul class="dropdown-menu">
+                    <li style="padding-right:0px;"><%= link_to "Upcoming Events", "/pages/47" %></li>
+                    <li style="padding-right:0px;"><%= link_to "Past events", "/pages/22" %></li>
+                </ul>
+              </li>
+
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
               
               <li class="dropdown">

@@ -22,15 +22,16 @@
 //= require password_resets
 
 
-window.addEventListener("load",function() {
-	// Set a timeout...
-	setTimeout(function(){
-		// Hide the address bar!
-		window.scrollTo(0, 1);
-	}, 0);
-	// $('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
-  // $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
-});
+
+//    window.addEventListener("load",function() {
+//    	// Set a timeout...
+//    	setTimeout(function(){
+//    		// Hide the address bar!
+//    		window.scrollTo(0, 1);
+//    	}, 0);
+//    	// $('body:not(#doc_viewer) div.page').wrap('<div class="page-shadow">')
+//      // $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
+//    });
 
 $('.submittable').live('change', function() {
   $(this).parents('form:first').submit();

@@ -9,6 +9,9 @@ jQuery ->
   $("a[rel=modal-person]").click (event) -> 
     event.preventDefault()
     $modal.modal('show')
+  $("a[rel=modal-question]").click (event) -> 
+    event.preventDefault()
+    $modal.modal('show')
   $('.datepicker').datepicker()
   $('textarea.simple_editor').wysihtml5()
   $('.startfocus').focus()

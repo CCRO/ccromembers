@@ -78,7 +78,7 @@
         <% if browser.ie8? || browser.ie7? %>
           <h1><i class="icon-comment"></i> Comments:</h1>
         <% else %>
-          <h1 class="ribbon-left">Comments:</h1>
+          <h1 class="ribbon-left" style="margin-left: -20px;">Comments:</h1>
         <% end %>
         <%= render :partial => 'shared/comment_hidden_form' %>
         <%= render :partial => 'shared/comment', :collection => page.comments.reverse %>
