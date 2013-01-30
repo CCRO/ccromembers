@@ -27,11 +27,6 @@
     <% highlights << result.highlight.content if result.highlight.try(:content) %>
     <tr>
         <td>
-          <%= if attachment.thumbnail.present? 
-              link_to attachment, :target => '_blank' do 
-                image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;')  
-              end
-            end %>
           <% if can? :edit, attachment %>
             <h3><%= link_to result.title, attachment, :target => '_blank' %></h3>
             <% elsif can? :read, attachment %>
@@ -39,6 +34,11 @@
             <% else %>
             <h3><%= result.title %></h3>
             <% end %>
+          <%= if attachment.thumbnail.present? 
+              link_to attachment, :target => '_blank' do 
+                image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;')  
+              end
+            end %>
             <h4></h4>
             <p><%= raw highlights.join(" ...<br><br>... ") %></p>
         </td>
@@ -58,6 +58,7 @@
             In group: <%= attachment.owner.name %><br />
             <% end %>
             <% end %>
+            <i class="icon-eye-open" <%= 'style="color:lightgrey;"' unless can? :read, attachment %>></i> <i class="icon-comment" <%= 'style="color:lightgrey;"' unless can? :comment_on, attachment %>></i> <i class="icon-print" <%= 'style="color:lightgrey;"' unless can? :download, attachment %>></i>
 <!--             <span class="label label-important">Full Members</span><br />
         <span class="label label-important">Participating Members</span><br />
         <span class="label label-important">Subscribers</span><br /> -->
