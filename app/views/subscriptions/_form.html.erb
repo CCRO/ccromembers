@@ -15,8 +15,10 @@
     <%= f.label :product %>
     <% if @subscription.owner_type == "Company" %>
     <% subscription_types = [['Subscriber', 'subscriber'], ['Company Membership', 'company_member'], ['Leader Company', 'leadership']] %>
-    <% else %>
+    <% elsif @subscription.owner_type == "Person" %>
     <% subscription_types = [['Pro', 'pro'], ['Subscriber', 'subscriber'], ['Individual Membership', 'individual_member']] %>
+    <% else %>
+    <% subscription_types = [['Pro', 'pro'], ['Subscriber', 'subscriber'], ['Individual Membership', 'individual_member'], ['Company Membership', 'company_member'], ['Leader Company', 'leadership']] %>
     <% end %>
     <%= select_tag('subscription[product]', options_for_select(subscription_types, :selected => @subscription.product), :include_blank => true) %>
   </div>
