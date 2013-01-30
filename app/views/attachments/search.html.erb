@@ -40,7 +40,7 @@
               end
             end %>
             <h4></h4>
-            <p><%= raw highlights.join(" ...<br><br>... ") %></p>
+            <p><%= raw highlights.take(4).join(" ...<br><br>... ") %></p>
         </td>
         <td width="250">
            <%= star_rating((result._score / (@results.max_score / 4) + 1).round, 5) %>
@@ -58,7 +58,9 @@
             In group: <%= attachment.owner.name %><br />
             <% end %>
             <% end %>
-            <i class="icon-eye-open" <%= 'style="color:lightgrey;"' unless can? :read, attachment %>></i> <i class="icon-comment" <%= 'style="color:lightgrey;"' unless can? :comment_on, attachment %>></i> <i class="icon-print" <%= 'style="color:lightgrey;"' unless can? :download, attachment %>></i>
+            <i class="icon-eye-open" <%= raw 'style="color:lightgrey;"' unless can? :read, attachment %>></i> 
+            <i class="icon-comment" <%= raw 'style="color:lightgrey;"' unless (attachment.commentable? && can?(:comment_on, attachment)) %>></i> 
+            <i class="icon-print" <%= raw 'style="color:lightgrey;"' unless (attachment.downloadable? && can?(:download, attachment)) %>></i>
 <!--             <span class="label label-important">Full Members</span><br />
         <span class="label label-important">Participating Members</span><br />
         <span class="label label-important">Subscribers</span><br /> -->
