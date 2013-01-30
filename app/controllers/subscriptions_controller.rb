@@ -40,6 +40,8 @@ class SubscriptionsController < ApplicationController
     @owner = Company.find(params[:company_id]) if params[:company_id]
     @owner = Person.find(params[:person_id]) if params[:person_id]
 
+    @subscription.owner = @owner
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @subscription }
