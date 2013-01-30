@@ -47,6 +47,9 @@
             <% if attachment.published.present? %>
             Published: <%= attachment.published %><br />
             <% end %>
+            <% if attachment.author.present? %>
+            Source: <%= attachment.author.name %><br />
+            <% end %>
             Size: <%= number_to_human_size attachment.file_size %><br />
             <% if attachment.owner.present? %>
             <% if can? :read, attachment.owner %> 
