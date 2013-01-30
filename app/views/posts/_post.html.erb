@@ -67,7 +67,7 @@
     
     <!-- Post Subtitle: author or group that owns this -->
     <% if post.owner_type == 'Group'%>
-    <h3 id="post_author">From The '<%= post.owner.try(:name) %>' Working Group</h3>
+    <h3 id="post_author">From The '<%= link_to post.owner.try(:name), post.owner %>' Working Group</h3>
     <% else %>
     <h3 id="post_author">by <%= post.author.try(:name) %></h3>
     <% end %>
@@ -123,7 +123,7 @@
           <span class="post-footer-heading">Category: </span>
           <strong><%= (post.tags.pluck(:name).present?) ? post.tags.pluck(:name).to_sentence : "None" %> </strong>
         <% else %>
-          <strong><span class="post-footer-heading">Author: </span></strong>
+          <strong><span class="post-footer-heading">Source: </span></strong>
           <% if post.author %>
             <%= link_to post.author.try(:name), post.author %>
             <%= "- " + post.author.company.try(:name) if post.author.company %>
@@ -185,7 +185,7 @@
           <h5><%= post.author.name %></h5>
           <p><%= post.author.company.name %></p>
         </div>
-        <h3>About the author</h3>
+        <h3>About the source</h3>
         <p><%= post.author.bio %></p>
         <div style="clear: both"></div> 
       </div>
