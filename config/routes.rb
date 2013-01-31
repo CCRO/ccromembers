@@ -228,6 +228,10 @@ Ccromembers::Application.routes.draw do
   end
 
   resources :surveys do
+    member do
+      get :intro
+      get :slide_show
+    end
     resources :questions do
       resources :responses
       member do

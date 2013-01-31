@@ -14,7 +14,7 @@
 //= require_tree ./jquery-plugins
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require bootstrap-wysihtml5-all
+// require bootstrap-wysihtml5-all
 //= require_tree ./bootstrap
 //= require_tree ./jquery_ext
 //= require documents

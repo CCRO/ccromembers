@@ -1,0 +1,41 @@
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+
+$(document).on("click", "a", function( event ){
+ 
+// Stop the default behavior of the browser, which
+// is to change the URL of the page.
+event.preventDefault();
+ 
+// Manually change the location of the page to stay in
+// "Standalone" mode and change the URL at the same time.
+location.href = $( event.target ).attr( "href" );
+ 
+}
+);
+</script>
+<div class="hero-unit" style="background-color:white; padding:0px;">
+  <hr>
+  <h2><%= @survey.title %></h2>
+  <hr>
+  <%= simple_format(@survey.blurb) %>
+</div>
+<div class="" style="text-align:center;">
+<% if first_unanswered_question(@survey).position == 1 %>
+<h2><%= link_to "Get started", survey_question_path(@survey, @survey.questions.first), :class => 'btn btn-large', style: "padding:20px;" %></h2>
+<% else %>
+<h2><%= link_to "Start where you left off", survey_question_path(@survey, first_unanswered_question(@survey)), :class => 'btn btn-large', style: "padding:20px;" %></h2>
+<% end %>
+</div>
