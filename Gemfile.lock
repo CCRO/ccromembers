@@ -68,6 +68,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    commonjs (0.2.6)
     crocodoc (1.0.0)
       json (~> 1.1)
       rest-client (~> 1.4)
@@ -131,6 +132,11 @@ GEM
     json (1.7.6)
     jwt (0.1.5)
       multi_json (>= 1.0)
+    less (2.2.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.2.6)
+      actionpack (>= 3.1)
+      less (~> 2.2.0)
     libv8 (3.11.8.13)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -278,6 +284,7 @@ DEPENDENCIES
   impressionist
   jqcloud-rails
   jquery-rails
+  less-rails
   marginalia
   mercury-rails
   mobile-fu
