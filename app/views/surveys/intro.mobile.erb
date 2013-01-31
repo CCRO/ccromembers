@@ -26,14 +26,16 @@ location.href = $( event.target ).attr( "href" );
 }
 );
 </script>
-<div class="hero-unit" style="background-color:white; padding:px;">
-  <div class="jumbotron">
-    <h3><%= @survey.blurb %></h3>
-  </div>
+<div class="hero-unit" style="background-color:white; padding:0px;">
+  <hr>
+  <h2><%= @survey.title %></h2>
+  <hr>
+  <%= simple_format(@survey.blurb) %>
 </div>
-<br>
+<div class="" style="text-align:center;">
 <% if first_unanswered_question(@survey).position == 1 %>
-<h2><%= link_to "Get started", survey_question_path(@survey, @survey.questions.first), :class => 'btn btn-large' %></h2>
+<h2><%= link_to "Get started", survey_question_path(@survey, @survey.questions.first), :class => 'btn btn-large', style: "padding:20px;" %></h2>
 <% else %>
-<h2><%= link_to "Start where you left off", survey_question_path(@survey, first_unanswered_question(@survey)), :class => 'btn btn-large' %></h2>
+<h2><%= link_to "Start where you left off", survey_question_path(@survey, first_unanswered_question(@survey)), :class => 'btn btn-large', style: "padding:20px;" %></h2>
 <% end %>
+</div>

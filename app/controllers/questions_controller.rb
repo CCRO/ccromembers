@@ -28,6 +28,7 @@ class QuestionsController < ApplicationController
     @survey = @question.survey
 
     respond_to do |format|
+      format.mobile {render :layout => '/layouts/mobile_survey.html.erb'}
       format.html
       format.js
     end
@@ -37,6 +38,7 @@ class QuestionsController < ApplicationController
     @survey = Survey.find(params[:id])
 
     respond_to do |format|
+      format.mobile
       format.html
       format.js
     end
