@@ -1,0 +1,111 @@
+ <head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+
+$(document).on("click", "a", function( event ){
+ 
+// Stop the default behavior of the browser, which
+// is to change the URL of the page.
+event.preventDefault();
+ 
+// Manually change the location of the page to stay in
+// "Standalone" mode and change the URL at the same time.
+location.href = $( event.target ).attr( "href" );
+ 
+}
+);
+</script>
+ <div class="row span12">
+  <div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+          <li><%= link_to intro_survey_path(@survey) do %>INTRO<% end %></li>
+          <% @survey.questions.each do |question| %>
+            <% if question == @question %>
+              <li><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-arrow-down" style="font-size: 25px; padding-top: 3px; color:lightblue;"></i><% end %></li>
+            <% elsif question.responses.where(person_id: current_user.id).empty? %>
+              <li><%= link_to survey_question_path(@survey, question) do %><i class="icon-asterisk" style="font-size: 25px; padding-top: 3px;"></i><% end %></li>
+            <% else %>
+              <li><%= link_to survey_question_path(@survey, question) do %><i class="icon-certificate" style="font-size: 25px; padding-top: 3px; color:lightgreen;"></i><% end %></li>
+            <% end %>
+          <% end %>
+          <li><%= link_to surveys_path do %>FINISH<% end %></li>
+        </ul>
+    </div>
+  </div>
+
+
+  <div class="hero-unit" style="background-color:white; padding:30px 50px;">
+    
+    <div class="jumbotron">
+      <% q = @question %>
+
+      <h2><%= q.prompt %> </h2>
+
+      <div style="padding-left:15px; padding-top:10px;">
+        <% if q.response_type == 'radio' %>
+          <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+            <% if q.possible_responses.present? %>
+              <% q.possible_responses.each do |k, v| %>
+                <%= f.label k, :class => 'radio' do %>
+                  <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
+                  <%= v %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end%>
+        
+        <% if q.response_type == 'checkbox' %>
+          <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+          <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+            <% if q.possible_responses.present? %>
+              <% q.possible_responses.each do |k, v| %>
+                <%= f.label k, :class => 'checkbox' do %>
+                  <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                    <% checked = true %>
+                  <% end %>
+                  <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                  <%= v %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end%>
+        
+        <% if q.response_type == 'singleline' %>
+          <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+          <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+            <%= f.text_field :text_response , :class => 'submittable span8' %>
+          <% end %>
+        <% end%>
+        
+        <% if q.response_type == 'multiline' %>
+           <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+           <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+             <%= f.text_area :text_response , :class => 'submittable span8' %>
+           <% end %>
+        <% end%>
+      </div>
+      <br>
+    </div>
+  </div>
+
+  <% next_question = @survey.questions.where(position: q.position+1).first %>
+  <% unless next_question.nil? %>
+    <%= link_to "Next Question", survey_question_path(@survey, next_question), :class => 'btn btn-large' %>  
+  <% else %>
+    <%= link_to "Thank you", posts_path, :class => 'btn btn-large' %>
+  <% end %>
+</div>

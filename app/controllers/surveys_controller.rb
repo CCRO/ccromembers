@@ -1,8 +1,9 @@
 class SurveysController < ApplicationController
   
   
-  layout 'survey'#, :except => :show
+  layout 'survey', :except => :intro
   before_filter :require_user
+  has_mobile_fu
   
   
   def index
@@ -15,6 +16,16 @@ class SurveysController < ApplicationController
     @response = Response.new
     
     authorize! :read, @survey
+  end
+
+  def intro
+    @survey = Survey.find(params[:id])
+  end
+
+  def slide_show
+    @survey = Survey.find(params[:id])
+
+    redirect_to survey_question_path(@survey, @survey.questions.first)
   end
 
   def new

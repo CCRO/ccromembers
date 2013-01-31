@@ -12,6 +12,7 @@ class Survey < ActiveRecord::Base
   
   validates_presence_of :title
   
+
   
   private 
   
@@ -19,5 +20,7 @@ class Survey < ActiveRecord::Base
     self.published_at = Time.now if self.published_changed?
     true
   end
+
+
   
 end

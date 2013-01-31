@@ -1,7 +1,14 @@
 class QuestionsController < ApplicationController
+  
+  has_mobile_fu
+
   def create
     survey = Survey.find(params[:survey_id])
-    last_position = survey.questions.last.position
+    if survey.questions.empty?
+      last_position = 0
+    else
+      last_position = survey.questions.last.position
+    end
 
     @question = Question.create(params[:question])
     @question.survey = Survey.find(params[:survey_id])
@@ -18,9 +25,19 @@ class QuestionsController < ApplicationController
   
   def show
     @question = Question.find(params[:id])
+    @survey = @question.survey
 
-    logger.info "Editing: " + @question.to_s
     respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def intro
+    @survey = Survey.find(params[:id])
+
+    respond_to do |format|
+      format.html
       format.js
     end
   end
