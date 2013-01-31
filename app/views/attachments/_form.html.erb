@@ -67,6 +67,12 @@
       </div>
     </div> 
     <div class="control-group">
+      <%= f.label :author, :class => 'control-label' %>
+      <div class="controls">
+        <%= select_tag('attachment[author_id]', options_for_select(Person.find(:all, :order => 'last_name').map { |editor| [editor.name, editor.id] }, :selected => @attachment.author.id), :include_blank => true) %>
+      </div>
+    </div>
+    <div class="control-group">
       <%= f.label :published, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :published %>

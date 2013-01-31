@@ -213,7 +213,6 @@
 
 <% unless params[:action] == 'new' %>
   <% if can? :manage, @group %>
-    <% content_for :modal_settings do %>
       <div class="modal hide fade" id="modal-settings">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -259,7 +258,6 @@
            <%= button_to 'Back to group', @group %>
         </div>
       </div>
-    <% end %>
   <% end %>
 <% end %>
 
