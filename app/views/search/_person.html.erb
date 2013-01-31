@@ -1,0 +1,29 @@
+    <% person = Person.find(result.id) %>
+    <tr>
+        <td>
+          <% if can? :edit, person %>
+            <h3><%= link_to result.name, person, :target => '_blank' %></h3>
+            <% elsif can? :read, person %>
+            <h3><%= link_to result.name, person, :target => '_blank' %></h3>
+            <% else %>
+            <h3><%= result.name %></h3>
+            <% end %>
+          <%= if person.avatar.present? 
+              link_to person, :target => '_blank' do 
+                avatar_for(person, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;')  
+              end
+            end %>
+            <h4></h4>
+            <p><%= raw person.bio %></p>
+        </td>
+        <td width="250">
+           <%= star_rating((result._score / (max_score / 4) + 1).round, 5) %>
+            <% if person.level %>
+            Level: <%= person.level %><br />
+            <% end %>
+            <i class="icon-eye-open" <%= raw 'style="color:lightgrey;"' unless can? :read, person %>></i> 
+<!--             <span class="label label-important">Full Members</span><br />
+        <span class="label label-important">Participating Members</span><br />
+        <span class="label label-important">Subscribers</span><br /> -->
+      </td>
+    </tr>

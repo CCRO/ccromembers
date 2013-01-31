@@ -1,42 +1,47 @@
-<div class="attachment" style="clear:both; padding-bottom: 20px;">
-  <hr>
-  <%= file_icon attachment.extension, nil, :class => 'pull-left' %>
-  <p style="margin-left: 40px; color: lightgrey;">
-    <strong>
-      <% if can? :read, attachment %>
-        <%= link_to attachment.title, polymorphic_path([@group, attachment]), target: "_blank" %>
-      <% else %>
-        <%= attachment.title %> <i class="icon-lock"></i>
-      <% end %>
-    </strong>
-    <% if can? :read, attachment %>
-        <span style="color: black;"> - <%= attachment.description %></span>
-      <% else %>
-        - <%= attachment.description %>
-      <% end %>
-    
-    <% if attachment.owner && attachment.owner_type == "Group"%>
-      <% if can? :read, attachment.owner %> 
-      <br><small><stong><%= link_to "From Working Group: #{attachment.owner.name}", attachment.owner %></strong></small>
-      <% else %>
-      <br><small><stong><%= "From Working Group: #{attachment.owner.name}" %></strong></small>
-      <% end %>
-    <% end %>
-    <br><small>File Size: <%= number_to_human_size attachment.file_size %> <br>
-    Uploaded: <%= time_ago_in_words attachment.try(:created_at) %> ago by <%= attachment.author.try(:name) || "Unknown Source" %></small> 
-    <br><br>
-    <% if can? :edit, attachment %>
-      <span class="link-group">
-          <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]), class: "edit_link", "data-original-title" => "Viewing level: #{attachment.level}<br>
-                                                                                                                         Comment level: #{attachment.comment_level}<br>
-                                                                                                                         Download level: #{attachment.download_level}",trigger: "hover" if can? :edit, attachment %> | 
-          <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
-      </span>
-    <% end %>
-  </p>
-</div>
-
-<script>
-$('.edit_link').tooltip('hide')
-</script>
-
+    <tr>
+        <td>
+          <% if can? :edit, attachment %>
+            <h3><%= link_to attachment.title, attachment, :target => '_blank' %></h3>
+            <% elsif can? :read, attachment %>
+            <h3><%= link_to attachment.title, attachment, :target => '_blank' %></h3>
+            <% else %>
+            <h3><%= attachment.title %></h3>
+            <% end %>
+          <%= if attachment.thumbnail.present? 
+              link_to attachment, :target => '_blank' do 
+                image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;')  
+              end
+            end %>
+            <h4></h4>
+            <p><%= attachment.description %></p>
+        </td>
+        <td width="250">
+            <% if attachment.published.present? %>
+            Published: <%= attachment.published %><br />
+            <% end %>
+            <% if attachment.author.present? %>
+            Source: <%= attachment.author.name %><br />
+            <% end %>
+            Size: <%= number_to_human_size attachment.file_size %><br />
+            <% if attachment.owner.present? %>
+            <% if can? :read, attachment.owner %> 
+            In group: <%= link_to attachment.owner.name, attachment.owner %><br />
+            <% else %>
+            In group: <%= attachment.owner.name %><br />
+            <% end %>
+            <% end %>
+            <i class="icon-eye-open" <%= raw 'style="color:lightgrey;"' unless can? :read, attachment %>></i> 
+            <i class="icon-comment" <%= raw 'style="color:lightgrey;"' unless (attachment.commentable? && can?(:comment_on, attachment)) %>></i> 
+            <i class="icon-print" <%= raw 'style="color:lightgrey;"' unless (attachment.downloadable? && can?(:download, attachment)) %>></i>
+<!--             <span class="label label-important">Full Members</span><br />
+        <span class="label label-important">Participating Members</span><br />
+        <span class="label label-important">Subscribers</span><br /> -->
+        </p>
+        <% if can? :edit, attachment %>
+          <span class="link-group">
+            <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) %> | 
+            <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
+          </span>
+        <% end %>
+      </td>
+    </tr>

@@ -195,6 +195,12 @@ class Person < ActiveRecord::Base
     generate_pin(column)
     self.save!
   end
+
+  def self.search(params)
+    tire.search do
+      query { string params[:q], default_operator: "AND" } if params[:q].present?
+    end
+  end
   
   private
     
