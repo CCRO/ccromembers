@@ -4,6 +4,8 @@ Ccromembers::Application.routes.draw do
   
   get "doc_viewer/view"
 
+  get "search" => 'search#index'
+  
   constraints(CanAccessRoute) do
     match "/delayed_job" => DelayedJobWeb, :anchor => false
   end

@@ -2,6 +2,8 @@ class Attachment < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
   
+  acts_as_taggable
+
   belongs_to :owner, :polymorphic => true
   belongs_to :author, :class_name => 'Person'
 

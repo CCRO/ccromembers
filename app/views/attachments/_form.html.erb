@@ -67,6 +67,12 @@
       </div>
     </div> 
     <div class="control-group">
+      <%= f.label :tag_list, :class => 'control-label' %>
+      <div class="controls">
+        <%= select_tag('attachment[tag_list]', options_for_select(ActsAsTaggableOn::Tag.pluck(:name), :selected => @attachment.tag_list), :include_blank => true) %>
+      </div>
+    </div>
+     <div class="control-group">
       <%= f.label :author, :class => 'control-label' %>
       <div class="controls">
         <%= select_tag('attachment[author_id]', options_for_select(Person.find(:all, :order => 'last_name').map { |editor| [editor.name, editor.id] }, :selected => @attachment.author.id), :include_blank => true) %>
