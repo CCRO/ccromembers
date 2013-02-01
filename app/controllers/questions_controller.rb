@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
-  
-  has_mobile_fu
 
+  has_mobile_fu
+  
   def create
     survey = Survey.find(params[:survey_id])
     if survey.questions.empty?
