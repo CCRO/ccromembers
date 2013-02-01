@@ -1,11 +1,11 @@
     <tr>
         <td>
           <% if can? :edit, attachment %>
-            <h3><%= link_to attachment.title, attachment, :target => '_blank' %></h3>
+            <h3><%= link_to attachment.title, attachment, :target => '_blank' %> <%= content_tag(:span, attachment.tag_list, :class => 'label label-inverse') if attachment.tag_list.present? %></h3>
             <% elsif can? :read, attachment %>
-            <h3><%= link_to attachment.title, attachment, :target => '_blank' %></h3>
+            <h3><%= link_to attachment.title, attachment, :target => '_blank' %> <%= content_tag(:span, attachment.tag_list, :class => 'label label-inverse') if attachment.tag_list.present? %></h3>
             <% else %>
-            <h3><%= attachment.title %></h3>
+            <h3><%= attachment.title %> <%= content_tag(:span, attachment.tag_list, :class => 'label label-inverse') if attachment.tag_list.present? %></h3>
             <% end %>
           <%= if attachment.thumbnail.present? 
               link_to attachment, :target => '_blank' do 
