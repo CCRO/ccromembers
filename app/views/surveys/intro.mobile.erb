@@ -27,6 +27,9 @@ location.href = $( event.target ).attr( "href" );
 );
 </script>
 <div class="hero-unit" style="background-color:white; padding:0px;">
+  <div style="margin-top:10px;">
+    <%= link_to image_tag(asset_path('ccro_long.png')), "#" %>
+  </div>
   <hr>
   <h2><%= @survey.title %></h2>
   <hr>

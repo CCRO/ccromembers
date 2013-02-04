@@ -16,94 +16,110 @@ window.addEventListener("load",function() {
 </script>
 
  <div class="row span12" style="padding-top:20px;">
-  
-  <div class="hero-unit pull-left" style="background-color:lightgray; padding:5px 10px; width:75%">
-    
+
+  <div class="hero-unit" style="background-color:lightblue; padding: 10px;">
     <div class="jumbotron">
       <% q = @question %>
-      <div style="font-size:120%">
+      <div style="margin-bottom:10px;">
         <strong><%= q.prompt %> </strong>
       </div>
-      <div style="padding-left:5px; padding-top:5px;">
-        <% if q.response_type == 'radio' %>
-          <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-            <% if q.possible_responses.present? %>
-              <% q.possible_responses.each do |k, v| %>
-                <%= f.label k, :class => 'radio' do %>
-                  <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
-                  <%= v %>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end%>
+    </div>
+  </div>
+
+  <table style="width:100%;">
+    <tr>
+      <td style="vertical-align: top;">
         
-        <% if q.response_type == 'checkbox' %>
-          <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-          <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-            <% if q.possible_responses.present? %>
-              <% q.possible_responses.each do |k, v| %>
-                <%= f.label k, :class => 'checkbox' do %>
-                  <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
-                    <% checked = true %>
+            <div padding-top:-20px;>
+              <% if q.response_type == 'radio' %>
+                <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                  <% if q.possible_responses.present? %>
+                    <% q.possible_responses.each do |k, v| %>
+                      <div class="hero-unit" style="background-color:lightgray; padding: 10px;">
+                        <div class="jumbotron">
+                          <%= f.label k, :class => 'radio' do %>
+                          <table>
+                            <tr>
+                              <td>
+                                <%= f.radio_button 'selected_response', k, :class => 'submittable', style: 'font-size:30px; margin-right:10px; margin-top:-1px;' %>
+                              </td>
+                              <td>
+                                <p style="margin-left:10px;"><%= v %></p>
+                              </td>
+                            </tr>
+                          </table>
+                          <% end %>
+                        </div>
+                      </div>  
+                    <% end %>
                   <% end %>
-                  <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
-                  <%= v %>
                 <% end %>
-              <% end %>
+              <% end%>
+            
+              <% if q.response_type == 'checkbox' %>
+                <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+                <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                  <% if q.possible_responses.present? %>
+                    <% q.possible_responses.each do |k, v| %>
+                     <div class="hero-unit" style="background-color:lightgray; padding: 10px;">
+                      <div class="jumbotron">
+                        <%= f.label k, :class => 'checkbox' do %>
+                          <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                            <% checked = true %>
+                          <% end %>
+                          <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable', style: 'font-size:30px; margin-right:10px;' %>
+                          <p style="margin-left:10px;"><%= v %></p>
+                        <% end %>
+                      </div>
+                    </div>  
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end%>
+
+              <% if q.response_type == 'singleline' %>
+                <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+                <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                  <%= f.text_field :text_response , :class => 'submittable span8' %>
+                <% end %>
+              <% end%>
+            
+              <% if q.response_type == 'multiline' %>
+                 <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+                 <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                   <%= f.text_area :text_response , :class => 'submittable span8' %>
+                 <% end %>
+              <% end%>
+
+              <div style="text-align:center; margin-bottom:20px;">
+                <% next_question = @survey.questions.where(position: q.position+1).first %>
+                <% unless next_question.nil? %>
+                  <%= link_to "Next Question", survey_question_path(@survey, next_question), :class => 'btn btn-large' %>  
+                <% else %>
+                  <%= link_to "Thank you", posts_path, :class => 'btn btn-large' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td style="width:10%; padding-left:10px; vertical-align: top;">
+        <% padding = "10px"%>
+        <% size = "25px"%>
+        <ul class="nav">
+          <li style="padding-top:0px; margin-bottom:-10px;"><%= link_to intro_survey_path(@survey) do %><i class="icon-caret-up" style="font-size:<%= size %>; color:black;"></i><% end %></li>
+          <% @survey.questions.each do |question| %>
+            <% if question == @question %>
+              <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-caret-left" style="font-size:30px; color:lightblue;"></i><% end %></li>
+            <% elsif question.responses.where(person_id: current_user.id).empty? %>
+              <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-blank" style="font-size:<%= size %>; color:lightgray;"></i><% end %></li>
+            <% else %>
+              <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle" style="font-size:<%= size %>; color:lightgreen;"></i><% end %></li>
             <% end %>
           <% end %>
-        <% end%>
-        
-        <% if q.response_type == 'singleline' %>
-          <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-          <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-            <%= f.text_field :text_response , :class => 'submittable span8' %>
-          <% end %>
-        <% end%>
-        
-        <% if q.response_type == 'multiline' %>
-           <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-           <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-             <%= f.text_area :text_response , :class => 'submittable span8' %>
-           <% end %>
-        <% end%>
-      </div>
-      <br>
-    </div>
-    <div style="text-align:center; margin-bottom:20px;">
-      <% next_question = @survey.questions.where(position: q.position+1).first %>
-      <% unless next_question.nil? %>
-        <%= link_to "Next Question", survey_question_path(@survey, next_question), :class => 'btn btn-large' %>  
-      <% else %>
-        <%= link_to "Thank you", posts_path, :class => 'btn btn-large' %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="pull-right" style="margin-top:-20px">
-    <% padding = "20px"%>
-    <% size = "25px"%>
-    <ul class="nav">
-      <% if false %>
-      <li style="padding-top:<%= padding %>"><%= link_to intro_survey_path(@survey) do %><i class="icon-caret-up" style="font-size:<%= size %>; color:black;"></i><% end %></li>
-      <% end %>
-      <% @survey.questions.each do |question| %>
-        <% if question == @question %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-caret-left" style="font-size:30px; color:black;"></i><% end %></li>
-        <% elsif question.responses.where(person_id: current_user.id).empty? %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-blank" style="font-size:<%= size %>; color:black;"></i><% end %></li>
-        <% else %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle" style="font-size:<%= size %>; color:black;"></i><% end %></li>
-        <% end %>
-      <% end %>
-      <% if false %>
-      <li style="padding-top:<%= padding %>"><%= link_to surveys_path do %><i class="icon-caret-down" style="font-size:<%= size %>; color:black;"></i><% end %></li>
-      <% end %>
-    </ul>
-  </div>
-
-
-
-
+          <li style="padding-top:0px;"><%= link_to surveys_path do %><i class="icon-caret-down" style="font-size:<%= size %>; color:black;"></i><% end %></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 </div>
