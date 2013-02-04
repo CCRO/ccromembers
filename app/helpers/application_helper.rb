@@ -1,13 +1,5 @@
 module ApplicationHelper
-  
-  def first_unanswered_question(survey)
-    survey.questions.each do |q|
-      if q.responses.where(person_id: current_user).empty?
-        return q
-      end
-    end
-  end
-    
+
   def icon_tag(html_class)
     "<i class=\"#{html_class}\"></i>".html_safe
   end
