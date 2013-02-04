@@ -18,6 +18,9 @@
         </td>
         <td width="250">
            <%= star_rating((result._score / (max_score / 4) + 1).round, 5) %>
+            <% if person.company %>
+            Company: <%= link_to person.company.name, person.company %><br />
+            <% end %>
             <% if person.level %>
             Level: <%= person.level %><br />
             <% end %>
