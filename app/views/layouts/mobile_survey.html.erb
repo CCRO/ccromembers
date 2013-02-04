@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CCRO - <%= params[:controller].capitalize %></title>
+  <title>CCRO - <%= @survey.title.capitalize %></title>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <script src='http://www.google.com/jsapi'></script>
+  <style type="text/css">
 
+    .hotbod {
+      line-height: 1;
+      font-size: 200%;
+    }
+
+  </style>
 </head>
-<body style="">
+<body class="hotbod">
 	<div class="container">
 		<div id="notices">
 			<% flash.each do |key, msg| %>

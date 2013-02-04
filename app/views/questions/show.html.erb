@@ -22,6 +22,26 @@ window.addEventListener("load",function() {
   <div class="hero-unit pull-left" style="background-color:white; padding:30px 50px; width:75%;">
     
     <div class="jumbotron">
+
+      <div class="navbar">
+        <div class="navbar-inner">
+          <% padding = "0px"%>
+          <ul class="nav">
+            <li style="padding-top:<%= padding %>"><%= link_to intro_survey_path(@survey) do %><i class="icon-caret-left" style="font-size: 25px; color:white;"></i><% end %></li>
+            <% @survey.questions.each do |question| %>
+              <% if question == @question %>
+                <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-caret-down" style="font-size:25px; color:lightblue;"></i><% end %></li>
+              <% elsif question.responses.where(person_id: current_user.id).empty? %>
+                <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-blank" style="font-size:25px; color:;"></i><% end %></li>
+              <% else %>
+                <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle" style="font-size:25px; color:lightgreen;"></i><% end %></li>
+              <% end %>
+            <% end %>
+            <li style="padding-top:<%= padding %>"><%= link_to surveys_path do %><i class="icon-caret-right" style="font-size:25px; color:white;"></i><% end %></li>
+          </ul>
+        </div>
+      </div>
+
       <% q = @question %>
 
       <h2><%= q.prompt %> </h2>
@@ -80,25 +100,4 @@ window.addEventListener("load",function() {
       <%= link_to "Thank you", posts_path, :class => 'btn btn-large' %>
     <% end %>
   </div>
-
-  <div class="pull-right">
-    <% padding = "20px"%>
-    <ul class="nav">
-      <li style="padding-top:<%= padding %>"><%= link_to intro_survey_path(@survey) do %><i class="icon-circle-arrow-up" style="font-size: 30px; color:black;"></i><% end %></li>
-      <% @survey.questions.each do |question| %>
-        <% if question == @question %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-arrow-left" style="font-size:30px; color:black;"></i><% end %></li>
-        <% elsif question.responses.where(person_id: current_user.id).empty? %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle-blank" style="font-size:30px; color:black;"></i><% end %></li>
-        <% else %>
-          <li style="padding-top:<%= padding %>"><%= link_to survey_question_path(@survey, question) do %><i class="icon-circle" style="font-size:30px; color:black;"></i><% end %></li>
-        <% end %>
-      <% end %>
-      <li style="padding-top:<%= padding %>"><%= link_to surveys_path do %><i class="icon-circle-arrow-down" style="font-size:30px; color:black;"></i><% end %></li>
-    </ul>
-  </div>
-
-
-
-
 </div>

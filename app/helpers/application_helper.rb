@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def icon_tag(html_class)
     "<i class=\"#{html_class}\"></i>".html_safe
   end

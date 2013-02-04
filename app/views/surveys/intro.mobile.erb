@@ -27,6 +27,9 @@ location.href = $( event.target ).attr( "href" );
 );
 </script>
 <div class="hero-unit" style="background-color:white; padding:0px;">
+  <div style="margin-top:10px;">
+    <%= link_to image_tag(asset_path('ccro_long.png')), "#" %>
+  </div>
   <hr>
   <h2><%= @survey.title %></h2>
   <hr>
@@ -39,3 +42,5 @@ location.href = $( event.target ).attr( "href" );
 <h2><%= link_to "Start where you left off", survey_question_path(@survey, first_unanswered_question(@survey)), :class => 'btn btn-large', style: "padding:20px;" %></h2>
 <% end %>
 </div>
+<br>
+<br>
