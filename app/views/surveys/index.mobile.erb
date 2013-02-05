@@ -1,0 +1,85 @@
+ <head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+);
+</script>
+
+<% if false %>
+<div class="well">
+  <%= form_for Survey.new do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New survey title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= f.submit "Create new Survey", :class => "btn pull-right btn-large" %>
+  <% end %>
+</div>
+<% end %>
+
+<div class="row span12" style="padding-top:20px;">
+<h1>Active Surveys</h1>
+<hr>
+<% @surveys.each do |s| %>
+  <div class="hero-unit" style="background-color:lightblue; padding: 10px;">
+    <div class="jumbotron">
+      <div style="margin-bottom:10px;">
+        
+          <table style="width:100%">
+            <tr>
+              <td style="text-align:center;">
+                <%= link_to intro_survey_path(s), class: "btn btn-info", style: "width:90%; margin-bottom:10px;" do %>
+                  <h2 style="color:black;" ><%= s.title %></h2>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>
+                  <table style="width:100%; height:20px;">
+                    <tr style="border-color: rgb(0, 0, 0); border-style: solid; border-width: 1px 1px 1px 1px;">
+                      <% s.questions.each do |q| %>
+                        <% if Response.where(question_id: q, person_id: current_user).empty? %>
+                            <td style="background-color:gray; padding:5%;"></td>
+                        <% else %>
+                          <td style="background-color:lightgreen; padding:5%;"></td>
+                        <% end %>
+                      <% end %>
+                    </tr>
+                  </table>
+                </h3>
+              </td>
+            </tr>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+<% if false %>
+  <ul>
+    <% @surveys.each do |survey| %>
+      <li><%= link_to survey.title, edit_survey_path(survey) %> 
+        <%= link_to survey, :method => "delete", :confirm => "Are you sure?" do %>
+        <i class="icon-trash hide"></i>
+        <% end %>
+      </li>
+    <% end %>
+      <li>
+        <%= form_for Survey.new do |f| %>
+          <%= f.text_field :title %>
+          <%= f.submit %>
+        <% end %>
+      </li>
+  </ul>
+<% end %>
+

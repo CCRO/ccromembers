@@ -96,7 +96,7 @@ window.addEventListener("load",function() {
                 <% unless next_question.nil? %>
                   <%= link_to "Next Question", survey_question_path(@survey, next_question), :class => 'btn btn-large' %>  
                 <% else %>
-                  <%= link_to "Thank you", posts_path, :class => 'btn btn-large' %>
+                  <%= link_to "Thank you", surveys_path, :class => 'btn btn-large' %>
                 <% end %>
               </div>
             </div>

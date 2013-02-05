@@ -9,6 +9,12 @@ class SurveysController < ApplicationController
   def index
     @surveys = Survey.all
     authorize! :create, @survey
+
+    respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.html
+      format.js
+    end
   end
 
   def show
