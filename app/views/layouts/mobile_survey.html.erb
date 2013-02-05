@@ -30,11 +30,5 @@
 		<%= yield %>
 	</div>
 <!--Body content (END)-->
-<% if params[:controller] == 'polling_sessions' %>
-<footer>
-	<%= render 'shared/footer' %>
-</footer>
-<%= render :partial => 'shared/ga' if Rails.env.production? %>
-<% end %>
 </body>
 </html>
