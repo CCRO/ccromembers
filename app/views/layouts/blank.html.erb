@@ -13,5 +13,6 @@
 <!--Body content (END)-->
 <% unless params[:controller] == "surveys" || params[:controller] == "questions"%>
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
+<% end %>
 </body>
 </html>
