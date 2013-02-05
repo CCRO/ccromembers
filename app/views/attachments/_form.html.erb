@@ -75,9 +75,7 @@
      <div class="control-group">
       <%= f.label :author, :class => 'control-label' %>
       <div class="controls">
-        <% if false %>
-          <%= select_tag('attachment[author_id]', options_for_select(Person.find(:all, :order => 'last_name').map { |editor| [editor.name, editor.id] }, :selected => @attachment.author.id), :include_blank => true) %>
-        <% end %>
+          <%= select_tag('attachment[author_id]', options_for_select(Person.find(:all, :order => 'last_name').map { |editor| [editor.name, editor.id] }, :selected => (@attachment.author) ? @attachment.author.try(:id) : current_user.id), :include_blank => true) %>
       </div>
     </div>
     <div class="control-group">
