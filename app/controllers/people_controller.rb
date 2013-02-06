@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    if params[:search]
+    if params[:q]
       @people = Person.find(Person.accessible_by(current_ability).search(params).map(&:id))
     else
       @people = Person.joins(:company).order('companies.name').accessible_by(current_ability) + Person.where('company_id IS NULL').accessible_by(current_ability) if params[:sort] == 'company'
