@@ -12,18 +12,24 @@ module SurveysHelper
     temp = []
     list_of_people = []
 
-    survey.questions.each do |q|
-      q.responses.each do |r|
-        temp << r.person_id
+    unless survey.questions.empty?
+      survey.questions.each do |q|
+        unless  q.responses.empty?
+          q.responses.each do |r|
+            temp << r.person_id
+          end
+        end
       end
     end
 
-    temp.each do |i|
-      unless Person.find(i).admin?
-        list_of_people << Person.find(i)
+    unless temp.empty?
+      temp.each do |i|
+        unless Person.find(i).admin?
+          list_of_people << Person.find(i)
+        end
       end
     end
 
-    return list_of_people.uniq
+    return list_of_people.uniq || nil
   end
 end
