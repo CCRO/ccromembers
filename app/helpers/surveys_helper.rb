@@ -7,4 +7,16 @@ module SurveysHelper
     end
     return survey.questions.first
   end
+
+  def response_count(survey)
+    list_of_people = []
+
+    survey.questions.each do |q|
+      q.responses.each do |r|
+        list_of_people << r.person_id
+      end
+    end
+
+    return list_of_people.uniq.count
+  end
 end
