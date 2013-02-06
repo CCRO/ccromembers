@@ -38,7 +38,7 @@
               <% end %>
             </td>
             <td>
-              <% if true %>
+              <% if false %>
               <div class="btn-group pull-right">
                 <button class="btn btn-large">Respondents: </button>
                 <button class="btn dropdown-toggle btn-large" data-toggle="dropdown">
@@ -50,8 +50,9 @@
                   <% end %>
                 </ul>
               </div>
-              <% end %>
+              
               <%= respondents(survey).count %>
+              <% end %>
             </td>
             <td>
               <div class="btn-group pull-right">
