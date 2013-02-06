@@ -8,15 +8,22 @@ module SurveysHelper
     return survey.questions.first
   end
 
-  def response_count(survey)
+  def respondents(survey)
+    temp = []
     list_of_people = []
 
     survey.questions.each do |q|
       q.responses.each do |r|
-        list_of_people << r.person_id
+        temp << r.person_id
       end
     end
 
-    return list_of_people.uniq.count
+    temp.each do |i|
+      unless Person.find(i).admin?
+        list_of_people << Person.find(i)
+      end
+    end
+
+    return list_of_people.uniq
   end
 end
