@@ -1,34 +1,55 @@
+<% if can? :manage, Survey %>
 <div class="well">
   <%= form_for Survey.new do |f| %>
     <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New survey title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <%= f.submit "Create new Survey", :class => "btn pull-right btn-large" %>
   <% end %>
 </div>
-
-<h2>REG</h2>
+<% end %>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th><h1>Current surveys</h1></th>
+      <% if can? :manage, Survey %>
+      <th><h3>Active:</h3></th>
+      <th><h3>Level:</h3></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% @surveys.each do |survey| %>
-      <tr>
-        <td>
-          <div class="btn-group pull-right">
-            <button class="btn btn-large"><%= link_to 'Edit',  edit_survey_path(survey) %></button>
-            <button class="btn dropdown-toggle btn-large" data-toggle="dropdown">
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Report', report_survey_path(survey) %></li>
-              <li><%= link_to 'Delete', survey, :method => "delete", :confirm => "Are you sure?" %></li>
-            </ul>
-          </div>
-          <h2><%= link_to survey.title, survey_path(survey) %></h2>
-        </td>
-      </tr>
+      <% if can? :read, survey %>
+        <tr>
+          <td>
+            <h2><%= link_to survey.title, survey_path(survey) %></h2>
+          </td>
+          <% if can? :manage, survey %>
+            <td>
+              <% subscription_types = [['Basic', 'basic'], ['Pro', 'pro'], ['Subscriber', 'subscriber'], ['Individual Membership', 'individual_member'], ['Company Membership', 'company_member'], ['Leader Company', 'leadership']] %>
+              <%= form_for survey, { :remote => true } do |f| %>
+                <%= f.check_box :active, :class => 'submittable' %>
+              <% end %>
+            </td>
+            <td>
+              <%= form_for survey, { :remote => true } do |f| %>
+                <%= f.select :level, options_for_select(subscription_types, :selected => survey.level), {},  style: "padding-top:100px;", :class => 'submittable' %>
+              <% end %>
+            </td>
+            <td>
+              <div class="btn-group pull-right">
+                <button class="btn btn-large"><%= link_to 'Edit',  edit_survey_path(survey) %></button>
+                <button class="btn dropdown-toggle btn-large" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Report', report_survey_path(survey) %></li>
+                  <li><%= link_to 'Delete', survey, :method => "delete", :confirm => "Are you sure?" %></li>
+                </ul>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

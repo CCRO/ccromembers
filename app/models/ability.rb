@@ -7,7 +7,6 @@ class Ability
     can :read, [Post, Page], {level: 'public', published: true}
     can :create, Person
     can :read, Person
-    can :read, Survey if user.id
     cannot :manage, Subscription
    
     can :read, Group do |group|
@@ -50,7 +49,7 @@ class Ability
     
     if user.basic?
       can :read, [PollingSession, Poll]
-      can :read, Survey if user.id
+      can :read, [Post, Page, Document], {level: 'basic', :published => true}
 
       can :read, [Post, Page, Document], {level: 'basic', published: true}
       can :create, Comment
@@ -64,6 +63,8 @@ class Ability
     if user.pro?
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
+      can :read, Survey, {level: 'basic', :active => true}
+      can :read, Survey, {level: 'pro', :active => true}
       can :read, Attachment, {level: ['basic', 'pro']}  
       can :comment_on, Attachment, {comment_level: ['basic', 'pro']}  
       can :download, Attachment, {download_level: ['basic', 'pro']}  
@@ -73,6 +74,9 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
       can :read, [Post, Page, Document], {level: 'subscriber', :published => true}
+      can :read, Survey, {level: 'basic', :active => true}
+      can :read, Survey, {level: 'pro', :active => true}
+      can :read, Survey, {level: 'subscriber', :active => true}
       can :read, Attachment, {level: ['basic', 'pro', 'subscriber']}  
       can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber']}  
       can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber']}  
@@ -82,7 +86,11 @@ class Ability
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
       can :read, [Post, Page, Document], {level: 'subscriber', :published => true}  
-      can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
+      can :read, [Post, Page, Document], {level: 'individual_member', :published => true}
+      can :read, Survey, {level: 'basic', :active => true}
+      can :read, Survey, {level: 'pro', :active => true}
+      can :read, Survey, {level: 'subscriber', :active => true}
+      can :read, Survey, {level: 'individual_member', :active => true}  
       can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member']}
       can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member']}
       can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member']}
@@ -101,11 +109,16 @@ class Ability
       can :read, [Post, Page, Document], {level: 'pro', :published => true}
       can :read, [Post, Page, Document], {level: 'subscriber', :published => true}  
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}
-      can :read, [Post, Page, Document], {level: 'company_member', :published => true}  
+      can :read, [Post, Page, Document], {level: 'company_member', :published => true}
+      can :read, Survey, {level: 'basic', :active => true}
+      can :read, Survey, {level: 'pro', :active => true}
+      can :read, Survey, {level: 'subscriber', :active => true}
+      can :read, Survey, {level: 'individual_member', :active => true}
+      can :read, Survey, {level: 'company_member', :active => true}  
       can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
       can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
       can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member']}
-      can :read, [Group, Message, Comment, Survey]
+      can :read, [Group, Message, Comment]
       can :read, Company, :id => user.company_id
       
       if user.primary_contact? || user.billing_contact?
@@ -122,10 +135,16 @@ class Ability
       can :read, [Post, Page, Document], {level: 'individual_member', :published => true}  
       can :read, [Post, Page, Document], {level: 'company_member', :published => true}
       can :read, [Post, Page, Document], {level: 'leadership', :published => true}
+      can :read, Survey, {level: 'basic', :active => true}
+      can :read, Survey, {level: 'pro', :active => true}
+      can :read, Survey, {level: 'subscriber', :active => true}
+      can :read, Survey, {level: 'individual_member', :active => true}
+      can :read, Survey, {level: 'company_member', :active => true}
+      can :read, Survey, {level: 'leadership', :active => true}
       can :read, Attachment, {level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
       can :comment_on, Attachment, {comment_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
       can :download, Attachment, {download_level: ['basic', 'pro', 'subscriber', 'individual_member', 'company_member', 'leadership']}   
-      can :read, [Group, Message, Comment, Survey]
+      can :read, [Group, Message, Comment]
       can :read, Company, :id => user.company_id
       
       if user.primary_contact? || user.billing_contact?
