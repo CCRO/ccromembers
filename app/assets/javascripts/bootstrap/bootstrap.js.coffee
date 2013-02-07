@@ -13,5 +13,4 @@ jQuery ->
     event.preventDefault()
     $modal.modal('show')
   $('.datepicker').datepicker()
-  $('textarea.simple_editor').wysihtml5()
   $('.startfocus').focus()
