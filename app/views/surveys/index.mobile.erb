@@ -33,48 +33,42 @@ window.addEventListener("load",function() {
 <% @surveys.each do |s| %>
   <% if can? :read, s %>
     <div class="hero-unit" style="background-color:lightblue; padding: 10px; padding-top:15px;">
-      <div class="jumbotron">
-        <div style="margin-bottom:10px;">
-          <table style="width:100%">
-            <tr>
-              <td style="text-align:center;">
-                <h2 style="color:black; margin-bottom:10px;" ><%= s.title %></h2>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h3>
-                  <table style="width:100%; height:20px;">
-                    <tr style="border-color: rgb(0, 0, 0); border-style: solid; border-width: 1px 1px 1px 1px;">
-                      <% completed = {} %>
-                      <% completed[s.id] = true %>
-                      <% s.questions.each do |q| %>
-                        <% if Response.where(question_id: q, person_id: current_user).empty? %>
-                            <td style="background-color:gray; padding:5%;"></td>
-                            <% completed[s.id] = false %>
-                        <% else %>
-                          <td style="background-color:lightgreen; padding:5%;"></td>
-                        <% end %>
-                      <% end %>
-                    </tr>
-                  </table>
-                </h3>
-              </td>
-            </tr>
-            <tr>
-              <td style="text-align:center;">
-                <%= link_to intro_survey_path(s), class: "btn btn-info", style: "width:90%; margin-top:10px;" do %>
-                  <% if completed[s.id] %>
-                    <h2 style="color:black;" ><%= "Completed" %></h2>
+      <table style="width:100%; text-align:center;">
+        <tr>
+          <td>
+            <h2 style="color:black; margin-bottom:10px;" ><%= simple_format(s.title) %></h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table style="width:200px; height:20px; margin-left:25px;">
+              <tr style="border-color: rgb(0, 0, 0); border-style: solid; border-width: 1px 1px 1px 1px;">
+                <% completed = {} %>
+                <% completed[s.id] = true %>
+                <% s.questions.each do |q| %>
+                  <% if Response.where(question_id: q, person_id: current_user).empty? %>
+                      <td style="background-color:gray; padding:5%;"></td>
+                      <% completed[s.id] = false %>
                   <% else %>
-                    <h2 style="color:black;" ><%= "Go to Survey" %></h2>
+                    <td style="background-color:lightgreen; padding:5%;"></td>
                   <% end %>
                 <% end %>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to intro_survey_path(s), class: "btn btn-info", style: "width:90%; margin-top:10px;" do %>
+              <% if completed[s.id] %>
+                <h2 style="color:black;" ><%= "Completed" %></h2>
+              <% else %>
+                <h2 style="color:black;" ><%= "Go to Survey" %></h2>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
     </div>
   <% end %>
 <% end %>
