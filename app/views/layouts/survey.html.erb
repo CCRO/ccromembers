@@ -14,35 +14,35 @@
 <!--Body content (BEGIN)-->
 <div class="container">
   <div class="row">
-      <header class="span12">
-        <div class="pull-right">
-          <div class="btn-toolbar">
-            <div class="btn-group">
-               <% if current_user %>
-                <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
-                <%= link_to logout_path, :class => 'btn btn-large' do %>
-                  <i class="icon-off"></i>
-                <% end %>
+    <header class="span12">
+      <div class="pull-right">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+             <% if current_user %>
+              <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
+              <%= link_to logout_path, :class => 'btn btn-large' do %>
+                <i class="icon-off"></i>
               <% end %>
-           </div>
-          </div>
+            <% end %>
+         </div>
         </div>
-        <% unless current_user %>
-          <div class="pull-right">
-          <%= form_tag  :sessions, :class => "form-inline" do %>
-            <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
-            <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
-            <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-          <% end %>
-          
-          <% unless params[:controller] == 'signups' %>
-            <%= link_to "Learn about subscribing", signups_path, :class => 'pull-right' %><br>
-          <% end %>
-          <%= link_to "I need to reset my password", forgot_password_path, :class => 'pull-right' %>
-          </div>
+      </div>
+      <% unless current_user %>
+        <div class="pull-right">
+        <%= form_tag  :sessions, :class => "form-inline" do %>
+          <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
+          <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
+          <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
         <% end %>
-        <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), surveys_path %>
-      </header>
+        
+        <% unless params[:controller] == 'signups' %>
+          <%= link_to "Learn about subscribing", signups_path, :class => 'pull-right' %><br>
+        <% end %>
+        <%= link_to "I need to reset my password", forgot_password_path, :class => 'pull-right' %>
+        </div>
+      <% end %>
+      <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), surveys_path %>
+    </header>
   </div>
      	<div class="row">
         <div class="container" style="padding-left: 30px;">
