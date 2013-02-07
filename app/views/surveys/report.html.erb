@@ -1,5 +1,80 @@
 <h1><%= @survey.title %></h1>
 
+<% @survey.questions.each do |q| %>
+    <h2><%= q.prompt %> </h2>
+
+      <% if q.response_type == 'radio' %>
+        <% if q.possible_responses.present? %>
+          <% q.possible_responses.each do |k, v| %>
+              <p><label class="label-with-popover"
+                        data-content="<% radio_question_responses(q, k).each do |p| %>
+                                        <%= p.name %><br>
+                                      <% end %>"
+                        data-title="Respondents"
+                        data-placement="left">
+                  <span class="badge badge-inverse" style="margin-right:10px;"><%= radio_question_responses(q, k).length %></span><%= v %>
+              </label>
+              </p>
+          <% end %>
+        <% end %>
+      <% end %>
+    
+      <% if q.response_type == 'checkbox' %>
+        <% if q.possible_responses.present? %>
+          <% q.possible_responses.each do |k, v| %>
+              <p><label class="label-with-popover"
+                        data-content="<% checkbox_question_responses(q, k).each do |p| %>
+                                        <%= p.name %><br>
+                                      <% end %>"
+                        data-title="Respondents"
+                        data-placement="left">
+                        <span class="label label-inverse" style="margin-right:10px;"> <%= checkbox_question_responses(q, k).length %> </span><%= v %>
+                      </label>
+                    </p>
+          <% end %>
+        <% end %>
+      <% end %>
+    
+    <% if q.response_type == 'singleline' %>
+      <% q.responses.each do |r| %>
+        <% unless r.person.admin? %>
+          <div style="padding:10px; background-color:lightgray;">
+            <strong><%= "From #{r.person.name}:" %></strong>
+            <%= simple_format(r.text_response) %>
+          </div><br>
+        <% end %>
+      <% end%>
+    <% end%>
+    
+    <% if q.response_type == 'multiline' %>
+      <% q.responses.each do |r| %>
+        <% unless r.person.admin? %>
+          <div style="padding:10px; background-color:lightgray;">
+            <strong><%= "From #{r.person.name}:" %></strong>
+            <%= simple_format(r.text_response) %>
+          </div><br>
+        <% end %>
+      <% end%>
+    <% end%>
+     
+     <br>
+
+<% end %>
+
+<script>
+$('.label-with-popover').popover("hide")
+</script>
+
+
+
+
+
+
+
+
+
+<% if false%>
+
 <% @chart.each_with_index do |chart,index| %>
   <div id='chart_<%= index %>' class="page"></div>
   <%= render_chart(chart, 'chart_' + index.to_s) %>
@@ -7,7 +82,7 @@
 
 <%= link_to "Finished with survey for now", surveys_path, :class => 'btn btn-large' %>  
 
-<% if false%>
+
 
 
   <% @cloud.each_with_index do |cloud,index| %>

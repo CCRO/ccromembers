@@ -39,12 +39,12 @@
             </td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-large">Respondents: <%= respondents(survey).count %></button>
+                <button class="btn btn-large">Respondents: <%= survey_respondents(survey).count %></button>
                 <button class="btn dropdown-toggle btn-large" data-toggle="dropdown">
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <% respondents(survey).each do |r| %>
+                  <% survey_respondents(survey).each do |r| %>
                   <li><%= r.name %></li>
                   <% end %>
                 </ul>
