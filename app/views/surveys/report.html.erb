@@ -8,7 +8,11 @@
           <% q.possible_responses.each do |k, v| %>
               <p><label class="label-with-popover"
                         data-content="<% radio_question_responses(q, k).each do |p| %>
-                                        <%= p.name %><br>
+                                        <%= p.name %>
+                                        <% unless p.company.nil? %>
+                                         : <strong><%= p.company.name %></strong>
+                                        <% end %>
+                                        <br>
                                       <% end %>"
                         data-title="Respondents"
                         data-placement="left">
@@ -24,7 +28,11 @@
           <% q.possible_responses.each do |k, v| %>
               <p><label class="label-with-popover"
                         data-content="<% checkbox_question_responses(q, k).each do |p| %>
-                                        <%= p.name %><br>
+                                        <%= p.name %>
+                                        <% unless p.company.nil? %>
+                                         : <strong><%= p.company.name %></strong>
+                                        <% end %>
+                                        <br>
                                       <% end %>"
                         data-title="Respondents"
                         data-placement="left">
@@ -39,7 +47,11 @@
       <% q.responses.each do |r| %>
         <% unless r.person.admin? %>
           <div style="padding:10px; background-color:lightgray;">
-            <strong><%= "From #{r.person.name}:" %></strong>
+            <% unless r.person.company.nil? %>
+              <strong><%= "From #{r.person.name}, #{r.person.company.name}" %></strong>
+            <% else %>
+              <strong><%= "From #{r.person.name}:" %></strong>
+            <% end %>
             <%= simple_format(r.text_response) %>
           </div><br>
         <% end %>
@@ -50,7 +62,11 @@
       <% q.responses.each do |r| %>
         <% unless r.person.admin? %>
           <div style="padding:10px; background-color:lightgray;">
-            <strong><%= "From #{r.person.name}:" %></strong>
+            <% unless r.person.company.nil? %>
+              <strong><%= "From #{r.person.name},  #{r.person.company.name}" %></strong>
+            <% else %>
+              <strong><%= "From #{r.person.name}:" %></strong>
+            <% end %>
             <%= simple_format(r.text_response) %>
           </div><br>
         <% end %>
