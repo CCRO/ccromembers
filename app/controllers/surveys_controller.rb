@@ -84,6 +84,7 @@ class SurveysController < ApplicationController
 
   def report
     @survey = Survey.find(params[:id])
+    authorize! :create, @survey
 
     if false
       @chart = Array.new
