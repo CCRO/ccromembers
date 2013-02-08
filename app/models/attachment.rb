@@ -1,7 +1,8 @@
 class Attachment < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  
+  index_name INDEX_NAME
+   
   acts_as_taggable
 
   belongs_to :owner, :polymorphic => true
