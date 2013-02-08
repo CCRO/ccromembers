@@ -6,17 +6,19 @@
               <li>
                 <a href="#">Search</a> <span class="divider">/</span>
               </li>
+              <% if params[:q] %>
               <li class="active">
-                <a href="#">Files containing "<%= params[:q] %>"</a>
+                <a href="#">Matches for "<%= params[:q] %>"</a>
               </li>
+              <% end %>
             </ul>
     <form action="search" class="form-search pull-right">
-      <input type="text" name="q" class="input-medium search-query" placeholder="<%= params[:q] %>">
+      <input type="text" name="q" class="input-medium search-query" value="<%= params[:q] %>">
       <button type="submit" class="btn">Search</button>
     </form>
 <br><br><br>
 
-<% if @person_results.total > 0 %>
+<% if @person_results && @person_results.total > 0 %>
 <h2>People matching '<%= params[:q] %>'</h2>
 <table class="table table-striped table-bordered table-condensed">
     <% @person_results.each do |result| %>
@@ -27,7 +29,7 @@
 </table>
 <% end %>
 
-<% if @message_results.total > 0 %>
+<% if @message_results && @message_results.total > 0 %>
 <h2>Discussions matching '<%= params[:q] %>'</h2>
 <table class="table table-striped table-bordered table-condensed">
     <% @message_results.each do |result| %>
@@ -38,7 +40,7 @@
 </table>
 <% end %>
 
-<% if @attachment_results.total > 0 %>
+<% if @attachment_results && @attachment_results.total > 0 %>
 <h2>Files matching '<%= params[:q] %>'</h2>
 <table class="table table-striped table-bordered table-condensed">
     <% @attachment_results.each do |result| %>
@@ -47,7 +49,7 @@
 </table>
 <% end %>
 
-<% if @post_results.total > 0 %>
+<% if @post_results && @post_results.total > 0 %>
 <h2>Articles matching '<%= params[:q] %>'</h2>
 <table class="table table-striped table-bordered table-condensed">
     <% @post_results.each do |result| %>
