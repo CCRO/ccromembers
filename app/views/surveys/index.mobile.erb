@@ -41,20 +41,22 @@ window.addEventListener("load",function() {
         </tr>
         <tr>
           <td>
-            <table style="width:200px; height:20px; margin-left:25px;">
+            <div class="">
+            <table style="width:200px; margin-left:30px">
               <tr style="border-color: rgb(0, 0, 0); border-style: solid; border-width: 1px 1px 1px 1px;">
                 <% completed = {} %>
                 <% completed[s.id] = true %>
                 <% s.questions.each do |q| %>
                   <% if Response.where(question_id: q, person_id: current_user).empty? %>
-                      <td style="background-color:gray; padding:5%;"></td>
+                      <td style="background-color:gray; padding-top:20px;"></td>
                       <% completed[s.id] = false %>
                   <% else %>
-                    <td style="background-color:lightgreen; padding:5%;"></td>
+                    <td style="background-color:lightgreen; padding-top:20px;"></td>
                   <% end %>
                 <% end %>
               </tr>
             </table>
+            </div>
           </td>
         </tr>
         <tr>
