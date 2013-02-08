@@ -45,7 +45,11 @@
                 </button>
                 <ul class="dropdown-menu">
                   <% survey_respondents(survey).each do |r| %>
-                  <li><%= r.name %></li>
+                    <% if r.company.nil? %>
+                      <li style="margin-left:5px;"><%= r.name %></li>
+                    <% else %>
+                      <li style="margin-left:5px;"><%= "#{r.name} : #{r.company.name}" %></li>
+                    <% end %>
                   <% end %>
                 </ul>
               </div>
