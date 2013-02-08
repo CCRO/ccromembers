@@ -1,0 +1,41 @@
+    <% post = Post.find(result.id) %>
+    <% highlights = Array.new %>
+    <% highlights << result.highlight.body if result.highlight.try(:body) %>
+    <% highlights = highlights.flatten %>
+    <tr>
+        <td>
+          <% if can? :edit, post %>
+            <h3><%= link_to result.title, post, :target => '_blank' %></h3>
+            <% elsif can? :read, post %>
+            <h3><%= link_to result.title, post, :target => '_blank' %></h3>
+            <% else %>
+            <h3><%= result.title %></h3>
+            <% end %>
+            <% if highlights.length > 0 %><p><strong><%= highlights.length %> matches:</strong></p><% end %>
+            <p><%= strip_tags highlights.take(4).join(" ... ") %></p>
+        </td>
+        <td width="250">
+           <%= star_rating((result._score / (max_score / 4) + 1).round, 5) %>
+            <% if post.author.present? %>
+            Source: <%= post.author.name %><br />
+            <% end %>
+            <% if post.owner.present? && post.owner_type != 'Person' %>
+            <% if can? :read, post.owner %> 
+            In group: <%= link_to post.owner.name, post.owner %><br />
+            <% else %>
+            In group: <%= post.owner.name %><br />
+            <% end %>
+            <% end %>
+            <i class="icon-eye-open" <%= raw 'style="color:lightgrey;"' unless can? :read, post %>></i> 
+<!--             <span class="label label-important">Full Members</span><br />
+        <span class="label label-important">Participating Members</span><br />
+        <span class="label label-important">Subscribers</span><br /> -->
+        </p>
+        <% if can? :edit, post %>
+          <span class="link-group">
+            <%= link_to 'Edit', edit_polymorphic_path([@group, post]) %> | 
+            <%= link_to 'Delete', polymorphic_path([@group, post]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, post %>
+          </span>
+        <% end %>
+      </td>
+    </tr>

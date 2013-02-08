@@ -1,4 +1,15 @@
 class Post < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+ 
+  mapping do
+    indexes :id,           :index    => :not_analyzed
+    indexes :title,        :analyzer => 'snowball', :boost => 100
+    indexes :author,        :as => 'author_name', :analyzer => 'snowball', :boost => 25
+    # indexes :file_ext,        :as => 'extension', :analyzer => 'snowball', :boost => 25
+    indexes :body,      :analyzer => 'snowball'
+    indexes :created_at, :type => 'date', :include_in_all => false
+  end
   
   has_paper_trail
   acts_as_taggable
@@ -20,6 +31,10 @@ class Post < ActiveRecord::Base
     permalink
   end
 
+  def author_name
+    self.author.try(:name)
+  end
+
   def generate_token(column = :viewing_token)
     begin
       self[column] = SecureRandom.urlsafe_base64
@@ -34,6 +49,13 @@ class Post < ActiveRecord::Base
 
   def unlock
     self.locked, self.locked_at = nil, nil
+  end
+
+  def self.search(params)
+    tire.search do
+      query { string params[:q], default_operator: "AND" } if params[:q].present?
+      highlight :body
+    end
   end
 
   def share_by_email(email_list, my_subject, short_message, sender)

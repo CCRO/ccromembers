@@ -18,8 +18,10 @@
               end
             end %>
             <h4></h4>
-            <p><strong><%= highlights.length %> matches:</strong></p>
-            <p><%= raw highlights.take(4).join(" ... ") %></p>
+            <% if highlights.length > 0 %>
+                <p><strong><%= highlights.length %> matches:</strong></p>
+                <p><%= raw highlights.take(4).join(" ... ") %></p>
+            <% end %>
         </td>
         <td width="250">
            <%= star_rating((result._score / (max_score / 4) + 1).round, 5) %>
