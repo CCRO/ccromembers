@@ -75,6 +75,18 @@ window.addEventListener("load",function() {
   <% end %>
 <% end %>
 
+<div style="text-align:center;">
+  <div class="btn-toolbar">
+    <div class="btn-group">
+       <% if current_user %>
+        <%= link_to "Log Out", logout_path, :class => 'btn btn-large' %>
+        <%= link_to logout_path, :class => 'btn btn-large' do %>
+          <i class="icon-off"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <% if false %>
   <ul>

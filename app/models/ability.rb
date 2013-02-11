@@ -50,7 +50,7 @@ class Ability
     if user.basic?
       can :read, [PollingSession, Poll]
       can :read, [Post, Page, Document], {level: 'basic', :published => true}
-
+       can :read, Survey, {level: 'basic', :active => true}
       can :read, [Post, Page, Document], {level: 'basic', published: true}
       can :create, Comment
       can [:edit, :destroy], [Post, Document, Comment, Message, Page], :author_id => user.id
