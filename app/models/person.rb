@@ -1,7 +1,8 @@
 class Person < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
-
+  index_name INDEX_NAME
+ 
   mapping do
     indexes :id,           :index    => :not_analyzed
     indexes :name,        :analyzer => 'snowball', :boost => 100
