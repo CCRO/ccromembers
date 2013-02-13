@@ -1,0 +1,5 @@
+<%= form_for @page do |f| %>
+  <%= f.text_area :title, :class => "redactor", :rows => 1, :cols => 80 %>
+  <%= f.text_area :body, :class => "redactor", :rows => 40, :cols => 80 %>
+  <%= f.submit "Save", :class => "btn" %>
+<% end %>

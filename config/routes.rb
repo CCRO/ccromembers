@@ -1,5 +1,7 @@
 Ccromembers::Application.routes.draw do
 
+  mount RedactorRails::Engine => '/redactor_rails'
+
   get "doc_viewer/upload"
   
   get "doc_viewer/view"
@@ -108,7 +110,7 @@ Ccromembers::Application.routes.draw do
       resources :images
     end
 
-  mount Mercury::Engine => '/'
+  
     
     resources :posts do
       

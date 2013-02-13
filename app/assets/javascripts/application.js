@@ -20,6 +20,7 @@
 //= require documents
 //= require messages
 //= require password_resets
+//= require redactor-rails
 
 
 

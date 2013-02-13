@@ -176,12 +176,12 @@ class PagesController < ApplicationController
   end
   
   def edit
-    page = Page.find(params[:id])
-    unless page.locked?
-      page.lock(current_user)
-      page.save
+    @page = Page.find(params[:id])
+    unless @page.locked?
+      @page.lock(current_user)
+      @page.save
     end
-    redirect_to "/editor" + page_path(page)
+    # redirect_to "/editor" + page_path(page)
   end
 
   def update

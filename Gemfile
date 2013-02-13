@@ -18,6 +18,8 @@ group :production do
   gem 'dalli'
 end
 
+gem 'redactor-rails'
+gem 'mini_magick'
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
@@ -31,7 +33,6 @@ gem 'fog', "~> 1.3.1"
 gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
-gem 'mercury-rails'
 gem 'google_visualr'
 gem 'jqcloud-rails'
 gem 'acts_as_list'
@@ -61,7 +62,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'yui-compressor'
   gem "twitter-bootstrap-rails"
-  gem 'bootstrap-wysihtml5-rails'
   gem 'font-awesome-rails'
 end
 
