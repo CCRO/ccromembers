@@ -41,8 +41,6 @@ class PostsController < ApplicationController
       message = "You are unable to view news and updates for the working group: <strong>#{@group.name}</strong>. If you are still interested in viewing news and updates for this group, please let us know."
       authorize! :read, @group, :message => message.html_safe
     end
-
-    @posts = "asdfasdf"
     
     respond_to do |format|
       format.html
