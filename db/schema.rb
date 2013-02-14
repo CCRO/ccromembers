@@ -238,8 +238,6 @@ ActiveRecord::Schema.define(:version => 20130205184858) do
     t.boolean  "verified"
     t.string   "pin_code"
     t.string   "mobile_phone"
-    t.string   "last_browser"
-    t.string   "last_platform"
     t.text     "browser_info"
     t.text     "highrise_cache"
     t.datetime "highrise_cached_at"
@@ -304,6 +302,22 @@ ActiveRecord::Schema.define(:version => 20130205184858) do
   end
 
   add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"
+
+  create_table "redactor_assets", :force => true do |t|
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "redactor_assets", ["assetable_type", "assetable_id"], :name => "idx_redactor_assetable"
+  add_index "redactor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_redactor_assetable_type"
 
   create_table "responses", :force => true do |t|
     t.integer  "person_id"
