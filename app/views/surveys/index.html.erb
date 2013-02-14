@@ -27,12 +27,12 @@
           </td>
           <% if can? :manage, survey %>
             <td>
-              <% subscription_types = [['Basic', 'basic'], ['Pro', 'pro'], ['Subscriber', 'subscriber'], ['Individual Membership', 'individual_member'], ['Company Membership', 'company_member'], ['Leader Company', 'leadership']] %>
               <%= form_for survey, { :remote => true } do |f| %>
                 <%= f.check_box :active, :class => 'submittable' %>
               <% end %>
             </td>
             <td>
+              <% subscription_types = [['Basic', 'basic'], ['Pro', 'pro'], ['Subscriber', 'subscriber'], ['Individual Membership', 'individual_member'], ['Company Membership', 'company_member'], ['Leader Company', 'leadership']] %>
               <%= form_for survey, { :remote => true } do |f| %>
                 <%= f.select :level, options_for_select(subscription_types, :selected => survey.level), {},  style: "padding-top:100px;", :class => 'submittable' %>
               <% end %>
