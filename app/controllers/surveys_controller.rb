@@ -118,5 +118,57 @@ class SurveysController < ApplicationController
         end
       end
     end
+
+    if params[:format] = 'csv'
+      csv_data = CSV.generate() do |csv|
+        csv << [@survey.title]
+        @survey.questions.each do |q|
+          csv << []
+          csv << [q.prompt]
+          if q.response_type == 'radio'
+            if q.possible_responses.present?
+              q.possible_responses.each do |k, v|
+                csv << [radio_question_responses(q, k).length, v]
+              end
+              csv << []
+            end
+          end
+
+          if q.response_type == 'checkbox'
+            if q.possible_responses.present?
+              q.possible_responses.each do |k, v|
+                csv << [checkbox_question_responses(q, k).length, v]
+              end
+              csv << []
+            end
+          end
+
+          if q.response_type == 'singleline'
+            q.responses.each do |r|
+              unless r.person.admin?
+                csv << [r.text_response.html_safe]
+              end
+              csv << []
+            end
+          end
+
+          if q.response_type == 'multiline'
+            q.responses.each do |r|
+              unless r.person.admin?
+                csv << [r.text_response.html_safe]
+              end
+              csv << []
+            end
+          end
+
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.csv { send_data csv_data }
+    end
+
   end
 end
