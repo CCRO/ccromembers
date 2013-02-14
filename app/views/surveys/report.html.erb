@@ -1,5 +1,5 @@
-<h1><%= @survey.title %></h1>
-<%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+<div><h1 class="pull-left" style="margin-right:10px;"><%= @survey.title %></h1><%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn', style: 'padding:10px;') if current_user.admin? %></div>
+<br>
 
 <% @survey.questions.each do |q| %>
     <h2><%= q.prompt %> </h2>
