@@ -54,8 +54,6 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.6.8)
-    bootstrap-wysihtml5-rails (0.2.11)
-      railties (>= 3.0)
     browser (0.1.4)
     builder (3.0.4)
     cancan (1.6.7)
@@ -281,7 +279,6 @@ DEPENDENCIES
   bcurren-freshbooks.rb!
   better_errors
   binding_of_caller
-  bootstrap-wysihtml5-rails
   browser
   cancan
   carrierwave

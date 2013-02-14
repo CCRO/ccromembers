@@ -1,4 +1,4 @@
-<% if params[:action] == 'show'%>
+<% if params[:action] == 'show' || params[:action] == 'edit' %>
   <% content_for :pages_header_image do %>
     <% unless page.published? %>
       <h2 style="color: red;"> This page is a draft </h2>
@@ -22,12 +22,18 @@
   <% end %>
 <% end %>
 
+  <%= form_for @page do |f| %>
+
 <div>
   <article id="page-<%= page.id %>">
     <h1 class="page_title">
-      <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') %>
-        <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;" data-mercury="full" <%= 'contentEditable' if is_editing? %>>
-          <%= page.title.html_safe if page.title %>
+      <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') || params[:action] == 'edit' %>
+        <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;">
+          <% if is_editing? %>
+            <%= f.text_area :title, :class => "redactor", :rows => 1, :cols => 80 %>
+          <% else %>
+            <%= page.title.html_safe if page.title %>
+          <% end %>
         </div>
       <% else %>
         <%= link_to page.title.html_safe, page_path(page)  %>
@@ -46,8 +52,8 @@
         <% end %>
     <% else %>
       <% if is_editing? %>
-        <div id="page_body" class="mercury-region" data-mercury="full" contentEditable>
-          <%= page.body.html_safe unless params[:action] == 'draft' %>
+        <div id="page_body">
+          <%= f.text_area :body, :class => "redactor", :rows => 40, :cols => 80 %>
         </div>
       <% else %>
         <% unless params[:action] == 'index'%>
@@ -85,6 +91,9 @@
     <% end %>
   </article>
 </div>
+
+    <%= f.submit "Save", :class => "btn" %>
+    <% end %>
 
 
 <% content_for :aside do %>

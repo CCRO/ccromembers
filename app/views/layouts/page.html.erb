@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% if params[:action] == 'show' && @page.title.present? %>
+  <% if (params[:action] == 'show'  || params[:action] == 'edit') && @page.title.present? %>
     <title>CCRO - <%= @page.title.html_safe %></title>
   <% end %>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
-  <%= stylesheet_link_tag "style", :media => "all" %>
   <%= stylesheet_link_tag "page", :media => "all" %>
-  <%= stylesheet_link_tag "signup", :media => "all" if params[:controller] == 'signups' %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -51,7 +47,7 @@
             </ul>
           <% end %>
 
-          <% if params[:action] == 'show'%>
+          <% if params[:action] == 'show' || params[:action] == 'edit' %>
             <%= yield :aside %>
           <% end %>
           
@@ -111,7 +107,7 @@
             </ul>
           <% end %>
 
-          <% if params[:action] == 'show'%>
+          <% if params[:action] == 'show' ||  params[:action] == 'edit' %>
             <%= yield :aside %>
           <% end %>
           

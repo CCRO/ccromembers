@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
     
   def is_editing?
-    params[:mercury_frame]
+    params[:action] == 'edit'
   end
   helper_method :is_editing?
      

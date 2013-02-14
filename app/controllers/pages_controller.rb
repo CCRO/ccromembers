@@ -181,6 +181,45 @@ class PagesController < ApplicationController
       @page.lock(current_user)
       @page.save
     end
+
+    @tag = @page.tags.pluck(:name).to_sentence if @page.tags.pluck(:name).present?
+    @all_tags = all_tags
+    unless @group
+      if @page.published == true
+        @category = Page.where(published: true).tagged_with(@tag).sort! { |a,b| a.position <=> b.position }
+        @articles = Post.where(published: true).tagged_with(@tag)
+      else
+        @category = Page.tagged_with(@tag).sort! { |a,b| a.position <=> b.position }
+        @articles = Post.tagged_with(@tag)
+      end
+      @messages = Message.tagged_with(@tag)
+      @smart_list = Array.new
+      @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
+    end
+
+    @commentable = @page
+    
+    page_title = strip_tags @page.title
+
+    if current_user
+      message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
+    else
+      message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}. You are currently not logged in."
+    end
+    authorize! :edit, @page, :message => message.html_safe
+
+    @editors = []
+    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
+    @editors += Person.where(role: nil)
+
+
+    if @page.owner_type == 'Group' && !@group
+      redirect_to edit_polymorphic_path([@page.owner, @page])
+    else
+      respond_to do |format|
+        format.html
+      end
+    end  
     # redirect_to "/editor" + page_path(page)
   end
 

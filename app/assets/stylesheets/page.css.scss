@@ -8,9 +8,12 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
+ *= require 'application'
+ *= require 'style'
+ *= require 'bootstrap_and_overrides'
  *= require 'font-awesome'
-*/
+ *= require_self
+ */
 
 @media print {
   aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug {
