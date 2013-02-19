@@ -137,7 +137,7 @@ class SurveysController < ApplicationController
                   unless r.person.admin?
                     temp << r.person.name
                     q.possible_responses.each do |k, v|
-                      if q.responses.first.selected_response == k.to_i
+                      if r.selected_response == k.to_i
                         temp << 1
                       else
                         temp << 0
