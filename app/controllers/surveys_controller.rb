@@ -123,41 +123,95 @@ class SurveysController < ApplicationController
       csv_data = CSV.generate() do |csv|
         csv << [@survey.title]
         @survey.questions.each do |q|
+          temp = []
           csv << []
-          csv << [q.prompt]
+          temp << q.prompt
+
           if q.response_type == 'radio'
             if q.possible_responses.present?
-              q.possible_responses.each do |k, v|
-                csv << [radio_question_responses(q, k).length, v]
+              q.possible_responses.each {|i, r| temp << r }
+              csv << temp
+              temp = []
+              q.responses.each do |r|
+                unless r.person.admin?
+                  temp << r.person.name
+                  q.possible_responses.each do |k, v|
+                    if q.responses.first.selected_response == k.to_i
+                      temp << 1
+                    else
+                      temp << 0
+                    end
+                  end
+                  csv << temp
+                  temp = []
+                end
               end
-              csv << []
             end
           end
 
           if q.response_type == 'checkbox'
             if q.possible_responses.present?
-              q.possible_responses.each do |k, v|
-                csv << [checkbox_question_responses(q, k).length, v]
+              q.possible_responses.each {|i, r| temp << r }
+              csv << temp
+              temp = []
+              q.responses.each do |r|
+                unless r.person.admin?
+                  temp << r.person.name
+                  r.selected_responses.each do |s|
+                    temp << s
+                  end
+                  csv << temp
+                  temp = []
+                end
               end
-              csv << []
             end
           end
 
-          if q.response_type == 'singleline'
-            q.responses.each do |r|
-              unless r.person.admin?
-                csv << [r.text_response.html_safe]
+          if q.response_type == 'singleline' || q.response_type == 'multiline'
+              csv << temp
+              q.responses.each do |r|
+                unless r.person.admin?
+                  csv << [r.person.name, r.text_response.html_safe]
+                end
+                csv << []
               end
-              csv << []
             end
-          end
 
-          if q.response_type == 'multiline'
-            q.responses.each do |r|
-              unless r.person.admin?
-                csv << [r.text_response.html_safe]
+          if false
+            if q.response_type == 'radio'
+              if q.possible_responses.present?
+                q.possible_responses.each do |k, v|
+                  csv << [radio_question_responses(q, k).length, v]
+                end
+                csv << []
               end
-              csv << []
+            end
+
+            if q.response_type == 'checkbox'
+              if q.possible_responses.present?
+                q.possible_responses.each do |k, v|
+                  csv << [checkbox_question_responses(q, k).length, v]
+                end
+                csv << []
+              end
+            end
+
+            if q.response_type == 'singleline'
+              q.responses.each do |r|
+                unless r.person.admin?
+                  csv << [r.text_response.html_safe]
+                end
+                csv << []
+              end
+            end
+
+            if q.response_type == 'multiline'
+              q.responses.each do |r|
+                unless r.person.admin?
+                  csv << [r.text_response.html_safe]
+                end
+                csv << []
+              end
             end
           end
 
