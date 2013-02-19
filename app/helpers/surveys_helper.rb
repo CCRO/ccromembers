@@ -61,7 +61,7 @@ module SurveysHelper
     
     unless all_responses.empty?
       all_responses.each do |r|
-        unless r.selected_responses[key.to_i].nil?
+        unless r.selected_responses.nil?
           if r.selected_responses[key.to_i] == 1
             response_people << Person.find(r.person_id)
           end
