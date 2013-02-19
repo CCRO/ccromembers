@@ -181,7 +181,7 @@ class SurveysController < ApplicationController
             end
           end
 
-          end
+
 
           if q.response_type == 'singleline' || q.response_type == 'multiline'
               csv << temp
@@ -195,6 +195,7 @@ class SurveysController < ApplicationController
               end
             end
 
+            end
           if false
             if q.response_type == 'radio'
               if q.possible_responses.present?
