@@ -132,18 +132,20 @@ class SurveysController < ApplicationController
               q.possible_responses.each {|i, r| temp << r }
               csv << temp
               temp = []
-              q.responses.each do |r|
-                unless r.person.admin?
-                  temp << r.person.name
-                  q.possible_responses.each do |k, v|
-                    if q.responses.first.selected_response == k.to_i
-                      temp << 1
-                    else
-                      temp << 0
+              if q.responses.present?
+                q.responses.each do |r|
+                  unless r.person.admin?
+                    temp << r.person.name
+                    q.possible_responses.each do |k, v|
+                      if q.responses.first.selected_response == k.to_i
+                        temp << 1
+                      else
+                        temp << 0
+                      end
                     end
+                    csv << temp
+                    temp = []
                   end
-                  csv << temp
-                  temp = []
                 end
               end
             end
@@ -154,14 +156,16 @@ class SurveysController < ApplicationController
               q.possible_responses.each {|i, r| temp << r }
               csv << temp
               temp = []
-              q.responses.each do |r|
-                unless r.person.admin?
-                  temp << r.person.name
-                  r.selected_responses.each do |s|
-                    temp << s
+              if q.responses.present?
+                q.responses.each do |r|
+                  unless r.person.admin?
+                    temp << r.person.name
+                    r.selected_responses.each do |s|
+                      temp << s
+                    end
+                    csv << temp
+                    temp = []
                   end
-                  csv << temp
-                  temp = []
                 end
               end
             end
@@ -169,11 +173,13 @@ class SurveysController < ApplicationController
 
           if q.response_type == 'singleline' || q.response_type == 'multiline'
               csv << temp
-              q.responses.each do |r|
-                unless r.person.admin?
-                  csv << [r.person.name, r.text_response.html_safe]
+              if q.responses.present?
+                q.responses.each do |r|
+                  unless r.person.admin?
+                    csv << [r.person.name, r.text_response.html_safe]
+                  end
+                  csv << []
                 end
-                csv << []
               end
             end
 
