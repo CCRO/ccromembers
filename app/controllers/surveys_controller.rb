@@ -127,8 +127,6 @@ class SurveysController < ApplicationController
           csv << []
           temp << q.prompt
 
-          if false
-
           if q.response_type == 'radio'
             if q.possible_responses.present?
               q.possible_responses.each {|i, r| temp << r if r }
@@ -154,10 +152,6 @@ class SurveysController < ApplicationController
               end
             end
           end
-
-        
-
-          
 
           if q.response_type == 'checkbox'
             if q.possible_responses.present?
@@ -194,8 +188,7 @@ class SurveysController < ApplicationController
                 end
               end
             end
-
-            end
+            
           if false
             if q.response_type == 'radio'
               if q.possible_responses.present?

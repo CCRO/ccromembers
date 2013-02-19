@@ -59,9 +59,13 @@ module SurveysHelper
       end
     end
     
-    all_responses.each do |r|
-      if r.selected_responses[key.to_i] == 1
-        response_people << Person.find(r.person_id)
+    unless all_responses.empty?
+      all_responses.each do |r|
+        unless r.selected_responses[key.to_i].nil?
+          if r.selected_responses[key.to_i] == 1
+            response_people << Person.find(r.person_id)
+          end
+        end
       end
     end
 
