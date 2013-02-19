@@ -137,10 +137,12 @@ class SurveysController < ApplicationController
                   unless r.person.admin?
                     temp << r.person.name
                     q.possible_responses.each do |k, v|
-                      if r.selected_response == k.to_i
-                        temp << 1
-                      else
-                        temp << 0
+                      unless r.selected_response.nil?
+                        if r.selected_response == k.to_i
+                          temp << 1
+                        else
+                          temp << 0
+                        end
                       end
                     end
                     csv << temp
@@ -160,8 +162,10 @@ class SurveysController < ApplicationController
                 q.responses.each do |r|
                   unless r.person.admin?
                     temp << r.person.name
-                    r.selected_responses.each do |s|
-                      temp << s
+                    unless r.selected_responses.nil?
+                      r.selected_responses.each do |s|
+                        temp << s
+                      end
                     end
                     csv << temp
                     temp = []
