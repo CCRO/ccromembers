@@ -41,10 +41,12 @@
 
     <% if @pages && @pages.length > 0 %>
       <% @pages.each do |p| %>
-          <% if @page && p.title == @page.title %>
-            <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, p) do %><%= p.title + " " %><i class="icon-arrow-left"></i></li><% end %>
-          <% else %>
-            <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
+          <% if can? :read, p %>
+            <% if @page && p.title == @page.title %>
+              <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, p) do %><%= p.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+            <% else %>
+              <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
+            <% end %>
           <% end %>
         </li>
       <% end %>
@@ -80,10 +82,12 @@
     <% if @attachments && @attachments.length > 0 %>
       <li class="nav-header"> Files and Attachments </li>
       <% @group.attachments.limit(3).each do |m| %>
-        <% if @attachment && m.id == @attachment.id %>
-          <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
-        <% else %>
-          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+        <% unless m.archived == false %>
+          <% if @attachment && m.id == @attachment.id %>
+            <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+          <% else %>
+            <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+          <% end %>
         <% end %>
       <% end %>
       <% if @group.attachments.length > 3 %>

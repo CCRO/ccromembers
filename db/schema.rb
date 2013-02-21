@@ -238,8 +238,6 @@ ActiveRecord::Schema.define(:version => 20130212204323) do
     t.boolean  "verified"
     t.string   "pin_code"
     t.string   "mobile_phone"
-    t.string   "last_browser"
-    t.string   "last_platform"
     t.text     "browser_info"
     t.text     "highrise_cache"
     t.datetime "highrise_cached_at"

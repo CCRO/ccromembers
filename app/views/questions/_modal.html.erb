@@ -3,6 +3,15 @@
         <h3 id="myModalLabel">Update question</h3>
       </div>
 
+      <div style="margin-top:10px; margin-left:20px;">
+      <%= form_for [@question.survey, @question], { :remote => true, :class => 'radio inline' } do |q| %>
+        <%= q.radio_button :response_type, "radio", :class => 'submittable' %> Radio | 
+        <%= q.radio_button :response_type, "checkbox", :class => 'submittable' %> Checkbox | 
+        <%= q.radio_button :response_type, "singleline", :class => 'submittable' %> Singleline | 
+        <%= q.radio_button :response_type, "multiline", :class => 'submittable' %> Multiline
+      <% end %>
+      </div>
+
       <div class="modal-body">
         <%= form_for([@question.survey, @question]) do |q| %>
 
@@ -30,5 +39,5 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= link_to 'close',  edit_survey_path(@question.survey), class: 'btn' %>
       </div>

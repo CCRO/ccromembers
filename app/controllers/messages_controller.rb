@@ -118,12 +118,12 @@ class MessagesController < ApplicationController
   def update
     @message = Message.find(params[:id])
 
-    message = "You do not have access needed to update the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in updating this discussion, please let us know."
-    authorize! :edit, @message, :message => message.html_safe
+    our_message = "You do not have access needed to update the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in updating this discussion, please let us know."
+    authorize! :edit, @message, :message => our_message.html_safe
     
     respond_to do |format|
       if @message.update_attributes(params[:message])
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
+        format.html { redirect_to polymorphic_path([@group, @message]), notice: 'Message was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
