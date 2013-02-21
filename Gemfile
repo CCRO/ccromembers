@@ -12,6 +12,8 @@ group :development do
   gem 'rails-footnotes'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'meta_request'
+  #gem 'bullet'
 end
 
 group :production do

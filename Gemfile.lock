@@ -153,6 +153,9 @@ GEM
     marginalia (1.1.0)
       actionpack (>= 2.3, < 3.3)
       activerecord (>= 2.3, < 3.3)
+    meta_request (0.2.1)
+      rack-contrib
+      rails
     mime-types (1.18)
     mini_magick (3.4)
       subexec (~> 0.2.1)
@@ -164,7 +167,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
-    newrelic_rpm (3.4.0)
+    newrelic_rpm (3.5.7.59)
     nokogiri (1.5.4)
     open4 (1.3.0)
     orm_adapter (0.4.0)
@@ -182,6 +185,8 @@ GEM
     rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-mobile-detect (0.4.0)
       rack
     rack-protection (1.2.0)
@@ -300,6 +305,7 @@ DEPENDENCIES
   jqcloud-rails
   jquery-rails
   marginalia
+  meta_request
   mini_magick
   mobile-fu
   newrelic_rpm
