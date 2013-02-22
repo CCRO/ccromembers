@@ -68,7 +68,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <%= current_user.name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a data-toggle="modal" href="#modal-current_user">My Profile</a></li>
+              <li><%= link_to "View Profile", current_user %></li>
               <li><a href="#">Dial-in PIN: <strong><%= current_user.pin_code %></strong></a></li>
               <li class="divider"></li>
               <% if current_user.memberships %>
@@ -76,6 +76,12 @@
                 <% current_user.memberships.each do |membership| %>
                   <li><%= link_to(membership.group.name, membership.group) if membership.group %></li>
                 <% end %>
+              <% end %>
+              <li class="divider"></li>
+              <li><%= link_to "Logout", logout %></li>
+              <% if current_user.admin? %>
+              <li class="divider"></li>
+              <li><a data-toggle="modal" href="#modal-current_user">Old modal</a></li>
               <% end %>
             </ul>
           </li>
