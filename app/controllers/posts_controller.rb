@@ -166,12 +166,47 @@ class PostsController < ApplicationController
   end
   
   def edit
-    post = Post.find(params[:id])
-    unless post.locked?
-      post.lock(current_user)
-      post.save
+    @editors = []
+    @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
+    @editors += Person.where(role: nil)
+
+    if params['token']
+      @post = Post.find_by_viewing_token(params[:token])
+    else 
+      @post = Post.find(params[:id])
+      @tag = @post.tags.pluck(:name).to_sentence if @post.tags.pluck(:name).present?
+      @all_tags = all_tags
+      @category = Post.tagged_with(@tag)
+      @commentable = @post
+
+      post_title = strip_tags @post.title
+      if current_user 
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}, your access level is currently #{current_user.level}."
+      else
+        message = "You are unable to view the post: <strong>#{post_title}</strong>. The access level needed to view this post is #{@post.level}. You are currently not logged in."
+      end
+      authorize! :read, @post, :message => message.html_safe
     end
-    redirect_to "/editor" + polymorphic_path([@group, post])
+
+    if params[:page]
+      @page = Page.find(params[:page])
+    end
+
+    if @post.published 
+      impressionist(@post)
+    end
+
+    if @group
+      @article = @post
+    end
+
+    unless @post.locked?
+      @post.lock(current_user)
+      @post.save
+    end
+
+    render :edit
+    # redirect_to "/editor" + polymorphic_path([@group, post])
   end
 
   def update
