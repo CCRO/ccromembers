@@ -3,7 +3,7 @@
   <a href="#" class="toggle_form">Add a comment to the discussion</a>
   <%= form_for [@commentable, Comment.new], :html => {:class => 'hide'} do |f| %>
     <h2>Add a comment</h2>
-    <%= f.text_area :content, :rows => '5', :class => '', style: "width:100%;" %>
+    <%= f.text_area :content, :class => "redactor", :rows => 40, :cols => 80 %>
     <%= f.submit nil, :class => 'btn' %> or <%= link_to 'cancel', '#', :class => 'close_form' %>
   <% end %>
 </div>
