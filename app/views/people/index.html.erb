@@ -3,20 +3,20 @@
 
     <ul class="breadcrumb pull-left span8">
       <li><a href="#">Directory</a> <span class="divider">/</span></li>
-      <% unless params[:search] %>
+      <% unless params[:q] %>
         <li class="active"><a href="/people">People</a></li>
       <% else %>
         <li><a href="/people">People</a> <span class="divider">/</span></li>
-        <li class="active"></a>Search: <%= params[:search] %></li>        
+        <li class="active"></a>Search: <%= params[:q] %></li>        
       <% end %>
     </ul>
     <form action="/people" class="form-search pull-right">
-      <input type="text" name="search" class="input-medium search-query" placeholder="<%= params[:search] %>">
+      <input type="text" name="q" class="input-medium search-query" placeholder="<%= params[:q] %>">
       <button type="submit" class="btn">Search</button>
     </form>
     <% if current_user %>
-      <% if params[:search] %>
-        <%= link_to('export CSV', url_for(:only_path => false, search: params[:search], :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+      <% if params[:q] %>
+        <%= link_to('export CSV', url_for(:only_path => false, q: params[:q], :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
       <% else %>
         <%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
       <% end %>

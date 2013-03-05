@@ -99,6 +99,15 @@
                 <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
                 <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
             </ul>
+            <% if current_user %>
+            <ul class="nav nav-tabs nav-stacked">
+              <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">How do I:</li>
+              <li><%= link_to 'How do I - Join a working group?', "/pages/57" %></li>
+              <li><%= link_to 'How do I - Learn about working groups?', "/pages/59" %></li>
+              <li><%= link_to 'How do I - Work with online files?', "/pages/60" %></li>
+              <li><%= link_to 'How do I - For Chairs and Coordinators?', "/pages/57" %></li>
+            </ul>
+            <% end %>
             <% if current_user && current_user.admin? %>
               <%= image_tag "http://placehold.it/300x250" %><br><br>
               <%= image_tag "http://placehold.it/300x600" %>
