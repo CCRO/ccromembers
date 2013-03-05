@@ -2,7 +2,7 @@
     <%= form_for [@group, @message] do |f| %>
     <% if @group %>
     	<%= f.text_field :subject, :placeholder => 'Subject', :class => 'span8 input-xlarge startfocus' %><br />
-    	<%= f.text_area :content, :rows => '25', :class => 'span8 simple_editor' %>
+    	<%= f.text_area :content, :class => 'redactor', :rows => 40, :cols => 80  %>
     <% else %>
     	<%= f.text_field :subject, :placeholder => 'Subject', :class => 'span11 input-xlarge startfocus' %><br />
     	<%= f.text_area :content, :class => "redactor", :rows => 40, :cols => 80 %>
