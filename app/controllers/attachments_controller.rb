@@ -156,12 +156,17 @@ class AttachmentsController < ApplicationController
 
   def refresh
     attachment = Attachment.find(params[:id])
+    attachment.get_crocodoc_uuid!
 
-    attachment.download_text
-    attachment.download_thumbnail
+    redirect_to edit_attachment_path(attachment)
+  end
 
-    attachment.save
-   end
+  def status
+    attachment = Attachment.find(params[:id])
+    attachment.crocodoc_getstatus!
+
+    redirect_to edit_attachment_path(attachment)
+  end
 
   def destroy
     @attachment = Attachment.find(params[:id])

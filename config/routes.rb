@@ -18,6 +18,11 @@ Ccromembers::Application.routes.draw do
       post 'crocodoc_webhook'
       get 'report'
     end
+
+    member do
+      get 'refresh'
+      get 'status'
+    end
   end
   
   resources :smart_lists do
