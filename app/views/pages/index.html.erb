@@ -40,39 +40,45 @@
 	<% if params[:action] == 'index' %>
 		<table class="table">
 			<tr>
-				<th class="span2">Category:<%= link_to(pages_path(:sort => 'Category')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-				<th class="span2">Owner:<%= link_to(pages_path(:sort => 'Owner')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-				<th class="span3">Name:<%= link_to(pages_path(:sort => 'Name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-				<th class="span2">Position:<%= link_to(pages_path(:sort => 'Position')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span2">Published:<%= link_to(pages_path(:sort => 'Published')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span2">Category tag:<%= link_to(pages_path(:sort => 'Category')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span2">Working Group:<%= link_to(pages_path(:sort => 'Owner')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="span4">Name:<%= link_to(pages_path(:sort => 'Name')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+				<th class="">Position:</th>
 			</tr>
 				<% @pages.each do |page| %>
 				<tr>
 					<th>
-					<%if page.published == true %>
-						<i class="icon-file" style="color: green;"></i>
-					<% else %>
-						<i class="icon-file" style="color: red;"></i>
-					<% end %>
-						<strong><%= link_to (page.tags.pluck(:name).present?) ? page.tags.pluck(:name).to_sentence : "None", page_path(page) %></strong>
+						<%if page.published == true %>
+							<i class="icon-file" style="color: green;"> Yes</i>
+						<% else %>
+							<i class="icon-file" style="color: red;"> No</i>
+						<% end %>
+					</th>
+					<th>
+						<% @tag = page.tags.pluck(:name).to_sentence if page.tags.pluck(:name).present? %>
+						<%= form_for page, { :remote => true } do |f| %>
+	        		<%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable', style: "width: 120px;") %>
+	      		<% end %>
 					</th>
 					<% if page.owner %> 
 						<th>
 							<%= form_for page, { :remote => true } do |f| %>
-	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name", page.owner.id), :include_blank => true, :class => 'submittable') %>
+	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name", page.owner.id), :include_blank => true, :class => 'submittable', style: "width: 200px;") %>
 	    				<% end %>
 	    			</th>
 					<% else %>
 						<th>
 							<%= form_for page, { :remote => true } do |f| %>
-	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name"), :include_blank => true, :class => 'submittable') %>
+	    					<%= select_tag('owner', options_from_collection_for_select(@groups, "id", "name"), :include_blank => true, :class => 'submittable', style: "width: 200px;") %>
 	    				<% end %>
 	    			</th>
     			<% end %>
 					<th><%= link_to page.title.html_safe, page_path(page)  %></th>
 					<th>
 						<%= form_for page, { :remote => true } do |f| %>
-	    				<%= text_field('position', nil, :class => 'submittable', value: page.position) %>
-	    				<% end %>
+	    				<%= text_field('position', nil, :class => 'submittable', value: page.position, style: "width: 40px;") %>
+	    			<% end %>
 					</th>
 				</tr>
 				<% end %>

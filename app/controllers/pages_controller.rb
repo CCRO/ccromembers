@@ -40,6 +40,10 @@ class PagesController < ApplicationController
 
     @pages ||= Page.order('position DESC')
 
+    if params[:sort] == 'Published'
+      @pages.sort! {|a,b| (a.published ? 1 : 2) <=> (b.published ? 1 : 2) }
+    end
+
     if params[:sort] == 'Category'
       @pages.keep_if { |a| a.tags.pluck(:name).present? }
       @pages.sort! { |a,b| a.tags.pluck(:name).first.downcase <=> b.tags.pluck(:name).first.downcase }
@@ -59,7 +63,7 @@ class PagesController < ApplicationController
     end
 
 
-    
+    @all_tags = all_tags
     authorize! :create, @page
     
     respond_to do |format|
