@@ -79,10 +79,8 @@
               <% end %>
               <li class="divider"></li>
               <li><%= link_to "Logout", logout_path %></li>
-              <% if current_user.admin? %>
               <li class="divider"></li>
-              <li><a data-toggle="modal" href="#modal-current_user">Old modal</a></li>
-              <% end %>
+              <li><%= link_to 'change back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
             </ul>
           </li>
         </ul>
