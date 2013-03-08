@@ -22,13 +22,13 @@
     <div class="control-group">
       <%= f.label :crocodoc_uuid, :class => 'control-label' %>
       <div class="controls">
-        <%= @attachment.crocodoc_uuid %>
+        <%= @attachment.crocodoc_uuid %> (<%= link_to 'Retry with new UUID', refresh_attachment_path(@attachment) %>)
       </div>
     </div> 
     <div class="control-group">
       <%= f.label :crocodoc_status, :class => 'control-label' %>
       <div class="controls">
-        <%= @attachment.crocodoc_status %>
+        <%= @attachment.crocodoc_status %> (<%= link_to 'Refresh Status', status_attachment_path(@attachment) %>)
       </div>
     </div> 
     <div class="control-group">
