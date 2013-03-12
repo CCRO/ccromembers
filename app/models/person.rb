@@ -48,7 +48,7 @@ class Person < ActiveRecord::Base
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
-  attr_accessible :first_name, :last_name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio
+  attr_accessible :first_name, :last_name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio, :bio_pic
 
   validates_uniqueness_of :email
   
