@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212204323) do
+ActiveRecord::Schema.define(:version => 20130312194834) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20130212204323) do
     t.text     "browser_info"
     t.text     "highrise_cache"
     t.datetime "highrise_cached_at"
+    t.string   "bio_pic"
   end
 
   create_table "people_smart_lists", :id => false, :force => true do |t|

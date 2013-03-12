@@ -9,13 +9,13 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  adapter:  postgresql
+  adapter: postgresql
   encoding: unicode
   pool: 5
-  database: d39l10ibq8r00n
-  username: avzqwtfjjgeujz
-  password: eiBpnYl3cmtGOpdAC7QZpkOC_R
-  host: ec2-107-22-165-143.compute-1.amazonaws.com
+  database: dfua459bir6pq3
+  username: bqprjbfilsqjne
+  password: h-08QsX1Tg3gP4hFr7gV7lRH8y
+  host: ec2-23-21-89-241.compute-1.amazonaws.com
   port: 5432
 
 # Warning: The database defined as "test" will be erased and
