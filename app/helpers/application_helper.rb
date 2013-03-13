@@ -21,6 +21,14 @@ module ApplicationHelper
     end
   end
 
+  def bio_pic_for user, options = {}
+    if user.bio_pic.present?
+      image_tag user.avatar.url, options
+    else
+      avatar_for user, options
+    end
+  end
+
   def sticker_for user, options = {}
     options[:class] ||= ""
     content_tag :div, {:class => 'sticker ' + options[:class]} do

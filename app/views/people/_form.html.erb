@@ -57,7 +57,14 @@
       <div class="controls">
         <%= f.file_field :avatar %>
 	    <%= f.hidden_field :avatar_cache %>	    
-        <p class="help-block">Upload a profile picture as a *.jpg, *.gif, or *.png.</p>
+        <p class="help-block">Upload a Avatar Head Shot as a *.jpg, *.gif, or *.png.</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :bio_pic, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.file_field :bio_pic %>
+        <p class="help-block">Upload a Full Color Bio Pic as a *.jpg, *.gif, or *.png.</p>
       </div>
     </div>
     <div class="control-group">

@@ -27,6 +27,7 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :smart_lists
 
   mount_uploader :avatar, AvatarUploader
+  mount_uploader :bio_pic, AvatarUploader
 
   has_many :responses
   
