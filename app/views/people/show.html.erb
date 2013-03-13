@@ -4,8 +4,6 @@
   <li class="active"><%= link_to @person.name, @person %></li>
 </ul>
 
-<% if current_user == @person || can?(:manage, @person)%>
-
 <% if @possible_highrises && can?(:manage, @person) %>
   <% @possible_highrises.each do |possible_highrise| %>
     <div class="alert alert-block alert-info">
@@ -18,79 +16,83 @@
   <% end %>
 <% end %>
 
-<div class="content span12">
-  <div class="row">
-    
-    <div class="span5">
-     	<ul class="thumbnails">
-         <li class="span2">
-           <a href="#" class="thumbnail">
-             <%= bio_pic_for @person %>
-           </a>
-         </li>
-       </ul>
-      <h2><%= @person.name %></h2>
+<div class="hero-unit" style="background-color:white;">
 
-      <% if @person.company.present?%>
-      <p>
-        <p><%= @person.title %> at <%= @person.company_name %><br />
-      </p>
-      <% end %>
-
-      <p>
-        <b>Email:</b>
-        <%= @person.email %>
-      </p>
-
-      <% if current_user && current_user.admin? %>
-      <p>
-        <b>Verifed:</b>
-        <%= @person.verified %>
-      </p>
-      <% end %>
-
-      <p>
-        <% if @person.bio.present?  %>
-          <b>Bio:</b>
-          <%= @person.bio %>
-        <% elsif @person == current_user %>
-          <b>Bio:</b>
-          <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+  <%= bio_pic_for @person, class: "pull-right", style: "margin:0px; margin-left:10px; margin-bottom:10px; max-width: 50%; max-height:400px;" %>
+  <h3><%= @person.name %><% if can? :edit, @person %> | <%= link_to 'Edit', edit_person_path(@person) %><% end %></h3>
+  <% if @person.company.present?%>
+    <h2><i><%= @person.title %> at <%= @person.company_name %></i></h2>
+  <% end %>
+  
+  <% unless @person.memberships.present? %>
+    <p><%= @person.name + " is not involved with any working groups at this time."%></p>
+  <% else %>
+    <strong>Active Working Groups</strong><br>
+    <% Group.all.each do |group| %>
+      <% if @person.groups.where(:id => group.id).present? %>
+        <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
+        <% if membership.fuction == nil %>
+          <%= link_to "Participating in: '#{group.name}'", group %><br>
+        <% elsif membership.fuction == 'chair' %>
+          <%= link_to "Chairing: '#{group.name}'", group %><br>
+        <% elsif membership.fuction == 'coordinator' %>
+          <%= link_to "Coordinating for: '#{group.name}'", group %><br>
         <% end %>
-      </p>
-
-      <br>
-      <h2>Working Group Involvement</h2>
-      <% unless @person.memberships.present? %>
-        <p><%= @person.name + " is not involved with any working groups at this time."%></p>
-      <% else %>
-        <br>
       <% end %>
+    <% end %>
+  <% end %>
 
-      <ul class="nav">
-      <% Group.all.each do |group| %>
-        <%= form_for Membership.new, :method => 'post', :remote => true do %>
-          <%= hidden_field_tag :group_id, group.id %>
-          <%= hidden_field_tag :person_id, @person.id %>
-          <% if can?(:manage, group) || (can?(:edit, @person) && @person.committee?)  %>
-          <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
-          <%= link_to group.name, group %>
-          <% else%>
-            <% if @person.groups.where(:id => group.id).present? %>
-              <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
-              <% if membership.fuction == nil %>
-                <li><%= link_to "Participating in: '#{group.name}'", group %></li>
-              <% elsif membership.fuction == 'chair' %>
-                <li><%= link_to "Chairing: '#{group.name}'", group %></li>
-              <% elsif membership.fuction == 'coordinator' %>
-                <li><%= link_to "Coordinating for: '#{group.name}'", group %></li>
-              <% end %>
+  <br>
+
+  <% if @person.bio.present?  %>
+    <div style="min-height:400px;">
+      <%= @person.bio %>
+    </div>
+  <% else %>
+    <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+  <% end %>
+
+  <br>
+
+  <% unless can? :edit, @person %>
+    <%= link_to 'Back', :back, class: "btn btn-large btn-info pull-right" %>
+  <% end %>
+
+
+<% if can?(:manage, @person)%>
+  
+  <h2 style="margin-bottom:10px;">Join Working Groups by selecting them</h2>
+
+  <ul class="nav">
+    <% Group.all.each do |group| %>
+      <%= form_for Membership.new, :method => 'post', :remote => true do %>
+        <%= hidden_field_tag :group_id, group.id %>
+        <%= hidden_field_tag :person_id, @person.id %>
+        <% if can?(:manage, group) || (can?(:edit, @person) && @person.committee?)  %>
+        <%= check_box_tag :toggle, '1', @person.groups.where(:id => group.id).present?, :class => 'submittable' %>
+        <%= link_to group.name, group %>
+        <% else%>
+          <% if @person.groups.where(:id => group.id).present? %>
+            <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
+            <% if membership.fuction == nil %>
+              <li><%= link_to "Participating in: '#{group.name}'", group %></li>
+            <% elsif membership.fuction == 'chair' %>
+              <li><%= link_to "Chairing: '#{group.name}'", group %></li>
+            <% elsif membership.fuction == 'coordinator' %>
+              <li><%= link_to "Coordinating for: '#{group.name}'", group %></li>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
-      </ul>
-    </div>
+    <% end %>
+  </ul>
+<% end %>
+
+</div>
+
+<% if can?(:manage, @person)%>
+<div class="content span12">
+  <div class="row">
 
     <div class="span7">
       <% if can? :manage, @subscriptions %>
@@ -130,45 +132,6 @@
   </div>
 </div>
 
-<% else %>
-
-  <div class="hero-unit" style="background-color:white;">
-
-    <%= bio_pic_for @person, class: "pull-right", style: "margin:0px; margin-left:10px; margin-bottom:10px; max-width: 50%; max-height:400px;" %>
-    <h3><%= @person.name %></h3>
-    <% if @person.company.present?%>
-      <h2><i><%= @person.title %> at <%= @person.company_name %></i></h2>
-    <% end %>
-    
-    <% unless @person.memberships.present? %>
-      <p><%= @person.name + " is not involved with any working groups at this time."%></p>
-    <% else %>
-      <strong>Active Working Groups</strong><br>
-      <% Group.all.each do |group| %>
-        <% if @person.groups.where(:id => group.id).present? %>
-          <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
-          <% if membership.fuction == nil %>
-            <%= link_to "Participating in: '#{group.name}'", group %><br>
-          <% elsif membership.fuction == 'chair' %>
-            <%= link_to "Chairing: '#{group.name}'", group %><br>
-          <% elsif membership.fuction == 'coordinator' %>
-            <%= link_to "Coordinating for: '#{group.name}'", group %><br>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <br>
-
-    <div style="min-height:400px;">
-    <% if @person.bio.present?  %>
-      <%= @person.bio %>
-    </div>
-    <% end %>
-
-    <br>
-    <%= link_to 'Back', :back, class: "btn btn-large btn-info pull-right" %>
-  </div>
 <% end %>
 
 
