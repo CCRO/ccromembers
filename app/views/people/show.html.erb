@@ -134,6 +134,7 @@
 
   <div class="hero-unit" style="background-color:white;">
 
+    <%= bio_pic_for @person, class: "pull-right", style: "margin:0px; margin-left:10px; margin-bottom:10px; max-width: 50%; max-height:400px;" %>
     <h3><%= @person.name %></h3>
     <% if @person.company.present?%>
       <h2><i><%= @person.title %> at <%= @person.company_name %></i></h2>
@@ -161,7 +162,6 @@
 
     <div style="min-height:400px;">
     <% if @person.bio.present?  %>
-      <%= bio_pic_for @person, class: "pull-right", style: "margin:0px; margin-left:10px; margin-bottom:10px; max-width: 50%; max-height:400px;" %>
       <%= @person.bio %>
     </div>
     <% end %>
