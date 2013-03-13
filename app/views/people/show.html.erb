@@ -49,7 +49,9 @@
       <%= @person.bio %>
     </div>
   <% else %>
-    <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+    <% if can?(:manage, @person) || current_user == @person %>
+      <%= link_to 'Add a bio to your profile?', edit_person_path(@person) %>
+    <% end %>
   <% end %>
 
   <br>
@@ -59,7 +61,7 @@
   <% end %>
 
 
-<% if can?(:manage, @person)%>
+<% if can?(:manage, @person) || current_user == @person %>
   
   <h2 style="margin-bottom:10px;">Join Working Groups by selecting them</h2>
 
