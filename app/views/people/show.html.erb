@@ -4,6 +4,7 @@
   <li class="active"><%= link_to @person.name, @person %></li>
 </ul>
 
+<% if current_user == @person || can?(:manage, @person)%>
 
 <% if @possible_highrises && can?(:manage, @person) %>
   <% @possible_highrises.each do |possible_highrise| %>
@@ -128,5 +129,43 @@
     <%= link_to 'Back', people_path %>
   </div>
 </div>
+
+<% else %>
+
+  <div class="hero-unit" style="background-color:white;">
+
+    <h3><%= @person.name %></h3>
+    <% if @person.company.present?%>
+      <h2><i><%= @person.title %> at <%= @person.company_name %></i></h2>
+    <% end %>
+    
+    <% unless @person.memberships.present? %>
+      <p><%= @person.name + " is not involved with any working groups at this time."%></p>
+    <% else %>
+      <strong>Active Working Groups</strong><br>
+      <% Group.all.each do |group| %>
+        <% if @person.groups.where(:id => group.id).present? %>
+          <% membership = Membership.where(group_id: group.id, person_id: @person.id).first %>
+          <% if membership.fuction == nil %>
+            <%= link_to "Participating in: '#{group.name}'", group %><br>
+          <% elsif membership.fuction == 'chair' %>
+            <%= link_to "Chairing: '#{group.name}'", group %><br>
+          <% elsif membership.fuction == 'coordinator' %>
+            <%= link_to "Coordinating for: '#{group.name}'", group %><br>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <br>
+
+    <div style="min-height:400px;">
+    <% if @person.bio.present?  %>
+      <%= bio_pic_for @person, class: "pull-right", style: "margin:0px; margin-left:10px; margin-bottom:10px; max-width: 50%; max-height:400px;" %>
+      <%= @person.bio %>
+    </div>
+    <% end %>
+  </div>
+<% end %>
 
 

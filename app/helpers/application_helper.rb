@@ -23,9 +23,11 @@ module ApplicationHelper
 
   def bio_pic_for user, options = {}
     if user.bio_pic.present?
+      image_tag user.bio_pic.url, options
+    elsif user.avatar.present?
       image_tag user.avatar.url, options
     else
-      avatar_for user, options
+      gravatar_for user, options
     end
   end
 
