@@ -254,6 +254,7 @@ class PagesController < ApplicationController
       if params[:position]
         page.position = params[:position][0].to_i
       end
+      page.unlock
       page.update_attributes(params[:page])
       redirect_to page_path(page)
     end
@@ -275,6 +276,13 @@ class PagesController < ApplicationController
     @page = Version.where(item_type: 'Page', item_id: params[:id], event: 'destroy').last.reify
     @page.published = false
     @page.author = current_user
+    @page.save!
+    redirect_to page_path(@page)
+  end
+
+  def cancel
+    @page = Page.find(params[:id])
+    @page.unlock
     @page.save!
     redirect_to page_path(@page)
   end
