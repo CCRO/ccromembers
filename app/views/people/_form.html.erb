@@ -53,18 +53,20 @@
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :avatar, :class => 'control-label' %>
+      <%= f.label :avatar, "Avatar Picture", :class => 'control-label' %>
       <div class="controls">
         <%= f.file_field :avatar %>
-	    <%= f.hidden_field :avatar_cache %>	    
+	      <%= f.hidden_field :avatar_cache %>	    
         <p class="help-block">Upload a Avatar Head Shot as a *.jpg, *.gif, or *.png.</p>
+        <%= avatar_for @person, style: "width:100px;" %>
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :bio_pic, :class => 'control-label' %>
+      <%= f.label :bio_pic, "Profile Picture", :class => 'control-label' %>
       <div class="controls">
         <%= f.file_field :bio_pic %>
-        <p class="help-block">Upload a Full Color Bio Pic as a *.jpg, *.gif, or *.png.</p>
+        <p class="help-block">Upload a Full Color Profile Picture as a *.jpg, *.gif, or *.png.</p>
+        <%= bio_pic_for @person, style: "width:100px;" %>
       </div>
     </div>
     <div class="control-group">
