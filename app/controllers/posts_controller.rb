@@ -226,6 +226,7 @@ class PostsController < ApplicationController
       post.save! 
       render text: ""
     else
+      post.unlock
       post.update_attributes(params[:post])
       redirect_to polymorphic_path([post.owner, post])
     end
@@ -250,6 +251,13 @@ class PostsController < ApplicationController
     @post = Version.where(item_type: 'Post', item_id: params[:id], event: 'destroy').last.reify
     @post.published = false
     @post.author = current_user
+    @post.save!
+    redirect_to post_path(@post)
+  end
+
+  def cancel
+    @post = Post.find(params[:id])
+    @post.unlock
     @post.save!
     redirect_to post_path(@post)
   end

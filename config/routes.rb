@@ -132,6 +132,7 @@ Ccromembers::Application.routes.draw do
         get :reset_token
         get :duplicate
         get :restore
+        get :cancel
         post :share
       end
     end
