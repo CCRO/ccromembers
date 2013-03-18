@@ -16,6 +16,88 @@
  *= require redactor-rails
 */
 
+@media print {
+  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    margin-top: -80px;
+    padding: 0;
+  }
+
+  div.container {
+    margin-top: -20px;
+  }
+  
+  .navbar-fixed-bottom {
+    display: none !important;
+  }
+
+  #adminbar {
+    display: none !important;
+  }
+  
+  #header_logo {
+    width: 150px;
+    margin-bottom: 50px;
+  }
+  
+  #post_management_controls {
+    display: none !important;
+  }
+  
+  .post_date {
+    display: none;
+  }
+  
+  h2 {
+    color: #000;
+    font-size: 1em;
+  }
+  
+  h2:first-child {
+    padding-top: 20px;
+  }
+    
+  #post_author {
+    padding-top: 10px !important;
+  }
+  
+  @page {
+    size: 8.5in 11in;
+    margin: 16mm 16mm 16mm 16mm;
+
+    @top-left {
+      content: "CCRO";
+    }
+
+  }
+
+  @page :left {
+    @top-left {
+      content: "CCRO";
+    }
+  }
+
+  h2 {
+    string-set: header content();
+  }
+
+  @page :right {
+    @top-right {
+      content: string(header, first); 
+    }
+  }
+
+  @page :left {
+    @bottom-left {
+      content: counter(page);
+    }
+  } 
+}
+
 #message_content_box {
   margin-top: 25px;
   padding: 20px;
