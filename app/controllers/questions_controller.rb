@@ -82,8 +82,13 @@ class QuestionsController < ApplicationController
     @response = params[:response_text]
     
     if @question.possible_responses
-      index = (@question.possible_responses.to_a.last[0].to_i + 1).to_s
-      @question.possible_responses[index] = params[:response_text]
+        if @question.possible_responses.empty?
+          @question.possible_responses = {"0" => params[:response_text]}
+          @question.save
+        else
+          index = (@question.possible_responses.to_a.last[0].to_i + 1).to_s
+          @question.possible_responses[index] = params[:response_text]
+        end
     else
       @question.possible_responses = {"0" => params[:response_text]}
     end
