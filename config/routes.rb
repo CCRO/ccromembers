@@ -240,6 +240,7 @@ Ccromembers::Application.routes.draw do
     member do
       get :intro
       get :slide_show
+      get :archive
     end
     resources :questions do
       resources :responses

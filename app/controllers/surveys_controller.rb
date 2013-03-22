@@ -72,7 +72,7 @@ class SurveysController < ApplicationController
     @survey.update_attributes(params[:survey])
   end
 
-  def destroy
+  def archive
     @survey = Survey.find(params[:id])
     
     authorize! :destroy, @survey
