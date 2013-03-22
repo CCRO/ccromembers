@@ -16,7 +16,7 @@
  */
 
 @media print {
-  aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug, #pages_header_image, #fatty_nav {
+  .page_aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug, #pages_header_image, #fatty_nav {
     display: none !important;
   }
   
@@ -24,6 +24,11 @@
     margin: 0;
     margin-top: 0;
     padding: 0;
+    
+  }
+
+  .page_aside {
+    margin-right: 0;
   }
 
   div.container {

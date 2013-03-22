@@ -7,7 +7,7 @@ class SurveysController < ApplicationController
   
   
   def index
-    @surveys = Survey.all
+    @surveys = Survey.where(archived: false)
 
     respond_to do |format|
       format.mobile {render :layout => '/layouts/blank.html.erb'}
@@ -77,7 +77,9 @@ class SurveysController < ApplicationController
     
     authorize! :destroy, @survey
 
-    @survey.destroy
+    @survey.archived = true
+    @survey.active = false
+    @survey.save
     
     redirect_to surveys_path
   end
