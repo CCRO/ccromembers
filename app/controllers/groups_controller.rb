@@ -79,6 +79,13 @@ class GroupsController < ApplicationController
     end
   end
 
+  def join
+    @group = Group.find(params[:id])
+    @group.people << current_user
+    @group.save
+    redirect_to @group
+  end
+
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])

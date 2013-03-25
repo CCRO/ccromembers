@@ -74,6 +74,7 @@ Ccromembers::Application.routes.draw do
     member do
       get 'permissions'
       get 'show_activity'
+      get 'join'
     end
  
     resources :pages do
