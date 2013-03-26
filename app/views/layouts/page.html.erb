@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,9 +100,11 @@
       <% unless params[:controller] == 'signups' %> 
         <% if params[:action] == 'edit' %>
           <aside class="page_aside pull-right" style="width: 22%">
-            <div style="margin-bottom:20px">
-              <%= link_to "Insert HTML", '#', class: 'btn add_html' %>
-            </div>
+            <% Person.all.each do |person| %>
+              <%= link_to '#', class: "add_html#{person.id}" do %>
+                <%= sticker_for(person) %>
+              <% end %>
+            <% end %>
           </aside> 
         <% else %>
           <aside class="page_aside pull-right" style="width: 22%">
@@ -141,8 +144,14 @@
   $("#warning_message").toggle(['slow']);
   });
 
-  $(".add_html").click(function () {
-  $('#redactor_body').insertHtml('<%= sticker_for(Person.find(3))%>');
-  });
-
 </script>
+
+<% Person.all.each do |person| %>
+<% tag = ".add_html#{person.id}" %>
+<script>
+  $("<%= tag %>").click(function () {
+  $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
+  });
+</script>
+<% end %>
+
