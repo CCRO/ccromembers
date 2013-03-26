@@ -96,22 +96,31 @@
         <%= yield %>
       </section>
 
-      <% unless params[:controller] == 'signups' %>  
-        <aside class="page_aside pull-right" style="width: 22%">
+      <% unless params[:controller] == 'signups' %> 
+        <% if params[:action] == 'edit' %>
+          <aside class="page_aside pull-right" style="width: 22%">
+            <div style="margin-bottom:20px">
+              <%= link_to "Insert HTML", '#', class: 'btn add_html' %>
+            </div>
+          </aside> 
+        <% else %>
+          <aside class="page_aside pull-right" style="width: 22%">
 
-          <% if params[:action] == 'index' %>
-            <ul class="nav nav-tabs nav-stacked">
-              <li><%= link_to 'All Pages', pages_path() %></li>
-              <li><%= link_to 'Active Pages', active_pages_path() %></li>
-              <li><%= link_to 'Draft Pages', draft_pages_path() %></li>
-            </ul>
-          <% end %>
+            <% if params[:action] == 'index' %>
+              <ul class="nav nav-tabs nav-stacked">
+                <li><%= link_to 'All Pages', pages_path() %></li>
+                <li><%= link_to 'Active Pages', active_pages_path() %></li>
+                <li><%= link_to 'Draft Pages', draft_pages_path() %></li>
+              </ul>
+            <% end %>
 
-          <% if params[:action] == 'show' ||  params[:action] == 'edit' %>
-            <%= yield :aside %>
-          <% end %>
-          
-        </aside>
+            <% if params[:action] == 'show' %>
+              <%= yield :aside %>
+            <% end %>
+
+            
+          </aside>
+        <% end %>
       <% end %>
     </div> 
 
@@ -130,6 +139,10 @@
 
   $("#warning_close").click(function () {
   $("#warning_message").toggle(['slow']);
+  });
+
+  $(".add_html").click(function () {
+  $('#redactor_body').insertHtml('<%= sticker_for(Person.find(3))%>');
   });
 
 </script>

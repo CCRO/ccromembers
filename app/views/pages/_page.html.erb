@@ -53,7 +53,7 @@
     <% else %>
       <% if is_editing? %>
         <div id="page_body">
-          <%= f.text_area :body, :class => "redactor", :rows => 40, :cols => 80 %>
+          <%= f.text_area :body, :class => "redactor", id: "redactor_body", :rows => 40, :cols => 80 %>
         </div>
       <% else %>
         <% unless params[:action] == 'index'%>
@@ -97,89 +97,99 @@
 
 
 <% content_for :aside do %>
-  <% if @tag && (@category && @category.length > 1 && page.pages_enabled == true || @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true) %>
-    <div class="well">
-      <ul class="nav nav-list">
-        
-        <% if @category && @category.length > 1 && page.pages_enabled == true %>
-          <li class="nav-header"><%= 'Related Articles' %></li>
-          <% @category.each do |p| %>
-            <% if p.title == page.title.html_safe %>
-              <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
-                <%= p.title + " " %><i class="icon-arrow-left"></i>
-              <% end %></li>
-            <% else %>
-              <li><%= link_to strip_tags(p.title), page_path(p) %></li>
-            <% end %>
-          <% end %>
-        <% end %>  
-        
-        <% if @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true %>
-          <li class="nav-header"> Other resources </li>
-        <% end %>
-        
-        <% if @articles.length > 0 && page.articles_enabled == true%>
-          <li class="btn-group">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                </span><i class="icon-share-alt"></i>Related News and Updates
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li>
-                  <%= link_to tagged_posts_path(@tag, page: page.id) do %>
-                    <i class="icon-share-alt"></i> All Related News and Updates
-                  <% end %>
-                </li>
-                <% @articles.each do |a| %>
-                  <li><%= link_to strip_tags(a.title), post_path(a, page: page.id) %></li>
-                <% end %>
-              </ul>
-            </li>
-          </li>
-        <% end %>
-        
-        <% if @messages.length > 0 && page.discussions_enabled == true %>
-          <li class="btn-group">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                </span><i class="icon-share-alt"></i>Related Discussions
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li>
-                  <%= link_to tagged_messages_path(@tag, page: page.id) do %>
-                    <i class="icon-share-alt"></i> All Related Discussions
-                  <% end %>
-                </li>
-                <% @messages.each do |a| %>
-                  <li>
-                    <% if a.archived == false %>
-                      <%= link_to message_path(a, page: page.id) do %>
-                        <i class="icon-comment"></i><%= strip_tags(a.subject) %>
-                      <% end %>
-                    <% else %>
-                      <%= link_to message_path(a) do %>
-                        <i class="icon-inbox"></i><%= strip_tags(a.subject) %>
-                      <% end %>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-          </li>
-        <% end %>  
-      </ul>
-    </div>
-
-
-     <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
+  <% if params[:action] == 'edit' %>
+    <%= link_to "Insert HTML", '#', class: 'btn add_html' %>
+  <% else %>
+    <% if @tag && (@category && @category.length > 1 && page.pages_enabled == true || @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true) %>
       <div class="well">
         <ul class="nav nav-list">
-          <li class="nav-header"> Related people </li> 
-          <% @smart_list.each do |person| %>
-            <%= sticker_for person %>
+          
+          <% if @category && @category.length > 1 && page.pages_enabled == true %>
+            <li class="nav-header"><%= 'Related Articles' %></li>
+            <% @category.each do |p| %>
+              <% if p.title == page.title.html_safe %>
+                <li style="background-color: #E6E6E6;", class="active"><%= link_to page_path(p) do %>
+                  <%= p.title + " " %><i class="icon-arrow-left"></i>
+                <% end %></li>
+              <% else %>
+                <li><%= link_to strip_tags(p.title), page_path(p) %></li>
+              <% end %>
+            <% end %>
+          <% end %>  
+          
+          <% if @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true %>
+            <li class="nav-header"> Other resources </li>
           <% end %>
+          
+          <% if @articles.length > 0 && page.articles_enabled == true%>
+            <li class="btn-group">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  </span><i class="icon-share-alt"></i>Related News and Updates
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <%= link_to tagged_posts_path(@tag, page: page.id) do %>
+                      <i class="icon-share-alt"></i> All Related News and Updates
+                    <% end %>
+                  </li>
+                  <% @articles.each do |a| %>
+                    <li><%= link_to strip_tags(a.title), post_path(a, page: page.id) %></li>
+                  <% end %>
+                </ul>
+              </li>
+            </li>
+          <% end %>
+          
+          <% if @messages.length > 0 && page.discussions_enabled == true %>
+            <li class="btn-group">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  </span><i class="icon-share-alt"></i>Related Discussions
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <%= link_to tagged_messages_path(@tag, page: page.id) do %>
+                      <i class="icon-share-alt"></i> All Related Discussions
+                    <% end %>
+                  </li>
+                  <% @messages.each do |a| %>
+                    <li>
+                      <% if a.archived == false %>
+                        <%= link_to message_path(a, page: page.id) do %>
+                          <i class="icon-comment"></i><%= strip_tags(a.subject) %>
+                        <% end %>
+                      <% else %>
+                        <%= link_to message_path(a) do %>
+                          <i class="icon-inbox"></i><%= strip_tags(a.subject) %>
+                        <% end %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+            </li>
+          <% end %>  
         </ul>
       </div>
+
+
+       <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
+        <div class="well">
+          <ul class="nav nav-list">
+            <li class="nav-header"> Related people </li> 
+            <% @smart_list.each do |person| %>
+              <%= sticker_for person %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
+
+<script>
+
+
+
+</script>
