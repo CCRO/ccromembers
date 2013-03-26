@@ -146,12 +146,14 @@
 
 </script>
 
-<% @people.each do |person| %>
-  <% tag = ".add_html#{person.id}" %>
-  <script>
-    $("<%= tag %>").click(function () {
-    $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
-    });
-  </script>
+<% if params[:action] == 'edit' %>
+  <% @people.each do |person| %>
+    <% tag = ".add_html#{person.id}" %>
+    <script>
+      $("<%= tag %>").click(function () {
+      $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
+      });
+    </script>
+  <% end %>
 <% end %>
 
