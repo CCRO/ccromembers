@@ -99,7 +99,7 @@
 
       <% unless params[:controller] == 'signups' %> 
         <% if params[:action] == 'edit' %>
-          <aside class="page_aside pull-right" style="width: 25%; height: 600px; overflow: auto;">
+          <aside class="page_aside pull-right" style="height: 362px; overflow: auto; position: fixed; margin-left:880px; border-style:solid; border-width:1px; border-color: lightgray;">
             <% @people.each do |person| %>
               <%= link_to '#', class: "add_html#{person.id}" do %>
                 <%= sticker_for(person) %>
