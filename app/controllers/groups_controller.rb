@@ -111,6 +111,7 @@ class GroupsController < ApplicationController
   # PUT /groups/1.json
   def update
     @group = Group.find(params[:id])
+    @group.overview_page = params[:overview_page]
 
     respond_to do |format|
       if @group.update_attributes(params[:group])

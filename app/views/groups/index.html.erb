@@ -33,6 +33,7 @@
     <th style="text-align: center;">Discussions<br>/Comments</th>
     <th style="text-align: center;">Posts</th>
     <th style="text-align: center;">Uploads</th>
+    <th style="text-align: center;">Overview Page</th>
     <th></th>
     <th></th>
     <th></th>
@@ -47,6 +48,14 @@
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span> <span class="badge badge-success"><%= group.comments.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.attachments.count %></span></td>
+    <%= form_for(group, :remote => true) do |f| %>
+      <% group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
+      <% if group.overview_page %>
+      <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title", group.overview_page), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
+      <% else %>
+      <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title"), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
+      <% end %>
+    <% end %>
     <td><%= link_to 'Permissions', permissions_group_path(group) %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
