@@ -102,6 +102,7 @@ class PagesController < ApplicationController
       
       page_title = strip_tags @page.title
 
+
       if current_user
         message = "You are unable to view the page: <strong>#{page_title}</strong>. The access level needed to view this page is #{@page.level}, your access level is currently #{current_user.level}."
       else
@@ -202,6 +203,7 @@ class PagesController < ApplicationController
     end
 
     @commentable = @page
+    @people = Person.find(:all, :order => 'name')
     
     page_title = strip_tags @page.title
 
