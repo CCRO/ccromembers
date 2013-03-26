@@ -33,7 +33,7 @@ module ApplicationHelper
 
   def sticker_for user, options = {}
     options[:class] ||= ""
-    content_tag :div, {:class => 'sticker ' + options[:class]} do
+    content_tag :p, {:class => 'sticker ' + options[:class]} do
       avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
       link_to_person(user.name, user) +
       tag("br", nil, true) + 
