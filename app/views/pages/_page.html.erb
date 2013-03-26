@@ -30,7 +30,7 @@
       <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') || params[:action] == 'edit' %>
         <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;">
           <% if is_editing? %>
-            <%= f.text_area :title, :class => "redactor", :rows => 1, :cols => 80 %>
+            <%= f.text_area :title, :class => "redactor", :rows => 20, :cols => 80 %>
           <% else %>
             <%= page.title.html_safe if page.title %>
           <% end %>
@@ -53,7 +53,7 @@
     <% else %>
       <% if is_editing? %>
         <div id="page_body">
-          <%= f.text_area :body, :class => "redactor", id: "redactor_body", :rows => 40, :cols => 80 %>
+          <%= f.text_area :body, :class => "redactor", id: "redactor_body", :rows => 100, :cols => 80 %>
         </div>
       <% else %>
         <% unless params[:action] == 'index'%>
