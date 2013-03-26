@@ -63,8 +63,8 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer'
 
-  #gem 'uglifier', '>= 1.0.3'
-  #gem 'yui-compressor'
+  gem 'uglifier', '>= 1.0.3'
+  gem 'yui-compressor'
   gem "twitter-bootstrap-rails"
   gem 'font-awesome-rails'
 end
