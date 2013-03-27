@@ -101,6 +101,17 @@ class PostsController < ApplicationController
     if @group
       @article = @post
     end
+    
+    @groups = Group.where("overview_page IS NOT NULL").order("created_at asc")
+    @my_groups = []
+    @other_groups = []
+    @groups.each do |group| 
+      if group.people.include? current_user
+        @my_groups << group
+      else
+        @other_groups << group
+      end
+    end
 
     respond_to do |format|
       format.html
