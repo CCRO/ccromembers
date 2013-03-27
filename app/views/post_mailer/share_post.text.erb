@@ -1,8 +1,7 @@
-<%= @email %>, 
+<%= "Hello,
+          
+#{@sender.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"
 
-<%= @sender.name %> has shared a CCRO article with you titled "<%= strip_tags(@post.title).strip %>"
+#{strip_tags(raw @post.body.split('[---MORE---]').first).strip}
 
-<%= strip_tags @post.body.gsub('&nbsp;', ' ').split('[---MORE---]').first + " ..." %>
-
-Contine to full article:
-<%= post_url(@post) %>
+continued here: #{post_url(@post)}" %>

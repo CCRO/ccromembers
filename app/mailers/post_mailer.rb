@@ -9,9 +9,7 @@ class PostMailer < ActionMailer::Base
   def share_post(post, email, my_subject, short_message, sender)
     @post = post
     @sender = sender
-    @email = email
-    @my_subject = my_subject
     @short_message = short_message
-    mail :to => @email, :from => @sender.email , :subject => @my_subject, :body => @short_message
+    mail(:to => email, :from => sender.email, :subject => my_subject)
   end
 end
