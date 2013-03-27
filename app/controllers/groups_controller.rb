@@ -4,6 +4,8 @@ class GroupsController < ApplicationController
 
   layout 'group'
 
+  skip_before_filter :verify_authenticity_token, :only => [:update]
+
   def index
     @groups = Group.all
 
