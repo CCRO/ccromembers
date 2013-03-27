@@ -41,6 +41,19 @@ class PostsController < ApplicationController
       message = "You are unable to view news and updates for the working group: <strong>#{@group.name}</strong>. If you are still interested in viewing news and updates for this group, please let us know."
       authorize! :read, @group, :message => message.html_safe
     end
+
+    @groups = Group.where("overview_page IS NOT NULL").order("created_at asc")
+    @my_groups = []
+    @other_groups = []
+    @groups.each do |group| 
+      if group.people.include? current_user
+        @my_groups << group
+      else
+        @other_groups << group
+      end
+    end
+
+
     
     respond_to do |format|
       format.html

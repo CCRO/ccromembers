@@ -40,28 +40,44 @@
                   <%= link_to 'San Francisco RSVP', "/surveys/18", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
                   <%= link_to 'Poll: August Meeting Date', "/surveys/17", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
                 <% end %>
-                <ul class="nav nav-tabs nav-stacked">
-                  <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
-                  <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
-                  <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
-                  <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
-                  <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
-                  <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
-                  <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
-                  <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
-                  <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
-                  <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
-                </ul>
-                  <% if current_user %>
+
+                <% if current_user %>
+                  <% if @my_groups.length > 0%>
                     <ul class="nav nav-tabs nav-stacked">
-                      <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">How do I:</li>
-                      <li><%= link_to 'How do I - Join a working group?', "/pages/57" %></li>
-                      <li><%= link_to 'How do I - Conference calls?', "pages/66" %></li>
-                      <li><%= link_to 'How do I - Learn about working groups?', "/pages/59" %></li>
-                      <li><%= link_to 'How do I - Work with online files?', "/pages/60" %></li>
-                      <li><%= link_to 'How do I - For Chairs and Coordinators?', "/pages/57" %></li>
+                      <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">My CCRO Working Groups</li>
+                      <% @my_groups.each do |group| %>
+                        <li><%= link_to group.name, group %></li>
+                      <% end %>
                     </ul>
+                  <% end %>
+                  <% if @other_groups.length > 0%>
+                    <ul class="nav nav-tabs nav-stacked">
+                      <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                      <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                      <% @other_groups.each do |group| %>
+                        <li><%= link_to group.name, page_path(Page.find(group.overview_page)) %></li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                  <ul class="nav nav-tabs nav-stacked">
+                    <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">How do I:</li>
+                    <li><%= link_to 'How do I - Join a working group?', "/pages/57" %></li>
+                    <li><%= link_to 'How do I - Conference calls?', "pages/66" %></li>
+                    <li><%= link_to 'How do I - Learn about working groups?', "/pages/59" %></li>
+                    <li><%= link_to 'How do I - Work with online files?', "/pages/60" %></li>
+                    <li><%= link_to 'How do I - For Chairs and Coordinators?', "/pages/57" %></li>
+                  </ul>
+                <% else %>
+                  <ul class="nav nav-tabs nav-stacked">
+                    <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                    <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                    <% @groups.each do |group| %>
+                      <% group_overview_page = Page.find(group.overview_page)%>
+                      <li><%= link_to group.name, page_path(group_overview_page) %></li>
                     <% end %>
+                  </ul>
+                <% end %>
+
                 <% if current_user && current_user.admin? %>
                   <%= image_tag "http://placehold.it/300x250" %><br><br>
                   <%= image_tag "http://placehold.it/300x600" %>
@@ -103,28 +119,44 @@
               <%= link_to 'San Francisco RSVP', "/surveys/18", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
               <%= link_to 'Poll: August Meeting Date', "/surveys/17", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
             <% end %>
-            <ul class="nav nav-tabs nav-stacked">
+
+            <% if current_user %>
+              <% if @my_groups.length > 0%>
+                <ul class="nav nav-tabs nav-stacked">
+                  <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">My CCRO Working Groups</li>
+                  <% @my_groups.each do |group| %>
+                    <li><%= link_to group.name, group %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              <% if @other_groups.length > 0%>
+                <ul class="nav nav-tabs nav-stacked">
+                  <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
+                  <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
+                  <% @other_groups.each do |group| %>
+                    <li><%= link_to group.name, page_path(Page.find(group.overview_page)) %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              <ul class="nav nav-tabs nav-stacked">
+                <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">How do I:</li>
+                <li><%= link_to 'How do I - Join a working group?', "/pages/57" %></li>
+                <li><%= link_to 'How do I - Conference calls?', "pages/66" %></li>
+                <li><%= link_to 'How do I - Learn about working groups?', "/pages/59" %></li>
+                <li><%= link_to 'How do I - Work with online files?', "/pages/60" %></li>
+                <li><%= link_to 'How do I - For Chairs and Coordinators?', "/pages/57" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav nav-tabs nav-stacked">
                 <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                 <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
-                <li><%= link_to 'CCRO Passport Implementation', "/pages/25" %></li>
-                <li><%= link_to 'Evaluating Risk and Renewables', "/pages/28" %></li>
-                <li><%= link_to 'Next Steps for Risk and Compliance under Dodd-Frank', "/pages/27" %></li>
-                <li><%= link_to 'CCRO Industry Survey: Risk Organizations', "/pages/29" %></li>
-                <li><%= link_to 'Risk Metrics Subcommittee', "/pages/31" %></li>
-                <li><%= link_to 'Credit Risk Practices with Increased Use of FCMs', "/pages/32" %></li>
-                <li><%= link_to 'CCRO Training Development Team', "/pages/33" %></li>
-                <li><%= link_to 'Updating Your Risk Policy', "/pages/34" %></li>
-            </ul>
-            <% if current_user %>
-            <ul class="nav nav-tabs nav-stacked">
-              <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">How do I:</li>
-              <li><%= link_to 'How do I - Join a working group?', "/pages/57" %></li>
-              <li><%= link_to 'How do I - Conference calls?', "pages/66" %></li>
-              <li><%= link_to 'How do I - Learn about working groups?', "/pages/59" %></li>
-              <li><%= link_to 'How do I - Work with online files?', "/pages/60" %></li>
-              <li><%= link_to 'How do I - For Chairs and Coordinators?', "/pages/57" %></li>
-            </ul>
+                <% @groups.each do |group| %>
+                  <% group_overview_page = Page.find(group.overview_page)%>
+                  <li><%= link_to group.name, page_path(group_overview_page) %></li>
+                <% end %>
+              </ul>
             <% end %>
+
             <% if current_user && current_user.admin? %>
               <%= image_tag "http://placehold.it/300x250" %><br><br>
               <%= image_tag "http://placehold.it/300x600" %>

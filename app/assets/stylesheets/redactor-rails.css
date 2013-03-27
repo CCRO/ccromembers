@@ -491,3 +491,17 @@ body .redactor_toolbar li a.redactor_btn_alignment      { background-position: -
     background: #f4f4ee;
     border-color: #e0e5d6;
 }
+
+.redactor_editor table {
+  border-collapse: collapse;
+  font-size: 1em !important;
+}
+.redactor_editor table td {
+  border: 1px solid #ddd;
+  padding: 5px !important;
+  vertical-align: top;
+}
+.redactor_editor table thead td {
+  border-bottom: 2px solid #000 !important;
+  font-weight: bold !important;
+}
