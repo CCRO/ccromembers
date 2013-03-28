@@ -276,7 +276,7 @@ class PostsController < ApplicationController
     else
       post.unlock
       post.update_attributes(params[:post])
-      redirect_to polymorphic_path([post.owner, post])
+      redirect_to post
     end
 
 
