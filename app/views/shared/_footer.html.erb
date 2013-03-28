@@ -1,3 +1,9 @@
+    <style>
+    .redactor_editor{
+      height: 100px;
+    }
+    </style>
+
 <% if current_user %>
 	<div class="clearfix"></div>
     <footer>
@@ -76,18 +82,19 @@
         <h2>Share by email:</h2>
         <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
           <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
-          <% standard_body = 
-          "Hello,
-          
-          #{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"
-
-          #{strip_tags(raw @post.body.split('[---MORE---]').first).strip}
-          
-          continued here: #{post_url}"%>
-          <h4>subject</h4>
-          <%= text_area_tag 'my_subject', standard_subject,  rows: 1, style: 'width: 95%; important!' %><br><br>
-          <h4>body</h4>
-          <%= text_area_tag 'short_message', standard_body, rows: 5, style: 'width: 95%; important!' %><br><br>
+          <% standard_body = "none" %>
+          <h4 style="padding-bottom:5px;">Email Subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
+          <h4 style="padding-bottom:5px;">Short message</h4>
+          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
+          <div class="control-group radio">
+            <h4 style="padding-right:5px;">Test Email <%= radio_button_tag('email_who', 'user', checked: "true") %></h4>
+            <% if @post.owner_type == 'Group' %>
+            <h4 style="padding-right:5px;">Working Group Email <%= radio_button_tag('email_who', 'working_group') %></h4>
+            <% end %>
+            <h4 style="padding-right:5px;">CCRO Committee Email <%= radio_button_tag('email_who', 'committee') %></h4>
+          </div>
+          <br>
           <h4>intended recipient/s</h4>
           <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>

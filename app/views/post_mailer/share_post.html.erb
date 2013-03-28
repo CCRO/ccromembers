@@ -6,6 +6,10 @@
     img {
       margin:10px;
     }
+
+    .redactor_editor{
+      height: 100px;
+    }
     </style>
   </head>
   <body style="background-color:lightgray">
@@ -23,6 +27,11 @@
         <td width="10%">
         </td>
         <td width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+          <% if @short_message.length >= 10 %>
+            <p><%= @short_message.html_safe %></p>
+            <br>
+            <hr>
+          <% end %>
           <h1><%= link_to @post.title.html_safe, post_url(@post), style: "text-decoration:none;" %></h1>
           <% if @post.owner_type == 'Group' %>
             <h3>From The '<%= link_to @post.owner.try(:name), @post.owner %>' Working Group</h3>

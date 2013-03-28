@@ -60,10 +60,17 @@ class Post < ActiveRecord::Base
   end
 
   def share_by_email(email_list, my_subject, short_message, sender)
-    email_list = email_list.gsub(' ', '').split(',') if email_list.class.name == 'String'
-    email_list.each do |email|
-      PostMailer.share_post(self, email, my_subject, short_message, sender).deliver
+    if email_list.class.name == 'String'
+      email_list = email_list.gsub(' ', '').split(',')
+      email_list.each do |email|
+        PostMailer.share_post(self, email, my_subject, short_message, sender).deliver
+      end
+    elsif email_list.class.name == 'Array'
+      email_list.each do |person|
+        PostMailer.share_post(self, person.email, my_subject, short_message, sender).deliver
+      end
     end
+      
   end
 
   def locked?
