@@ -129,7 +129,6 @@ class PostsController < ApplicationController
     end
     
     authorize! :read, post, :message => message.html_safe
-
     post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
     redirect_to post
   end
