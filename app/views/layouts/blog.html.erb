@@ -48,7 +48,7 @@
               <aside class="span3">
                 <% if current_user && current_user.committee? %>
                   <% @surveys.each do |survey| %>
-                    <%= link_to survey.title, survey, class: "btn btn-info btn-large survey_btn" %>
+                    <%= link_to "Poll: #{survey.title}", survey, class: "btn btn-info btn-large survey_btn" %>
                   <% end %>
                 <% end %>
                 <% if current_user %>
@@ -129,7 +129,7 @@
 
             <% if current_user && current_user.committee? %>
                   <% @surveys.each do |survey| %>
-                    <%= link_to survey.title, survey, class: "btn btn-info btn-large survey_btn" %>
+                    <%= link_to "Poll: #{survey.title}", survey, class: "btn btn-info btn-large survey_btn" %>
                   <% end %>
                 <% end %>
             <% end %>
