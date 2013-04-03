@@ -203,7 +203,7 @@ class PagesController < ApplicationController
     end
 
     @commentable = @page
-    @people = Person.find(:all, :order => 'name')
+    @people = Person.find(:all, :order => 'last_name')
     
     page_title = strip_tags @page.title
 
