@@ -30,13 +30,36 @@
   <div class="modal hide fade" id="modal-settings">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>page Settings</h3>
+      <h3 class="pull-left" style="padding-right:10px;">Page Settings</h3> <%= page_publish_toggle(@page) %>
     </div>
     <div class="modal-body center">
-  <table cellpadding="10">
+  <table cellpadding="10" width="100%">
+    <tr>
+      <td valign="top" width="50%">
+        <% if can?(:publish, @page) && params[:action] == 'show' %> 
+          <% unless params[:mercury_frame] %>
+            <div >
+              <%= form_for @page, { :remote => true } do |f| %>
+                <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
+                  <b>Assign this page to: </b>
+                <%= select_tag('page[author_id]', options_for_select(editors, :selected => @page.author.id), :include_blank => true, :class => 'submittable') %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </td>
+
+      <td>
+        <%= form_for @page, { :remote => true } do |f| %>
+          <b>Category tag: </b>
+          <%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
+        <% end %>
+      </td>
+    </tr>
+
     <tr>
       <td>
-        <% if can?(:publish, @page) && ( params[:action] == 'show' || params[:action] == 'edit' ) %>  
+        <% if can?(:publish, @page) && params[:action] == 'show' %>  
           <div class="control-group radio inline" >
             <b>Level</b>
             <%= form_for @page, { :remote => true, :class => 'radio inline' } do |f| %>
@@ -56,28 +79,16 @@
           </div>
         <% end %>
       </td>
-      <td valign="top">
-        <% if can?(:publish, @page) && (params[:action] == 'show' || params[:action] == 'edit' ) %> 
-          <% unless params[:mercury_frame] %>
-            <div >
-              <%= form_for @page, { :remote => true } do |f| %>
-                <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
-                  <b>Assign this page to: </b>
-                <%= select_tag('page[author_id]', options_for_select(editors, :selected => @page.author.id), :include_blank => true, :class => 'submittable') %>
-              <% end %>
-            </div>
-          <% end %>
-          <%= page_publish_toggle(@page) %>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td class="Hero">
-        <%= form_for @page, { :remote => true } do |f| %>
-          <b>Category tag: </b>
-          <%= select_tag('page[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
-        <% end %>
+      <td>
         <div class="control-group checkbox inline" >
+          <div id="stretch_button">
+          <b>Stretch mode</b>
+          <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
+            <%= f.check_box :stretch, :class => 'submittable' %><%= f.label :stretch %>
+          <% end %>
+          </div>
+
+          <div id="widget">
             <b>Side Bar Widget</b>
             <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
               <%= f.check_box :pages_enabled, :class => 'submittable' %><%= f.label :pages_enabled %>
@@ -86,8 +97,10 @@
               <%= f.check_box :smart_lists_enabled, :class => 'submittable' %><%= f.label :smart_lists_enabled %>
             <% end %>
           </div>
-    </td>  
+        </div>
+      </td>  
     </tr>
+
     </table>
     </div>
     <div class="modal-footer">

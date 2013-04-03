@@ -65,7 +65,7 @@
   </div>
 
 <% else %>
-  <% if current_user   %>
+  <% if current_user %>
   <div style margin-bottom: 100px;>
     <div style="margin-bottom: 100px;">
       <%= render 'shared/nav' %>
@@ -92,14 +92,18 @@
     </div>
 
     <div class="row page">
-      <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
+      <section class="<%= (params[:controller] == 'signups') ? '' : @page.stretch ? 'span12' : 'span9' %>"
                style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
         <%= yield %>
       </section>
 
       <% unless params[:controller] == 'signups' %> 
         <% if params[:action] == 'edit' %>
+          <% if @page.stretch %>
+          <aside class="page_aside pull-right" style="height: 362px; overflow: auto; position: fixed; margin-left:1190px; border-style:solid; border-width:1px; border-color: lightgray;">
+          <% else %>
           <aside class="page_aside pull-right" style="height: 362px; overflow: auto; position: fixed; margin-left:880px; border-style:solid; border-width:1px; border-color: lightgray;">
+          <% end %>
             <% @people.each do |person| %>
               <%= link_to '#', class: "add_html#{person.id}" do %>
                 <%= sticker_for(person) %>
@@ -138,8 +142,18 @@
 </body>
 </html>
 
+<% if @page.stretch %>
+  <script>
+    $('#widget').hide();
+  </script>
+<% end %>
+
 <script>
-  
+  $('#stretch_button').click(function() {
+    $('#widget').toggle();
+    $('#widget .submittable').prop('checked', false);
+  });
+
   $("#warning_close").click(function () {
   $("#warning_message").toggle(['slow']);
   });
@@ -151,7 +165,7 @@
     <% tag = ".add_html#{person.id}" %>
     <script>
       $("<%= tag %>").click(function () {
-      $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
+        $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
       });
     </script>
   <% end %>

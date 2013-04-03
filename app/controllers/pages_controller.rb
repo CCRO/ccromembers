@@ -257,6 +257,15 @@ class PagesController < ApplicationController
         page.position = params[:position][0].to_i
       end
       page.unlock
+
+      if params[:page][:stretch]
+        page.pages_enabled = false
+        page.articles_enabled = false
+        page.discussions_enabled = false
+        page.smart_lists_enabled = false
+        page.save!
+      end
+
       page.update_attributes(params[:page])
       redirect_to page_path(page)
     end

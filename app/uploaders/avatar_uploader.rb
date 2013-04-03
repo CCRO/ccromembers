@@ -29,13 +29,18 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
+  process :make_jpg
+  def make_jpg
+    manipulate!(:format => 'jpg')
+  end
+  
   # process :scale => [200, 300]
   #
   # def scale(width, height)
   #   # do something
   # end
 
-  # Create different versions of your uploaded files:
+  # Create different versions of your uploaded files: 
   version :thumb do
     process :resize_to_fill => [200, 200]
     process :remove_color
