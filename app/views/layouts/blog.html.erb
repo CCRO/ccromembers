@@ -13,6 +13,16 @@
   <%= csrf_meta_tags %>
   <%= auto_discovery_link_tag(:rss, "/posts.rss", :title => "CCRO RSS Feed") %>
   <%= auto_discovery_link_tag(:atom, "/posts.atom", :title => "CCRO Atom Feed") %>
+
+  <style>
+    .survey_btn {
+      margin-bottom: 20px;
+      margin-left:0;
+      padding-left: 25%;
+      padding-right: 25%;
+    }
+
+  </style>
 </head>
 <body id="blog">
 <!--Body content (BEGIN)-->
@@ -37,10 +47,10 @@
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">
                 <% if current_user && current_user.committee? %>
-                  <%= link_to 'San Francisco RSVP', "/surveys/18", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
-                  <%= link_to 'Poll: August Meeting Date', "/surveys/17", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
+                  <% @surveys.each do |survey| %>
+                    <%= link_to survey.title, survey, class: "btn btn-info btn-large survey_btn" %>
+                  <% end %>
                 <% end %>
-
                 <% if current_user %>
                   <% if @my_groups.length > 0%>
                     <ul class="nav nav-tabs nav-stacked">
@@ -116,8 +126,12 @@
         <% unless params[:controller] == 'signups' %>  
         	<aside class="span3">
             <% if current_user && current_user.committee? %>
-              <%= link_to 'San Francisco RSVP', "/surveys/18", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
-              <%= link_to 'Poll: August Meeting Date', "/surveys/17", class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
+
+            <% if current_user && current_user.committee? %>
+                  <% @surveys.each do |survey| %>
+                    <%= link_to survey.title, survey, class: "btn btn-info btn-large survey_btn" %>
+                  <% end %>
+                <% end %>
             <% end %>
 
             <% if current_user %>
