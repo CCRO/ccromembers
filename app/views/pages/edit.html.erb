@@ -112,4 +112,12 @@
 
 <%= render @page %>
 
-  
+<script>
+  $(document).ready(function(){
+    $('#page_body .redactor_toolbar').draggable();
+    $("#page_body .redactor_toolbar").dblclick(function() {
+      $("#page_body .redactor_toolbar").addClass("floating_bar");
+    });
+  });
+   
+</script>

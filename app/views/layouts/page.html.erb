@@ -9,6 +9,20 @@
   <%= stylesheet_link_tag "page", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <style>
+    #page_body .redactor_toolbar {
+      z-index: 1;
+    }
+
+    .floating_bar {
+      width: 35px;
+      height: 650px !important;
+      position: absolute;
+      border: solid;
+      border-color: darkgray;
+    }
+    
+  </style>
 </head>
 <body id="web_page">
 <!--Body content (BEGIN)-->
