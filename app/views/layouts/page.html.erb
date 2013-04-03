@@ -92,8 +92,13 @@
     </div>
 
     <div class="row page">
-      <section class="<%= (params[:controller] == 'signups') ? '' : @page.stretch ? 'span12' : 'span9' %>"
-               style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
+      <% unless @page.nil? %>
+          <section class="<%= (params[:controller] == 'signups') ? '' : @page.stretch ? 'span12' : 'span9' %>"
+                   style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">
+      <% else %>
+          <section class="<%= (params[:controller] == 'signups') ? '' : 'span9' %>"
+                  style="<%= (params[:controller] == 'signups') ? '' : 'margin-left: 0px;' %>">   
+      <% end %>
         <%= yield %>
       </section>
 
@@ -142,10 +147,16 @@
 </body>
 </html>
 
-<% if @page.stretch %>
-  <script>
-    $('#widget').hide();
-  </script>
+<% unless @page.nil? %>
+  <% if @page.stretch %>
+    <script>
+      $('#widget').hide();
+    </script>
+  <% else %>
+    <script>
+      $('#widget').show();
+    </script>
+  <% end %>
 <% end %>
 
 <script>
