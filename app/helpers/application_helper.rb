@@ -17,7 +17,15 @@ module ApplicationHelper
     if user.avatar.present?
       image_tag user.avatar.thumb.url, options
     else
-      gravatar_for user, options
+      if false
+        gravatar_for user, options
+      else
+        if true
+          user.avatar = File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg'))
+          user.save!
+          avatar_for user
+        end
+      end
     end
   end
 
