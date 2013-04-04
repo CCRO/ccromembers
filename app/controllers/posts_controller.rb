@@ -42,7 +42,7 @@ class PostsController < ApplicationController
       authorize! :read, @group, :message => message.html_safe
     end
 
-    @surveys = Survey.where(active: true)
+    
     @groups = Group.where("overview_page IS NOT NULL").order("created_at asc")
     @my_groups = []
     @other_groups = []
@@ -363,6 +363,7 @@ class PostsController < ApplicationController
   end
 
   def lookup_group
+    @surveys = Survey.where(active: true)
      if params[:group_id]
       @group = Group.find(params[:group_id])
       @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
