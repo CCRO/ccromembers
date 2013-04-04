@@ -114,9 +114,20 @@ class PostsController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      format.html
-      format.pdf { doc_raptor_send }
+    if @post.owner.class == Group
+      unless params[:group_id]
+        redirect_to polymorphic_path([@post.owner, @post])
+      else
+        respond_to do |format|
+          format.html
+          format.pdf { doc_raptor_send }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.pdf { doc_raptor_send }
+      end
     end
   end
 
