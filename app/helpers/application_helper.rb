@@ -20,7 +20,7 @@ module ApplicationHelper
       if false
         gravatar_for user, options
       else
-        if true
+        if false
           user.avatar = File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg'))
           user.save!
           avatar_for user
