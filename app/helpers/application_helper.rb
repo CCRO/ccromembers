@@ -40,12 +40,15 @@ module ApplicationHelper
   end
 
   def sticker_for user, options = {}
-    options[:class] ||= ""
-    content_tag :p, {:class => 'sticker ' + options[:class]} do
-      avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
-      link_to_person(user.name, user) +
-      tag("br", nil, true) + 
-      (user.company.name if user.company)
+    object = link_to_person(user.name, user)
+    unless object.nil?
+      options[:class] ||= ""
+      content_tag :p, {:class => 'sticker ' + options[:class]} do
+        avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
+        link_to_person(user.name, user) +
+        tag("br", nil, true) + 
+        (user.company.name if user.company)
+      end
     end
   end
   
