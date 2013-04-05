@@ -112,6 +112,7 @@ class PeopleController < ApplicationController
       params[:person].delete(:company_name)
     end
     @person = Person.new(params[:person])
+    @person.avatar ||= File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg'))
 
     authorize! :create, @person
         

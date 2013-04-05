@@ -17,6 +17,7 @@ module ApplicationHelper
     if user.avatar.present?
       image_tag user.avatar.thumb.url, options
     else
+      gravatar_for user, options
       if false
         gravatar_for user, options
       else
