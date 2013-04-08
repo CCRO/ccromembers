@@ -86,12 +86,11 @@
     <% if @attachments && @attachments.length > 0 %>
       <li class="nav-header"> Files and Attachments </li>
       <% @group.attachments.limit(3).each do |m| %>
-        <% unless m.archived == false %>
-          <% if @attachment && m.id == @attachment.id %>
-            <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+        <% unless m.archived %>
+          
+          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
           <% else %>
-            <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
-          <% end %>
+          <% raise m.to_yaml %>
         <% end %>
       <% end %>
       <% if @group.attachments.length > 3 %>
