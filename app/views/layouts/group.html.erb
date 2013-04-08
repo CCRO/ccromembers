@@ -159,13 +159,13 @@
             <% end %>
                 <ul class="nav pull-left">
               <% if(can? :edit, @post) && @post %>
-                  <li><%= link_to edit_polymorphic_path([@group, @post]), id: "edit_link", data: {save_url: polymorphic_path([@group, @post]) + '/mercury_update'} do %>Edit Post<% end %></li>
+                  <li><%= link_to edit_polymorphic_path([@group, @post]), id: "edit_link", data: {save_url: polymorphic_path([@group, @post]) + '/mercury_update'} do %>Edit Article<% end %></li>
                   <li class="divider-vertical"></li>
               <% end %>
               <% if(can? :publish, @post) && @post %>
-                  <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %>Delete Post<% end %></li>
+                  <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %>Delete Article<% end %></li>
                   <li class="divider-vertical"></li>
-                  <li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %>Post Settings<% end %></li>
+                  <li><%= link_to "#modal-settings", 'data-toggle' => "modal" do %>Article Settings<% end %></li>
                   <li class="divider-vertical"></li>
               <% end %>
                 </ul>
@@ -219,7 +219,7 @@
             <% end %>
               <ul class="nav pull-left">
                 <% if(can? :edit, @post) && @post %>
-                  <li><%= link_to "Save Post", "javascript:document.getElementById(\"edit_post_#{@post.id}\").submit();" %></li>
+                  <li><%= link_to "Save Article", "javascript:document.getElementById(\"edit_post_#{@post.id}\").submit();" %></li>
                   <li class="divider-vertical"></li>
                 <% end %>
               </ul>
