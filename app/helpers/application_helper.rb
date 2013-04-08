@@ -18,15 +18,6 @@ module ApplicationHelper
       image_tag user.avatar.thumb.url, options
     else
       gravatar_for user, options
-      if false
-        gravatar_for user, options
-      else
-        if false
-          user.avatar = File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg'))
-          user.save!
-          avatar_for user
-        end
-      end
     end
   end
 
@@ -41,8 +32,10 @@ module ApplicationHelper
   end
 
   def sticker_for user, options = {}
-    object = link_to_person(user.name, user)
-    unless object.nil?
+    link_check = link_to_person(user.name, user)
+    avatar_check = avatar_for(user)
+
+    unless link_check.nil? || avatar_check.nil?
       options[:class] ||= ""
       content_tag :p, {:class => 'sticker ' + options[:class]} do
         avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
