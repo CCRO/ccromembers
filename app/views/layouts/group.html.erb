@@ -208,6 +208,27 @@
       <% end %>
     <% end %>
 
+    <% if params[:action] == 'edit' && params[:controller] == 'posts' %>
+      <% if current_user %>
+        <div>
+          <% if current_user.role == 'admin' || @group.people.include?(current_user) %>
+            <% if current_user.role == 'admin' %>
+              <div class="navbar navbar-fixed-bottom" style="margin-bottom: 92px; width: 100%; background-color: black;">
+            <% else %>
+              <div class="navbar navbar-fixed-bottom" style="background-color: black;">
+            <% end %>
+              <ul class="nav pull-left">
+                <% if(can? :edit, @post) && @post %>
+                  <li><%= link_to "Save Post", "javascript:document.getElementById(\"edit_post_#{@post.id}\").submit();" %></li>
+                  <li class="divider-vertical"></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
   </div>
 
 <!--Body content (END)-->
