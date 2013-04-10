@@ -68,9 +68,15 @@
           
         </div>
       <% end %>
-      <div style="width:75%; float:left;">
-        <%= yield %>
-      </div>
+      <% if @page.stretch %>
+        <div style="width:100%; float:left;">
+          <%= yield %>
+        </div>
+      <% else %>
+        <div style="width:75%; float:left;">
+          <%= yield %>
+        </div>
+      <% end %>
     </div> 
 
     <footer>
