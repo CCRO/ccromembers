@@ -1,3 +1,58 @@
+<style>
+body {
+  background-color: white;
+  padding-top: 30px;
+}
+</style>
+
+<% if browser.ie8? || browser.ie7? %>
+<div class="container">
+  <div id="login" class="" style="">
+    <div id="login_tools" class="span3 offset4" style="padding:50px; background-color: #eeeeee; margin-bottom:20px;">
+      <%= image_tag "ccro_short.png", :width => 250, :id => 'logo_short', style: "margin-bottom:20px; margin-left:8px" %>  
+      <h3 style="margin-bottom: 10px; color:#0088cc;">Reset your password</h3>
+      <div style="margin-bottom:20px;">
+        <%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
+            <p>Account email address: <%= text_field_tag :email, params[:email], :class => "input-xlarge ", :placeholder => 'User Account Email' %></p>
+            <%= submit_tag "Reset Password", :class => 'btn pull-right' %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="login" style="margin-left:50px;">
+    <div id="login_tools" class="span3 offset4" style="text-align:center;">  
+      <h3 style="margin-bottom: 10px; color:#0088cc;">Need help?</h3>
+      <p>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</p>
+    </div>
+  </div>
+</div>
+<% else %>
+<div class="container">
+  <div id="login" class="" style="">
+    <div id="login_tools" class="span3 offset4" style="padding:50px; background-color: #eeeeee; margin-bottom:20px;">
+      <%= image_tag "ccro_short.png", :width => 250, :id => 'logo_short', style: "margin-bottom:20px; margin-left:8px" %>  
+      <h3 style="margin-bottom: 10px; color:#0088cc;">Reset your password</h3>
+      <div style="margin-bottom:20px;">
+        <%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
+            <p><%= text_field_tag :email, params[:email], :class => "input-xlarge ", :placeholder => 'User Account Email' %></p>
+            <%= submit_tag "Reset Password", :class => 'btn pull-right' %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="login" style="margin-left:50px;">
+    <div id="login_tools" class="span3 offset4" style="text-align:center;">  
+      <h3 style="margin-bottom: 10px; color:#0088cc;">Need help?</h3>
+      <p>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</p>
+    </div>
+  </div>
+</div>
+
+<% end %>
+
+<% if false %>
 <div id="password-reset" class="new">
 	<div class="offset1">
 		<table>
@@ -25,3 +80,4 @@
     </table>
 	</div>
 </div>
+<% end %>
