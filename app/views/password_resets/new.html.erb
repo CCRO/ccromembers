@@ -4,6 +4,12 @@ body {
   padding-top: 30px;
 }
 </style>
+<% flash.each do |key, msg| %>
+  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+  </div>
+<% end %>
 
 <% if browser.ie8? || browser.ie7? %>
 <div class="container">
@@ -13,7 +19,7 @@ body {
       <h3 style="margin-bottom: 10px; color:#0088cc;">Reset your password</h3>
       <div style="margin-bottom:20px;">
         <%= form_tag forgot_password_path, :class => 'form-inline', :method => :post do %>
-            <p>Account email address: <%= text_field_tag :email, params[:email], :class => "input-xlarge ", :placeholder => 'User Account Email' %></p>
+            <p>Account email address: <%= text_field_tag :email, params[:email], :class => " ", :placeholder => 'User Account Email' %></p>
             <%= submit_tag "Reset Password", :class => 'btn pull-right' %>
           <% end %>
       </div>

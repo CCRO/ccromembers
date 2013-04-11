@@ -24,8 +24,8 @@
         <div style="margin-bottom:20px;">
           <%= form_tag  :sessions, :class => "form-inline" do %>
             <%= hidden_field_tag :remember_me, '1' %>
-            email: <%= text_field_tag :email, '', :class => "input-xlarge ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
-            password: <%= password_field_tag :password, '', :class => "input-xlarge ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
+            email: <%= text_field_tag :email, '', :class => " ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
+            password: <%= password_field_tag :password, '', :class => " ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
             <%= link_to 'Sign Up', register_path, class: "" %> | 
             <%= link_to 'Password Help', forgot_password_path, class: "" %>
             <%= submit_tag 'Sign in', :class => "btn brn-large pull-right", style: "" %>
