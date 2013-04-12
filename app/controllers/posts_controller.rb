@@ -322,6 +322,7 @@ class PostsController < ApplicationController
   def submit
     @post = Post.find(params[:id])
     @post.submitted = params[:submitted]
+    @post.submitted_by = current_user.id
     post_title = strip_tags @post.title
 
     message = "You do not have the access needed to publish the post: <strong>#{post_title}</strong> at this time. If you are still interested in publishing this post, please let us know."
@@ -329,7 +330,7 @@ class PostsController < ApplicationController
 
     people = []
 
-    Person.find(8) ? people << Person.find(8) : ""
+    Person.find(248) ? people << Person.find(248) : ""
 
     @post.submit_by_email(people, current_user)
 

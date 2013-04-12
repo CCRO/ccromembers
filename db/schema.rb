@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412142517) do
+ActiveRecord::Schema.define(:version => 20130412192214) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(:version => 20130412142517) do
     t.boolean  "archived"
     t.boolean  "hidden",             :default => false
     t.boolean  "submitted",          :default => false
+    t.integer  "submitted_by"
   end
 
   create_table "questions", :force => true do |t|
