@@ -33,7 +33,8 @@ class PostsController < ApplicationController
     end
     
     if current_user && current_user.admin?
-      @posts ||= Post.where(published: true).order('published_at DESC')
+      #@posts ||= Post.where(published: true).order('published_at DESC')
+      @posts ||= Post.where(published: true, hidden: false).order('published_at DESC')
     else
       @posts ||= Post.where(published: true, hidden: false).order('published_at DESC')
     end
