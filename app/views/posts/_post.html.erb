@@ -24,7 +24,7 @@
 
 
 <!-- Post Container: start showing the post here - Give the post its 'page' box -->
-<div class="page drop-shadow lifted<%= "watermark-draft" unless post.published? %>">
+<div class="page drop-shadow lifted<%= "watermark-draft" unless post.published? %>" style="<%= "background-color:whitesmoke" if post.hidden %>">
   <article id="post-<%= post.id %>">
       
     <!-- Post Flag: index mode. put the flag on.  -->

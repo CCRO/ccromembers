@@ -32,7 +32,11 @@ class PostsController < ApplicationController
       @posts = Post.where(published: true).tagged_with(params[:tag_name])
     end
     
-    @posts ||= Post.where(:published => true).order('published_at DESC')
+    if current_user && current_user.admin?
+      @posts ||= Post.where(published: true).order('published_at DESC')
+    else
+      @posts ||= Post.where(published: true, hidden: false).order('published_at DESC')
+    end
 
     if params[:page]
       @page = Page.find(params[:page])
@@ -182,10 +186,10 @@ class PostsController < ApplicationController
     @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your post preview!"
     if params[:group_id]
       @post.owner = Group.find(params[:group_id])
-      @post.hidden = true 
     else
       @post.owner ||= current_user
     end
+    @post.hidden = true 
     @post.author = current_user
     @post.published = false
     @post.level ||= 'public'
