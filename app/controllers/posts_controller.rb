@@ -23,6 +23,9 @@ class PostsController < ApplicationController
       if params[:filter] == 'summit'
         @posts = Post.where(published: true).tagged_with("summit")
       end
+      if params[:filter] == 'submitted'
+        @posts = Post.where(published: false).where(submitted: true)
+      end
     end
 
     if params[:tag_name]
@@ -36,7 +39,11 @@ class PostsController < ApplicationController
     end
 
     if @group
-      @posts = @group.posts.order('updated_at DESC')
+      if (@group.leadership.include? current_user) || (current_user && current_user.admin?)
+        @posts = @group.posts.order('updated_at DESC')
+      else 
+        @posts = @group.posts.where(hidden: false).order('updated_at DESC')
+      end
 
       message = "You are unable to view news and updates for the working group: <strong>#{@group.name}</strong>. If you are still interested in viewing news and updates for this group, please let us know."
       authorize! :read, @group, :message => message.html_safe
@@ -164,6 +171,7 @@ class PostsController < ApplicationController
     @post = Post.new
     if params[:group_id]
       @owner = Group.find(params[:group_id])
+
     end
   end
   
@@ -173,7 +181,8 @@ class PostsController < ApplicationController
     
     @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your post preview!"
     if params[:group_id]
-      @post.owner = Group.find(params[:group_id]) 
+      @post.owner = Group.find(params[:group_id])
+      @post.hidden = true 
     else
       @post.owner ||= current_user
     end
@@ -298,10 +307,31 @@ class PostsController < ApplicationController
   def publish
     @post = Post.find(params[:id])
     @post.published = params[:published]
+    if @post.published?
+      @post.hidden = false
+    end
     post_title = strip_tags @post.title
 
     message = "You do not have the access needed to publish the post: <strong>#{post_title}</strong> at this time. If you are still interested in publishing this post, please let us know."
     authorize! :publish, @post, :message => message.html_safe
+
+    @post.save 
+    redirect_to polymorphic_path([@group, @post])
+  end
+
+  def submit
+    @post = Post.find(params[:id])
+    @post.submitted = params[:submitted]
+    post_title = strip_tags @post.title
+
+    message = "You do not have the access needed to publish the post: <strong>#{post_title}</strong> at this time. If you are still interested in publishing this post, please let us know."
+    authorize! :publish, @post, :message => message.html_safe
+
+    people = []
+
+    Person.find(8) ? people << Person.find(8) : ""
+
+    @post.submit_by_email(people, current_user)
 
     @post.save 
     redirect_to polymorphic_path([@group, @post])

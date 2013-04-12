@@ -10,6 +10,17 @@ module PostHelper
       html.html_safe
   end
 
+  def submit_toggle(object) 
+      object.owner = nil if object.owner_type == 'Person'
+      html = "<div class=\"btn-group\">"
+      html += link_to "Submitted", polymorphic_path([object.owner, object], :action => 'submit', :submitted=> false ), {:class =>'btn btn-success'} if object.submitted?
+      html += link_to "Submitted", polymorphic_path([object.owner, object], :action => 'submit', :submitted=> true ), {:class =>'btn disabled'} unless object.submitted?
+      html += link_to "Draft", polymorphic_path([object.owner, object], :action => 'submit', :submitted=> false ), {:class =>'btn disabled'} if object.submitted?
+      html += link_to "Draft", polymorphic_path([object.owner, object], :action => 'submit', :submitted=> true ), {:class =>'btn btn-danger'} unless object.submitted?
+      html += "</div>"
+      html.html_safe
+  end
+
   def short_date(post)
     post_date = post.published_at if post.published
     post_date ||= post.updated_at

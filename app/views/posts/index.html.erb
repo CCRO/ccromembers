@@ -1,6 +1,7 @@
 <% content_for :adminbar do %>
 	<ul>
 		<li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %><i class="icon-asterisk"></i><br><p>New<br>Post</p><% end %></li>
+    <li><%= link_to submitted_posts_path() do %><i class="icon-inbox"></i><br><p>Submitted<br>Posts</p><% end %></li>
     <li><%= link_to draft_posts_path() do %><i class="icon-file"></i><br><p>Drafts</p><% end %></li>
     <li><%= link_to my_draft_posts_path() do %><i class="icon-paste"></i><br><p>My<br>Drafts</p><% end %></li>
     <li><%= link_to archive_posts_path() do %><i class="icon-hdd"></i><br><p>Archived<br>Posts</p><% end %></li>

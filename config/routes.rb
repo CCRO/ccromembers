@@ -93,6 +93,7 @@ Ccromembers::Application.routes.draw do
       member do 
         post :mercury_update
         get :publish
+        get :submit
         get :claim
         get :reset_token
         get :duplicate
@@ -161,6 +162,7 @@ Ccromembers::Application.routes.draw do
     match 'tag/:tag_name' => 'posts#index', as: 'tagged_posts'
     match 'archive' => 'posts#index', :defaults => { filter: 'archive' }, as: 'archive_posts'
     match 'drafts' => 'posts#index', :defaults => { filter: 'drafts' }, as: 'draft_posts'
+    match 'submissions' => 'posts#index', :defaults => { filter: 'submitted' }, as: 'submitted_posts'
     match 'my_drafts' => 'posts#index', :defaults => { filter: 'my_drafts' }, as: 'my_draft_posts'
     match 'summit' => 'posts#index', :defaults => { filter: 'summit' }, as: 'summit_posts'
     match 'shared_post/:token' => 'posts#show', as: 'shared_post'

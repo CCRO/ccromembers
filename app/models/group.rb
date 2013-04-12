@@ -15,4 +15,13 @@ class Group < ActiveRecord::Base
   has_many :people, :through => :memberships
   has_many :comments, :through => :messages, :as => :commentable
 
+  def leadership
+    leaders = []
+    self.memberships.where(fuction: "chair").each {|l| leaders << Person.find(l.person_id)}
+    self.memberships.where(fuction: "coordinator").each {|l| leaders << Person.find(l.person_id)}
+    return leaders
+  end
+
 end
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130403142901) do
+ActiveRecord::Schema.define(:version => 20130412142517) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -280,8 +280,8 @@ ActiveRecord::Schema.define(:version => 20130403142901) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "author_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "published"
     t.datetime "published_at"
     t.string   "level"
@@ -292,6 +292,8 @@ ActiveRecord::Schema.define(:version => 20130403142901) do
     t.string   "tag_list"
     t.boolean  "commenting_enabled"
     t.boolean  "archived"
+    t.boolean  "hidden",             :default => false
+    t.boolean  "submitted",          :default => false
   end
 
   create_table "questions", :force => true do |t|

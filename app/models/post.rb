@@ -70,8 +70,15 @@ class Post < ActiveRecord::Base
         PostMailer.share_post(self, person.email, my_subject, short_message, sender).deliver
       end
     end
-      
   end
+
+   def submit_by_email(email_list, sender)
+    email_list.each do |person|
+      PostMailer.submit_post(self, person.email, sender).deliver
+    end
+  end
+
+
 
   def locked?
     if self.locked_at && self.locked_at < 2.hours.ago

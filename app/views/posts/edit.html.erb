@@ -136,25 +136,27 @@
   <article id="post-<%= @post.id %>">
       
     <!-- Post Flag: index mode. put the flag on.  -->
-    <% if browser.ie8? || browser.ie7? %>  
-      <% if @post.level == 'basic' && params[:action] == 'index' %>
-        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h2>
-      <% elsif @post.level == 'pro' && params[:action] == 'index' %>
-        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h2>
-      <% elsif @post.level == 'individual_member' || @post.level == 'company_member' && params[:action] == 'index' %>
-        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Committee</h2>
-      <% elsif @post.level == 'leadership' && params[:action] == 'index' %>
-        <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Leadership</h2>
-      <% end %>
-    <% else %>
-      <% if @post.level == 'basic' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h1>
-      <% elsif @post.level == 'pro' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h1>
-      <% elsif @post.level == 'individual_member' || @post.level == 'company_member' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Committee</h1>
-      <% elsif @post.level == 'leadership' && params[:action] == 'index' %>
-        <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Leadership</h1>
+    <% unless params[:action] == 'edit' %>
+      <% if browser.ie8? || browser.ie7? %>  
+        <% if @post.level == 'basic' && params[:action] == 'index' %>
+          <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h2>
+        <% elsif @post.level == 'pro' && params[:action] == 'index' %>
+          <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h2>
+        <% elsif @post.level == 'individual_member' || @post.level == 'company_member' && params[:action] == 'index' %>
+          <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Committee</h2>
+        <% elsif @post.level == 'leadership' && params[:action] == 'index' %>
+          <h2 style="float:right;"><i class="icon-key icon-white icon-medium"></i> Leadership</h2>
+        <% end %>
+      <% else %>
+        <% if @post.level == 'basic' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info ribbon-basic"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h1>
+        <% elsif @post.level == 'pro' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info"><i class="icon-key icon-white icon-medium"></i> <%= @post.level.capitalize %></h1>
+        <% elsif @post.level == 'individual_member' || @post.level == 'company_member' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Committee</h1>
+        <% elsif @post.level == 'leadership' && params[:action] == 'index' %>
+          <h1 class="ribbon-right ribbon-info ribbon-member"><i class="icon-key icon-white icon-medium"></i> Leadership</h1>
+        <% end %>
       <% end %>
     <% end %>
    <%= form_for @post do |f| %>

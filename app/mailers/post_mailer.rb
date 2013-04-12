@@ -12,4 +12,10 @@ class PostMailer < ActionMailer::Base
     @short_message = short_message
     mail(:to => email, :from => sender.email, :subject => my_subject)
   end
+
+  def submit_post(post, email, sender)
+    @post = post
+    @sender = sender
+    mail(:to => email, :from => sender.email, :subject => "#{sender.name} is submitting a post for publication.")
+  end
 end
