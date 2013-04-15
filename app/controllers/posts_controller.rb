@@ -155,6 +155,10 @@ class PostsController < ApplicationController
     authorize! :read, post, :message => message.html_safe
     if params[:email_who] == 'user'
       post.share_by_email(current_user.email, params[:my_subject], params[:short_message], current_user)
+    elsif params[:email_who] == 'my_list'
+      post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
+    elsif params[:email_who] == 'leadership'
+      post.share_by_email(post.owner.leadership, params[:my_subject], params[:short_message], current_user)
     elsif params[:email_who] == 'working_group'
       post.share_by_email(post.owner.people, params[:my_subject], params[:short_message], current_user)
     elsif params[:email_who] == 'committee'

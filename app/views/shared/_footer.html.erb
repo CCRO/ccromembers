@@ -85,13 +85,17 @@
           <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
           <div class="control-group radio">
             <h4 style="padding-right:5px;">Test Email <%= radio_button_tag('email_who', 'user', checked: "true") %>: <%= current_user.email %> </h4>
+
             <% if @post.owner_type == 'Group' %>
             <h4 style="padding-right:5px;">Working Group Email <%= radio_button_tag('email_who', 'working_group') %></h4>
+            <h4 style="padding-right:5px;">Working Group Leadership Email <%= radio_button_tag('email_who', 'leadership') %></h4>
             <% end %>
+            <% if current_user and current_user.admin? %>
             <h4 style="padding-right:5px;">CCRO Committee Email <%= radio_button_tag('email_who', 'committee') %></h4>
+            <% end %>
           </div>
           <br>
-          <h4>intended recipient/s</h4>
+          <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list', checked: "true") %></h4>
           <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>
