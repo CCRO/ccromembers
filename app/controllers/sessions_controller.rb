@@ -1,11 +1,16 @@
 class SessionsController < ApplicationController
   
   layout 'blank'
+  has_mobile_fu
   
   before_filter :require_no_user, :only => ['new', 'create']
   before_filter :require_user, :only => 'destroy'
 
   def new
+    respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.html
+    end
   end
   
   def create
