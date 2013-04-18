@@ -352,11 +352,17 @@ class PagesController < ApplicationController
       @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
       @attachments = @group.attachments
       @attachments.delete_if { |attachment| attachment.archived? }
-      @total_articles = @group.posts
-      @articles = @total_articles.limit(3)
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people
+
+      if current_user && @group.leadership.include?(current_user)
+        @total_articles = @group.posts
+        @articles = @total_articles.limit(3)
+      else
+        @total_articles = @group.posts.where(hidden: false)
+        @articles = @total_articles.limit(3)
+      end
     end
 
   end

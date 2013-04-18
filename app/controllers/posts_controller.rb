@@ -188,7 +188,7 @@ class PostsController < ApplicationController
 
     @post = Post.new(params[:post])
     
-    @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surronding characters where you want to end your post preview!"
+    @post.body = "This text is your preview text. It will be before the break.<br><br>[---MORE---]<br><br>This text is after the break. Put the MORE and its surrounding characters where you want to end your post preview!"
     if params[:group_id]
       @post.owner = Group.find(params[:group_id])
     else
@@ -418,15 +418,19 @@ class PostsController < ApplicationController
      if params[:group_id]
       @group = Group.find(params[:group_id])
       @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-
       @attachments = @group.attachments
       @attachments.delete_if { |attachment| attachment.archived? }
-      
-      @total_articles = @group.posts
-      @articles = @total_articles.limit(3)
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people
+
+      if current_user && @group.leadership.include?(current_user)
+        @total_articles = @group.posts
+        @articles = @total_articles.limit(3)
+      else
+        @total_articles = @group.posts.where(hidden: false)
+        @articles = @total_articles.limit(3)
+      end
     end
   end
 
