@@ -2,6 +2,9 @@ class PeopleController < ApplicationController
   #before_filter :require_admin, :except => ['new', 'create', 'show', 'su']
   # GET /people
   # GET /people.json
+
+  has_mobile_fu
+
   def index
     if params[:q]
       @people = Person.find(Person.accessible_by(current_ability).search(params).map(&:id))
@@ -73,6 +76,7 @@ class PeopleController < ApplicationController
     authorize! :create, Person
     
     respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
       format.html # new.html.erb
       format.json { render json: @person }
     end
