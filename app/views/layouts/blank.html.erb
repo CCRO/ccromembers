@@ -11,7 +11,7 @@
 <!--Body content (BEGIN)-->
 <%= yield %>
 <!--Body content (END)-->
-<% unless params[:controller] == "surveys" || params[:controller] == "questions"%>
+<% unless params[:controller] == "surveys" || params[:controller] == "questions" || params[:controller] == "exceptions"%>
 <%= render :partial => 'shared/ga' if Rails.env.production? %>
 <% end %>
 </body>
