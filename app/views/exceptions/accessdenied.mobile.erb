@@ -1,0 +1,77 @@
+ <head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+);
+</script>
+
+<% if current_user %>
+  
+  <div id="contact" class="row-fluid">
+    <div class="hero-unit span12">  
+    <h1 style="margin-bottom: 30px;">Need help?</h1>
+    <h2>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</h2>
+    <% if flash[:alert] %>
+      <p><%= flash[:alert] %></p>
+    <% else %>
+      <p>You do not currently have access to <%= session[:url_return_to] %>.</p>
+    <% end %>
+    <%= link_to "Back", :back, class: 'btn btn-success btn-large', style: 'width: 100px; height:20px; margin-top:20px' %>
+    </div> 
+  </div>
+
+<% else %>
+
+  <div class="container">
+    <div id="login" class="" style="">
+      <div id="login_tools" class="span3 offset4" style="padding:50px; background-color: #eeeeee; margin-bottom:20px;">  
+        <h3 style="margin-bottom: 10px; color:#0088cc;"> Please Sign in</h3>
+        <div style="margin-bottom:20px;">
+          <%= form_tag  :sessions, :class => "form-inline" do %>
+            <%= hidden_field_tag :remember_me, '1' %>
+            <%= text_field_tag :email, '', :class => "input-xlarge ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
+            <%= password_field_tag :password, '', :class => "input-xlarge ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
+            <%= link_to 'Sign Up', register_path, class: "" %> | 
+            <%= link_to 'Password Help', forgot_password_path, class: "" %>
+            <%= submit_tag 'Sign in', :class => "btn brn-large pull-right", style: "" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="login" style="margin-left:50px;">
+      <div id="login_tools" class="span3 offset4" style="text-align:center;">  
+        <h3 style="margin-bottom: 10px; color:#0088cc;">Need help?</h3>
+        <p>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</p>
+      </div>
+    </div>
+  </div>
+  
+<% end %>
+
+<style>
+body {
+  background-color: #fff !important;
+}
+
+div#signup div.hero-unit {
+  min-height: 400px !important;
+  position: relative;
+}
+
+div#signup div.hero-unit .btn {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+</style>
