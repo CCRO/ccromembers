@@ -34,22 +34,24 @@ window.addEventListener("load",function() {
 
   <div class="container">
     <div id="login" class="" style="">
-      <div id="login_tools" class="span3 offset4" style="padding:50px; background-color: #eeeeee; margin-bottom:20px;">  
-        <h3 style="margin-bottom: 10px; color:#0088cc;"> Please Sign in</h3>
+      <div id="login_tools" class="span3 offset4" style="padding-left:50px; padding-top:10px; padding-bottom:5px; padding-right:50px; background-color: #eeeeee; margin-bottom:20px; margin-top:20px;">  
+        <h3 style="margin-bottom: 10px; color:#0088cc; text-align:center;"> Please Sign in</h3>
         <div style="margin-bottom:20px;">
           <%= form_tag  :sessions, :class => "form-inline" do %>
             <%= hidden_field_tag :remember_me, '1' %>
             <%= text_field_tag :email, '', :class => "input-xlarge ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
             <%= password_field_tag :password, '', :class => "input-xlarge ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
-            <%= link_to 'Sign Up', register_path, class: "" %> | 
-            <%= link_to 'Password Help', forgot_password_path, class: "" %>
-            <%= submit_tag 'Sign in', :class => "btn brn-large pull-right", style: "" %>
+            
+            <%= submit_tag 'Sign in', :class => "btn brn-large", style: "text-align:center; width:100%;" %>
+            <p></br></p>
+            <div class="" style="text-align:center; margin-top:-10px; margin-bottom:10px"><%= link_to 'Sign Up', register_path, class: "" %></div>
+            <div class="" style="text-align:center;"><%= link_to 'Password Help', forgot_password_path, class: "" %></div>
           <% end %>
         </div>
       </div>
     </div>
 
-    <div id="login" style="margin-left:50px;">
+    <div id="login">
       <div id="login_tools" class="span3 offset4" style="text-align:center;">  
         <h3 style="margin-bottom: 10px; color:#0088cc;">Need help?</h3>
         <p>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</p>
