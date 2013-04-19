@@ -18,7 +18,6 @@ window.addEventListener("load",function() {
 <div id="notices" style="margin:10px;">
   <% flash.each do |key, msg| %>
     <div id="notice_<%= key %>" class="alert alert-<%= key %>">
-      <a class="close" data-dismiss="alert">×</a>
       <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
     </div>
   <% end %>
@@ -69,8 +68,8 @@ div#signup div.hero-unit .btn {
 </style>
 <script>
 
-  $("#warning_close").click(function () {
-  $("#warning_message").toggle(['slow']);
+  $("#notices").click(function () {
+  $("#notices").hide();
   });
 
 </script>
