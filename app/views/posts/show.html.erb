@@ -87,7 +87,7 @@
           <p><small>Submited for publication by: <%= link_to Person.find(@post.submitted_by).name, Person.find(@post.submitted_by) %></small></p>
         <% end %>
 
-        <% if current_user.admin? %>
+        <% if current_user && current_user.admin? %>
           <%= publish_toggle(@post) %>
         <% else %>
           <%= submit_toggle(@post) %>

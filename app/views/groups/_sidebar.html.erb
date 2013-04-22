@@ -31,7 +31,7 @@
     </div>
   </div>
   <% else %>
-    <% if current_user.committee? %>
+    <% if current_user && current_user.committee? %>
       <%= link_to 'Join This Working Group', join_group_path(@group), class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
     <% end %>
   <% end %>
