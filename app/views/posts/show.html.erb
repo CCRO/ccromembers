@@ -90,7 +90,9 @@
         <% if current_user && current_user.admin? %>
           <%= publish_toggle(@post) %>
         <% else %>
+          <% if @post.owner.class == Group %>
           <%= submit_toggle(@post) %>
+          <% end %>
         <% end %>
       <br>
       <%= form_for @post, { :remote => true, :class => 'checkbox inline' } do |f| %>
