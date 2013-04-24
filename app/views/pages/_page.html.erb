@@ -30,6 +30,9 @@
       <% if params[:action] == 'show' || ( params[:action]  == 'index' && params[:filter] == 'archive') || params[:action] == 'edit' %>
         <div id="page_title" class="mercury-region" style="min-width: 100px; margin-right: 10px;">
           <% if is_editing? %>
+            <% if current_user && current_user.admin? %>
+              <%= f.text_area :header_picture, :class => "redactor", :rows => 20, :cols => 80 %>
+            <% end %>
             <%= f.text_area :title, :class => "redactor", :rows => 20, :cols => 80 %>
           <% else %>
             <%= page.title.html_safe if page.title %>
