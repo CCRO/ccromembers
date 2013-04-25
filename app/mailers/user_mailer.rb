@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "CCRO_Membership@ccro.org"
+  default from: "CCRO_Resources@ccro.org"
 
   def password_reset(person)
     @person = person

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="well span8 offset2">
-	<h2>CCRO Basic Subscription</h2>
+	<h2>Tell us who you are</h2>
   <%= javascript_tag "var companies = #{ @companies.to_json };" %>
 
   <%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
@@ -17,7 +17,7 @@
     <% end %>
 
     <fieldset>
-      <legend>User Information</legend>
+      <legend></legend>
       <div class="control-group">
         <%= f.label :first_name, :class => 'control-label' %>
         <div class="controls">
@@ -37,9 +37,12 @@
         <p class="help-block">This will be your login username.</p>
         </div>
       </div>
+
       <div class="control-group">
+
         <%= f.label :password, :class => 'control-label' %>
         <div class="controls">
+          <p class="help-block">So that you might resume if interrupted </br> and return to view future results, please enter a password.</p>
           <%= f.password_field :password %><br /><br />
           <%= f.password_field :password_confirmation %>
           <p class="help-block">Enter password and confirm by entering again.</p>
@@ -47,7 +50,7 @@
       </div>
     </fieldset>
     <div class="actions">
-      <%= f.submit "Sign Up", :class => 'btn' %> or <%= link_to 'back', :back %>
+      <%= f.submit "Sign In", :class => 'btn' %> or <%= link_to 'back', :back %>
     </div>
 
   <% end %>
