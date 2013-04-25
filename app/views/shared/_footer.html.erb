@@ -92,6 +92,7 @@
             <% end %>
             <% if current_user and current_user.admin? %>
             <h4 style="padding-right:5px;">CCRO Committee Email <%= radio_button_tag('email_who', 'committee') %></h4>
+            <h4 style="padding-right:5px;">Complete Directory <%= radio_button_tag('email_who', 'all') %></h4>
             <% end %>
           </div>
           <br>

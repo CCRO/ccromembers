@@ -161,6 +161,8 @@ class PostsController < ApplicationController
       post.share_by_email(post.owner.leadership, params[:my_subject], params[:short_message], current_user)
     elsif params[:email_who] == 'working_group'
       post.share_by_email(post.owner.people, params[:my_subject], params[:short_message], current_user)
+    elsif params[:email_who] == 'all'
+      post.share_by_email(Person.all, params[:my_subject], params[:short_message], current_user)
     elsif params[:email_who] == 'committee'
       people = []
       Person.all.each do |person|
