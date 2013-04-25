@@ -21,6 +21,17 @@ class SurveysController < ApplicationController
     @response = Response.new
     
     authorize! :read, @survey
+
+    if is_mobile_device?
+      redirect_to intro_survey_path(@survey)
+    else
+
+      respond_to do |format|
+        
+        format.html
+        format.js
+      end
+    end
   end
 
   def intro

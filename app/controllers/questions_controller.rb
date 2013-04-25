@@ -27,10 +27,14 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @survey = @question.survey
 
-    respond_to do |format|
-      format.mobile {render :layout => '/layouts/mobile_survey.html.erb'}
-      format.html
-      format.js
+    if is_mobile_device?
+      redirect_to intro_survey_path(@survey)
+    else
+      respond_to do |format|
+        
+        format.html
+        format.js
+      end
     end
   end
 
