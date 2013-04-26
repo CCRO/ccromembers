@@ -120,6 +120,7 @@ class AttachmentsController < ApplicationController
 
     @attachment.author = current_user
     @attachment.owner = @group if @group
+    @attachment.get_crocodoc_uuid!
 
     if @group
       authorize! :create_in, @group
@@ -128,8 +129,8 @@ class AttachmentsController < ApplicationController
     end
 
     @attachment.save
-
-    redirect_to polymorphic_path([@group, :attachments])
+    sleep(10.0)
+    redirect_to refresh_attachment_path(@attachment)
   end
 
   def edit
@@ -157,8 +158,8 @@ class AttachmentsController < ApplicationController
   def refresh
     attachment = Attachment.find(params[:id])
     attachment.get_crocodoc_uuid!
-
-    redirect_to edit_attachment_path(attachment)
+    sleep(10.0)
+    redirect_to attachment_path(attachment)
   end
 
   def status
