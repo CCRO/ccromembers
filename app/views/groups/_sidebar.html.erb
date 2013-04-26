@@ -83,18 +83,15 @@
       <% end %>
     <% end %>
 
-    <% if @attachments && @attachments.length > 0 %>
+    <% @these_attachments = @group.attachments.where(archived: 'false') if @attachments %>
+    <% if @attachments && @these_attachments.length > 0 %>
       <li class="nav-header"> Files and Attachments </li>
-      <% @group.attachments.limit(3).each do |m| %>
-        <% unless m.archived %>
-          
+      
+      <% @these_attachments.limit(3).each do |m| %>
           <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
-          <% else %>
-          <% raise m.to_yaml %>
-        <% end %>
       <% end %>
-      <% if @group.attachments.length > 3 %>
-        <li><i><%= link_to "See all #{@group.attachments.length} uploads" , group_attachments_path(@group) %></i></li>
+      <% if @these_attachments.length > 3 %>
+        <li><i><%= link_to "See all #{@these_attachments.length} uploads" , group_attachments_path(@group) %></i></li>
       <% end %>
     <% end %>
 
