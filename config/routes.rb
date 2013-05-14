@@ -231,6 +231,7 @@ Ccromembers::Application.routes.draw do
         get :resend_activation
         get :send_mobile_activation
         get :su
+        get :sticker_image
       end
       resources :subscriptions
   end
