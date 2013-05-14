@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  include Magick
+  include ::Magick
   index_name INDEX_NAME
  
   mapping do
@@ -260,7 +260,7 @@ class Person < ActiveRecord::Base
   def sticker_url
     "https://s3.amazonaws.com/ccromembers_assets/person-stickers/#{self.id}-sticker.png"
   end
-  
+
   private
     
   def initialize_person
