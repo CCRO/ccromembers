@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  include ::Magick
+  include RMagick
   index_name INDEX_NAME
  
   mapping do
