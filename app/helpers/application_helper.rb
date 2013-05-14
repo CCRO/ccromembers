@@ -37,11 +37,12 @@ module ApplicationHelper
 
     unless link_check.nil? || avatar_check.nil?
       options[:class] ||= ""
-      content_tag :p, {:class => 'sticker ' + options[:class]} do
-        avatar_for(user, :class => 'pull-left', style: 'width: 50px; padding-right: 5px;') +
-        link_to_person(user.name, user) +
-        tag("br", nil, true) + 
-        (user.company.name if user.company)
+      if options[:link]
+        link_to user do
+          image_tag sticker_image_person_url(user), options
+        end
+      else
+        image_tag sticker_image_person_url(user), options
       end
     end
   end

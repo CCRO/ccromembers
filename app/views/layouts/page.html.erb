@@ -130,8 +130,8 @@
           <aside class="page_aside pull-right" style="height: 362px; overflow: auto; position: fixed; margin-left:880px; border-style:solid; border-width:1px; border-color: lightgray;">
           <% end %>
             <% @people.each do |person| %>
-              <%= link_to '#', class: "add_html#{person.id}" do %>
-                <%= sticker_for(person) %>
+              <%= link_to '#', class: "insert_sticker", 'data-person' => person.id do %>
+                <%= sticker_for(person,link: false) %>
               <% end %>
             <% end %>
           </aside> 
@@ -192,13 +192,11 @@
 </script>
 
 <% if params[:action] == 'edit' %>
-  <% @people.each do |person| %>
-    <% tag = ".add_html#{person.id}" %>
     <script>
-      $("<%= tag %>").click(function () {
-        $('#redactor_body').insertHtml('<%= sticker_for(person) %>');
+      $(".insert_sticker").click(function (event) {
+        event.preventDefault();
+        $('#redactor_body').insertHtml('<img src="/people/' + $(this).data("person") + '/sticker_image.png">');
       });
     </script>
-  <% end %>
 <% end %>
 

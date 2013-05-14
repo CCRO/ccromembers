@@ -70,7 +70,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
 
     image = Image.new(1000, 240) {
-      self.background_color = "lightgrey"
+      self.background_color = "#f0f0f0"
     }
 
     # open("https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/443/bw_sm_thumb_xx_6277384695_80d0094872_t.jpg", 'rb') do |f|
