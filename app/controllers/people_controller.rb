@@ -66,51 +66,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  def sticker_image
-    @person = Person.find(params[:id])
-
-    image = Image.new(1000, 240) {
-      self.background_color = "#f0f0f0"
-    }
-
-    # open("https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/443/bw_sm_thumb_xx_6277384695_80d0094872_t.jpg", 'rb') do |f|
-    #   avatar = Magick::Image::from_blob(f.read)
-    # end
-
-    avatar = Magick::Image::from_blob(open(@person.avatar.thumb.url).read)[0]
-    avatar.resize_to_fit!(200)
-    image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
-
-    if @person.name.present?
-      text_name = Draw.new
-      text_name.annotate(image, 0,0,240,80, @person.name) {
-        self.fill = '#0088cc'
-        self.pointsize = 18 *4
-      }
-    end
-
-    if @person.company_name.present?
-      text_company = Draw.new
-      text_company.annotate(image, 0,0,240,38*4, @person.company_name) {
-        self.fill = 'black'
-        self.pointsize = 14 *4
-      }
-    end
-
-    if @person.title != "Unknown Title"
-      text_title = Draw.new
-      text_title.annotate(image, 0,0,240,54*4, @person.title) {
-        self.fill = 'black'
-        self.pointsize = 14 *4
-      }
-    end
-
-    image.resize_to_fit!(250)
-    image.format = "PNG"
-    # image.write("image.png")
-    render :text => image.to_blob,
-            :status => 200, :content_type => 'image/png'
-  end
   # GET /people/new
   # GET /people/new.json
   def new

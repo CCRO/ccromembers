@@ -39,10 +39,10 @@ module ApplicationHelper
       options[:class] ||= ""
       if options[:link]
         link_to user do
-          image_tag sticker_image_person_url(user), options
+          image_tag user.sticker_url, options
         end
       else
-        image_tag sticker_image_person_url(user), options
+        image_tag user.sticker_url, options
       end
     end
   end

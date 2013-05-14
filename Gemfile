@@ -34,6 +34,7 @@ gem 'cancan'
 gem 'bcurren-freshbooks.rb', :git => 'git://github.com/bcurren/freshbooks.rb.git'
 gem 'carrierwave'
 gem 'fog', "~> 1.3.1"
+gem 'aws-sdk'
 gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'

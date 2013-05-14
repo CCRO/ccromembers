@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
+  include Magick
   index_name INDEX_NAME
  
   mapping do
@@ -15,6 +16,7 @@ class Person < ActiveRecord::Base
 
   after_save do
     update_index
+    update_sticker
   end
   
   serialize :browser_info
@@ -202,6 +204,61 @@ class Person < ActiveRecord::Base
     tire.search do
       query { string params[:q], default_operator: "AND" } if params[:q].present?
     end
+  end
+  
+  def update_sticker
+    image = Image.new(1000, 240) {
+      self.background_color = "#f0f0f0"
+    }
+
+    # open("https://s3.amazonaws.com/ccromembers_assets/uploads/mercury/image/image/443/bw_sm_thumb_xx_6277384695_80d0094872_t.jpg", 'rb') do |f|
+    #   avatar = Magick::Image::from_blob(f.read)
+    # end
+
+    avatar = Magick::Image::from_blob(open(self.avatar.thumb.url).read)[0]
+    avatar.resize_to_fit!(200)
+    image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
+
+    if self.name.present?
+      text_name = Draw.new
+      text_name.annotate(image, 0,0,240,80, self.name) {
+        self.fill = '#0088cc'
+        self.pointsize = 18 *4
+      }
+    end
+
+    if self.company_name.present?
+      text_company = Draw.new
+      text_company.annotate(image, 0,0,240,38*4, self.company_name) {
+        self.fill = 'black'
+        self.pointsize = 14 *4
+      }
+    end
+
+    if self.title != "Unknown Title"
+      text_title = Draw.new
+      text_title.annotate(image, 0,0,240,54*4, self.title) {
+        self.fill = 'black'
+        self.pointsize = 14 *4
+      }
+    end
+
+    image.resize_to_fit!(250)
+    image.format = "PNG"
+    # image.write("image.png")
+
+    # gotta packet the file
+    image.write("#{Rails.root}/tmp/#{self.id}-sticker.gif")
+
+    # upload to Amazon S3
+    s3 = AWS::S3.new
+    bucket = s3.buckets['ccromembers_assets']
+    obj = bucket.objects["person-stickers/" + self.id.to_s + "-sticker.png"]
+    obj.write(:file => "#{Rails.root}/tmp/#{self.id}-sticker.gif")
+  end
+
+  def sticker_url
+    "https://s3.amazonaws.com/ccromembers_assets/person-stickers/#{self.id}-sticker.png"
   end
   
   private
