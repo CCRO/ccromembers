@@ -2,7 +2,8 @@
 <table class="table table-bordered table-striped">
 	<tbody>
 <% @memberships.each do |membership| %>
-	
+		
+		<% if membership.person %>
 		<tr>
 			<td><%= sticker_for(membership.person) %></td>
 			<td style="vertical-align: middle; text-align: center;">
@@ -13,6 +14,7 @@
 				<% end %>
 			</td>
 		</tr>
+		<% end %>
 	
 <% end %>
 </tbody>

@@ -27,13 +27,16 @@
 <table class="table table-bordered table-striped">
   <tr>
     <th>Name</th>
+    <th style="text-align: center;">Leadership</th>
     <th>Conference line</th>
     <th style="text-align: center;">Participants</th>
     <th style="text-align: center;">Pages</th>
     <th style="text-align: center;">Discussions<br>/Comments</th>
     <th style="text-align: center;">Posts</th>
     <th style="text-align: center;">Uploads</th>
+    <% if false %>
     <th style="text-align: center;">Overview Page</th>
+    <% end %>
     <th></th>
     <th></th>
     <th></th>
@@ -42,18 +45,32 @@
 <% @groups.each do |group| %>
   <tr>
     <td><%= link_to group.name, group %></td>
+    <td>
+      <% group.memberships.each do |m| %>
+        <% if m.fuction == 'chair' %>
+          <%= m.person.name if m.person %> </br>
+        <% end %>
+      <% end %>
+      <% group.memberships.each do |m| %>
+        <% if m.fuction == 'coordinator' %>
+          <%= m.person.name if m.person %> </br>
+        <% end %>
+      <% end %>
+    <td>
     <td><%= number_to_phone group.conf_phone %></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.people.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.pages.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span> <span class="badge badge-success"><%= group.comments.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.attachments.count %></span></td>
-    <%= form_for(group, :remote => true) do |f| %>
-      <% group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
-      <% if group.overview_page %>
-      <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title", group.overview_page), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
-      <% else %>
-      <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title"), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
+    <% if false %>
+      <%= form_for(group, :remote => true) do |f| %>
+        <% group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
+        <% if group.overview_page %>
+        <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title", group.overview_page), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
+        <% else %>
+        <td><%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title"), :include_blank => true, :class => 'submittable') %><%= f.submit %></td>
+        <% end %>
       <% end %>
     <% end %>
     <td><%= link_to 'Permissions', permissions_group_path(group) %></td>
