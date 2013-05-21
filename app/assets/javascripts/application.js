@@ -33,6 +33,8 @@
 //      // $('body#doc_viewer div.page').wrap('<div class="page-shadow span9 offset3">')
 //    });
 
-$('.submittable').live('change', function() {
-  $(this).parents('form:first').submit();
+jQuery(function(){
+	$('.submittable').on('change', function() {
+	  $(this).parents('form:first').submit();
+	});
 });

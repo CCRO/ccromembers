@@ -1,6 +1,6 @@
   <% @about_pages = Page.where(published: true).tagged_with("about").sort! { |a,b| a.position <=> b.position } %>
   <% if current_user %>
-  <div class="navbar navbar-fixed-top">
+  <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
       <div class="container">
 
