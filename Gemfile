@@ -23,7 +23,7 @@ group :production do
 end
 
 gem 'redactor-rails'
-gem 'mini_magick'
+
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
@@ -35,7 +35,7 @@ gem 'bcurren-freshbooks.rb', :git => 'git://github.com/bcurren/freshbooks.rb.git
 gem 'carrierwave'
 gem 'fog', "~> 1.3.1"
 gem 'aws-sdk'
-gem 'rmagick', :require => 'RMagick'
+gem 'rmagick'
 gem 'delayed_job_active_record'
 gem 'thin'
 gem 'google_visualr'
@@ -62,7 +62,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer'
+  gem 'therubyracer', '0.11.4'
 
   gem 'uglifier', '>= 1.0.3'
   gem 'yui-compressor'
