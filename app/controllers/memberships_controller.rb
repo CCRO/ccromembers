@@ -34,10 +34,15 @@ class MembershipsController < ApplicationController
   def toggle
     if params[:toggle]
       Membership.create(:group_id => params[:group_id], :person_id => params[:person_id])
+      render :nothing => true
+    elsif params[:membership]
+      Membership.create(:group_id => params[:membership][:group_id], :person_id => params[:membership][:person_id])
+      redirect_to edit_group_path(Group.find(params[:membership][:group_id]))
     else
       Membership.find_by_group_id_and_person_id(params[:group_id], params[:person_id]).destroy
+      render :nothing => true
     end
-    render :nothing => true
+    
    end
 
   def update

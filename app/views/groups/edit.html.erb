@@ -1,7 +1,6 @@
-<h1>Editing group</h1>
+<h1>Managing group: <%= @group.name %></h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %> |
-<%= link_to permissions_group_path(@group) do %><i class="icon-sitemap"></i> Group Permissions <% end %>
+<%= link_to 'Back', groups_path %>

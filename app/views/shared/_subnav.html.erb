@@ -24,7 +24,7 @@
         <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
         <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
         <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">CCRO Working Groups<i class="icon-caret-down"></i></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> CCRO Working Groups <i class="icon-caret-down" style="margin-left:5px;"></i></a>
           <ul class="dropdown-menu">
             <% @group_pages.each do |p| %>
               <li style="padding-right:0px;"><%= link_to p.title, p %></li>
@@ -70,7 +70,8 @@
         <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
         <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
         <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">CCRO Working Groups<i class="icon-caret-down"></i></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">CCRO Working Groups <i class="icon-caret-down" style="margin-left:5px;"></i></div></a>
+          <ul class="dropdown-menu"></a>
           <ul class="dropdown-menu">
             <% @group_pages.each do |p| %>
               <li style="padding-right:0px;"><%= link_to p.title, p %></li>

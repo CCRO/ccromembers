@@ -91,6 +91,8 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+    @left_over_people = Person.all - @group.people
+    @left_over_people.sort! { |a,b| a.last_name.downcase <=> b.last_name.downcase }
   end
 
   # POST /groups
@@ -117,7 +119,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.update_attributes(params[:group])
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+        format.html { redirect_to groups_path, notice: 'Group was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

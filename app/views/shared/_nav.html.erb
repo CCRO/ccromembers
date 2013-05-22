@@ -43,7 +43,7 @@
               <li <%= 'class=active' if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'discussions' || params[:controller] == 'documents' || params[:controller] == 'groups' || params[:controller] == 'posts' || (params[:controller] == 'reports' && params[:action] == 'dashboard') %>><a href="/pages/23-about-ccro-working-groups"><i class="icon-book icon-white"></i> Resource Center</a></li>
               
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-calendar icon-white"></i></i>Events</i></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-calendar icon-white"></i></i> Events</i></a>
                 <ul class="dropdown-menu">
                     <li style="padding-right:0px;"><%= link_to "Upcoming Events", "/pages/47" %></li>
                     <li style="padding-right:0px;"><%= link_to "Past events", "/pages/22" %></li>
@@ -53,7 +53,7 @@
               <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
               
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bullhorn icon-white"></i>About The CCRO</i></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bullhorn icon-white"></i> About The CCRO</i></a>
                 <ul class="dropdown-menu">
                   <% @about_pages.each do |p| %>
                     <li style="padding-right:0px;"><%= link_to p.title, p %></li>

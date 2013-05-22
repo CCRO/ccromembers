@@ -12,14 +12,59 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+</br>
   <div class="field">
-    <%= f.label :conf_phone %><br />
+    <%= f.label :conf_phone %>
     <%= f.text_field :conf_phone %>
   </div>
+  <br>
+
+
+  <div class="field">
+    <%= f.label :overview_page %>
+    <% group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
+    <% if @group.overview_page %>
+      <%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title", @group.overview_page), :include_blank => true) %>
+    <% else %>
+      <%= select_tag('overview_page', options_from_collection_for_select(group_pages, "id", "title"), :include_blank => true) %>
+    <% end %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update group", class: "btn"%>
   </div>
 <% end %>
+
+</br>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr>
+      <%= form_for Membership.new do |f| %>
+        <%= f.hidden_field :group_id, :value => @group.id %>
+        <%= f.select(:person_id,  @left_over_people.collect {|p| [ p.name, p.id ] }, :prompt => 'Choose a person') %>
+        <%= f.submit "Add to group", class: "btn", style: "margin-left:5px; margin-top:-10px;" %>
+      <% end %>
+    </tr>
+<% @group.memberships.reverse.each do |membership| %>
+    
+    <% if membership.person %>
+    <tr>
+      <td><%= sticker_for(membership.person) %></td>
+      <td style="vertical-align: middle; text-align: center;">
+        <%= form_for [@group, membership], { :remote => true , :html => {:class => ' form-inline '}} do |f| %>
+          <%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, '', :class => 'submittable' %> Participant <% end %> 
+          <%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'coordinator', :class => 'submittable' %> Coordinator <% end %> 
+          <%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, 'chair', :class => 'submittable' %> Chair <% end %> 
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  
+<% end %>
+</tbody>
+</table>
+
+
