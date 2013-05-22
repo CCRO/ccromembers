@@ -23,7 +23,7 @@ group :production do
 end
 
 gem 'redactor-rails'
-
+gem 'mini_magick'
 gem 'paper_trail'
 gem 'redcarpet'
 gem 'wiky', :git => 'git://github.com/crjones/wiky.git'
