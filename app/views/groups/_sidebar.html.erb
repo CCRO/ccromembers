@@ -136,9 +136,11 @@
       <% end %>
       <% if @coordinators && (@coordinators.length > 0) %>
         <% @coordinators.each do |person| %>
-          <%= link_to person do %> 
-            <li><%= sticker_for(person) %></il>
+       
+          <%= link_to person do %>
+            <li style="width:108%"><%= sticker_for(person) %></il>
           <% end %>
+
         <% end %>
       <% end %>
       <li style="text-align:center; padding-top:10px;"><%= link_to "See all #{@group.memberships.length} participants", group_memberships_path(@group) %></li>
