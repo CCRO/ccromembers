@@ -124,8 +124,10 @@
       <% end %>
       <% if @co_chairs && (@co_chairs.length > 0) %>
         <% @co_chairs.each do |person| %>
-          <%= link_to person do %> 
+          <%= link_to person do %>
+          <div style="width:108%; margin-bottom:5px;"> 
             <li><%= sticker_for(person) %></il>
+          </div>
           <% end %>
         <% end %>
       <% end %>
@@ -138,7 +140,9 @@
         <% @coordinators.each do |person| %>
        
           <%= link_to person do %>
-            <li style="width:108%"><%= sticker_for(person) %></il>
+            <div style="width:108%; margin-bottom:5px;">
+              <li><%= sticker_for(person)%></il>
+            </div>
           <% end %>
 
         <% end %>
@@ -156,8 +160,10 @@
       <% end %>
       <% if @group_memberships && (@group_memberships.length > 0) %>
         <% @group_memberships.each do |person| %>
-          <%= link_to person do %> 
+          <%= link_to person do %>
+          <div style="width:108%; margin-bottom:5px;"> 
             <li><%= sticker_for(person) %></il>
+          </div>
           <% end %>
         <% end %>
       <% end %>
