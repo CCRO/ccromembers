@@ -45,10 +45,12 @@
                 </button>
                 <ul class="dropdown-menu">
                   <% survey_respondents(survey).each do |r| %>
-                    <% if r.company.nil? %>
-                      <li style="margin-left:5px;"><%= r.name %></li>
-                    <% else %>
-                      <li style="margin-left:5px;"><%= "#{r.name} : #{r.company.name}" %></li>
+                    <% if r %>
+                      <% if r.company.nil? %>
+                        <li style="margin-left:5px;"><%= r.name %></li>
+                      <% else %>
+                        <li style="margin-left:5px;"><%= "#{r.name} : #{r.company.name}" %></li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -77,21 +79,3 @@
 </content>
 <br>
 <br>
-
-<% if false %>
-  <ul>
-    <% @surveys.each do |survey| %>
-      <li><%= link_to survey.title, edit_survey_path(survey) %> 
-        <%= link_to survey, :method => "delete", :confirm => "Are you sure?" do %>
-        <i class="icon-trash hide"></i>
-        <% end %>
-      </li>
-    <% end %>
-      <li>
-        <%= form_for Survey.new do |f| %>
-          <%= f.text_field :title %>
-          <%= f.submit %>
-        <% end %>
-      </li>
-  </ul>
-<% end %>
