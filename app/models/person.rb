@@ -225,31 +225,35 @@ class Person < ActiveRecord::Base
       image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
     end
 
-    if self.name.present?
-      text_name = Draw.new
-      text_name.annotate(image, 0,0,240,80, self.name) {
-        self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
-        self.fill = '#0088cc'
-        self.pointsize = 18 *4
-      }
-    end
+    if false
 
-    if self.company_name != "Unknown Company"
-      text_company = Draw.new
-      text_company.annotate(image, 0,0,240,38*4, self.company_name) {
-        self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
-        self.fill = 'black'
-        self.pointsize = 14 *4
-      }
-    end
+      if self.name.present?
+        text_name = Draw.new
+        text_name.annotate(image, 0,0,240,80, self.name) {
+          self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
+          self.fill = '#0088cc'
+          self.pointsize = 18 *4
+        }
+      end
 
-    if self.title != "Unknown Title"
-      text_title = Draw.new
-      text_title.annotate(image, 0,0,240,54*4, self.title) {
-        self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
-        self.fill = 'black'
-        self.pointsize = 14 *4
-      }
+      if self.company_name != "Unknown Company"
+        text_company = Draw.new
+        text_company.annotate(image, 0,0,240,38*4, self.company_name) {
+          self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
+          self.fill = 'black'
+          self.pointsize = 14 *4
+        }
+      end
+
+      if self.title != "Unknown Title"
+        text_title = Draw.new
+        text_title.annotate(image, 0,0,240,54*4, self.title) {
+          self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
+          self.fill = 'black'
+          self.pointsize = 14 *4
+        }
+      end
+
     end
 
     image.resize_to_fit!(250)

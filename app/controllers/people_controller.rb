@@ -124,7 +124,7 @@ class PeopleController < ApplicationController
       if @person.save
         @person.send_activation
         format.html { redirect_to activation_path }
-        format.mobile { render :layout => '/layouts/blank.html.erb' }
+        format.mobile {render :layout => '/layouts/blank.html.erb'}
         format.json { render json: @person, status: :created, location: @person }
       else
         format.html { render action: "new" }
