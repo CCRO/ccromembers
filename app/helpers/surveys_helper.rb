@@ -16,7 +16,9 @@ module SurveysHelper
       survey.questions.each do |q|
         unless  q.responses.empty?
           q.responses.each do |r|
-            temp << r.person_id
+            unless Person.find_by_id(r.person_id) == nil
+              temp << r.person_id
+            end
           end
         end
       end
