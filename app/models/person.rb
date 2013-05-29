@@ -225,8 +225,6 @@ class Person < ActiveRecord::Base
       image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
     end
 
-    if false
-
       if self.name.present?
         text_name = Draw.new
         text_name.annotate(image, 0,0,240,80, self.name) {
@@ -253,8 +251,6 @@ class Person < ActiveRecord::Base
           self.pointsize = 14 *4
         }
       end
-
-    end
 
     image.resize_to_fit!(250)
     image.format = "PNG"
