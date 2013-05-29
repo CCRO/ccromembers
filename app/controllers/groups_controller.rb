@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
     @articles = @total_articles.limit(3)
     @messages = @group.messages
     @comments = @group.comments
-    @attachments = @group.attachments
+    @attachments = @group.attachments.where(archive: false)
     @group_document = @group.documents
     @smart_list = @group.people
     @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person }

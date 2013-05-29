@@ -62,8 +62,10 @@ class Attachment < ActiveRecord::Base
   end
 
   def download_text
-    self.content = Crocodoc::Download.text(self.crocodoc_uuid)
-    self
+    if false
+      self.content = Crocodoc::Download.text(self.crocodoc_uuid)
+      self
+    end
   end
 
   def download_text!
@@ -72,11 +74,13 @@ class Attachment < ActiveRecord::Base
   end
 
   def download_thumbnail
-    io = FilelessIO.new(Crocodoc::Download.thumbnail(self.crocodoc_uuid))
-    io.original_filename = self.crocodoc_uuid + "_thumbnail.png"
+    if false
+      io = FilelessIO.new(Crocodoc::Download.thumbnail(self.crocodoc_uuid))
+      io.original_filename = self.crocodoc_uuid + "_thumbnail.png"
 
-    self.thumbnail = io
-    self
+      self.thumbnail = io
+      self
+    end
   end
 
   def download_thumbnail!

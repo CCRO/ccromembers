@@ -1,7 +1,39 @@
-<h1>CCRO File Permission Report</h1>
+<h1>CCRO Working Group Files</h1>
 
 <br>
 
+<% @groups.each do |g| %>
+  <table class="table table-bordered">
+    <tr>
+      <td>
+        <h2><%= link_to "#{g.name}", group_attachments_path(g) %></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <% @group_attachments.each do |a| %>
+            <% if a.owner_id == g.id %>
+            <tr>
+              <td class="span5"><%= link_to a.title, attachments_path(a) %></td>
+              <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+                                                                                                                         Comment level: #{a.comment_level}<br>
+                                                                                                                         Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+<% end %>
+<br>
+<br>
+<h1>CCRO File Permission Report</h1>
+
+<br>
 <table class="table table-bordered">
   <tr>
     <th><h2>Viewing Levels</h2></th>
@@ -342,37 +374,6 @@
 <br>
 <br>
 
-<h1>CCRO Working Group Files</h1>
-
-<br>
-
-<% @groups.each do |g| %>
-  <table class="table table-bordered">
-    <tr>
-      <td>
-        <h2><%= "#{g.name}" %></h2>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table class="table">
-          <% @group_attachments.each do |a| %>
-            <% if a.owner_id == g.id %>
-            <tr>
-              <td class="span5"><%= link_to "#{a.title}", a %></td>
-              <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
-                                                                                                                         Comment level: #{a.comment_level}<br>
-                                                                                                                         Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
-          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
-            </tr>
-            <% end %>
-          <% end %>
-        </table>
-
-      </td>
-    </tr>
-  </table>
-<% end %>
 
 <% content_for :adminbar do %>
   <ul>

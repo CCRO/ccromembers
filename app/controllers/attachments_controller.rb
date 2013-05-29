@@ -14,12 +14,13 @@ class AttachmentsController < ApplicationController
     end
 
     @attachments.delete_if { |attachment| attachment.archived? }
+    @attachments = @attachments.where(archived: false)
   end
 
   def report
     authorize! :manage, Attachment
 
-    a = Attachment.all
+    a = Attachment.where(archived: false)
     @group_attachments = []
     @groups = []
 
