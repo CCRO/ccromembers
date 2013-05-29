@@ -3,33 +3,33 @@
 <br>
 
 <% @groups.each do |g| %>
-  <table class="table table-bordered">
-    <tr>
-      <td>
-        <% if (g.respond_to? 'name') && g.name? %>
+  <% if (g.respond_to? 'name') && g.name? %>
+    <table class="table table-bordered">
+      <tr>
+        <td>
           <h2><%= link_to g.name, group_attachments_path(g) %></h2>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table class="table">
-          <% @group_attachments.each do |a| %>
-            <% if a.owner_id == g.id %>
-            <tr>
-              <td class="span5"><%= link_to a.title, attachments_path(a) %></td>
-              <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
-                                                                                                                         Comment level: #{a.comment_level}<br>
-                                                                                                                         Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
-          <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
-            </tr>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="table">
+            <% @group_attachments.each do |a| %>
+              <% if a.owner_id == g.id %>
+              <tr>
+                <td class="span5"><%= link_to a.title, attachments_path(a) %></td>
+                <td class="span1"><%= link_to 'Edit', edit_polymorphic_path([@group, a]), class: "edit_link", "data-original-title" => "Viewing level: #{a.level}<br>
+                                                                                                                           Comment level: #{a.comment_level}<br>
+                                                                                                                           Download level: #{a.download_level}",trigger: "hover" if can? :edit, a %></td>
+            <td class="span1"><%= link_to 'Delete', polymorphic_path([@group, a]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, a %></td>
+              </tr>
+              <% end %>
             <% end %>
-          <% end %>
-        </table>
+          </table>
 
-      </td>
-    </tr>
-  </table>
+        </td>
+      </tr>
+    </table>
+  <% end %>
 <% end %>
 <br>
 <br>
