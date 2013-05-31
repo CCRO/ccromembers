@@ -161,7 +161,7 @@
             <% end %>
 
             <% if current_user %>
-              <% if @my_groups.length > 0%>
+              <% if @my_groups && @my_groups.length > 0%>
                 <ul class="nav nav-tabs nav-stacked">
                   <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">My CCRO Working Groups</li>
                   <% @my_groups.each do |group| %>
@@ -169,7 +169,7 @@
                   <% end %>
                 </ul>
               <% end %>
-              <% if @other_groups.length > 0%>
+              <% if @other_groups && @other_groups.length > 0%>
                 <ul class="nav nav-tabs nav-stacked">
                   <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                   <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
