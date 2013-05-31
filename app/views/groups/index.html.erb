@@ -38,7 +38,6 @@
     <th style="text-align: center;">Overview Page</th>
     <% end %>
     <th></th>
-    <th></th>
   </tr>
 
 <% @groups.each do |group| %>
@@ -67,8 +66,6 @@
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
     <td style="text-align: center;"><span class="badge badge-inverse"><%= group.attachments.count %></span></td>
     <td><%= link_to 'Manage', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
 <% end %>
 </table>
 

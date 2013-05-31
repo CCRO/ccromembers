@@ -81,6 +81,7 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     authorize! :edit, @survey
     @survey.update_attributes(params[:survey])
+    redirect_to edit_survey_path(@survey)
   end
 
   def archive
