@@ -368,6 +368,10 @@
   }
 
   .ribbon-right {
+      font-size: 18px;
+      line-height: 20px;
+      top: -14px;
+
       position: absolute;
       right: -10px;
       padding: 4px 8px;
@@ -400,7 +404,7 @@
       height: 20px;
       width: 8px;
       position: absolute;
-      top: 44px;
+      top: 27px;
       right: 0px;
       background: transparent;
       z-index: -1;
