@@ -79,8 +79,20 @@
               <% end %>
               <li class="divider"></li>
               <li><%= link_to "Logout", logout_path %></li>
-              <li class="divider"></li>
               <li><%= link_to 'change back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
+              <li class="divider"></li>
+              <% if false %>
+              <li class="dropdown-submenu">
+                <a href="#">More options</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Second level link</a></li>
+                  <li><a href="#">Second level link</a></li>
+                  <li><a href="#">Second level link</a></li>
+                  <li><a href="#">Second level link</a></li>
+                  <li><a href="#">Second level link</a></li>
+                </ul>
+              </li>
+              <% end %>
             </ul>
           </li>
         </ul>
