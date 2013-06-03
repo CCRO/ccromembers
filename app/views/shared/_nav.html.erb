@@ -81,18 +81,51 @@
               <li><%= link_to "Logout", logout_path %></li>
               <li><%= link_to 'change back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
               <li class="divider"></li>
-              <% if false %>
+              <li><a href="#"><strong>Admin Options:</strong></a></li>
               <li class="dropdown-submenu">
-                <a href="#">More options</a>
+                <%= link_to pages_path do %>
+                  <i class="icon-file"></i> Pages
+                <% end %>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Second level link</a></li>
-                  <li><a href="#">Second level link</a></li>
-                  <li><a href="#">Second level link</a></li>
-                  <li><a href="#">Second level link</a></li>
-                  <li><a href="#">Second level link</a></li>
+                  <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New page<% end %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "All pages", pages_path %></li>
                 </ul>
               </li>
-              <% end %>
+              <li class="dropdown-submenu">
+                <%= link_to posts_path do %>
+                  <i class="icon-list-alt"></i> Posts
+                <% end %>
+                <ul class="dropdown-menu">
+                  <% if @group %>
+                    <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post for this group<% end %></li>
+                  <% else %>
+                    <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post<% end %></li>
+                  <% end %>
+                  <li class="divider"></li>
+                  <li><%= link_to "All posts", posts_path %></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <%= link_to groups_path do %>
+                  <i class="icon-group"></i> Groups
+                <% end %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "#modal-new-group", 'data-toggle' => "modal" do %>New group<% end %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "All groups", groups_path %></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <%= link_to surveys_path do %>
+                  <i class="icon-list-ul"></i> Surveys
+                <% end %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "#modal-new-survey", 'data-toggle' => "modal" do %>New survey<% end %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "All surveys", surveys_path %></li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
@@ -108,4 +141,87 @@
     </div>
   </div>
   <%= render 'shared/subnav' %>
+
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-new-page">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Page</h3>
+    </div>
+    <div class="modal-body center">
+    <%= form_for Page.new do |f| %>
+      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New page title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <%= f.hidden_field :position, :value => 1 %>
+  </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+
+  <% if @group %>
+    <div class="modal hide fade" id="modal-new-post">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>New Post For: <%= @group.name %></h3>
+      </div>
+      <div class="modal-body center">
+      <%= form_for [@group, Post.new] do |f| %>
+        <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    </div>
+      <div class="modal-footer">
+        <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="modal hide fade" id="modal-new-post">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>New Post</h3>
+      </div>
+      <div class="modal-body center">
+      <%= form_for [@group, Post.new] do |f| %>
+        <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    </div>
+      <div class="modal-footer">
+        <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="modal hide fade" id="modal-new-group">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Group</h3>
+    </div>
+    <div class="modal-body center">
+      <%= form_for Group.new do |f| %>
+      <%= f.text_field :name, :class => "input-xlarge focused pull-left", :placeholder => "New group name" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new Group", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="modal hide fade" id="modal-new-survey">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Survey</h3>
+    </div>
+    <div class="modal-body center">
+      <%= form_for Survey.new do |f| %>
+      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New group name" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new Survey", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+<% end %>
+
 <% end %>

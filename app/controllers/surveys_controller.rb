@@ -57,7 +57,7 @@ class SurveysController < ApplicationController
     @survey.author = current_user
     
     if @survey.save
-      redirect_to surveys_path
+      redirect_to edit_survey_path(@survey)
     else
       flash[:notice] = "Please give your new survey a title."
       redirect_to surveys_path
