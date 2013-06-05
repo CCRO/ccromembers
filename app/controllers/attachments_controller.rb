@@ -14,7 +14,7 @@ class AttachmentsController < ApplicationController
     end
 
     @attachments.delete_if { |attachment| attachment.archived? }
-    @attachments = @attachments.where(archived: false)
+    @attachments = @attachments.keep_if { |a| a.archived == false }
   end
 
   def report
