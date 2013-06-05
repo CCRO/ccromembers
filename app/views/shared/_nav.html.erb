@@ -88,8 +88,17 @@
                 <% end %>
                 <ul class="dropdown-menu">
                   <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New page<% end %></li>
+                  <% if @group %>
+                    <li><%= link_to "#modal-new-group-page", 'data-toggle' => "modal" do %>New page for this group<% end %></li>
+                  <% end %>
                   <li class="divider"></li>
                   <li><%= link_to "All pages", pages_path %></li>
+                  <li><%= link_to "Active pages", active_pages_path %></li>
+                  <li><%= link_to "My draft pages", my_draft_pages_path %></li>
+                  <li><%= link_to "Draft pages", draft_pages_path %></li>
+                  <% if @group %>
+                    <li><%= link_to "Group pages", group_pages_path(@group) %></li>
+                  <% end %>
                 </ul>
               </li>
               <li class="dropdown-submenu">
@@ -97,13 +106,18 @@
                   <i class="icon-list-alt"></i> Posts
                 <% end %>
                 <ul class="dropdown-menu">
+                  <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post<% end %></li>
                   <% if @group %>
                     <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post for this group<% end %></li>
-                  <% else %>
-                    <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post<% end %></li>
                   <% end %>
                   <li class="divider"></li>
                   <li><%= link_to "All posts", posts_path %></li>
+                  <li><%= link_to "Submitted posts", submitted_posts_path %></li>
+                  <li><%= link_to "My draft posts", my_draft_posts_path %></li>
+                  <li><%= link_to "Draft posts", draft_posts_path %></li>
+                  <% if @group %>
+                    <li><%= link_to "Group posts", group_posts_path(@group) %></li>
+                  <% end %>
                 </ul>
               </li>
               <li class="dropdown-submenu">
@@ -160,38 +174,21 @@
     <% end %>
   </div>
 
+  <div class="modal hide fade" id="modal-new-post">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Post</h3>
+    </div>
+    <div class="modal-body center">
+    <%= form_for [@group, Post.new] do |f| %>
+      <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
 
-  <% if @group %>
-    <div class="modal hide fade" id="modal-new-post">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>New Post For: <%= @group.name %></h3>
-      </div>
-      <div class="modal-body center">
-      <%= form_for [@group, Post.new] do |f| %>
-        <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    </div>
-      <div class="modal-footer">
-        <%= f.submit "Create new draft", :class => "btn btn-primary" %>
-      </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="modal hide fade" id="modal-new-post">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>New Post</h3>
-      </div>
-      <div class="modal-body center">
-      <%= form_for [@group, Post.new] do |f| %>
-        <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    </div>
-      <div class="modal-footer">
-        <%= f.submit "Create new draft", :class => "btn btn-primary" %>
-      </div>
-      <% end %>
-    </div>
-  <% end %>
 
   <div class="modal hide fade" id="modal-new-group">
     <div class="modal-header">
@@ -222,6 +219,39 @@
     </div>
     <% end %>
   </div>
+
+    <% if @group %>
+    <div class="modal hide fade" id="modal-new-group-page">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>New Page for: <%= @group.name %></h3>
+      </div>
+      <div class="modal-body center">
+      <%= form_for [@group, Page.new] do |f| %>
+        <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New page title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <%= f.hidden_field :position, :value => 1 %>
+    </div>
+      <div class="modal-footer">
+        <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="modal hide fade" id="modal-new-post">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3>New Post For: <%= @group.name %></h3>
+        </div>
+        <div class="modal-body center">
+        <%= form_for [@group, Post.new] do |f| %>
+          <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New post title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      </div>
+        <div class="modal-footer">
+          <%= f.submit "Create new draft", :class => "btn btn-primary" %>
+        </div>
+        <% end %>
+      </div>
+  <% end %>
 <% end %>
 
 <% end %>

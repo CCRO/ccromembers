@@ -1,5 +1,5 @@
 <%= form_for [@owner, @page] do |f| %>
   <%= f.label :title %> <%= f.text_field :title %>
   <%= f.hidden_field :position, :value => 1 %>
-  <%= f.submit %>
+  <%= f.submit "Create page", class: "btn", style: "margin-top:-10px;" %>
 <% end %>
