@@ -33,13 +33,13 @@
 
 
 <div class="page" style="background-color: white;">
-<% if false %>
+
   <%= form_for @survey do |f| %>
     <h1><%= f.text_area :title, class: "redactor" %></h1>
     <%=  f.text_area :blurb, class: "redactor" %></br>
     <%= f.submit "Update Survey Info", class: "btn" %>
   <% end %>
-<% end %>
+
 </br>
 </br>
 
