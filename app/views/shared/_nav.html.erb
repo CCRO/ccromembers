@@ -80,8 +80,8 @@
               <% end %>
               <li class="divider"></li>
               <li><%= link_to "Logout", logout_path %></li>
-              <% if current_user and current_user.admin? %>
-                <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
+              <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
+               <% if current_user and current_user.admin? %>
                 <li class="divider"></li>
                 
                 <% if @page %>
