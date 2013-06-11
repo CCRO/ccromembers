@@ -77,6 +77,7 @@ class PeopleController < ApplicationController
     
     respond_to do |format|
       format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
       format.html # new.html.erb
       format.json { render json: @person }
     end
@@ -125,6 +126,7 @@ class PeopleController < ApplicationController
         @person.send_activation
         format.html { redirect_to activation_path }
         format.mobile {render :layout => '/layouts/blank.html.erb'}
+        format.tablet {render :layout => '/layouts/blank.html.erb'}
         format.json { render json: @person, status: :created, location: @person }
       else
         format.html { render action: "new" }

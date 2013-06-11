@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
   def new
     respond_to do |format|
       format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
       format.html
     end
   end

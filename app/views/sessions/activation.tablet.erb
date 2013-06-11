@@ -1,0 +1,17 @@
+<div class="container">
+  <div id="logo" class="span3" style="padding-bottom:30px">
+    <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300', :id => 'header_logo'), root_path %> 
+  </div>
+  <div id="contact" class="row-fluid">
+    <div class="hero-unit span10" style="background-color:white; text-align:center; margin-top:20px">  
+      <h1 style="margin-bottom: 30px; color:#24A9D3;">Please verify your email</h1>
+      <p>Please check your email for an activation link from: CCRO_Resources@ccro.org</p>
+      <br>
+      <h2 >Thank you for verifying you're email!</h2>
+
+      <% if @person %>
+        there is a person here
+      <% end %>
+    </div> 
+  </div>
+</div>

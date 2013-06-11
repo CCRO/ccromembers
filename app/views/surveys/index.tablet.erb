@@ -1,0 +1,108 @@
+ <head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+);
+</script>
+
+<% if false %>
+<div class="well">
+  <%= form_for Survey.new do |f| %>
+    <%= f.text_field :title, :class => "input-xlarge focused pull-left", :placeholder => "New survey title" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= f.submit "Create new Survey", :class => "btn pull-right btn-large" %>
+  <% end %>
+</div>
+<% end %>
+<div style="margin-top:10px;">
+  <%= link_to image_tag(asset_path('ccro_long.png')), "#" %>
+</div>
+<div class="row span12" style="padding-top:0px;">
+<hr>
+<h1 style="text-align:center;">Active Surveys</h1>
+<hr>
+<% @surveys.each do |s| %>
+  <% if can? :read, s %>
+    <div class="hero-unit" style="background-color:lightblue; padding: 10px; padding-top:15px;">
+      <table style="width:100%; text-align:center;">
+        <tr>
+          <td>
+            <h2 style="color:black; margin-bottom:10px;" ><%= simple_format(s.title) %></h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="">
+            <table style="width:200px; margin-left:30px">
+              <tr style="border-color: rgb(0, 0, 0); border-style: solid; border-width: 1px 1px 1px 1px;">
+                <% completed = {} %>
+                <% completed[s.id] = true %>
+                <% s.questions.each do |q| %>
+                  <% if Response.where(question_id: q, person_id: current_user).empty? %>
+                      <td style="background-color:gray; padding-top:20px;"></td>
+                      <% completed[s.id] = false %>
+                  <% else %>
+                    <td style="background-color:lightgreen; padding-top:20px;"></td>
+                  <% end %>
+                <% end %>
+              </tr>
+            </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to intro_survey_path(s), class: "btn btn-info", style: "width:90%; margin-top:10px;" do %>
+              <% if completed[s.id] %>
+                <h2 style="color:black;" ><%= "Completed" %></h2>
+              <% else %>
+                <h2 style="color:black;" ><%= "Go to Survey" %></h2>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+<% end %>
+
+<div style="text-align:center;">
+  <div class="btn-toolbar">
+    <div class="btn-group">
+       <% if current_user %>
+        <%= link_to "Log Out", logout_path, :class => 'btn btn-large' %>
+        <%= link_to logout_path, :class => 'btn btn-large' do %>
+          <i class="icon-off"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if false %>
+  <ul>
+    <% @surveys.each do |survey| %>
+      <li><%= link_to survey.title, edit_survey_path(survey) %> 
+        <%= link_to survey, :method => "delete", :confirm => "Are you sure?" do %>
+        <i class="icon-trash hide"></i>
+        <% end %>
+      </li>
+    <% end %>
+      <li>
+        <%= form_for Survey.new do |f| %>
+          <%= f.text_field :title %>
+          <%= f.submit %>
+        <% end %>
+      </li>
+  </ul>
+<% end %>
+

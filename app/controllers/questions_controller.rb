@@ -43,6 +43,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       format.mobile
+      format.tablet
       format.html
       format.js
     end

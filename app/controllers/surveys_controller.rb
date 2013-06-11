@@ -11,6 +11,7 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
       format.html
       format.js
     end
@@ -23,6 +24,8 @@ class SurveysController < ApplicationController
     authorize! :read, @survey
 
     if is_mobile_device?
+      redirect_to intro_survey_path(@survey)
+    elsif is_tablet_device?
       redirect_to intro_survey_path(@survey)
     else
 

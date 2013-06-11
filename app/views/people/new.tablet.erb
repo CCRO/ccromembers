@@ -1,0 +1,114 @@
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name = "viewport" content = "user-scalable=no, width=device-width">
+  <%= stylesheet_link_tag "bootstrap_and_overrides" %>
+</head>
+<script>
+// When ready...
+window.addEventListener("load",function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+);
+</script>
+
+<div id="notices" style="margin:10px;">
+  <% flash.each do |key, msg| %>
+    <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+      <a class="close" data-dismiss="alert">×</a>
+      <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container">
+  <div id="login" class="" style="">
+    <div id="login_tools" class="span8 offset1" style="padding-left:50px; padding-top:10px; padding-bottom:5px; padding-right:50px; background-color: #eeeeee; margin-bottom:20px; margin-top:10px;">  
+      <h3 style="margin-bottom: 10px; color:#0088cc; text-align:center;">CCRO Sign Up</h3>
+      <div style="margin-bottom:20px;">
+        <%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
+          
+          <% if @person.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+              <ul>
+              <% @person.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <fieldset style="">
+            <div class="control-group">
+              <%= f.label :first_name, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.text_field :first_name, :class => "input-xlarge " %>
+              </div>
+            </div>  
+            <div class="control-group">
+              <%= f.label :last_name, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.text_field :last_name, :class => "input-xlarge " %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :email, :class => 'control-label' %>
+              <div class="controls">
+              <%= f.text_field :email, :class => "input-xlarge " %>
+              <p class="help-block">This email will be your login username.</p>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :password, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.password_field :password, :class => "input-xlarge " %><br /><br />
+                <%= f.password_field :password_confirmation, :class => "input-xlarge " %>
+                <p class="help-block">Enter password and confirm by entering again.</p>
+              </div>
+            </div>
+          </fieldset>
+          <div class="actions">
+            <%= f.submit "Sign Up", :class => 'btn', style: "width:100%;" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="login">
+    <div id="login_tools" class="span3 offset4" style="text-align:center;">  
+      <h3 style="margin-bottom: 10px; color:#0088cc;">Need help?</h3>
+      <p>Contact Danette Kuru at 281-825-4870 or <a href="mailto:danette.kuru@ccro.org">danette.kuru@ccro.org</a>.</p>
+    </div>
+  </div>
+</div>
+  
+<style>
+body {
+  background-color: #fff !important;
+}
+
+div#signup div.hero-unit {
+  min-height: 400px !important;
+  position: relative;
+}
+
+div#signup div.hero-unit .btn {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+</style>
+<script>
+
+  $("#warning_close").click(function () {
+  $("#warning_message").toggle(['slow']);
+  });
+
+</script>
+

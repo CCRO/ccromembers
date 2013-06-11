@@ -40,6 +40,7 @@ class PollsController < ApplicationController
 
     respond_to do |format|
       format.mobile
+      format.tablet
       format.html # show.html.erb
       format.json { render json: @poll }
     end
