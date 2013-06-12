@@ -1,0 +1,27 @@
+<div class="row-fluid">
+  <div id="" class="span12">
+
+    <ul class="breadcrumb pull-left span8">
+      <li><a href="#">Directory</a> <span class="divider">/</span></li>
+      <% unless params[:q] %>
+        <li class="active"><a href="/people">People</a></li>
+      <% else %>
+        <li><a href="/people">People</a> <span class="divider">/</span></li>
+        <li class="active"></a>Search: <%= params[:q] %></li>        
+      <% end %>
+    </ul>
+    <form action="/people" class="form-search pull-right">
+      <input type="text" name="q" class="input-medium search-query" placeholder="<%= params[:q] %>">
+      <button type="submit" class="btn">Search</button>
+    </form>
+    <% if current_user %>
+      <% if params[:q] %>
+        <%= link_to('export CSV', url_for(:only_path => false, q: params[:q], :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+      <% else %>
+        <%= link_to('export CSV', url_for(:only_path => false, :format => 'csv'), :class => 'btn pull-right') if current_user.admin? %>
+      <% end %>
+    <% end %>
+    <%= render :partial => 'list', :object => @people %>
+    <br />
+ </div>
+</div>

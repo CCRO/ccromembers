@@ -25,6 +25,8 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
       format.html # index.html.erb
       format.json { render json: @people }
       format.csv { send_data csv_data }
@@ -59,6 +61,8 @@ class PeopleController < ApplicationController
     authorize! :read, @person
     
     respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
       format.html # show.html.erb
       format.json { render json: @person }
       format.js
