@@ -4,16 +4,13 @@
       </div>
 
       <div style="margin-top:10px; margin-left:20px;">
-      <%= form_for [@question.survey, @question], { :remote => true, :class => 'radio inline' } do |q| %>
-        <%= q.radio_button :response_type, "radio", :class => 'submittable' %> Radio | 
-        <%= q.radio_button :response_type, "checkbox", :class => 'submittable' %> Checkbox | 
-        <%= q.radio_button :response_type, "singleline", :class => 'submittable' %> Singleline | 
-        <%= q.radio_button :response_type, "multiline", :class => 'submittable' %> Multiline
-      <% end %>
-      </div>
-
-      <div class="modal-body">
-        <%= form_for([@question.survey, @question]) do |q| %>
+        <%= form_for [@question.survey, @question] do |q| %>
+          <div class="field">
+            <%= q.radio_button :response_type, "radio", :class => 'submittable' %> Radio | 
+            <%= q.radio_button :response_type, "checkbox", :class => 'submittable' %> Checkbox | 
+            <%= q.radio_button :response_type, "singleline", :class => 'submittable' %> Singleline | 
+            <%= q.radio_button :response_type, "multiline", :class => 'submittable' %> Multiline
+          </div>
 
           <div class="field">
             <%= q.label :prompt %>
@@ -31,12 +28,11 @@
             <% end %>
           <% end %>
 
-
           <div class="actions">
             <%= q.submit "Update", class: "btn" %>
           </div>
         <% end %>
-      </div>
+
 
       <div class="modal-footer">
         <%= link_to 'close',  edit_survey_path(@question.survey), class: 'btn' %>
