@@ -8,6 +8,34 @@
   <%= csrf_meta_tags %>
 </head>
 <body id="blank">
+<% if browser.ie8? || browser.ie7? %>
+  <% if current_user   %>
+    <div style="margin-bottom:20px;">
+      <div>
+        <%= render 'shared/nav' %>
+      </div>
+    </div>
+    <% if params[:action] == 'index' %>
+      <div id="warning_message" style="margin-bottom: 20px;">
+        <%= render 'shared/browser_warning' %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render 'shared/public_nav' %>
+  <% end %>
+<% else %>
+    <% if current_user   %>
+      <div style margin-bottom: 100px;>
+        <div style="margin-bottom: 100px;">
+          <%= render 'shared/nav' %>
+        </div>
+      </div>
+  <% else %>
+    <div margin-bottom:20px;>
+      <%= render 'shared/public_nav' %>
+    </div>
+  <% end %>
+<% end %>
 <!--Body content (BEGIN)-->
 <%= yield %>
 <!--Body content (END)-->
