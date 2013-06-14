@@ -62,8 +62,6 @@ class BillboardsController < ApplicationController
   # POST /billboards.json
   def create
     @billboard = Billboard.new(params[:billboard])
-    @billboard.archived = false
-    @billboard.active = false
 
     respond_to do |format|
       if @billboard.save

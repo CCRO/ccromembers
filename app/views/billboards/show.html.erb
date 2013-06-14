@@ -1,9 +1,10 @@
-<p id="notice"><%= notice %></p>
 <p><%= @billboard.title %></p>
 
 <div class="row-fluid">
-	<div class="page drop-shadow billboard span9">
-		<%= @billboard.body.html_safe %>
+	<div class="span9">
+    <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:15px; padding-right:15px;">
+  		<%= @billboard.body.html_safe %>
+    </div>
 	</div>
 </div>
 
