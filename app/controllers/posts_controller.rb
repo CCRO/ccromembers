@@ -7,6 +7,9 @@ class PostsController < ApplicationController
   layout :conditional_layout
 
   def index
+    @billboards = []
+    Billboard.all.each {|a| @billboards << a if a.active }
+
     if params[:filter] 
       if params[:filter] == 'drafts'
         authorize! :create, Post

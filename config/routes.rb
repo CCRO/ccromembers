@@ -31,6 +31,19 @@ Ccromembers::Application.routes.draw do
     end
   end
 
+  resources :billboards do
+    collection do
+      get :archived
+    end
+    
+    member do
+      get :archive
+      get :activate
+      get :unarchive
+      get :deactivate
+    end
+  end
+
   get "call_manager/sms"
 
   get "call_manager/voice"

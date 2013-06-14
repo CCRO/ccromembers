@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<p><%= @billboard.title %></p>
+
+<div class="row-fluid">
+	<div class="page drop-shadow billboard span9">
+		<%= @billboard.body.html_safe %>
+	</div>
+</div>
+
+
+<%= link_to 'Edit', edit_billboard_path(@billboard) %> |
+<%= link_to 'Back', billboards_path %>

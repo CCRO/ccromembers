@@ -27,6 +27,15 @@
 
 <% end %>
 <% end %>
+
+<% if @billboards %>
+  <% @billboards.each do |billboard| %>
+    <div class=" drop-shadow billboard" style="margin-top:0px; margin-bottom:20px;">
+      <%= billboard.body.html_safe %>
+    </div>
+  <% end %>
+<% end %>
+
 <% if @posts.present? %>
 	<%= render @posts %>
 <% else %>

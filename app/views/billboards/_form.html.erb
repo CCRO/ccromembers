@@ -1,0 +1,52 @@
+<%= form_for(@billboard) do |f| %>
+  <% if @billboard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@billboard.errors.count, "error") %> prohibited this billboard from being saved:</h2>
+
+      <ul>
+      <% @billboard.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="field">
+        <p> Title: <%= f.text_field :title %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="field">
+      <div class="page drop-shadow billboard span9">
+        <%= f.text_area :body, class: "redactor" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row-fluid">
+    <div class="row-fluid">
+      <div class="span4">
+        <div class="field">
+          <p> Active: <%= f.check_box :active, style: "margin-top:-3px;" %></p>
+        </div>
+
+        <div class="field">
+          <p> Archived: <%= f.check_box :archived, style: "margin-top:-3px;" %></p>
+        </div>
+        <br />
+        <% if params[:action] == 'edit' %>
+          <div class="actions">
+            <%= f.submit "Update Billboard", class: "btn" %>
+          </div>
+        <% else %>
+          <div class="actions">
+            <%= f.submit "Create Billboard", class: "btn" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

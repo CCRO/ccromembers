@@ -1,0 +1,32 @@
+<%= link_to 'New Billboard', new_billboard_path, class: "btn" %>
+
+<h1>Archived billboards</h1>
+<% if @archived_billboards ==  nil %>
+  <p> You have no inactive billboards at this time.
+<% else %>
+  <table class="table">
+    <tr>
+      <th>Title</th>
+      <th>Date Created</th>
+      <th>Date Updated</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @archived_billboards.each do |billboard| %>
+    <tr>
+      <td><%= billboard.title %></td>
+      <td><%= billboard.created_at %></td>
+      <td><%= billboard.updated_at %></td>
+      <td><%= link_to 'Show', billboard %></td>
+      <td><%= link_to 'Edit', edit_billboard_path(billboard) %></td>
+      <td><%= link_to 'Un-Archive', unarchive_billboard_path(billboard) %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+
+<%= link_to 'Back', billboards_path %>
+
+
