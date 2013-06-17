@@ -30,9 +30,12 @@
 
 <% if @billboards %>
   <% @billboards.each do |billboard| %>
-    <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:15px; padding-right:15px;">
-      <%= billboard.body.html_safe %>
-    </div>
+    <% if billboard.location == "blog index top"%>
+      <div class="billboard" style="margin-top:0px; margin-bottom:20px; margin-left:10px; padding-right:0px;">
+        <%= billboard.body.html_safe %>
+      </div>
+      
+    <% end %>
   <% end %>
 <% end %>
 

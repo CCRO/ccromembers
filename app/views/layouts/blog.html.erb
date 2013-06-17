@@ -50,11 +50,22 @@
           <div style="width:22%; float:left;">
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">
+                <% if @billboards %>
+                  <% @billboards.each do |billboard| %>
+                    <% if billboard.location == "blog sidebar top"%>
+                      <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:15px; padding-right:15px;">
+                        <%= billboard.body.html_safe %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
                 <% if current_user && current_user.committee? %>
                   <% @surveys.each do |survey| %>
                     <%= link_to "Poll: #{survey.title}", survey, class: "btn btn-info btn-large survey_btn" %>
                   <% end %>
                 <% end %>
+
                 <% if current_user %>
                   <% if @my_groups.length > 0%>
                     <ul class="nav nav-tabs nav-stacked">
@@ -150,14 +161,22 @@
       <div class="row">
         <% unless params[:controller] == 'signups' %>  
         	<aside class="span3">
+            <% if @billboards %>
+              <% @billboards.each do |billboard| %>
+                <% if billboard.location == "blog sidebar top"%>
+                  <div class="billboard blog-sidebar-top" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+                    <%= billboard.body.html_safe %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
            
             <% if current_user && current_user.committee? %>
-
-            <% if current_user && current_user.committee? %>
-                  <% @surveys.each do |survey| %>
-                    <%= link_to "Poll: #{survey.title}", survey, class: "btn btn-info btn-large survey_btn" %>
-                  <% end %>
+              <% if current_user && current_user.committee? %>
+                <% @surveys.each do |survey| %>
+                  <%= link_to "Poll: #{survey.title}", survey, class: "btn btn-info btn-large survey_btn" %>
                 <% end %>
+              <% end %>
             <% end %>
 
             <% if current_user %>

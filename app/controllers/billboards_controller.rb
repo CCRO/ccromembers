@@ -65,7 +65,7 @@ class BillboardsController < ApplicationController
 
     respond_to do |format|
       if @billboard.save
-        format.html { redirect_to @billboard, notice: 'Billboard was successfully created.' }
+        format.html { redirect_to edit_billboard_path(@billboard), notice: 'Billboard was successfully created.' }
         format.json { render json: @billboard, status: :created, location: @billboard }
       else
         format.html { render action: "new" }

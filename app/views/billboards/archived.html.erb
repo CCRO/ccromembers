@@ -7,8 +7,7 @@
   <table class="table">
     <tr>
       <th>Title</th>
-      <th>Date Created</th>
-      <th>Date Updated</th>
+      <th>location</th>
       <th></th>
       <th></th>
       <th></th>
@@ -17,8 +16,7 @@
   <% @archived_billboards.each do |billboard| %>
     <tr>
       <td><%= billboard.title %></td>
-      <td><%= billboard.created_at %></td>
-      <td><%= billboard.updated_at %></td>
+      <td><%= billboard.location %></td>
       <td><%= link_to 'Show', billboard %></td>
       <td><%= link_to 'Edit', edit_billboard_path(billboard) %></td>
       <td><%= link_to 'Un-Archive', unarchive_billboard_path(billboard) %></td>
