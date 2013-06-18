@@ -7,6 +7,7 @@ class Ability
     can :read, [Post, Page], {level: 'public', published: true}
     can :create, Person
     can :read, Person
+    can :read, Billboard
     cannot :manage, Subscription
    
     can :read, Group do |group|

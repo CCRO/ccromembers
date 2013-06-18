@@ -1,23 +1,29 @@
 class BillboardsController < ApplicationController
+  load_and_authorize_resource
   # GET /billboards
   # GET /billboards.json
   def index
     @billboards = Billboard.all
 
-    unless @billboards.empty?
-      @active_billboards = []
-      @inactive_billboards = []
-      @archived_billboards = []
+    unless current_user && current_user.admin?
+      redirect_to :root
+    else
 
-      @billboards.each {|a| @active_billboards << a if a.active }
-      @billboards.each {|a| @inactive_billboards << a if (a.active == false && a.archived == false) }
-      @billboards.each {|a| @archived_billboards << a if a.archived }
+      unless @billboards.empty?
+        @active_billboards = []
+        @inactive_billboards = []
+        @archived_billboards = []
 
-    end
+        @billboards.each {|a| @active_billboards << a if a.active }
+        @billboards.each {|a| @inactive_billboards << a if (a.active == false && a.archived == false) }
+        @billboards.each {|a| @archived_billboards << a if a.archived }
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @billboards }
+      end
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @billboards }
+      end
     end
   end
 
