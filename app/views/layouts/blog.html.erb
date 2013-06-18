@@ -179,6 +179,16 @@
               <% end %>
             <% end %>
 
+            <% if @billboards %>
+              <% @billboards.each do |billboard| %>
+                <% if billboard.location == "blog sidebar after polls"%>
+                  <div class="billboard blog-sidebar-top" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+                    <%= billboard.body.html_safe %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+
             <% if current_user %>
               <% if @my_groups && @my_groups.length > 0%>
                 <ul class="nav nav-tabs nav-stacked">
