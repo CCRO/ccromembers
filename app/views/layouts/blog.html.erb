@@ -66,6 +66,16 @@
                   <% end %>
                 <% end %>
 
+                 <% if @billboards %>
+              <% @billboards.each do |billboard| %>
+                <% if billboard.location == "blog sidebar after polls"%>
+                  <div class="billboard blog-sidebar-top" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+                    <%= billboard.body.html_safe %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+
                 <% if current_user %>
                   <% if @my_groups.length > 0%>
                     <ul class="nav nav-tabs nav-stacked">
@@ -84,6 +94,16 @@
                       <% end %>
                     </ul>
                   <% end %>
+
+                  <% if @billboards %>
+                <% @billboards.each do |billboard| %>
+                  <% if billboard.location == "blog sidebar after menu"%>
+                    <div class="billboard blog-sidebar-top" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+                      <%= billboard.body.html_safe %>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
 
                   <%= link_to "http://ccro.org/pages/76" do %>
                     <%= image_tag "https://s3.amazonaws.com/ccromembers_assets/redactor_assets/pictures/112/Screen_Shot_2013-04-10_at_2.03.52_PM.png", style: "border-style:solid; border-width:1px; border-color:lightgray; width: 99%;" %>
@@ -206,6 +226,16 @@
                     <li><%= link_to group.name, page_path(Page.find(group.overview_page)) %></li>
                   <% end %>
                 </ul>
+              <% end %>
+
+              <% if @billboards %>
+                <% @billboards.each do |billboard| %>
+                  <% if billboard.location == "blog sidebar after menu"%>
+                    <div class="billboard blog-sidebar-top" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+                      <%= billboard.body.html_safe %>
+                    </div>
+                  <% end %>
+                <% end %>
               <% end %>
 
               <%= link_to "http://ccro.org/pages/76" do %>

@@ -1,0 +1,35 @@
+<div id="password-reset" class="edit">
+	<div id="reset-form" class="span6 offset3">
+	  <center><%= image_tag "ccro_long.png", :width => '300' %></center><br />
+		<%= form_for @person, :url => reset_password_path(params[:parishable_token]), :html => {:class => 'well'} do |f| %>
+			<h2>Choose a new password</h2>
+			<br />
+			<div id="notices">
+				<% flash.each do |key, msg| %>
+				  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+			      <a class="close" data-dismiss="alert">×</a>
+			      <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+			    </div>
+				<% end %>
+			</div>
+			
+	    <div class="control-group">
+	      <p>New Password</p>
+	    	<div class="controls">
+					<%= f.password_field :password, :placeholder => 'Password' %>
+				</div>
+	    </div>
+	    <div class="control-group">
+	      <p>Confirm New Password</p>
+	    	<div class="controls">
+					<%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
+					<p class="help-block"></p>
+				</div>
+	    </div>
+
+	    <div class="actions"><%= submit_tag "Save new password", :class => "btn" %></div>
+	  <% end%>
+	</div>
+</div>
+
+
