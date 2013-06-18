@@ -20,6 +20,7 @@ Ccromembers::Application.routes.draw do
     end
 
     member do
+      get 'get_pic_and_text'
       get 'refresh'
       get 'status'
     end

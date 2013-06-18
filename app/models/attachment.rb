@@ -68,6 +68,11 @@ class Attachment < ActiveRecord::Base
     end
   end
 
+  def download_text_2
+    self.content = Crocodoc::Download.text(self.crocodoc_uuid)
+    self.save
+  end
+
   def download_text!
     self.download_text
     self.save
@@ -81,6 +86,16 @@ class Attachment < ActiveRecord::Base
       self.thumbnail = io
       self
     end
+  end
+
+  def download_thumbnail_2
+  
+    io = FilelessIO.new(Crocodoc::Download.thumbnail(self.crocodoc_uuid))
+    io.original_filename = self.crocodoc_uuid + "_thumbnail.png"
+
+    self.thumbnail = io
+    self.save
+    
   end
 
   def download_thumbnail!

@@ -191,17 +191,25 @@ class AttachmentsController < ApplicationController
         attachment.crocodoc_viewable = params[:viewable]
         attachment.save
 
-        if params[:status] == "DONE"
-            attachment.download_text
-            attachment.download_thumbnail
+        if false
+          if params[:status] == "DONE"
+              attachment.download_text_2
+              attachment.download_thumbnail_2
+          end
         end
 
       end
 
       render status: 200, text: :none
     end
+  end
 
+  def get_pic_and_text
+    attachment = Attachment.find(params[:id])
+    attachment.download_text_2
+    attachment.download_thumbnail_2
 
+    redirect_to :back
   end
 
   def lookup_group

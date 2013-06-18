@@ -7,11 +7,11 @@
             <% else %>
             <h3><%= attachment.title %> <%= content_tag(:span, attachment.tag_list, :class => 'label label-inverse') if attachment.tag_list.present? %></h3>
             <% end %>
-          <%= if attachment.thumbnail.present? 
-              link_to attachment, :target => '_blank' do 
-                image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;')  
-              end
-            end %>
+            <% if attachment.thumbnail.present? %>
+              <%= link_to attachment, :target => '_blank' do %>
+                <%= image_tag(attachment.thumbnail, class: 'pull-left', style: 'border: 1px solid lightgrey; padding: 2px; margin: 3px;') %>
+              <% end %>
+            <% end %>
             <h4></h4>
             <p><%= attachment.description %></p>
         </td>
@@ -40,7 +40,8 @@
         <% if can? :edit, attachment %>
           <span class="link-group">
             <%= link_to 'Edit', edit_polymorphic_path([@group, attachment]) %> | 
-            <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %>
+            <%= link_to 'Delete', polymorphic_path([@group, attachment]), :method => 'delete', :confirm => "Are you sure you want to delete?" if can? :destroy, attachment %> |
+            <%= link_to "Grab Picture of Attachment", get_pic_and_text_attachment_path(attachment) %>
           </span>
         <% end %>
       </td>
