@@ -15,6 +15,12 @@ class PasswordResetsController < ApplicationController
     unless @person = Person.find_by_perishable_token(params[:perishable_token])
       redirect_to forgot_password_path, :flash => {:error => "Password reset token not found."}
     end
+    
+    respond_to do |format|
+      format.mobile {render :layout => '/layouts/blank.html.erb'}
+      format.tablet {render :layout => '/layouts/blank.html.erb'}
+      format.html
+    end
   end
   
   def create
