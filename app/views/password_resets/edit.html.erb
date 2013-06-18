@@ -1,7 +1,7 @@
 <div id="password-reset" class="edit">
 	<div id="reset-form" class="span6 offset3">
 	  <center><%= image_tag "ccro_long.png", :width => '300' %></center><br />
-		<%= form_for @person, :url => reset_password_path(params[:parishable_token]), :html => {:class => 'well'} do |f| %>
+		<%= form_for @person, :url => reset_password_path(@the_token), :html => {:class => 'well'} do |f| %>
 			<h2>Choose a new password</h2>
 			<br />
 			<div id="notices">
