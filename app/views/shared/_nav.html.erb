@@ -153,6 +153,18 @@
                   </ul>
                 </li>
                 <li class="dropdown-submenu">
+                  <%= link_to billboards_path do %>
+                    <i class="icon-desktop"></i> Billboards
+                  <% end %>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "New Billboard", new_billboard_path %></li>
+                    <li class="divider"></li>
+                    <li><%= link_to "Active Billboards", billboards_path %></li>
+                    <li><%= link_to "Inactive Billboards", billboards_path %></li>
+                    <li><%= link_to "Archived Billboards", archived_billboards_path %></li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu">
                   <%= link_to surveys_path do %>
                     <i class="icon-list-ul"></i> Surveys
                   <% end %>
