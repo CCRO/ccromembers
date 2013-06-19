@@ -92,7 +92,7 @@ class BillboardsController < ApplicationController
 
     respond_to do |format|
       if @billboard.update_attributes(params[:billboard])
-        format.html { redirect_to @billboard, notice: 'Billboard was successfully updated.' }
+        format.html { redirect_to billboards_path, notice: 'Billboard was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
