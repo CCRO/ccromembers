@@ -1,6 +1,6 @@
 <% if @billboards %>
   <% @billboards.each do |billboard| %>
-    <% if billboard.location == "group sidebar top" && billboard.group_id == @group.id %>
+    <% if billboard.location == "group sidebar top" && (billboard.group_id == @group.id || billboard.group_id.nil?) %>
       <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
         <%= billboard.body.html_safe %>
         <% if current_user && current_user.admin? %>
@@ -129,7 +129,7 @@
 
 <% if @billboards %>
   <% @billboards.each do |billboard| %>
-    <% if billboard.location == "group sidebar after first menu" && billboard.group_id == @group.id %>
+    <% if billboard.location == "group sidebar after first menu" && (billboard.group_id == @group.id || billboard.group_id.nil?) %>
       <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
         <%= billboard.body.html_safe %>
       </div>
@@ -200,7 +200,7 @@
 
 <% if @billboards %>
   <% @billboards.each do |billboard| %>
-    <% if billboard.location == "group sidebar after last menu" && billboard.group_id == @group.id %>
+    <% if billboard.location == "group sidebar after last menu" && (billboard.group_id == @group.id || billboard.group_id.nil?) %>
       <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
         <%= billboard.body.html_safe %>
       </div>
