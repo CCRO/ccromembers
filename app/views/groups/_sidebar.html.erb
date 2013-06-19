@@ -1,3 +1,18 @@
+<% if @billboards %>
+  <% @billboards.each do |billboard| %>
+    <% if billboard.location == "group sidebar top" && billboard.group_id == @group.id %>
+      <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+        <%= billboard.body.html_safe %>
+        <% if current_user && current_user.admin? %>
+          <div id="edit_billboard<%= billboard.id %>", class="hide billboard_edit_buton" style="text-align:center" >
+            <%= link_to "Edit this billboard", edit_billboard_path(billboard), class: "btn btn-info", style: "width:80%; margin-top:10px;" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
 <div class="well">
   <% if @group.people.include? current_user %>
   <div class="accordion" id="accordion1">
@@ -35,6 +50,7 @@
       <%= link_to 'Join This Working Group', join_group_path(@group), class: 'btn btn-info btn-large', style: 'margin-bottom: 20px; margin-left:0; padding-left: 25%; padding-right: 25%;' %>
     <% end %>
   <% end %>
+
   <ul class="nav nav-list">
     <li class="nav-header"><%= 'Working Group Information' %></li>
     <% unless @article || @page || @message || params[:controller] == 'attachments' %>
@@ -111,6 +127,16 @@
   </ul>
 </div>
 
+<% if @billboards %>
+  <% @billboards.each do |billboard| %>
+    <% if billboard.location == "group sidebar after first menu" && billboard.group_id == @group.id %>
+      <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+        <%= billboard.body.html_safe %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
 <% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
 <% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
 <% @group_memberships = @group.memberships.all.map { |membership| membership.person } %>
@@ -172,4 +198,28 @@
   </div>
 <% end %>
 
+<% if @billboards %>
+  <% @billboards.each do |billboard| %>
+    <% if billboard.location == "group sidebar after last menu" && billboard.group_id == @group.id %>
+      <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+        <%= billboard.body.html_safe %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
 <span class="btn" style="width:90%; margin-bottom: 20px; margin-left: 0px; padding-right:15px;"><%= link_to 'Group Activity', show_activity_group_path(@group) %></span>
+
+<% if current_user && current_user.admin? %>
+  <script>
+    $(".billboard").mouseenter(function (event) {
+      $('.billboard_edit_buton').removeClass('hide');
+    });
+    $(".billboard_edit_buton").mouseenter(function (event) {
+      $('.billboard_edit_buton').removeClass('hide');
+    });
+    $(".billboard").mouseleave(function (event) {
+      $('.billboard_edit_buton').addClass('hide');
+    });
+  </script>
+<% end %>

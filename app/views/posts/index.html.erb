@@ -30,11 +30,17 @@
 
 <% if @billboards %>
   <% @billboards.each do |billboard| %>
-    <% if billboard.location == "blog index top"%>
+    <% if billboard.location == "blog index top" && billboard.group_id == (@group ? @group.id : nil) %>
       <div class="billboard" style="margin-top:0px; margin-bottom:20px; margin-left:10px; padding-right:0px;">
         <%= billboard.body.html_safe %>
+        <% if false %>
+          <% if current_user && current_user.admin? %>
+            <div id="edit_billboard<%= billboard.id %>", class="hide billboard_edit_buton" style="text-align:center" >
+              <%= link_to "Edit this billboard", edit_billboard_path(billboard), class: "btn btn-info", style: "width:80%; margin-top:10px;" %>
+            </div>
+          <% end %>
+        <% end %>
       </div>
-      
     <% end %>
   <% end %>
 <% end %>
@@ -43,4 +49,18 @@
 	<%= render @posts %>
 <% else %>
 	<h1>You do not currently have any blog posts or news items.</h1>
+<% end %>
+
+<% if current_user && current_user.admin? %>
+  <script>
+    $(".billboard").mouseenter(function (event) {
+      $('.billboard_edit_buton').removeClass('hide');
+    });
+    $(".billboard_edit_buton").mouseenter(function (event) {
+      $('.billboard_edit_buton').removeClass('hide');
+    });
+    $(".billboard").mouseleave(function (event) {
+      $('.billboard_edit_buton').addClass('hide');
+    });
+  </script>
 <% end %>
