@@ -71,7 +71,9 @@
     <% if post.owner_type == 'Group'%>
     <h3 id="post_author">From The '<%= link_to post.owner.try(:name), post.owner %>' Working Group</h3>
     <% else %>
-    <h3 id="post_author">by <%= post.author.try(:name) %></h3>
+      <% unless post.author.nil? %>
+        <h3 id="post_author">by <%= post.author.try(:name) %></h3>
+      <% end %>
     <% end %>
     
     <!-- Post Body:  -->

@@ -39,32 +39,35 @@
                     <li class="divider"></li>
                     
                     <% if @page %>
-                      <li><a href="#"><strong>Admin options for the page: <%= @page.title %></strong></a></li>
-                      <li><%= link_to edit_page_path(@page) do %><i class="icon-sign-blank"></i> Edit this page<% end %></li>
-                      <li><%= link_to "#modal-page-settings", 'data-toggle' => "modal" do %><i class="icon-sign-blank"></i> Page settings<% end %></li>
-                      <li><%= link_to duplicate_page_path(@page) do %><i class="icon-sign-blank"></i> Duplicate this page<% end %></li>
-                      <li><%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-sign-blank"></i> Delete this page<% end %></li>
+                      <li><a href="#"><strong>Admin options for the page: <%= @page.title.html_safe %></strong></a></li>
+                      <li><%= link_to edit_page_path(@page) do %><i class="icon-file"></i> Edit this page<% end %></li>
+                      <li><%= link_to "#modal-page-settings", 'data-toggle' => "modal" do %><i class="icon-file"></i> Page settings<% end %></li>
+                      <li><%= link_to duplicate_page_path(@page) do %><i class="icon-file"></i> Duplicate this page<% end %></li>
+                      <li><%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-file"></i> Delete this page<% end %></li>
 
 
                       <li class="divider"></li>
                     <% end %>
 
                     <% if @post %>
-                      <li><a href="#"><strong>Admin options for the post: <%= @post.title %></strong></a></li>
-                      <li><%= link_to edit_post_path(@post) do %><i class="icon-sign-blank"></i> Edit this post<% end %></li>
-                      <li><%= link_to "#modal-post-settings", 'data-toggle' => "modal" do %><i class="icon-sign-blank"></i> Post settings<% end %></li>
-                      <li><%= link_to duplicate_post_path(@post) do %><i class="icon-sign-blank"></i> Duplicate this post<% end %></li>
-                      <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-sign-blank"></i> Delete this post<% end %></li>
+                      <li><a href="#"><strong>Admin options for the post: <%= @post.title.html_safe %></strong></a></li>
+                      <li><%= link_to edit_post_path(@post) do %><i class="icon-list-alt"></i> Edit this post<% end %></li>
+                      <li><%= link_to "#modal-share-post", 'data-toggle' => "modal" do %><i class="icon-list-alt"></i> Share post<% end %></li>
+                      <li><%= link_to "#modal-post-settings", 'data-toggle' => "modal" do %><i class="icon-list-alt"></i> Post settings<% end %></li>
+                      <li><%= link_to duplicate_post_path(@post) do %><i class="icon-list-alt"></i> Duplicate this post<% end %></li>
+                      <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-list-alt"></i> Delete this post<% end %></li>
 
                       <li class="divider"></li>
                     <% end %>
 
                     <% if @group %>
-                      <li><a href="#"><strong>Admin options for the working group: <%= @group.name %> </strong></a></li>
-                      <li><%= link_to "#modal-new-group-post", 'data-toggle' => "modal" do %><i class="icon-sign-blank"></i> New post for this group<% end %></li>
-                      <li><%= link_to "#modal-new-group-page", 'data-toggle' => "modal" do %><i class="icon-sign-blank"></i> New page for this group<% end %></li>
-                      <li><%= link_to group_posts_path(@group) do %><i class="icon-sign-blank"></i> Group posts<% end %></li>
-                      <li><%= link_to group_pages_path(@group) do %><i class="icon-sign-blank"></i> Group pages<% end %></li>
+                      <li><a href="#"><strong>Admin options for the working group: <%= @group.name.html_safe %> </strong></a></li>
+                      <li><%= link_to "#modal-new-group-post", 'data-toggle' => "modal" do %><i class="icon-group"></i> New post for this group<% end %></li>
+                      <li><%= link_to "#modal-new-group-page", 'data-toggle' => "modal" do %><i class="icon-group"></i> New page for this group<% end %></li>
+                      <li><%= link_to new_group_attachment_path(@group) do %><i class="icon-group"></i> New online document for this group<% end %></li>
+                      <li><%= link_to new_group_message_path(@group) do %><i class="icon-group"></i> New discussion for this group<% end %></li>
+                      <li><%= link_to group_posts_path(@group) do %><i class="icon-group"></i> Group posts<% end %></li>
+                      <li><%= link_to group_pages_path(@group) do %><i class="icon-group"></i> Group pages<% end %></li>
 
                       <li class="divider"></li>
                     <% end %>
@@ -296,6 +299,44 @@
 
 
 <% content_for :modal_settings do %>
+
+  <% if @post && @post.id %>
+    <div class="modal hide fade" id="modal-share-post">
+      <div class="modal-header">
+        <h1><%= @post.title.html_safe if @post.title %></h1>
+      </div>
+      <div class="modal-body center">
+        <h2>Share this post:</h2>
+        <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
+        <h2>Share by email:</h2>
+        <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
+          <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
+          <% standard_body = "none" %>
+          <h4 style="padding-bottom:5px;">Email Subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
+          <h4 style="padding-bottom:5px;">Short message</h4>
+          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
+          <div class="control-group radio">
+            <h4 style="padding-right:5px;">Test Email <%= radio_button_tag('email_who', 'user', checked: "true") %>: <%= current_user.email %> </h4>
+
+            <% if @post.owner_type == 'Group' %>
+            <h4 style="padding-right:5px;">Working Group Email <%= radio_button_tag('email_who', 'working_group') %></h4>
+            <h4 style="padding-right:5px;">Working Group Leadership Email <%= radio_button_tag('email_who', 'leadership') %></h4>
+            <% end %>
+            <% if current_user and current_user.admin? %>
+            <h4 style="padding-right:5px;">CCRO Committee Email <%= radio_button_tag('email_who', 'committee') %></h4>
+            <h4 style="padding-right:5px;">Complete Directory <%= radio_button_tag('email_who', 'all') %></h4>
+            <% end %>
+          </div>
+          <br>
+          <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list') %></h4>
+          <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
+          <%= submit_tag 'Send', class: 'btn' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="modal hide fade" id="modal-new-page">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -479,7 +520,11 @@
               <%= form_for [@group, @post], { :remote => true } do |f| %>
                 <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                 <b>Assign this post to: </b>
-                <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% if @post.author.nil? %>
+                  <%= select_tag('post[author_id]', options_for_select(editors), :include_blank => true, :class => 'submittable') %>
+                <% else %>
+                  <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% end %>
               <% end %>
             </div>
           <% end %>

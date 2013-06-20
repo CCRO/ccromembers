@@ -21,15 +21,121 @@
         <% elsif current_user.level == 'committee'%>
          <%= link_to "CCRO Member", posts_path, class: "brand", style: "color: white;" %>
         <% elsif current_user.level == 'admin' %>
-          <%= link_to posts_path, class: "brand", style: "color: white;" do %>
-            <%if current_user.first_name == 'Bob' %>
-              CCRO Admin
-            <% elsif current_user.first_name == 'Danette' %>
-              <span class="icon-heart"> CCRO Admin <span class="icon-heart">
-            <% else%>
-              <span class="icon-star"> </span> CCRO Admin <span class="icon-star"> </span>
+          <% if false %>
+            <%= link_to posts_path, class: "brand", style: "color: white;" do %>
+                CCRO Admin <i class="icon-caret-down icon-white"></i>
             <% end %>
-          <% end %> 
+          <% end %>
+          <ul class="nav pull-left">
+            <li class="divider-vertical"></li>  
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle brand" data-toggle="dropdown" style="color:white;">
+                    CCRO Admin <i class="icon-caret-down icon-white"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Home", :root %></li>
+                   <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
+                   <% if current_user and current_user.admin? %>
+                    <li class="divider"></li>
+                    
+                    <% if @page %>
+                      <li><a href="#"><strong>Admin options for the page: <%= @page.title.html_safe %></strong></a></li>
+                      <li><%= link_to edit_page_path(@page) do %><i class="icon-file"></i> Edit this page<% end %></li>
+                      <li><%= link_to "#modal-page-settings", 'data-toggle' => "modal" do %><i class="icon-file"></i> Page settings<% end %></li>
+                      <li><%= link_to duplicate_page_path(@page) do %><i class="icon-file"></i> Duplicate this page<% end %></li>
+                      <li><%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-file"></i> Delete this page<% end %></li>
+
+
+                      <li class="divider"></li>
+                    <% end %>
+
+                    <% if @post %>
+                      <li><a href="#"><strong>Admin options for the post: <%= @post.title.html_safe %></strong></a></li>
+                      <li><%= link_to edit_post_path(@post) do %><i class="icon-list-alt"></i> Edit this post<% end %></li>
+                      <li><%= link_to "#modal-share-post", 'data-toggle' => "modal" do %><i class="icon-list-alt"></i> Share post<% end %></li>
+                      <li><%= link_to "#modal-post-settings", 'data-toggle' => "modal" do %><i class="icon-list-alt"></i> Post settings<% end %></li>
+                      <li><%= link_to duplicate_post_path(@post) do %><i class="icon-list-alt"></i> Duplicate this post<% end %></li>
+                      <li><%= link_to polymorphic_path([@group, @post]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-list-alt"></i> Delete this post<% end %></li>
+
+                      <li class="divider"></li>
+                    <% end %>
+
+                    <% if @group %>
+                      <li><a href="#"><strong>Admin options for the working group: <%= @group.name.html_safe %> </strong></a></li>
+                      <li><%= link_to "#modal-new-group-post", 'data-toggle' => "modal" do %><i class="icon-group"></i> New post for this group<% end %></li>
+                      <li><%= link_to "#modal-new-group-page", 'data-toggle' => "modal" do %><i class="icon-group"></i> New page for this group<% end %></li>
+                      <li><%= link_to new_group_attachment_path(@group) do %><i class="icon-group"></i> New online document for this group<% end %></li>
+                      <li><%= link_to new_group_message_path(@group) do %><i class="icon-group"></i> New discussion for this group<% end %></li>
+                      <li><%= link_to group_posts_path(@group) do %><i class="icon-group"></i> Group posts<% end %></li>
+                      <li><%= link_to group_pages_path(@group) do %><i class="icon-group"></i> Group pages<% end %></li>
+
+                      <li class="divider"></li>
+                    <% end %>
+
+                    <li><a href="#"><strong>General Admin options</strong></a></li>
+                    <li class="dropdown-submenu">
+                      <%= link_to pages_path do %>
+                        <i class="icon-file"></i> Pages
+                      <% end %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to "#modal-new-page", 'data-toggle' => "modal" do %>New page<% end %></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "All pages", pages_path %></li>
+                        <li><%= link_to "Active pages", active_pages_path %></li>
+                        <li><%= link_to "My draft pages", my_draft_pages_path %></li>
+                        <li><%= link_to "Draft pages", draft_pages_path %></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <%= link_to posts_path do %>
+                        <i class="icon-list-alt"></i> Posts
+                      <% end %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to "#modal-new-post", 'data-toggle' => "modal" do %>New post<% end %></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "All posts", posts_path %></li>
+                        <li><%= link_to "Submitted posts", submitted_posts_path %></li>
+                        <li><%= link_to "My draft posts", my_draft_posts_path %></li>
+                        <li><%= link_to "Draft posts", draft_posts_path %></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <%= link_to groups_path do %>
+                        <i class="icon-group"></i> Groups
+                      <% end %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to "#modal-new-group", 'data-toggle' => "modal" do %>New group<% end %></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "All groups", groups_path %></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <%= link_to billboards_path do %>
+                        <i class="icon-desktop"></i> Billboards
+                      <% end %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to "New Billboard", new_billboard_path %></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "Active Billboards", billboards_path %></li>
+                        <li><%= link_to "Inactive Billboards", billboards_path %></li>
+                        <li><%= link_to "Archived Billboards", archived_billboards_path %></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <%= link_to surveys_path do %>
+                        <i class="icon-list-ul"></i> Surveys
+                      <% end %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to "#modal-new-survey", 'data-toggle' => "modal" do %>New survey<% end %></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "All surveys", surveys_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>  
+                </ul>
+              </li>
+            </li>
+          </ul>
         <% else %>
         <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
         <% end %>
@@ -153,6 +259,18 @@
                   </ul>
                 </li>
                 <li class="dropdown-submenu">
+                  <%= link_to billboards_path do %>
+                    <i class="icon-desktop"></i> Billboards
+                  <% end %>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "New Billboard", new_billboard_path %></li>
+                    <li class="divider"></li>
+                    <li><%= link_to "Active Billboards", billboards_path %></li>
+                    <li><%= link_to "Inactive Billboards", billboards_path %></li>
+                    <li><%= link_to "Archived Billboards", archived_billboards_path %></li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu">
                   <%= link_to surveys_path do %>
                     <i class="icon-list-ul"></i> Surveys
                   <% end %>
@@ -167,13 +285,9 @@
           </li>
         </ul>
         <% unless browser.ie8? || browser.ie7? %>
-          <% if is_mobile_device? %>
-          <% elsif is_tablet_device? %>
-          <% else %>
-            <form action="/search" class="navbar-search pull-right">
-              <input type="text" class="search-query" name="q" placeholder="Search">
-            </form>
-          <% end %>
+        <form action="/search" class="navbar-search pull-right">
+          <input type="text" class="search-query" name="q" placeholder="Search">
+        </form>
         <% end %>
         
 
@@ -185,6 +299,44 @@
 
 
 <% content_for :modal_settings do %>
+
+  <% if @post && @post.id %>
+    <div class="modal hide fade" id="modal-share-post">
+      <div class="modal-header">
+        <h1><%= @post.title.html_safe if @post.title %></h1>
+      </div>
+      <div class="modal-body center">
+        <h2>Share this post:</h2>
+        <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
+        <h2>Share by email:</h2>
+        <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
+          <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
+          <% standard_body = "none" %>
+          <h4 style="padding-bottom:5px;">Email Subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
+          <h4 style="padding-bottom:5px;">Short message</h4>
+          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
+          <div class="control-group radio">
+            <h4 style="padding-right:5px;">Test Email <%= radio_button_tag('email_who', 'user', checked: "true") %>: <%= current_user.email %> </h4>
+
+            <% if @post.owner_type == 'Group' %>
+            <h4 style="padding-right:5px;">Working Group Email <%= radio_button_tag('email_who', 'working_group') %></h4>
+            <h4 style="padding-right:5px;">Working Group Leadership Email <%= radio_button_tag('email_who', 'leadership') %></h4>
+            <% end %>
+            <% if current_user and current_user.admin? %>
+            <h4 style="padding-right:5px;">CCRO Committee Email <%= radio_button_tag('email_who', 'committee') %></h4>
+            <h4 style="padding-right:5px;">Complete Directory <%= radio_button_tag('email_who', 'all') %></h4>
+            <% end %>
+          </div>
+          <br>
+          <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list') %></h4>
+          <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
+          <%= submit_tag 'Send', class: 'btn' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="modal hide fade" id="modal-new-page">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -368,7 +520,11 @@
               <%= form_for [@group, @post], { :remote => true } do |f| %>
                 <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                 <b>Assign this post to: </b>
-                <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% if @post.author.nil? %>
+                  <%= select_tag('post[author_id]', options_for_select(editors), :include_blank => true, :class => 'submittable') %>
+                <% else %>
+                  <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                <% end %>
               <% end %>
             </div>
           <% end %>

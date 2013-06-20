@@ -74,7 +74,11 @@
             <%= form_for [@group, @post], { :remote => true } do |f| %>
               <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
               <b>Assign this post to: </b>
-              <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+              <% if @post.author.nil? %>
+                <%= select_tag('post[author_id]', options_for_select(editors), :include_blank => true, :class => 'submittable') %>
+              <% else %>
+                <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+              <% end %>
             <% end %>
           </div>
         <% end %>
