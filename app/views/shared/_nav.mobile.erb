@@ -337,6 +337,71 @@
     </div>
   <% end %>
 
+  <div class="modal hide fade" id="modal-post-settings">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Post Settings</h3>
+    </div>
+    <div class="modal-body center">
+      <table cellpadding="10">
+        <tr>
+          <td>
+            <% if can?(:publish, @post) && params[:action] == 'show' %>
+              <div class="control-group radio inline" >
+                <b>Level</b>
+                <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+                  <%= f.radio_button :level, "public", :class => 'submittable' %><%= f.label :level, 'Public' %>
+                  <%= f.radio_button :level, "basic", :class => 'submittable' %><%= f.label :level, 'Basic' %>
+                  <%= f.radio_button :level, "pro", :class => 'submittable' %><%= f.label :level, 'Pro' %>
+                  <%= f.radio_button :level, "subscriber", :class => 'submittable' %><%= f.label :level, 'Subscriber' %>
+                  <%= f.radio_button :level, "individual_member", :class => 'submittable' %><%= f.label :level, 'Individual Member' %>
+                  <%= f.radio_button :level, "company_member", :class => 'submittable' %><%= f.label :level, 'Company Member' %>
+                  <%= f.radio_button :level, "leadership", :class => 'submittable' %><%= f.label :level, 'Leadership' %>
+                <% end %>
+                <b>Commenting</b>
+                <%= form_for @post, { :remote => true, :class => 'radio inline' } do |f| %>
+                  <%= f.radio_button :commenting_enabled, true, :class => 'submittable' %><%= f.label :commenting_enabled, 'Yes' %>
+                  <%= f.radio_button :commenting_enabled, false, :class => 'submittable' %><%= f.label :commenting_enabled, 'No' %>
+                <% end %>
+              </div>
+            <% end %>
+          </td>
+          <td valign="top">
+            <% if can?(:publish, @post) && params[:action] == 'show' %>
+              <% unless params[:mercury_frame] %>
+                <div >
+                  <%= form_for [@group, @post], { :remote => true } do |f| %>
+                    <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
+                    <b>Assign this post to: </b>
+                    <% if @post.author.nil? %>
+                      <%= select_tag('post[author_id]', options_for_select(editors), :include_blank => true, :class => 'submittable') %>
+                    <% else %>
+                      <%= select_tag('post[author_id]', options_for_select(editors, :selected => @post.author.id), :include_blank => true, :class => 'submittable') %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <%= publish_toggle(@post) %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="Hero">
+            <%= form_for @post, { :remote => true } do |f| %>
+              <b>tag: </b>
+              <%= select_tag('post[tag_list]', options_for_select(@all_tags, :selected => @tag), :include_blank => true, :class => 'submittable') %>
+            <% end %>
+          </td>  
+        </tr>
+      </table>
+    </div>
+
+    <div class="modal-footer">
+      <%= button_to 'Back to Post', polymorphic_path([@group, @post]) %>
+    </div>
+  </div>
+
   <div class="modal hide fade" id="modal-new-page">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
