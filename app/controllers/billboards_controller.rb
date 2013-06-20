@@ -101,6 +101,18 @@ class BillboardsController < ApplicationController
     end
   end
 
+  def duplicate
+    old_billboard = Billboard.find(params[:id])
+    @billboard = Billboard.new()
+    @billboard.title = "#{old_billboard.title} Copy"
+    @billboard.body = old_billboard.body
+    @billboard.active = false
+    @billboard.archived = false
+
+    @billboard.save 
+    redirect_to edit_billboard_path(@billboard)
+  end
+
   def archive
     @billboard = Billboard.find(params[:id])
 

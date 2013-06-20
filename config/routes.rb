@@ -38,6 +38,7 @@ Ccromembers::Application.routes.draw do
     end
     
     member do
+      get :duplicate
       get :archive
       get :activate
       get :unarchive

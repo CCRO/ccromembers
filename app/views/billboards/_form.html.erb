@@ -34,7 +34,7 @@
   <div class="row-fluid">
     <div class="span4">
       <div class="field">
-        <p> Title: <%= f.text_field :title %></p>
+        <p> Title: <%= f.text_field :title, style: "width:500px;" %></p>
         </br>
       </div>
     </div>
@@ -159,21 +159,31 @@
     <div class="row-fluid">
       <div class="row-fluid">
         <div class="span4">
-          <div class="field">
-            <p> Active: <%= f.check_box :active, style: "margin-top:-3px;" %></p>
-          </div>
+          <% if @billboard.location.nil? %>
+            <p> Location <%= f.select :location, options_for_select(@locations), {:prompt => 'Select location for billboard'} %>
+            <p> Group <%= f.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }, {:prompt => 'Select a group if needed'} %>
+            </br> 
+            <div class="actions">
+              <%= f.submit "Create Billboard", class: "btn" %>
+            </div> 
+          <% else %>
+            <div class="field">
+              <p> Active: <%= f.check_box :active, style: "margin-top:-3px;" %></p>
+            </div>
 
-          <div class="field">
-            <p> Archived: <%= f.check_box :archived, style: "margin-top:-3px;" %></p>
-          </div>
-          <br />
-          
-          <div class="actions">
-            <%= f.submit "Update Billboard", class: "btn" %>
-          </div>
+            <div class="field">
+              <p> Archived: <%= f.check_box :archived, style: "margin-top:-3px;" %></p>
+            </div>
+            <br />
+
+            <div class="actions">
+              <%= f.submit "Update Billboard", class: "btn" %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
+
   <% else %>
     <p> Location <%= f.select :location, options_for_select(@locations), {:prompt => 'Select location for billboard'} %>
     <p> Group <%= f.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }, {:prompt => 'Select a group if needed'} %>

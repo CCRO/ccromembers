@@ -195,8 +195,19 @@
     <script>
       $(".insert_sticker").click(function (event) {
         event.preventDefault();
-        $('#redactor_body').insertHtml('<img src="/people/' + $(this).data("person") + '/sticker_image.png">');
+        $('#redactor_body').insertHtml('<img src="https://s3.amazonaws.com/ccromembers_assets/person-stickers/' + $(this).data("person") + '-sticker.png">');
       });
     </script>
 <% end %>
+
+
+
+
+
+
+
+
+
+
+
 

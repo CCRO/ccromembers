@@ -8,9 +8,9 @@
   <table class="table">
     <tr>
       <th class="span3">Title</th>
-      <th class="span3">Location</th>
+      <th class="span2">Location</th>
       <th class="span3">Group</th>
-      
+      <th class="span1"></th>
       <th class="span1"></th>
       <th class="span1"></th>
       <th class="span1"></th>
@@ -21,8 +21,8 @@
       <td><%= billboard.title %></td>
       <td><%= billboard.location %></td>
       <td><%= Group.find_by_id(billboard.group_id).name unless Group.find_by_id(billboard.group_id).nil? %></td>
+      <td><%= link_to 'Duplicate', duplicate_billboard_path(billboard) %></td>
       <td><%= link_to 'De-activate', deactivate_billboard_path(billboard) %></td>
-      
       <td><%= link_to 'Edit', edit_billboard_path(billboard) %></td>
       <td><%= link_to 'Archive', archive_billboard_path(billboard) %></td>
     </tr>
@@ -38,9 +38,9 @@
   <table class="table">
     <tr>
       <th class="span3">Title</th>
-      <th class="span3">Location</th>
+      <th class="span2">Location</th>
       <th class="span3">Group</th>
-      
+      <th class="span1"></th>
       <th class="span1"></th>
       <th class="span1"></th>
       <th class="span1"></th>
@@ -51,8 +51,8 @@
       <td><%= billboard.title %></td>
       <td><%= billboard.location %></td>
       <td><%= Group.find_by_id(billboard.group_id).name unless Group.find_by_id(billboard.group_id).nil? %></td>
+      <td><%= link_to 'Duplicate', duplicate_billboard_path(billboard) %></td>
       <td><%= link_to 'Activate', activate_billboard_path(billboard) %></td>
-      
       <td><%= link_to 'Edit', edit_billboard_path(billboard) %></td>
       <td><%= link_to 'Archive', archive_billboard_path(billboard) %></td>
     </tr>
