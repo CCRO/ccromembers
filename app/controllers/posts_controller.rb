@@ -85,6 +85,9 @@ class PostsController < ApplicationController
   end
   
   def show
+    @billboards = []
+    Billboard.all.each {|a| @billboards << a if a.active }
+    
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
     @editors += Person.where(role: nil)
