@@ -100,9 +100,18 @@
 
 
 <% content_for :aside do %>
-  <% if params[:action] == 'edit' %>
-    <%= link_to "Insert HTML", '#', class: 'btn add_html' %>
-  <% else %>
+  <% unless params[:action] == 'edit' %>
+
+    <% if @billboards %>
+      <% @billboards.each do |billboard| %>
+        <% if billboard.location == "page sidebar top"%>
+          <div class="billboard page-sidebar-after-menu" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+            <%= billboard.body.html_safe %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
     <% if @tag && (@category && @category.length > 1 && page.pages_enabled == true || @articles && @articles.length > 0 && page.articles_enabled == true || @messages && @messages.length > 0 && page.discussions_enabled == true) %>
       <div class="well">
         <ul class="nav nav-list">
@@ -172,12 +181,22 @@
                 </ul>
               </li>
             </li>
-          <% end %>  
+          <% end %>
+
         </ul>
       </div>
 
+      <% if @billboards %>
+        <% @billboards.each do |billboard| %>
+          <% if billboard.location == "page sidebar after menu"%>
+            <div class="billboard page-sidebar-after-menu" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+              <%= billboard.body.html_safe %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
 
-       <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
+      <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
         <div class="well">
           <ul class="nav nav-list">
             <li class="nav-header"> Related people </li> 
@@ -187,6 +206,7 @@
           </ul>
         </div>
       <% end %>
+
     <% end %>
   <% end %>
 <% end %>

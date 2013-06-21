@@ -79,6 +79,8 @@ class PagesController < ApplicationController
   end
   
   def show
+    @billboards = []
+    Billboard.all.each {|a| @billboards << a if a.active }
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 

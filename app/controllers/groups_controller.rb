@@ -20,6 +20,8 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @billboards = []
+    Billboard.all.each {|a| @billboards << a if a.active }
     @group = Group.find(params[:id])
 
     message = "You do not have access to the working group <strong>'#{@group.name}'</strong> at this time. If you are interested in joining this group, please let us know."

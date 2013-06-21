@@ -29,7 +29,7 @@
   <% end %>
   
   <% @locations = [] %>
-  <% @locations = "blog index top", "blog sidebar top", "blog sidebar after polls", "blog sidebar after menu", "group sidebar top", "group sidebar after first menu", "group sidebar after last menu"%>
+  <% @locations = "blog index top", "blog sidebar top", "blog sidebar after polls", "blog sidebar after menu", "group sidebar top", "group sidebar after first menu", "page sidebar top",  "group sidebar after last menu", "page sidebar after menu" %>
 
   <div class="row-fluid">
     <div class="span4">
@@ -143,6 +143,38 @@
       <% if @billboard.location == "group sidebar after last menu" %>
         
         <p> note: This billboard will be shown after the last sidebar menu when viewing a group. The width of this Billboard is 270px. The hight can be what ever you want. </p>
+
+        <div class="row-fluid">
+          <div class="field">
+            <div class="">
+              <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px; width:270px;">
+                <%= f.text_area :body, class: "redactor" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+      <% if @billboard.location == "page sidebar top" %>
+        
+        <p> note: This billboard will be shown at the top of the sidebar when viewing a page. The width of this Billboard is 270px. The hight can be what ever you want. </p>
+
+        <div class="row-fluid">
+          <div class="field">
+            <div class="">
+              <div class="billboard" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px; width:270px;">
+                <%= f.text_area :body, class: "redactor" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+      <% if @billboard.location == "page sidebar after menu" %>
+        
+        <p> note: This billboard will be shown after the sidebar menu when viewing a page. The width of this Billboard is 270px. The hight can be what ever you want. </p>
 
         <div class="row-fluid">
           <div class="field">
