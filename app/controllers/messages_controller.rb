@@ -27,6 +27,12 @@ class MessagesController < ApplicationController
       @page = Page.find(params[:page])
     end
 
+    if params[:group_id]
+      @group = Group.find_by_id(params[:group_id])
+      @messages = Message.not_archived.delete_if { |message| message.owner != @group }
+      @archived_messages = nil
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @messages }
@@ -75,7 +81,8 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     @message = Message.find(params[:id])
-
+    @all_tags = all_tags
+    
     message = "You do not have access needed to edit the discussion <strong>'#{@message.subject}'</strong> at this time. If you are interested in editing this discussion, please let us know."
     authorize! :edit, @message, :message => message.html_safe
     
@@ -153,6 +160,7 @@ class MessagesController < ApplicationController
   end
 
   def lookup_group
+    @all_tags = all_tags
     if params[:id]
     @message = Message.find(params[:id])
 

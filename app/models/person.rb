@@ -201,8 +201,10 @@ class Person < ActiveRecord::Base
   end
 
   def self.search(params)
-    tire.search do
-      query { string params[:q], default_operator: "AND" } if params[:q].present?
+    unless params.nil?
+      tire.search do
+        query { string params[:q], default_operator: "AND" } if params[:q].present?
+      end
     end
   end
   
