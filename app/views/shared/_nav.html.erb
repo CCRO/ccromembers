@@ -33,6 +33,17 @@
                     CCRO Admin <i class="icon-caret-down icon-white"></i>
                 </a>
                 <ul class="dropdown-menu">
+                  <% if params[:action] == 'edit'%>
+                    <% if @post %>
+                      <li><%= link_to 'Save post edits', "javascript:document.getElementById(\"edit_post_#{@post.id}\").submit();" %></li>
+                      <li><%= link_to "Cancel post edits", cancel_post_path(@post) %></li>
+                      <li class="divider"></li>
+                    <% elsif @page %>
+                      <li><%= link_to 'Save page edits', "javascript:document.getElementById(\"edit_page_#{@page.id}\").submit();" %></li>
+                      <li><%= link_to "Cancel page edits", cancel_page_path(@page) %></li>
+                      <li class="divider"></li>
+                    <% end %>
+                  <% end %>
                   <li><%= link_to "Home", :root %></li>
                    <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
                    <% if current_user and current_user.admin? %>
