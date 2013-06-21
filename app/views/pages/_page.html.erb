@@ -186,16 +186,6 @@
         </ul>
       </div>
 
-      <% if @billboards %>
-        <% @billboards.each do |billboard| %>
-          <% if billboard.location == "page sidebar after menu"%>
-            <div class="billboard page-sidebar-after-menu" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
-              <%= billboard.body.html_safe %>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
-
       <% if @smart_list.length > 0 && page.smart_lists_enabled == true %>
         <div class="well">
           <ul class="nav nav-list">
@@ -208,6 +198,17 @@
       <% end %>
 
     <% end %>
+
+    <% if @billboards %>
+        <% @billboards.each do |billboard| %>
+          <% if billboard.location == "page sidebar after menu"%>
+            <div class="billboard page-sidebar-after-menu" style="margin-top:0px; margin-bottom:20px; padding-left:0px; padding-right:0px;">
+              <%= billboard.body.html_safe %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      
   <% end %>
 <% end %>
 

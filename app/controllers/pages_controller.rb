@@ -79,8 +79,7 @@ class PagesController < ApplicationController
   end
   
   def show
-    @billboards = []
-    Billboard.all.each {|a| @billboards << a if a.active }
+
     if params['token']
       @page = Page.find_by_viewing_token(params[:token])
     else 
@@ -98,6 +97,11 @@ class PagesController < ApplicationController
         @messages = Message.tagged_with(@tag)
         @smart_list = Array.new
         @smart_list = SmartList.tagged_with(@tag).first.people if SmartList.tagged_with(@tag).present?
+      end
+
+      unless @page.stretch
+        @billboards = []
+        Billboard.all.each {|a| @billboards << a if a.active }
       end
 
       @commentable = @page
