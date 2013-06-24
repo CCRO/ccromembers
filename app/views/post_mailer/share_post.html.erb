@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <style>
-    img {
-      margin:10px;
+    <link rel="stylesheet" type="text/css" href="/blog.css">
+  <style>
+    .survey_btn {
+      margin-bottom: 20px;
+      margin-left: 0;
+      padding-left: 20%;
+      padding-right: 20%;
+      font-size: 15px;
     }
-    </style>
+
+    a:hover {
+      text-decoration:none;
+    }
+
+    .page img, .page .callout {
+      border: 1px solid lightGrey;
+      background-color: white;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 1px 1px 3px gray;
+      font-weight: bold;
+      font-size: 110%;
+  }
+
+  </style>
   </head>
-  <body style="background-color:lightgray">
+  <body id="blog" style="background-color:lightgray" >
     <table style="padding-top:10px;">
       <tr>
         <td>
@@ -22,7 +41,7 @@
       <tr>
         <td width="10%">
         </td>
-        <td width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+        <td id="post_body" class="page drop-shadow lifted mercury-region" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
           <% if @short_message.length >= 10 %>
             <p><%= @short_message.html_safe %></p>
             <br>

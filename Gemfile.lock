@@ -96,6 +96,8 @@ GEM
     crocodoc (1.0.2)
       json (~> 1.1)
       rest-client (~> 1.4)
+    css_parser (1.3.4)
+      addressable
     daemons (1.1.9)
     dalli (2.6.4)
     debug_inspector (0.0.2)
@@ -275,6 +277,11 @@ GEM
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rmagick (2.13.2)
+    roadie (2.3.4)
+      actionmailer (> 3.0.0, < 3.3.0)
+      css_parser
+      nokogiri (>= 1.4.4)
+      sprockets
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
@@ -405,6 +412,7 @@ DEPENDENCIES
   redactor-rails
   redcarpet
   rmagick
+  roadie
   rspec-rails
   sass-rails (~> 3.2.3)
   sinatra (>= 1.3.0)
