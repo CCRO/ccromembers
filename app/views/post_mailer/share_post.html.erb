@@ -15,7 +15,7 @@
       text-decoration:none;
     }
 
-    .page img, .page .callout {
+    .email img, .page .callout {
       border: 1px solid lightGrey;
       background-color: white;
       padding: 10px;
@@ -24,8 +24,6 @@
       font-weight: bold;
       font-size: 110%;
   }
-
-
 
   </style>
   <link rel="stylesheet" type="text/css" href="/blog_email.css">
@@ -55,7 +53,9 @@
           <% if @post.owner_type == 'Group' %>
             <h3>From The '<%= link_to @post.owner.try(:name), @post.owner %>' Working Group</h3>
           <% end %>
-          <%= @post.body.split('[---MORE---]').first.html_safe + " ...", class: "email" %><b><%= link_to 'continued', post_url(@post) %></b>
+          < div class="email" >
+          <%= @post.body.split('[---MORE---]').first.html_safe + " ..." %><b><%= link_to 'continued', post_url(@post) %></b>
+          < /div >
         </td>
         <td width="10%">
         </td>
