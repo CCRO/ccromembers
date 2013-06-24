@@ -500,3 +500,17 @@ blockquote:hover > a.close {
   font-size: 18px;
   line-height: 27px;
 }
+
+.email .btn {
+  color:white;
+}
+
+.email img {
+  border: 1px solid lightGrey;
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 1px 1px 3px gray;
+  font-weight: bold;
+  font-size: 110%;
+}
