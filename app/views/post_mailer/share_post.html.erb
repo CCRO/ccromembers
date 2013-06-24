@@ -3,7 +3,7 @@
   <head>
   <style>
 
-  
+
 .clearfix {
   *zoom: 1;
 }
@@ -6161,27 +6161,7 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
-    .survey_btn {
-      margin-bottom: 20px;
-      margin-left: 0;
-      padding-left: 20%;
-      padding-right: 20%;
-      font-size: 15px;
-    }
-
-    a:hover {
-      text-decoration:none;
-    }
-
-    .page img, .page .callout {
-      border: 1px solid lightGrey;
-      background-color: white;
-      padding: 10px;
-      margin: 10px;
-      box-shadow: 1px 1px 3px gray;
-      font-weight: bold;
-      font-size: 110%;
-  }
+    
 
 @media print {
   aside, header .pull-right, #about_author, footer, #adminbar, .navbar, .subnav, #footnotes_debug, .post-footer, #post_comments {
@@ -6669,7 +6649,27 @@ blockquote:hover > a.close {
   line-height: 27px;
 }
 
+.survey_btn {
+      margin-bottom: 20px;
+      margin-left: 0;
+      padding-left: 20%;
+      padding-right: 20%;
+      font-size: 15px;
+    }
 
+    a:hover {
+      text-decoration:none;
+    }
+
+    .page img, .page{
+      border: 1px solid lightGrey;
+      background-color: white;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 1px 1px 3px gray;
+      font-weight: bold;
+      font-size: 110%;
+  }
 
 
 
@@ -6690,7 +6690,7 @@ blockquote:hover > a.close {
       <tr>
         <td width="10%">
         </td>
-        <td id="post_body" class="page drop-shadow lifted mercury-region" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+        <td id="post_body" class="page " width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
           <% if @short_message.length >= 10 %>
             <p><%= @short_message.html_safe %></p>
             <br>
