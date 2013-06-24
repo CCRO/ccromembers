@@ -29,6 +29,7 @@
 
   </style>
   <link rel="stylesheet" type="text/css" href="/blog_email.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
   </head>
   <body id="blog" style="background-color:lightgray" >
     <table style="padding-top:10px;">
@@ -44,7 +45,7 @@
       <tr>
         <td width="10%">
         </td>
-        <td id="post_body" class="page drop-shadow lifted mercury-region" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+        <td id="post_body" class="page drop-shadow lifted mercury-region email" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
           <% if @short_message.length >= 10 %>
             <p><%= @short_message.html_safe %></p>
             <br>
