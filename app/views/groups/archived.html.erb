@@ -1,0 +1,75 @@
+<% content_for :adminbar do %>
+  <ul>
+    <li><%= link_to "#modal-new-group", 'data-toggle' => "modal" do %><i class="icon-file"></i><br><p>New Group</p><% end %></li>
+  </ul>
+<% end %>
+
+<% content_for :modal_settings do %>
+  <div class="modal hide fade" id="modal-new-group">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Group</h3>
+    </div>
+    <div class="modal-body center">
+    <%= form_for Group.new do |f| %>
+      <%= f.text_field :name, :class => "input-xlarge focused pull-left", :placeholder => "New group name" %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  </div>
+    <div class="modal-footer">
+      <%= f.submit "Create new Group", :class => "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @archived_groups %>
+  <h1>Listing Archived groups</h1>
+  <br>
+
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Name</th>
+      <th style="text-align: center;">Leadership</th>
+      <th>Conference line</th>
+      <th style="text-align: center;">Participants</th>
+      <th style="text-align: center;">Pages</th>
+      <th style="text-align: center;">Discussions<br>/Comments</th>
+      <th style="text-align: center;">Posts</th>
+      <th style="text-align: center;">Uploads</th>
+      <% if false %>
+      <th style="text-align: center;">Overview Page</th>
+      <% end %>
+      <th></th>
+    </tr>
+
+  <% @archived_groups.each do |group| %>
+    <tr>
+      <td><%= link_to group.name, group %></td>
+      <td>
+        <% group.memberships.each do |m| %>
+          <% if m.fuction == 'chair' %>
+            <% if m.person %>
+              <%= link_to "Chair: #{m.person.name}", m.person %> </br>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% group.memberships.each do |m| %>
+          <% if m.fuction == 'coordinator' %>
+            <% if m.person %>
+              <%= link_to "Coordinator: #{m.person.name}", m.person %> </br>
+            <% end %>
+          <% end %>
+        <% end %>
+      </td>
+      <td><%= number_to_phone group.conf_phone %></td>
+      <td style="text-align: center;"><span class="badge badge-inverse"><%= group.people.count %></span></td>
+      <td style="text-align: center;"><span class="badge badge-inverse"><%= group.pages.count %></span></td>
+      <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span> <span class="badge badge-success"><%= group.comments.count %></span></td>
+      <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
+      <td style="text-align: center;"><span class="badge badge-inverse"><%= group.attachments.count %></span></td>
+      <td><%= link_to 'Manage', edit_group_path(group) %></td>
+  <% end %>
+  </table>
+<% end %>
+<br />
+
+<%= link_to 'Unarchived Groups', groups_path %>

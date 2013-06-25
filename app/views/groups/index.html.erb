@@ -21,7 +21,7 @@
   </div>
 <% end %>
 
-<h1>Listing groups</h1>
+<h1>Listing Active groups</h1>
 <br>
 
 <table class="table table-bordered table-striped">
@@ -40,7 +40,7 @@
     <th></th>
   </tr>
 
-<% @groups.each do |group| %>
+<% @active_groups.each do |group| %>
   <tr>
     <td><%= link_to group.name, group %></td>
     <td>
@@ -71,4 +71,54 @@
 
 <br />
 
-<%= link_to 'New Group', new_group_path %>
+<h1>Listing Inactive groups</h1>
+<br>
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: center;">Leadership</th>
+    <th>Conference line</th>
+    <th style="text-align: center;">Participants</th>
+    <th style="text-align: center;">Pages</th>
+    <th style="text-align: center;">Discussions<br>/Comments</th>
+    <th style="text-align: center;">Posts</th>
+    <th style="text-align: center;">Uploads</th>
+    <% if false %>
+    <th style="text-align: center;">Overview Page</th>
+    <% end %>
+    <th></th>
+  </tr>
+
+<% @inactive_groups.each do |group| %>
+  <tr>
+    <td><%= link_to group.name, group %></td>
+    <td>
+      <% group.memberships.each do |m| %>
+        <% if m.fuction == 'chair' %>
+          <% if m.person %>
+            <%= link_to "Chair: #{m.person.name}", m.person %> </br>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% group.memberships.each do |m| %>
+        <% if m.fuction == 'coordinator' %>
+          <% if m.person %>
+            <%= link_to "Coordinator: #{m.person.name}", m.person %> </br>
+          <% end %>
+        <% end %>
+      <% end %>
+    </td>
+    <td><%= number_to_phone group.conf_phone %></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.people.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.pages.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.messages.count %></span> <span class="badge badge-success"><%= group.comments.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.posts.count %></span></td>
+    <td style="text-align: center;"><span class="badge badge-inverse"><%= group.attachments.count %></span></td>
+    <td><%= link_to 'Manage', edit_group_path(group) %></td>
+<% end %>
+</table>
+
+<br />
+
+<p><%= link_to 'New Group', new_group_path %> | <%= link_to 'Archived Groups', archived_groups_path %></p>

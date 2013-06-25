@@ -86,7 +86,13 @@ Ccromembers::Application.routes.draw do
   resources :tags
 
   resources :groups do
+    collection do 
+      get :archived
+    end    
+
     member do
+      get :archive
+      get :unarchive
       get 'permissions'
       get 'show_activity'
       get 'join'

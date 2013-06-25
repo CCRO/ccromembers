@@ -8,6 +8,8 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.all
+    @active_groups = @groups.select {|g| g.active == true }
+    @inactive_groups = @groups.select {|g| g.active == false }
 
     authorize! :read, @groups , :message => "You do not have the access to view all groups in this manner."
 
@@ -119,6 +121,20 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @group.overview_page = params[:overview_page]
 
+    if params[:status] == 'active'
+      @group.active = true
+      @group.archived = false
+      
+    elsif params[:status] == 'inactive'
+      @group.active = false
+     
+    elsif params[:status] == 'archived'
+      @group.active = false
+      @group.archived = true
+      
+
+    end
+
     respond_to do |format|
       if @group.update_attributes(params[:group])
         format.html { redirect_to groups_path, notice: 'Group was successfully updated.' }
@@ -127,6 +143,50 @@ class GroupsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def archive
+    @group = Group.find(params[:id])
+
+    @group.archived = true
+    @group.active = false
+    @group.save
+
+    respond_to do |format|
+      if @group.update_attributes(params[:group])
+        format.html { redirect_to groups_path, notice: 'Group was successfully archived.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unarchive
+    @group = Group.find(params[:id])
+
+    @group.archived = false
+    @group.save
+
+    respond_to do |format|
+      if @group.update_attributes(params[:group])
+        format.html { redirect_to groups_path, notice: 'Group was successfully un-archived.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def archived
+    @groups = Group.all
+    @archived_groups = @groups.select {|g| g.archived }
+
+    respond_to do |format|
+      format.html # archived.html.erb -- right?
     end
   end
 
