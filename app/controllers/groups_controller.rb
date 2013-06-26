@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
     @active_groups = @groups.select {|g| g.active == true }
-    @inactive_groups = @groups.select {|g| g.active == false }
+    @inactive_groups = @groups.select {|g| g.active == false && g.archived == false}
 
     authorize! :read, @groups , :message => "You do not have the access to view all groups in this manner."
 
