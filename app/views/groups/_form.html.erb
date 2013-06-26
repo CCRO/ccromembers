@@ -22,6 +22,23 @@
   </div>
   <br>
 
+  <div class="control-group radio">
+    <% if @group.active %>
+      <p style="padding-right:5px;">Active <%= radio_button_tag('status', 'active', checked: 'true') %></p>
+      <p style="padding-right:5px;">Inactive <%= radio_button_tag('status', 'inactive') %></p>
+      <p style="padding-right:5px;">Archived <%= radio_button_tag('status', 'archived')  %></p>
+    <% else %>
+      <p style="padding-right:5px;">Active <%= radio_button_tag('status', 'active') %></p>
+      <% unless @group.archived %>
+        <p style="padding-right:5px;">Inactive <%= radio_button_tag('status', 'inactive', checked: 'true') %></p>
+        <p style="padding-right:5px;">Archived <%= radio_button_tag('status', 'archived')  %></p>
+      <% else %>
+        <p style="padding-right:5px;">Inactive <%= radio_button_tag('status', 'inactive') %></p>
+        <p style="padding-right:5px;">Archived <%= radio_button_tag('status', 'archived', checked: 'true')  %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <br>
 
   <div class="field">
     <%= f.label :overview_page %>
