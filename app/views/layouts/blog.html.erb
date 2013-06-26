@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% if params[:action] == 'show' %>
-    <title><% @post.title if @post %></title>
+  <% if params[:action] == 'show' && @post.title.present?  %>
+    <title><%= strip_tags(@post.title) %></title>
   <% else %>
     <title>CCRO</title>
   <% end %>

@@ -104,7 +104,7 @@
       <li class="nav-header"> Files and Attachments </li>
       
       <% @these_attachments.limit(3).each do |m| %>
-          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]), target: "_blank" %></li>
       <% end %>
       <% if @these_attachments.length > 3 %>
         <li><i><%= link_to "See all #{@these_attachments.length} uploads" , group_attachments_path(@group) %></i></li>

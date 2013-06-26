@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% if (params[:action] == 'show'  || params[:action] == 'edit') && @page.title.present? %>
-    <title>CCRO - <%= @page.title.html_safe %></title>
+  <% if params[:action] == 'show' && @page.title.present? %>
+    <title><%= strip_tags(@page.title) %></title>
   <% end %>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <%= stylesheet_link_tag "page", :media => "all" %>
