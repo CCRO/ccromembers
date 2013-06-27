@@ -1,83 +1,126 @@
-
 <% @about_pages = Page.where(published: true).tagged_with("about").sort! { |a,b| a.position <=> b.position } %>
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
-<% if browser.ie8? || browser.ie7? %>
-  <div style="overflow:visible; margin-bottom:20px;">
-    <div class="navbar">
-      <div class="navbar-inner"  style="padding-top:10px; padding-bottom:0px;">
-        <div id="logo" class="span3" style="margin-top:5px; margin-bottom:5px; margin-left:75px;">
-          <%= link_to image_tag(asset_path('ccro_long.png')), root_path %> 
-        </div>
-        <ul class="nav" style="margin-left:20px;">
-          <li padding-left: 10px;><%= link_to 'Home', posts_path %></li>
-            
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <!-- Be sure to leave the brand out there if you want it shown -->
+      <div id="logo" class="span3 pull-left" style="margin-top:5px; margin-bottom:5px; margin-left: 0px;">
+        <%= link_to image_tag(asset_path('ccro_long.png')), root_path %> 
+      </div>
+
+      <!-- Everything you want hidden at 940px or less, place within here -->
+      <div class="nav-collapse">
+        <ul class="nav" style="margin-top: 5px;">
+          <!-- Research Center Dropdown -->
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<i class="icon-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <% @about_pages.each do |p| %>
-                <li style="padding-right:0px;"><%= link_to p.title, p %></li>
-              <% end %>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-book icon-white"></i> Resource Center</i></a>
+            <ul class="dropdown-menu", style="width:150%;">
+              <li class="dropdown-submenu">
+                <%= link_to '#' do %>
+                  <i class="icon-group"></i> Working Groups 
+                <% end %>
+                <ul class="dropdown-menu">
+                  <% @group_pages.each do |p| %>
+                    <li style="padding-right:0px;"><%= link_to p.title, p %></li>
+                  <% end %>
+                </ul>
+              </li>
+              <li style="padding-right:0px;"><%= link_to attachments_path do %><i class="icon-file"></i> File Library <% end %></li>
             </ul>
           </li>
           
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">File Library<i class="icon-caret-down"></i></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-calendar icon-white"></i></i> Events</i></a>
             <ul class="dropdown-menu">
-              <li style="padding-right:0px;"><%= link_to 'Local File Library', attachments_path %></li>
-              <li style="padding-right:0px;"><%= link_to 'Store', 'http://www.amazon.com/gp/browse.html?ie=UTF8&marketplaceID=ATVPDKIKX0DER&me=A3OWOTQ4UZUTOZ' %></li>
+                <li style="padding-right:0px;"><%= link_to "Upcoming Events", "/pages/47" %></li>
+                <li style="padding-right:0px;"><%= link_to "Past events", "/pages/22" %></li>
             </ul>
           </li>
 
+          <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user && current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
+          
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">CCRO Working Groups<i class="icon-caret-down"></i></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bullhorn icon-white"></i> About The CCRO</i></a>
             <ul class="dropdown-menu">
-              <% @group_pages.each do |p| %>
+              <% @about_pages.each do |p| %>
                 <li style="padding-right:0px;"><%= link_to p.title, p %></li>
               <% end %>
+              <li><%= link_to "CCRO on LinkedIn", 'http://www.linkedin.com/groups?home=&gid=2130494&trk=anet_ug_hm', target: "_blank" %></li>
             </ul>
           </li>
+
         </ul>
-
-        <div id="login_tools" class="span5" style="width: 410px;">  
-          <%= form_tag  :sessions, :class => "pull-right form-inline" do %>
-            <%= hidden_field_tag :remember_me, '1' %>
-            email: <%= text_field_tag :email, '', :class => "input-small", style: "margin-right:10px;", :placeholder => "Email" %>
-            password: <%= password_field_tag :password, '', :class => "input-small", :placeholder => "Password" %>
-            <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-            <p style="float:right; padding-right:50px;"><%= link_to 'register', new_person_path %> | <%= link_to 'forgot password', forgot_password_path %></p>
-          <% end %>
-
-        </div>
+        <ul class="nav pull-right" style="margin-top: 5px;">
+          <li><%= link_to "#modal-log-in", 'data-toggle' => "modal" do %><i class="icon-signin"></i> Sign in<% end %></li>
+        </ul>
       </div>
+      
     </div>
   </div>
-<% else %>
-  <header class="fatty <%='collapse' if params[:action] == 'show' || ['drafts', 'my_drafts'].include?(params[:filter]) %> " style="overflow:visible;;">
-    <div id='fatty_basket' class="container">
-      <div id='fatty_nav'class="row">
-
-        <div id="logo" class="span3">
-          <%= link_to image_tag(asset_path('ccro_long.png'), :width => '400', :id => 'header_logo'), root_path %> 
-        </div>
-        
-      </div>
-      <% if params[:controller] == 'posts' && params[:action] == 'index'%>
-        <div id="header_expanded" class="row">
-          <div id="promo_video" class="span8">
-            <img id="video" src="https://s3.amazonaws.com/ccro_static/empty_office.png" width="770" height="432" frameborder="0" >
-          </div>
-          <div id="header_promo" class="span4">
-            <h1>Committee of Chief Risk Officers:</h1>
-            <p>Advancing Best Practices for Energy Companies</p>
-            <p>
-              <% unless params[:controller] == 'signups' %>  
-                <%= link_to 'Learn more', signups_path, class: "btn btn-primary btn-large" %>
-              <% end %> 
-            </p>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </header>
+</div>
+<% if false %>
+  <%= render 'shared/subnav' %>
 <% end %>
+
+<% if browser.ie8? || browser.ie7? %>
+  <div class="modal hide fade" id="modal-log-in" style="width: 375px;">
+    <div class="modal-header" style="height:30px;">
+      <h3 class="pull-left" style="margin-top: 5px;">Sign in</h3> 
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="login_tools">  
+        <div style="margin-bottom:20px;" class="span3">
+          <%= form_tag  :sessions, :class => "form-inline" do %>
+            Email: </br>
+            <%= text_field_tag :email, '', :class => "input-xlarge ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
+            Password: </br>
+            <%= password_field_tag :password, '', :class => "input-xlarge ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
+            <%= submit_tag 'Sign in', :class => "btn brn-large pull-right", style: "" %>
+          <% end %>
+        </div>
+      </div>
+    </div>  
+    <% if true %>
+      <div class="modal-footer">
+        <%= link_to 'Sign Up', register_path, class: "" %> | 
+        <%= link_to 'Password Help', forgot_password_path, class: "" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="modal hide fade" id="modal-log-in" style="width: 375px;">
+    <div class="modal-header" style="height:30px;">
+      <h3 class="pull-left" style="margin-top: 5px;">Sign in</h3> 
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="login_tools">  
+        <div style="margin-bottom:20px;" class="span3">
+          <%= form_tag  :sessions, :class => "form-inline" do %>
+            <%= text_field_tag :email, '', :class => "input-xlarge ", :placeholder => "Email", style: "margin-bottom:10px;" %></br>
+            <%= password_field_tag :password, '', :class => "input-xlarge ", :placeholder => "Password", style: "margin-bottom:10px;" %></br>
+            <%= submit_tag 'Sign in', :class => "btn brn-large pull-right", style: "" %>
+          <% end %>
+        </div>
+      </div>
+    </div>  
+    <% if true %>
+      <div class="modal-footer">
+        <%= link_to 'Sign Up', register_path, class: "" %> | 
+        <%= link_to 'Password Help', forgot_password_path, class: "" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+

@@ -10,7 +10,7 @@ class Ability
     can :read, Billboard
     cannot :manage, Subscription
    
-    if true
+    if false
       can :read, Group do |group|
           group.people.include? user
       end
