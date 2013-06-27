@@ -10,8 +10,12 @@ class Ability
     can :read, Billboard
     cannot :manage, Subscription
    
-    can :read, Group do |group|
-        group.people.include? user
+    if true
+      can :read, Group do |group|
+          group.people.include? user
+      end
+    else
+      can :read, Group
     end
 
     can :read, Attachment, level: 'public'
