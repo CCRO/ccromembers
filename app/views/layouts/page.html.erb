@@ -41,7 +41,11 @@
     <%= render 'shared/public_nav' %>
   <% end %>
 
-  <div class="container" style="margin-top: 70px;">
+  <% if current_user %>
+      <div class="container" >
+    <% else %>
+      <div class="container" style="margin-top: 70px;" >
+    <% end %>
     <div class="row">
       <% unless params[:controller] == 'signups' %>
         <section>
