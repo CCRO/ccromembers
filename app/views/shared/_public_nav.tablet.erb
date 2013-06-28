@@ -19,8 +19,11 @@
 
       <!-- Everything you want hidden at 940px or less, place within here -->
       <div class="nav-collapse">
-        <ul class="nav" style="margin-top: 5px;">
+        <ul class="nav" style="margin-top: 5px; margin-left: 30px;">
           <!-- Research Center Dropdown -->
+          <li><%= link_to :root do %><i class="icon-user icon-home"></i> Home<% end %></li>
+
+
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-book icon-white"></i> Resource Center</i></a>
             <ul class="dropdown-menu", style="width:150%;">
@@ -46,8 +49,10 @@
             </ul>
           </li>
 
+          <% if false %>
           <li <%= 'class=active' if params[:controller] == 'companies' || params[:controller] == 'people' %>><a href="<%= (current_user && current_user.admin?) ? '/people' : '/people' %>"><i class="icon-user icon-white"></i> Directory</a></li>
-          
+          <% end %>
+
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bullhorn icon-white"></i> About The CCRO</i></a>
             <ul class="dropdown-menu">
