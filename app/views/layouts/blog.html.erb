@@ -46,7 +46,7 @@
       <%= render 'shared/public_nav' %>
     <% end %>  
 
-    <div class="container" <%= style="margin-top: 70px;" unless current_user %> >
+    <div class="container" <%= "style='margin-top: 70px;'" unless current_user %> >
           <div style="width:22%; float:left;">
             <% unless params[:controller] == 'signups' %>  
               <aside class="span3">
