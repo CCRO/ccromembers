@@ -23,6 +23,7 @@ class CompaniesController < ApplicationController
     @possible_highrises = Highrise::Company.find_all_across_pages(:params => { :name => @company.name})
   end
 
+
     authorize! :read, @company
 
     respond_to do |format|
