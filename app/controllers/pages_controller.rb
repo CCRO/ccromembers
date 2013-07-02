@@ -119,7 +119,6 @@ class PagesController < ApplicationController
 
     @editors = []
     @editors = Person.where(role: ['editor', 'admin', 'super_admin'])
-    @editors += Person.where(role: nil)
 
 
     if @page.owner_type == 'Group' && !@group
