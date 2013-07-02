@@ -517,7 +517,11 @@
                 <%= form_for @page, { :remote => true } do |f| %>
                   <% editors = @editors.each.map { |editor| [editor.name, editor.id] } %>
                     <b>Assign this page to: </b>
+                  <% if @page.author.nil? %>
+                  <%= select_tag('page[author_id]', options_for_select(editors), :include_blank => true, :class => 'submittable') %>
+                  <% else %>
                   <%= select_tag('page[author_id]', options_for_select(editors, :selected => @page.author.id), :include_blank => true, :class => 'submittable') %>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>
