@@ -160,26 +160,44 @@ class PostsController < ApplicationController
     end
     
     authorize! :read, post, :message => message.html_safe
-    if params[:email_who] == 'user'
-      post.share_by_email(current_user.email, params[:my_subject], params[:short_message], current_user)
-    elsif params[:email_who] == 'my_list'
-      post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
-    elsif params[:email_who] == 'leadership'
-      post.share_by_email(post.owner.leadership, params[:my_subject], params[:short_message], current_user)
-    elsif params[:email_who] == 'working_group'
-      post.share_by_email(post.owner.people, params[:my_subject], params[:short_message], current_user)
-    elsif params[:email_who] == 'all'
-      post.share_by_email(Person.all, params[:my_subject], params[:short_message], current_user)
-    elsif params[:email_who] == 'committee'
-      people = []
-      Person.all.each do |person|
-        if person.committee? 
-          people << person
-        end
-      end
+    list_of_people = Person.all
+
+    people = []
+    if params[:test] == 'yes'
+      people << current_user
+    end
+
+    if params[:working_group] == 'yes'
+      people += post.owner.people
+    end
+
+    if params[:working_group_leadership] == 'yes'
+      people += post.owner.leadership
+    end
+
+    if params[:leadership] == 'yes'
+      people += list_of_people.select {|p| p.level == 'leadership'}
+    end
+
+    if params[:company] == 'yes'
+      people += list_of_people.select {|p| p.level == 'company'}
+    end
+
+    if params[:individual] == 'yes'
+      people += list_of_people.select {|p| p.level == 'individual'}
+    end
+
+    if params[:basic] == 'yes'
+      people += list_of_people.select {|p| p.level == 'basic' || p.level == 'pro'}
+    end
+
+    if params[:contacts] == 'yes'
+      people += Contact.all
+    end
+
+    unless people == []
       post.share_by_email(people, params[:my_subject], params[:short_message], current_user)
     end
-      
       
     redirect_to post
   end

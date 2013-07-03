@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625144051) do
+ActiveRecord::Schema.define(:version => 20130703150305) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -77,6 +77,13 @@ ActiveRecord::Schema.define(:version => 20130625144051) do
     t.date     "expires_on"
     t.boolean  "active"
     t.float    "balance"
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "delayed_jobs", :force => true do |t|

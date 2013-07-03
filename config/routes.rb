@@ -1,5 +1,8 @@
 Ccromembers::Application.routes.draw do
 
+  resources :contacts
+
+
   mount RedactorRails::Engine => '/redactor_rails'
 
   get "doc_viewer/upload"
