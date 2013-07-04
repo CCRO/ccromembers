@@ -67,13 +67,13 @@ class Post < ActiveRecord::Base
       end
     elsif email_list.class.name == 'Array'
       email_list.each do |person|
-        PostMailer.delay.share_post(self, person.email, my_subject, short_message, sender)
+        PostMailer.share_post(self, person.email, my_subject, short_message, sender).deliver
       end
     end
   end
 
 
-   def submit_by_email(email_list, sender)
+  def submit_by_email(email_list, sender)
     email_list.each do |person|
       PostMailer.submit_post(self, person.email, sender).deliver
     end
