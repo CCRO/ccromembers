@@ -67,7 +67,7 @@ class Post < ActiveRecord::Base
       end
     elsif email_list.class.name == 'Array'
       email_list.each do |person|
-        PostMailer.share_post(self, person.email, my_subject, short_message, sender).deliver
+        PostMailer.delay.share_post(self, person.email, my_subject, short_message, sender)
       end
     end
   end
