@@ -363,10 +363,11 @@ class PagesController < ApplicationController
       @smart_list = @group.people
 
       if current_user && @group.leadership.include?(current_user)
-        @total_articles = @group.posts
+        @total_articles = @group.posts.sort! { |a,b| a.created_at <=> b.created_at }
         @articles = @total_articles.limit(3)
       else
         @total_articles = @group.posts.where(hidden: false)
+        @total_articles.sort! { |a,b| a.created_at <=> b.created_at }
         @articles = @total_articles.limit(3)
       end
     end

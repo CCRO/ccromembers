@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
 
     @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-    @total_articles = @group.posts
+    @total_articles = @group.posts.sort! { |a,b| a.created_at <=> b.created_at }
     @articles = @total_articles.limit(3)
     @messages = @group.messages
     @comments = @group.comments
