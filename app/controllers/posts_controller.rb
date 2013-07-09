@@ -177,14 +177,15 @@ class PostsController < ApplicationController
 
     if params[:leadership] == 'yes'
       people += list_of_people.select {|p| p.level == 'leadership'}
+      people += list_of_people.select {|p| p.level == 'admin'}
     end
 
     if params[:company] == 'yes'
-      people += list_of_people.select {|p| p.level == 'company'}
+      people += list_of_people.select {|p| p.level == 'company_member'}
     end
 
     if params[:individual] == 'yes'
-      people += list_of_people.select {|p| p.level == 'individual'}
+      people += list_of_people.select {|p| p.level == 'individual_member'}
     end
 
     if params[:basic] == 'yes'
