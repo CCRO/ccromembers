@@ -50,11 +50,7 @@
             <hr>
           <% end %>
           <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @post.title.html_safe, post_url(@post), style: "text-decoration:none;" %></h1>
-          <% if false%>
-            <% if @post.owner_type == 'Group' %>
-              <h3>From The '<%= link_to @post.owner.try(:name), @post.owner %>' Working Group</h3>
-            <% end %>
-          <% end %>
+          
           < div class="email" >
           <%= @post.body.split('[---MORE---]').first.html_safe + " ..." %><b><%= link_to 'continued', post_url(@post) %></b>
           < /div >
