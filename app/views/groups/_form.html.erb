@@ -69,7 +69,11 @@
     
     <% if membership.person %>
     <tr>
-      <td><%= sticker_for(membership.person) %></td>
+      <td>
+        <%= link_to membership.person do %>
+          <%= sticker_for(membership.person) %>
+        <% end %>
+      </td>
       <td style="vertical-align: middle; text-align: center;">
         <%= form_for [@group, membership], { :remote => true , :html => {:class => ' form-inline '}} do |f| %>
           <%= f.label :fuction, :class => 'radio', :style => 'margin-right: 30px;' do %> <%= f.radio_button :fuction, '', :class => 'submittable' %> Participant <% end %> 

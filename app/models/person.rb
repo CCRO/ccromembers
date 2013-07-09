@@ -143,7 +143,7 @@ class Person < ActiveRecord::Base
     if self.highrise_id.present?
       title = Highrise::Person.find(self.highrise_id).title
     end
-    title != nil ? title : 'Unknown Title'
+    title != nil ? title : ' '
   end
 
   def company_name
@@ -249,7 +249,7 @@ class Person < ActiveRecord::Base
           end
         end
 
-        if self.title != "Unknown Title" || ""
+        unless self.title == "Unknown Title" || ""
           text_title = Draw.new
           text_title.annotate(image, 0,0,240,54*4, self.title) {
             self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
