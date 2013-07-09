@@ -452,11 +452,11 @@ class PostsController < ApplicationController
       @smart_list = @group.people
 
       if current_user && @group.leadership.include?(current_user)
-        @total_articles = @group.posts.sort! { |a,b| a.created_at <=> b.created_at }
+        @total_articles = @group.posts.order('updated_at DESC')
         @articles = @total_articles.limit(3)
       else
         @total_articles = @group.posts.where(hidden: false)
-        @total_articles.sort! { |a,b| a.created_at <=> b.created_at }
+        @total_articles = @total_articles.order('updated_at DESC')
         @articles = @total_articles.limit(3)
       end
     end
