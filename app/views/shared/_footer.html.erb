@@ -15,9 +15,9 @@
         </div>
     </footer>  
     </div>
-
+<% if false %>
 <%= render 'shared/adminbar' if current_user && (current_user.admin? || current_user.editor?) %>
-
+<% end %>
   <div class="modal hide fade" id="modal-window">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
