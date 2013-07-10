@@ -95,6 +95,9 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+
+    authorize! :manage, @groups , :message => "You do not have the access to manage this group."
+
     @left_over_people = Person.all - @group.people
     @left_over_people.sort! { |a,b| a.last_name.downcase <=> b.last_name.downcase }
   end
