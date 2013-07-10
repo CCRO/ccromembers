@@ -100,6 +100,7 @@
                       <li><%= link_to "#modal-new-group-page", 'data-toggle' => "modal" do %><i class="icon-group"></i> New page for this group<% end %></li>
                       <li><%= link_to new_group_attachment_path(@group) do %><i class="icon-group"></i> New online document for this group<% end %></li>
                       <li><%= link_to new_group_message_path(@group) do %><i class="icon-group"></i> New discussion for this group<% end %></li>
+                      <li><%= link_to edit_group_path(@group) do %><i class="icon-group"></i> Manage this group<% end %></li>
                       <li class="divider"></li>
                       <li><%= link_to group_posts_path(@group) do %><i class="icon-group"></i> Group posts<% end %></li>
                       <li><%= link_to group_pages_path(@group) do %><i class="icon-group"></i> Group pages<% end %></li>
