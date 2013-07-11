@@ -455,9 +455,9 @@ class PostsController < ApplicationController
         @total_articles = @group.posts.order('updated_at DESC')
         @articles = @total_articles.limit(3)
       else
-        @total_articles = @group.posts.where(hidden: false)
-        @total_articles = @total_articles.order('updated_at DESC')
-        @articles = @total_articles.limit(3)
+        @total_articles = @group.posts.select {|p| p.hidden == false}
+        @total_articles = @total_articles.sort
+        @articles = @total_articles
       end
     end
   end

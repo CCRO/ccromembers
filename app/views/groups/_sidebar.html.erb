@@ -66,10 +66,12 @@
     <% end %>
 
 
-    <% unless @article || @page || @message || params[:controller] == 'attachments' %>
-      <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @articles.length %></span> <%= link_to group_posts_path(@group) do %> Working Group Blog <i class="icon-arrow-left"></i></li><% end %>
-    <% else %>
-      <li><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @articles.length %></span> <%= link_to " Working Group Blog", group_posts_path(@group) %></li>
+    <% if @articles && @total_articles.length > 0 %>
+      <% unless @article || @page || @message || params[:controller] == 'attachments' %>
+        <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @total_articles.length %></span> <%= link_to group_posts_path(@group) do %> Blog posts <i class="icon-arrow-left"></i></li><% end %>
+      <% else %>
+        <li><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @total_articles.length %></span> <%= link_to " Blog posts", group_posts_path(@group) %></li>
+      <% end %>
     <% end %>
 
     <% if @group.attachments && @group.attachments.length > 0 %>

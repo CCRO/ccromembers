@@ -59,10 +59,14 @@
           <%= post.title.html_safe %>
         </div>
       <% else %>
-        <% if @group %>
-          <%= link_to post.title.html_safe, polymorphic_path([@group, post]) %>
+        <% if can? :read, Post.find_by_id(post.id) %>
+          <% if @group %>
+            <%= link_to post.title.html_safe, polymorphic_path([@group, post]) %>
+          <% else %>
+            <%= link_to post.title.html_safe, post_path(post)  %>
+          <% end %>
         <% else %>
-          <%= link_to post.title.html_safe, post_path(post)  %>
+          <%= post.title.html_safe %>
         <% end %>
       <% end %>
     </h1>
