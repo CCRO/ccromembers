@@ -213,17 +213,24 @@ class AttachmentsController < ApplicationController
   end
 
   def lookup_group
-    @group = Group.find(params[:group_id]) if params[:group_id]
-
-    if @group
+    @surveys = Survey.where(active: true)
+     if params[:group_id]
+      @group = Group.find(params[:group_id])
       @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-      @total_articles = @group.posts
-      @articles = @total_articles.limit(3)
+      @attachments = @group.attachments.select {|a| a.archived == false}
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people
-    end
 
+      if current_user && @group.leadership.include?(current_user)
+        @total_articles = @group.posts.order('updated_at DESC')
+        @articles = @total_articles.limit(3)
+      else
+        @total_articles = @group.posts.select {|p| p.hidden == false}
+        @total_articles = @total_articles.sort
+        @articles = @total_articles
+      end
+    end
   end
   
   def conditional_layout
