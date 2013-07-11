@@ -74,7 +74,7 @@
       <% end %>
     <% end %>
 
-    <% if @group.attachments && @group.attachments.length > 0 %>
+    <% if @group.attachments && @attachments.length > 0 %>
       <% if params[:controller] == 'attachments' %>
         <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @attachments.length %></span> <%= link_to group_attachments_path(@group) do %> Uploaded Files <i class="icon-arrow-left"></i></li><% end %>
       <% else %>
