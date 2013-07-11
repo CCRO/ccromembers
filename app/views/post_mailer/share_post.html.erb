@@ -49,10 +49,10 @@
             <br>
             <hr>
           <% end %>
-          <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @post.title.html_safe, post_url(@post), style: "text-decoration:none;" %></h1>
+          <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @post.title.html_safe, "http://ccro.org/groups/8/posts/#{@post.id}", style: "text-decoration:none;" %></h1>
           
           < div class="email" >
-          <%= @post.body.split('[---MORE---]').first.html_safe + " ..." %><b><%= link_to 'continued', post_url(@post) %></b>
+          <%= @post.body.split('[---MORE---]').first.html_safe + " ..." %><b><%= link_to 'continued', "http://ccro.org/groups/8/posts/#{@post.id}" %></b>
           < /div >
         </td>
         <td width="10%">

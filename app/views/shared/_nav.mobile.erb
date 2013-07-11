@@ -134,6 +134,7 @@
                         <li><%= link_to "Submitted posts", submitted_posts_path %></li>
                         <li><%= link_to "My draft posts", my_draft_posts_path %></li>
                         <li><%= link_to "Draft posts", draft_posts_path %></li>
+                        <li><%= link_to "Archived posts", archive_posts_path %></li>
                       </ul>
                     </li>
                     <li class="dropdown-submenu">
@@ -563,24 +564,28 @@
           <% end %>
         </td>
         <td>
-          <div class="control-group checkbox inline" >
-            <div id="stretch_button">
-            <b>Stretch mode</b>
-            <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
-              <%= f.check_box :stretch, :class => 'submittable' %><%= f.label :stretch %>
-            <% end %>
-            </div>
-
-            <div id="widget">
-              <b>Side Bar Widget</b>
+          <% if @group %>
+            <%= link_to 'Set as overview page', set_as_overview_group_path(@group, page: @page)%>
+          <% else %>
+            <div class="control-group checkbox inline" >
+              <div id="stretch_button">
+              <b>Stretch mode</b>
               <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
-                <%= f.check_box :pages_enabled, :class => 'submittable' %><%= f.label :pages_enabled %>
-                <%= f.check_box :articles_enabled, :class => 'submittable' %><%= f.label :articles_enabled %>
-                <%= f.check_box :discussions_enabled, :class => 'submittable' %><%= f.label :discussions_enabled %>
-                <%= f.check_box :smart_lists_enabled, :class => 'submittable' %><%= f.label :smart_lists_enabled %>
+                <%= f.check_box :stretch, :class => 'submittable' %><%= f.label :stretch %>
               <% end %>
+              </div>
+
+              <div id="widget">
+                <b>Side Bar Widget</b>
+                <%= form_for @page, { :remote => true, :class => 'checkbox inline' } do |f| %>
+                  <%= f.check_box :pages_enabled, :class => 'submittable' %><%= f.label :pages_enabled %>
+                  <%= f.check_box :articles_enabled, :class => 'submittable' %><%= f.label :articles_enabled %>
+                  <%= f.check_box :discussions_enabled, :class => 'submittable' %><%= f.label :discussions_enabled %>
+                  <%= f.check_box :smart_lists_enabled, :class => 'submittable' %><%= f.label :smart_lists_enabled %>
+                <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         </td>  
       </tr>
 

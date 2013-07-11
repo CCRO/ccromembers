@@ -94,6 +94,7 @@ Ccromembers::Application.routes.draw do
     end    
 
     member do
+      get :set_as_overview
       get :archive
       get :unarchive
       get 'permissions'

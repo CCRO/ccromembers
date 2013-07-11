@@ -29,7 +29,11 @@ class GroupsController < ApplicationController
     message = "You do not have access to the working group <strong>'#{@group.name}'</strong> at this time. If you are interested in joining this group, please let us know."
     authorize! :read, @group, :message => message.html_safe
 
-    redirect_to group_posts_path(@group)
+    if Page.find(@group.overview_page)
+      redirect_to Page.find(@group.overview_page)
+    else
+      redirect_to group_posts_path(@group)
+    end
   end
 
   def show_activity
@@ -147,6 +151,15 @@ class GroupsController < ApplicationController
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def set_as_overview
+    @group = Group.find(params[:id])
+    @page = Page.find(params[:page])
+
+    @group.overview_page = @page.id
+    @group.save
+    redirect_to @group
   end
 
   def archive

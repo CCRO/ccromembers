@@ -356,8 +356,7 @@ class PagesController < ApplicationController
 
     if @group
       @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-      @attachments = @group.attachments
-      @attachments.delete_if { |attachment| attachment.archived? }
+      @attachments = @group.attachments.select {|a| a.archived == false}
       @messages = @group.messages
       @group_document = @group.documents
       @smart_list = @group.people

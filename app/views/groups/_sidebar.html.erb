@@ -52,36 +52,65 @@
   <% end %>
 
   <ul class="nav nav-list">
-    <li class="nav-header"><%= 'Working Group Information' %></li>
-    <% unless @article || @page || @message || params[:controller] == 'attachments' %>
-      <li style="background-color: #E6E6E6;", class="active"><%= link_to @group do %>Group News and Updates <i class="icon-arrow-left"></i></li><% end %>
+    <li class="nav-header"><%= 'Working Group Resources' %></li>
+    
+    <% if @group.overview_page %>
+      <% pages_length = @pages.length - 1 %>
+      <% if @page && @page.id == @group.overview_page %>
+        <li style="background-color: #E6E6E6;", class="active"><%= link_to Page.find_by_id(@group.overview_page).title, Page.find_by_id(@group.overview_page) %></li>
+      <% else %>
+        <li><%= link_to Page.find_by_id(@group.overview_page).title, Page.find_by_id(@group.overview_page)if @group.overview_page %></li>
+      <% end %>
     <% else %>
-      <li><%= link_to "Group News and Updates", @group %></li>
+      <% pages_length = @pages.length %>
     <% end %>
 
-    <% if @pages && @pages.length > 0 %>
+
+    <% unless @article || @page || @message || params[:controller] == 'attachments' %>
+      <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @articles.length %></span> <%= link_to group_posts_path(@group) do %> Working Group Blog <i class="icon-arrow-left"></i></li><% end %>
+    <% else %>
+      <li><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @articles.length %></span> <%= link_to " Working Group Blog", group_posts_path(@group) %></li>
+    <% end %>
+
+    <% if @group.attachments && @group.attachments.length > 0 %>
+      <% if params[:controller] == 'attachments' %>
+        <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @attachments.length %></span> <%= link_to group_attachments_path(@group) do %> Uploaded Files <i class="icon-arrow-left"></i></li><% end %>
+      <% else %>
+        <li><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @attachments.length %></span> <%= link_to " Uploaded Files", group_attachments_path(@group) %></li>
+      <% end %>
+    <% end %>
+    
+
+
+
+    <% if @pages && pages_length > 0 %>
+      </br>
+      <li class="divider"></li>
+      <li class="nav-header">Articles </li>
       <% @pages.each do |p| %>
-          <% if can? :read, p %>
+          
+         <% unless p.id == @group.overview_page %>
             <% if @page && p.title == @page.title %>
               <li style="background-color: #E6E6E6;", class="active"><%= link_to group_page_path(@group, p) do %><%= p.title + " " %><i class="icon-arrow-left"></i></li><% end %>
             <% else %>
-              <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
+              <% if can? :read, Page.find_by_id(p.id) %>
+                <li><%= link_to p.title.html_safe, group_page_path(@group, p) %>
+              <% else %>
+                <li><%= p.title.html_safe %> </li>
+              <% end %>
             <% end %>
-          <% end %>
+          <% end %>  
+          
         </li>
       <% end %>
     <% end %>
   
-    <% if @group.attachments && @group.attachments.length > 0 %>
-      <% if params[:controller] == 'attachments' %>
-        <li style="background-color: #E6E6E6;", class="active"><%= link_to group_attachments_path(@group) do %>Files<i class="icon-arrow-left"></i></li><% end %>
-      <% else %>
-        <li><%= link_to "Files", group_attachments_path(@group) %></li>
-      <% end %>
-    <% end %>
+    
 
     <% if @group_document && @group_document.length > 0 %>
-      <li class="nav-header"><%= 'Working Group Documents' %></li>
+      </br>
+      <li class="divider"></li>
+      <li class="nav-header"><%= 'Documents' %></li>
       <% @group_document.each do |d| %>
         <li><%= link_to d.title.html_safe, document_path(d) %></li>
       <% end %>
@@ -89,40 +118,50 @@
 
     
     <% if @messages && @messages.length > 0 %>
-      <li class="nav-header"> Working Group Discussions </li>
+      </br>
+      <li class="divider"></li>
+      <li class="nav-header">Discussions </li>
       <% @messages.each do |m| %>
         <% if @message && m.subject == @message.subject %>
           <li style="background-color: #E6E6E6;", class="active"><%= link_to group_message_path(@group, m) do %><%= m.subject + " " %><i class="icon-arrow-left"></i></li><% end %>
         <% else %>
-          <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
+          <% if can? :read, Message.find_by_id(m.id) %>
+            <li><%= link_to m.subject.html_safe, polymorphic_path([@group, m]) %></li>
+          <% else %>
+            <li><%= m.subject.html_safe %></li>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
 
-    <% @these_attachments = @group.attachments.where(archived: 'false') if @attachments %>
-    <% if @attachments && @these_attachments.length > 0 %>
-      <li class="nav-header"> Files and Attachments </li>
-      
-      <% @these_attachments.limit(3).each do |m| %>
-          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]), target: "_blank" %></li>
-      <% end %>
-      <% if @these_attachments.length > 3 %>
-        <li><i><%= link_to "See all #{@these_attachments.length} uploads" , group_attachments_path(@group) %></i></li>
-      <% end %>
-    <% end %>
+    <% if false %>
 
-    <% if @articles && @articles.length > 0 %>
-      <li class="nav-header"> News and Update Items </li>
-      <% @articles.each do |m| %>
-        <% if @article && m.id == @article.id %>
-          <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
-        <% else %>
-          <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+      <% @these_attachments = @group.attachments.where(archived: 'false') if @attachments %>
+      <% if @attachments && @these_attachments.length > 0 %>
+        <li class="nav-header"> Files and Attachments </li>
+        
+        <% @these_attachments.limit(3).each do |m| %>
+            <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]), target: "_blank" %></li>
+        <% end %>
+        <% if @these_attachments.length > 3 %>
+          <li><i><%= link_to "See all #{@these_attachments.length} uploads" , group_attachments_path(@group) %></i></li>
         <% end %>
       <% end %>
-      <% if @total_articles.length > 3 %>
-        <li><i><%= link_to "See all #{@total_articles.length} articles" , @group %></i></li>
+
+      <% if @articles && @articles.length > 0 %>
+        <li class="nav-header"> News and Update Items </li>
+        <% @articles.each do |m| %>
+          <% if @article && m.id == @article.id %>
+            <li style="background-color: #E6E6E6;", class="active"><%= link_to group_posts_path(@group, m) do %><%= strip_tags m.title + " " %><i class="icon-arrow-left"></i></li><% end %>
+          <% else %>
+            <li><%= link_to strip_tags(m.title), polymorphic_path([@group, m]) %></li>
+          <% end %>
+        <% end %>
+        <% if @total_articles.length > 3 %>
+          <li><i><%= link_to "See all #{@total_articles.length} articles" , @group %></i></li>
+        <% end %>
       <% end %>
+
     <% end %>
   </ul>
 </div>
