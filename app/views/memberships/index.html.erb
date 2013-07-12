@@ -15,21 +15,27 @@
 	<tbody>
 	<h2>Co-Chairs</h2>
 	<% @co_chairs.each do |person| %>
+		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
+		<% end %>
 	<% end %>
 	<hr style="clear:both; padding-top:10px;">
 		
 	<h2 style="padding-top:20px;">Coordinators</h2>
 		
 	<% @coordinators.each do |person| %>
+		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
+		<% end %>
 	<% end %>
 	<hr style="clear:both; padding-top:10px;">
 		
 	<h2 style="padding-top:20px; ">Participants</h2>
 		
 	<% @participants.each do |person| %>
+		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
+		<% end %>
 	<% end %>
 	<hr style="clear:both; padding-top:10px;">
 </tbody>
