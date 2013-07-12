@@ -43,10 +43,16 @@ class Page < ActiveRecord::Base
     self.locked, self.locked_at = nil, nil
   end
 
-  def share_by_email(email_list, sender)
-    email_list = email_list.gsub(' ', '').split(',') if email_list.class.name == 'String'
-    email_list.each do |email|
-      PostMailer.share_post(self, email, sender).deliver
+  def share_by_email(email_list, my_subject, short_message, sender)
+    if email_list.class.name == 'String'
+      email_list = email_list.gsub(' ', '').split(',')
+      email_list.each do |email|
+        PageMailer.share_page(self, email, my_subject, short_message, sender).deliver
+      end
+    elsif email_list.class.name == 'Array'
+      email_list.each do |person|
+        PageMailer.delay.share_page(self, person.email, my_subject, short_message, sender)
+      end
     end
   end
 

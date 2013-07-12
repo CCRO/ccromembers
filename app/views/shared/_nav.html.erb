@@ -58,6 +58,7 @@
                       <% else %>
                         <li><%= link_to edit_page_path(@page) do %><i class="icon-file"></i> Edit this page<% end %></li>
                       <% end %>
+                      <li><%= link_to "#modal-share-page", 'data-toggle' => "modal" do %><i class="icon-file"></i> Share page [BETA]<% end %></li>
                       <li><%= link_to "#modal-page-settings", 'data-toggle' => "modal" do %><i class="icon-file"></i> Page settings<% end %></li>
                       <li><%= link_to duplicate_page_path(@page) do %><i class="icon-file"></i> Duplicate this page<% end %></li>
                       <li><%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-file"></i> Delete this page<% end %></li>
@@ -435,6 +436,44 @@
       </div>
       <div class="modal-footer">
          <%= button_to 'Back to Post', polymorphic_path([@group, @post]) %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @page && @page.id %>
+    <div class="modal hide fade" id="modal-share-page">
+      <div class="modal-header">
+        <h1><%= @page.title.html_safe if @page.title %></h1>
+      </div>
+      <div class="modal-body center">
+        <h2>Share by email:</h2>
+        <%= form_tag share_page_path(@page), method: 'post', class: 'form-inline' do %>
+          <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@page.title).strip}\"" %>
+          <% standard_body = "none" %>
+          <h4 style="padding-bottom:5px;">Email Subject</h4>
+          <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
+          <h4 style="padding-bottom:5px;">Short message</h4>
+          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
+          <div class="control-group radio">
+            <h4 style="padding-right:5px;">Test Email <%= check_box_tag('test', 'yes', checked: "true") %>: <%= current_user.email %> </h4>
+
+            <% if @page.owner_type == 'Group' %>
+            <h4 style="padding-right:5px;">Working Group Email <%= check_box_tag('working_group', 'yes') %></h4>
+            <h4 style="padding-right:5px;">Working Group Leadership Email <%= check_box_tag('working_group_leadership', 'yes') %></h4>
+            <% end %>
+            <% if current_user and current_user.admin? %>
+            <h4 style="padding-right:5px;">Leadership level <%= check_box_tag('leadership', 'yes') %></h4>
+            <h4 style="padding-right:5px;">Company level <%= check_box_tag('company', 'yes') %></h4>
+            <h4 style="padding-right:5px;">Individual level <%= check_box_tag('individual', 'yes') %></h4>
+            <h4 style="padding-right:5px;">Basic level <%= check_box_tag('basic', 'yes') %></h4>
+            <h4 style="padding-right:5px;">Contacts <%= check_box_tag('contacts', 'yes') %></h4>
+            <% end %>
+          </div>
+          <br>
+          <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list') %></h4>
+          <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
+          <%= submit_tag 'Send', class: 'btn' %>
+        <% end %>
       </div>
     </div>
   <% end %>

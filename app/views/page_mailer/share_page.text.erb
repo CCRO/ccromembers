@@ -1,0 +1,7 @@
+<%= "Hello,
+          
+#{@sender.name} has shared a CCRO article with you titled \"#{strip_tags(@page.title).strip}\"
+
+#{strip_tags(raw @page.body.split('[---MORE---]').first).strip}
+
+continued here: #{post_url(@page)}" %>

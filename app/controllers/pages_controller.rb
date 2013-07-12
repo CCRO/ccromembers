@@ -136,12 +136,52 @@ class PagesController < ApplicationController
     page = Page.find(params[:id])
     page_title = strip_tags page.title
     if current_user
-      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."  
     else
-      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
+      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
     end
+    
     authorize! :read, page, :message => message.html_safe
-    page.share_by_email(params[:email_list], current_user)
+    list_of_people = Person.all
+
+    people = []
+    if params[:test] == 'yes'
+      people << current_user
+    end
+
+    if params[:working_group] == 'yes'
+      people += page.owner.people
+    end
+
+    if params[:working_group_leadership] == 'yes'
+      people += page.owner.leadership
+    end
+
+    if params[:leadership] == 'yes'
+      people += list_of_people.select {|p| p.level == 'leadership'}
+      people += list_of_people.select {|p| p.level == 'admin'}
+    end
+
+    if params[:company] == 'yes'
+      people += list_of_people.select {|p| p.level == 'company_member'}
+    end
+
+    if params[:individual] == 'yes'
+      people += list_of_people.select {|p| p.level == 'individual_member'}
+    end
+
+    if params[:basic] == 'yes'
+      people += list_of_people.select {|p| p.level == 'basic' || p.level == 'pro'}
+    end
+
+    if params[:contacts] == 'yes'
+      people += Contact.all
+    end
+
+    unless people == []
+      page.share_by_email(people, params[:my_subject], params[:short_message], current_user)
+    end
+      
     redirect_to page
   end
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+  <style>
+    .survey_btn {
+      margin-bottom: 20px;
+      margin-left: 0;
+      padding-left: 20%;
+      padding-right: 20%;
+      font-size: 15px;
+    }
+
+    a:hover {
+      text-decoration:none;
+    }
+
+    .email img, .page .callout {
+      border: 1px solid lightGrey;
+      background-color: white;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 1px 1px 3px gray;
+      font-weight: bold;
+      font-size: 110%;
+  }
+
+  </style>
+  <link rel="stylesheet" type="text/css" href="/blog_email.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  </head>
+  <body id="blog" style="background-color:lightgray" >
+    <table style="padding-top:10px;">
+      <tr>
+        <td>
+        </td>
+        <td style="background-color:black; padding-left:20px">
+          <p style="text-align:left;"><img src="https://s3.amazonaws.com/ccromembers_assets/redactor_assets/pictures/91/lrg_thumb_xx_ccro_short.png" style="width:200px; margin-left:30px:"></p>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td width="10%">
+        </td>
+        <td id="post_body" class="page drop-shadow lifted mercury-region" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+          <% if @short_message.length >= 10 %>
+            <p><%= @short_message.html_safe %></p>
+            <br>
+            <hr>
+          <% end %>
+          <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @age.title.html_safe, "http://ccro.org/groups/8/posts/#{@page.id}", style: "text-decoration:none;" %></h1>
+          
+          < div class="email" >
+          <%= @age.body %></b>
+          < /div >
+        </td>
+        <td width="10%">
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
