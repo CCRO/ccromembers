@@ -136,9 +136,9 @@ class PagesController < ApplicationController
     page = Page.find(params[:id])
     page_title = strip_tags page.title
     if current_user
-      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."  
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}, your access level is currently #{current_user.level}."  
     else
-      message = "You are unable to share the post: <strong>#{post_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
+      message = "You are unable to share the page: <strong>#{page_title}</strong>. The access level needed to share this page is #{page.level}. You are currently not logged in."
     end
     
     authorize! :read, page, :message => message.html_safe
