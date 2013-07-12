@@ -4,7 +4,7 @@ class PageMailer < ActionMailer::Base
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.post_mailer.share_post.subject
+  #   en.post_mailer.share_page.subject
   #
   def share_page(page, email, my_subject, short_message, sender)
     @page = page

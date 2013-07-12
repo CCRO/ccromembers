@@ -49,10 +49,10 @@
             <br>
             <hr>
           <% end %>
-          <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @age.title.html_safe, "http://ccro.org/groups/8/posts/#{@page.id}", style: "text-decoration:none;" %></h1>
+          <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @page.title.html_safe, "http://ccro.org/groups/8/posts/#{@page.id}", style: "text-decoration:none;" %></h1>
           
           < div class="email" >
-          <%= @age.body %></b>
+            <%= @page.body %></b>
           < /div >
         </td>
         <td width="10%">

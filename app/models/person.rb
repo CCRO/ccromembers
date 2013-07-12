@@ -142,8 +142,9 @@ class Person < ActiveRecord::Base
   def title
     if self.highrise_id.present?
       title = Highrise::Person.find(self.highrise_id).title
+    else
+      title = ' '
     end
-    title != nil ? title : ' '
   end
 
   def company_name
