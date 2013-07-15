@@ -1,6 +1,10 @@
 <div class="row">
 	<div class="well span8 offset2">
-	<h2>Tell us who you are</h2>
+    <% if current_user && current_user.admin? %>
+      <h2>Who would you like to create an account for?</h2>
+    <% else %>
+      <h2>Tell us who you are</h2>
+    <% end %>
   <%= javascript_tag "var companies = #{ @companies.to_json };" %>
 
   <%= form_for(@person, :html => {:class => 'form-horizontal'}) do |f| %>
@@ -34,7 +38,11 @@
         <%= f.label :email, :class => 'control-label' %>
         <div class="controls">
         <%= f.text_field :email %>
+        <% if current_user && current_user.admin? %>
+        <p class="help-block">This will be their login username.</p>
+        <% else %>
         <p class="help-block">This will be your login username.</p>
+        <% end %>
         </div>
       </div>
 
@@ -42,7 +50,7 @@
 
         <%= f.label :password, :class => 'control-label' %>
         <div class="controls">
-          <p class="help-block">So that you might resume if interrupted </br> and return to view future results, please enter a password.</p>
+          
           <%= f.password_field :password %><br /><br />
           <%= f.password_field :password_confirmation %>
           <p class="help-block">Enter password and confirm by entering again.</p>

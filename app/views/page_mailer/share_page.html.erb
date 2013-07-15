@@ -51,9 +51,9 @@
           <% end %>
           <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @page.title.html_safe, "http://ccro.org/groups/8/posts/#{@page.id}", style: "text-decoration:none;" %></h1>
           
-          < div class="email" >
-            <%= @page.body %></b>
-          < /div >
+          <div class="email" >
+            <%= @page.body.html_safe %></b>
+          </div >
         </td>
         <td width="10%">
         </td>

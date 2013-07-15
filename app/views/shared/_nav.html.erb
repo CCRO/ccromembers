@@ -58,7 +58,7 @@
                       <% else %>
                         <li><%= link_to edit_page_path(@page) do %><i class="icon-file"></i> Edit this page<% end %></li>
                       <% end %>
-                      <li><%= link_to "#modal-share-page", 'data-toggle' => "modal" do %><i class="icon-file"></i> Share page [BETA]<% end %></li>
+                      <li><%= link_to "#modal-share-page", 'data-toggle' => "modal" do %><i class="icon-file"></i> Share page [BETA - NOT WORKING!]<% end %></li>
                       <li><%= link_to "#modal-page-settings", 'data-toggle' => "modal" do %><i class="icon-file"></i> Page settings<% end %></li>
                       <li><%= link_to duplicate_page_path(@page) do %><i class="icon-file"></i> Duplicate this page<% end %></li>
                       <li><%= link_to polymorphic_path([@group, @page]), method: 'delete', :confirm => "Are you sure?" do %><i class="icon-file"></i> Delete this page<% end %></li>
@@ -189,6 +189,7 @@
                         <i class="icon-wrench"></i> Other tools
                       <% end %>
                       <ul class="dropdown-menu">
+                        <li><%= link_to new_person_path do %><i class="icon-user"></i> New person <% end %></li>
                         <li><%= link_to messages_path do %><i class="icon-comment"></i> Discussions <% end %></li>
                         <li><%= link_to tags_path do %><i class="icon-tags"></i> Tag maker <% end %></li>
                       </ul>
