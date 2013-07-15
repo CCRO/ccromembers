@@ -21,6 +21,7 @@ layout 'twiml'
   end
 
   def voice
+  	caller_phone = params['From'].to_s[2..-1]
     if Group.find_by_conf_phone(params['To'])
       @group = Group.find_by_conf_phone(params['To'])
       conf_room = @group.name.parameterize
@@ -29,13 +30,13 @@ layout 'twiml'
     end
 
   	twiml = Twilio::TwiML::Response.new do |r|
-  		if Person.find_by_mobile_phone(params['From'])
-  			@person = Person.find_by_mobile_phone(params['From'])
+  		if Person.find_by_mobile_phone(caller_phone)
+  			@person = Person.find_by_mobile_phone(caller_phone)
   			r.Say "hello #{@person.name}! You will be placed into the #{@group.try(:name) if @group} conference room.", :voice => 'woman'
         r.Dial do
           r.Conference conf_room
         end
-      elsif params['From'] == '2818254871'
+      elsif caller_phone == '2818254871'
         r.Say "Entering #{@group.try(:name) if @group} conference room as host.", :voice => 'woman'
         r.Dial  :record => 'true' do
           r.Conference conf_room, :beep => 'false', :waitUrl => ''
