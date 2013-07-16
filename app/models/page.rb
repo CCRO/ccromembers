@@ -47,7 +47,7 @@ class Page < ActiveRecord::Base
     if email_list.class.name == 'String'
       email_list = email_list.gsub(' ', '').split(',')
       email_list.each do |email|
-        PageMailer.delay.share_page(self, email, my_subject, short_message, sender).deliver
+        PageMailer.delay.share_page(self, email, my_subject, short_message, sender)
       end
     elsif email_list.class.name == 'Array'
       email_list.each do |person|
