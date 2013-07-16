@@ -181,6 +181,10 @@ class PagesController < ApplicationController
     unless people == []
       page.share_by_email(people, params[:my_subject], params[:short_message], current_user)
     end
+
+    if params[:email_who] == 'my_list'
+      page.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
+    end
       
     redirect_to page
   end

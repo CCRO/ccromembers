@@ -199,6 +199,10 @@ class PostsController < ApplicationController
     unless people == []
       post.share_by_email(people, params[:my_subject], params[:short_message], current_user)
     end
+
+    if params[:email_who] == 'my_list'
+      post.share_by_email(params[:email_list], params[:my_subject], params[:short_message], current_user)
+    end
       
     redirect_to post
   end

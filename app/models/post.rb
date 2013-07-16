@@ -63,7 +63,7 @@ class Post < ActiveRecord::Base
     if email_list.class.name == 'String'
       email_list = email_list.gsub(' ', '').split(',')
       email_list.each do |email|
-        PostMailer.share_post(self, email, my_subject, short_message, sender).deliver
+        PostMailer.delay.share_post(self, email, my_subject, short_message, sender).deliver
       end
     elsif email_list.class.name == 'Array'
       email_list.each do |person|
