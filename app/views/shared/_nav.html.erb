@@ -242,6 +242,14 @@
               <li><%= link_to "View Profile", current_user %></li>
               <li><a href="#">Dial-in PIN: <strong><%= current_user.pin_code %></strong></a></li>
               <li class="divider"></li>
+              <% if @page %>
+                <li><%= link_to "#modal-share-page", 'data-toggle' => "modal" do %><i class="icon-envelope-alt"></i> Share page: <%= @page.title %> <% end %></li>
+                <li class="divider"></li>
+              <% end %>
+              <% if @post %>
+                <li><%= link_to "#modal-share-post", 'data-toggle' => "modal" do %><i class="icon-envelope-alt"></i> Share post: <%= @post.title %>  <% end %></li>
+                <li class="divider"></li>
+              <% end %>
               <% if current_user.memberships %>
                   <li><a href="#"><strong>Jump to:</strong></a></li>
                 <% current_user.memberships.each do |membership| %>
@@ -325,33 +333,42 @@
         <h1><%= @post.title.html_safe if @post.title %></h1>
       </div>
       <div class="modal-body center">
-        <h2>Share this post:</h2>
-        <p><%= shared_post_url(@post.viewing_token)%> <%= clippy(shared_post_url(@post.viewing_token)) %></p>
-        <h2>Share by email:</h2>
         <%= form_tag share_post_path(@post), method: 'post', class: 'form-inline' do %>
           <% standard_subject = "#{current_user.name} has shared a CCRO article with you titled \"#{strip_tags(@post.title).strip}\"" %>
           <% standard_body = "none" %>
           <h4 style="padding-bottom:5px;">Email Subject</h4>
           <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
           <h4 style="padding-bottom:5px;">Short message</h4>
-          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
-          <div class="control-group radio">
-            <h4 style="padding-right:5px;">Test Email <%= check_box_tag('test', 'yes', checked: "true") %>: <%= current_user.email %> </h4>
+          <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %>
 
-            <% if @post.owner_type == 'Group' %>
-            <h4 style="padding-right:5px;">Working Group Email <%= check_box_tag('working_group', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Working Group Leadership Email <%= check_box_tag('working_group_leadership', 'yes') %></h4>
-            <% end %>
-            <% if current_user and current_user.admin? %>
-            <h4 style="padding-right:5px;">Leadership level <%= check_box_tag('leadership', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Company level <%= check_box_tag('company', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Individual level <%= check_box_tag('individual', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Basic level <%= check_box_tag('basic', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Contacts <%= check_box_tag('contacts', 'yes') %></h4>
-            <% end %>
-          </div>
+            <div class="control-group radio">
+              
+              <% if current_user && current_user.admin? %>
+                <br><br>
+                <h4 style="padding-right:5px;">Test Email <%= check_box_tag('test', 'yes', checked: "true") %>: <%= current_user.email %> </h4>
+              <% end %>
+              <% if @post.owner_type == 'Group' %>
+                <% if current_user && current_user.admin? || current_user && @group.leadership.include?(current_user) %>
+                  <h4 style="padding-right:5px;">Working Group Email <%= check_box_tag('working_group', 'yes') %></h4>
+                  <h4 style="padding-right:5px;">Working Group Leadership Email <%= check_box_tag('working_group_leadership', 'yes') %></h4>
+                <% end %>
+              <% end %>
+              <% if current_user && current_user.admin? %>
+                <h4 style="padding-right:5px;">Leadership level <%= check_box_tag('leadership', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Company level <%= check_box_tag('company', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Individual level <%= check_box_tag('individual', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Basic level <%= check_box_tag('basic', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Contacts <%= check_box_tag('contacts', 'yes') %></h4>
+              <% end %>
+            </div>
+          
+          <% if current_user && current_user.admin? %>
           <br>
           <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list') %></h4>
+          <% elsif current_user %>
+            Add email address/es below to share this post, separate multiple addresses with commas. 
+            <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list', checked: 'true') %></h4>
+          <% end %>
           <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>
@@ -455,23 +472,34 @@
           <%= text_area_tag 'my_subject', standard_subject,  rows: 3, style: 'width: 95%; important!' %><br><br>
           <h4 style="padding-bottom:5px;">Short message</h4>
           <%= text_area_tag 'short_message', standard_body, :class => "redactor",  rows: 5, style: 'width: 95%; important! height: 100px; important!' %><br><br>
-          <div class="control-group radio">
-            <h4 style="padding-right:5px;">Test Email <%= check_box_tag('test', 'yes', checked: "true") %>: <%= current_user.email %> </h4>
-
-            <% if @page.owner_type == 'Group' %>
-            <h4 style="padding-right:5px;">Working Group Email <%= check_box_tag('working_group', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Working Group Leadership Email <%= check_box_tag('working_group_leadership', 'yes') %></h4>
-            <% end %>
-            <% if current_user and current_user.admin? %>
-            <h4 style="padding-right:5px;">Leadership level <%= check_box_tag('leadership', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Company level <%= check_box_tag('company', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Individual level <%= check_box_tag('individual', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Basic level <%= check_box_tag('basic', 'yes') %></h4>
-            <h4 style="padding-right:5px;">Contacts <%= check_box_tag('contacts', 'yes') %></h4>
-            <% end %>
-          </div>
+            
+              <div class="control-group radio">
+                 <div class="control-group radio">
+              
+              <% if current_user && current_user.admin? %>
+                <br><br>
+                <h4 style="padding-right:5px;">Test Email <%= check_box_tag('test', 'yes', checked: "true") %>: <%= current_user.email %> </h4>
+              <% end %>
+              <% if @page.owner_type == 'Group' && (current_user && current_user.admin? || current_user && @group.leadership.include?(current_user)) %>
+                <h4 style="padding-right:5px;">Working Group Email <%= check_box_tag('working_group', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Working Group Leadership Email <%= check_box_tag('working_group_leadership', 'yes') %></h4>
+              <% end %>
+              <% if current_user && current_user.admin? %>
+                <h4 style="padding-right:5px;">Leadership level <%= check_box_tag('leadership', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Company level <%= check_box_tag('company', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Individual level <%= check_box_tag('individual', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Basic level <%= check_box_tag('basic', 'yes') %></h4>
+                <h4 style="padding-right:5px;">Contacts <%= check_box_tag('contacts', 'yes') %></h4>
+              <% end %>
+            </div>
+          
+          <% if current_user && current_user.admin? %>
           <br>
           <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list') %></h4>
+          <% elsif current_user %>
+            Add email address/es below to share this post, separate multiple addresses with commas. 
+            <h4 style="padding-right:5px; margin-bottom:5px;">Intended Recipient/s <%= radio_button_tag('email_who', 'my_list', checked: 'true') %>
+          <% end %>
           <%= text_field_tag 'email_list', nil, rows: 1, style: 'width: 80%; important!' %>
           <%= submit_tag 'Send', class: 'btn' %>
         <% end %>

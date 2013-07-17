@@ -121,8 +121,12 @@
 
       <!-- Post Footer: right-side -->
       <p class="pull-right">
+        <% if current_user && post.level == 'public' && params[:action] == 'show' %>
+          <%= link_to "#modal-share-post", 'data-toggle' => "modal" do %><i class="icon-envelope-alt"></i> Email post<% end %>
+        <% else %> 
         <span class="post-footer-heading">Updated: </span>
         <strong><%= time_ago_in_words post.updated_at %> ago</strong>
+        <% end %>
       </p>
 
       <!-- Post Footer: left-side -->
