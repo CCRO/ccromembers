@@ -13,6 +13,7 @@
       <%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %>
     </span>
       <small style="color:lightgreen"><%= "Across: Active" if question.across == true %></small>
+      <small style="color:lightblue"><%= "Sub-Question" if question.sub_question == true %></small>
   </h2>
       
       <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
