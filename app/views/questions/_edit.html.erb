@@ -1,7 +1,19 @@
 <%= content_tag_for :li, question do %>
-<span class="handle"><i class="icon-move"></i></span><h2><%= question.prompt %><br>
-<span class="delete_selector "><%= link_to survey_question_path(question.survey, question), :remote => true, :rel => 'modal-question', 'data-controls-modal' =>  "modal-window", 'data-backdrop' => true, 'data-keyboard' => true, class: "btn btn-success" do %>Edit Question<% end %></span>
-<span class="delete_selector "><%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %></span></h2>
+  <span class="handle">
+    <i class="icon-move"></i>
+  </span>
+  <h2><%= question.prompt %>
+    <br>
+    <span class="delete_selector ">
+      <%= link_to survey_question_path(question.survey, question), :remote => true, :rel => 'modal-question', 'data-controls-modal' =>  "modal-window", 'data-backdrop' => true, 'data-keyboard' => true, class: "btn btn-success" do %>
+        Edit Question
+      <% end %>
+    </span>
+    <span class="delete_selector ">
+      <%= link_to "Delete question", survey_question_path(question.survey,question), :remote => true , :class => 'btn btn-danger', :method => 'delete', :confirm => 'There is no go backs. Ok?' %>
+    </span>
+      <small style="color:lightgreen"><%= "Across: Active" if question.across == true %></small>
+  </h2>
       
       <% if question.response_type == 'radio' || question.response_type == 'checkbox'%>
       <ul id="question_responses_<%= question.id %>" style="list-style: none;">

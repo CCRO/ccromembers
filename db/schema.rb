@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703150305) do
+ActiveRecord::Schema.define(:version => 20130717165354) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -322,9 +322,10 @@ ActiveRecord::Schema.define(:version => 20130703150305) do
     t.text     "prompt"
     t.text     "possible_responses"
     t.string   "response_type"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "position"
+    t.boolean  "across",             :default => false
   end
 
   add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"

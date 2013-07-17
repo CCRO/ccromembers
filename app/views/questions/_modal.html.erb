@@ -1,39 +1,49 @@
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Update question</h3>
+<div style="max-height: 800px; overflow: scroll;">     
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Update question</h3>
+  </div>
+
+  <div style="margin-top:10px; margin-left:20px;">
+    <%= form_for [@question.survey, @question] do |q| %>
+      
+      <div class="field">
+        <%= q.radio_button :response_type, "radio", :class => 'submittable' %> Radio | 
+        <%= q.radio_button :response_type, "checkbox", :class => 'submittable' %> Checkbox | 
+        <%= q.radio_button :response_type, "singleline", :class => 'submittable' %> Singleline | 
+        <%= q.radio_button :response_type, "multiline", :class => 'submittable' %> Multiline
       </div>
 
-      <div style="margin-top:10px; margin-left:20px;">
-        <%= form_for [@question.survey, @question] do |q| %>
-          <div class="field">
-            <%= q.radio_button :response_type, "radio", :class => 'submittable' %> Radio | 
-            <%= q.radio_button :response_type, "checkbox", :class => 'submittable' %> Checkbox | 
-            <%= q.radio_button :response_type, "singleline", :class => 'submittable' %> Singleline | 
-            <%= q.radio_button :response_type, "multiline", :class => 'submittable' %> Multiline
-          </div>
+      </br>
+        <div class="field">
+          <%= q.check_box :across, :class => 'submittable' %> Make the responses go across
+        </div>
+      </br>
 
-          <div class="field">
-            <%= q.label :prompt %>
-            <%= q.text_area :prompt %>
-          </div>
 
-          <% if @question.possible_responses.present? %>
-            <% @question.possible_responses.each_with_index do |response, index| %>
+      <div class="field">
+        <%= q.label :prompt %>
+        <%= q.text_area :prompt %>
+      </div>
 
-              <div class="field">
-                <%= q.label :possible_responses %>
-                <%= q.text_area "possible_responses[#{index}]", value: response[1] %>
-              </div>
+      <% if @question.possible_responses.present? %>
+        <% @question.possible_responses.each_with_index do |response, index| %>
 
-            <% end %>
-          <% end %>
+         
+            <%= q.label :possible_responses %>
+            <%= q.text_area "possible_responses[#{index}]", value: response[1] %>
+         
 
-          <div class="actions">
-            <%= q.submit "Update", class: "btn" %>
-          </div>
         <% end %>
+      <% end %>
 
-
-      <div class="modal-footer">
-        <%= link_to 'close',  edit_survey_path(@question.survey), class: 'btn' %>
+      <div class="actions">
+        <%= q.submit "Update", class: "btn" %>
       </div>
+    <% end %>
+
+
+  <div class="modal-footer">
+    <%= link_to 'close',  edit_survey_path(@question.survey), class: 'btn' %>
+  </div>
+</div>
