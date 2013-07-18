@@ -16,10 +16,9 @@
 
       </br>
       <div class="field">
-        <% if current_user && current_user.id == 8 %>
-          <%= q.check_box :title, :class => 'submittable' %> This is not a question its a title! </br>
-          <%= q.check_box :sub_question, :class => 'submittable' %> Make the question a sub-question </br>
-        <% end %>
+        
+        <%= q.check_box :title, :class => 'submittable' %> This is not a question its a title! </br>
+        <%= q.check_box :sub_question, :class => 'submittable' %> Make the question a sub-question </br>
         <%= q.check_box :across, :class => 'submittable' %> Make the responses go across </br>
       </div>
       </br>
