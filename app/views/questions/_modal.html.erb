@@ -1,4 +1,4 @@
-<div style="max-height: 800px; overflow: scroll;">     
+<div style="max-height: 500px; overflow: scroll;">     
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Update question</h3>
@@ -16,8 +16,10 @@
 
       </br>
       <div class="field">
-        <%= q.check_box :title, :class => 'submittable' %> This is not a question its a title! </br>
-        <%= q.check_box :sub_question, :class => 'submittable' %> Make the question a sub-question </br>
+        <% if current_user && current_user.id == 8 %>
+          <%= q.check_box :title, :class => 'submittable' %> This is not a question its a title! </br>
+          <%= q.check_box :sub_question, :class => 'submittable' %> Make the question a sub-question </br>
+        <% end %>
         <%= q.check_box :across, :class => 'submittable' %> Make the responses go across </br>
       </div>
       </br>

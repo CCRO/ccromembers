@@ -9,6 +9,7 @@
   
   <br style="clear:both;">
   
+  
   <% @survey.questions.each do |q| %>
     <% if q.sub_question == true %>
       
@@ -170,7 +171,6 @@
      
       <br>
     <% end %>
-        
   <% end %>
 </div>
 <% if can? :create, Post %>
