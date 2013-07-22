@@ -14,10 +14,9 @@ jqThis.bind('keydown', function(e){ //on key down
        this.style.width = newVal + 'px'; //update the value.
 });
 
-
 jQuery(function($) {
   $("a[rel='new_question_type']").on('click', function(event) {
-    event.preventDefault();
+   event.preventDefault();
     $('.add_question_form input#question_response_type').prop('value', $(this).data('qtype'));
     $('.add_question_form input#question_prompt').prop('placeholder', 'Prompt for ' +$(this).data('qtype')  + ' question');
     $('.add_question_form').show();
