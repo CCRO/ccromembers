@@ -250,7 +250,7 @@ class Person < ActiveRecord::Base
         title_split = (title[0..26].rindex(" ") and title.length > 26) ? [title[0..title[0..26].rindex(" ")], title[title[0..26].rindex(" ").+(1)..-1]] : [title, ""]
         if title_split[0] 
           text_title = Draw.new
-          text_title.annotate(image, 0,0,360,54*4, self.title) {
+          text_title.annotate(image, 0,0,360,54*4, title_split[0]) {
             self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
             self.fill = 'black'
             self.pointsize = 14 *4
@@ -259,7 +259,7 @@ class Person < ActiveRecord::Base
 
         if title_split[1]
           text_title = Draw.new
-          text_title.annotate(image, 0,0,360,70*4, self.title) {
+          text_title.annotate(image, 0,0,360,70*4, title_split[1]) {
             self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
             self.fill = 'black'
             self.pointsize = 14 *4
