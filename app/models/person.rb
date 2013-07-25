@@ -208,7 +208,7 @@ class Person < ActiveRecord::Base
   end
   
   def update_sticker
-    image = Image.new(1000, 240) {
+    image = Image.new(1000, 360) {
       self.background_color = "#f0f0f0"
     }
 
@@ -222,7 +222,7 @@ class Person < ActiveRecord::Base
     rescue 
       avatar = Magick::Image::read(File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg')))[0] 
     else 
-      avatar.resize_to_fit!(200)
+      avatar.resize_to_fit!(320)
       image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
     end
 
@@ -230,7 +230,7 @@ class Person < ActiveRecord::Base
 
         if self.name.present?
           text_name = Draw.new
-          text_name.annotate(image, 0,0,240,80, self.name) {
+          text_name.annotate(image, 0,0,360,80, self.name) {
             self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
             self.fill = '#0088cc'
             self.pointsize = 18 *4
@@ -240,17 +240,26 @@ class Person < ActiveRecord::Base
         if self.company_name && self.company_name != "Unknown Company"
           unless self.company_name.empty?
             text_company = Draw.new
-            text_company.annotate(image, 0,0,240,38*4, self.company_name) {
+            text_company.annotate(image, 0,0,360,38*4, self.company_name) {
               self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
               self.fill = 'black'
               self.pointsize = 14 *4
             }
           end
         end
-
-        if self.title 
+        title_split = (title[0..26].rindex(" ") and title.length > 26) ? [title[0..title[0..26].rindex(" ")], title[title[0..26].rindex(" ").+(1)..-1]] : [title, ""]
+        if title_split[0] 
           text_title = Draw.new
-          text_title.annotate(image, 0,0,240,54*4, self.title) {
+          text_title.annotate(image, 0,0,360,54*4, self.title) {
+            self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
+            self.fill = 'black'
+            self.pointsize = 14 *4
+          }
+        end
+
+        if title_split[1]
+          text_title = Draw.new
+          text_title.annotate(image, 0,0,360,70*4, self.title) {
             self.font_family = "'Helvetica Neue',Helvetica,Arial,sans-serif"
             self.fill = 'black'
             self.pointsize = 14 *4
