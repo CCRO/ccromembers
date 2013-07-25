@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717204334) do
+ActiveRecord::Schema.define(:version => 20130725192110) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130717204334) do
     t.date     "expires_on"
     t.boolean  "active"
     t.float    "balance"
+    t.string   "logo_pic"
   end
 
   create_table "contacts", :force => true do |t|

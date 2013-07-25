@@ -19,6 +19,16 @@
   	</div>
     </div>
     <div class="control-group">
+      <%= f.label :logo_pic, "Company Logo", :class => 'control-label' %>
+      <div class="controls">
+        <%= f.file_field :logo_pic %>
+        <p class="help-block">Upload a Full Color logo as a *.jpg, *.gif, or *.png.</p>
+        <% if @company.logo_pic.present? %>
+          <%= image_tag @company.logo_pic %>
+        <% end %>
+      </div>
+    </div>
+    <div class="control-group">
       <%= f.label :role, :class => 'control-label' %>
       <div class="controls">
   		<%= f.select :role, options_for_select(ROLES, @company.role) %>
