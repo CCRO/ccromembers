@@ -94,7 +94,7 @@
                       <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                       <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
                       <% @other_groups.each do |group| %>
-                        <li><%= link_to group.name, page_path(Page.find(group.overview_page)) %></li>
+                        <li><%= link_to group.name, group %></li>
                       <% end %>
                     </ul>
                   <% end %>
@@ -123,8 +123,7 @@
                     <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                     <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
                     <% @groups.each do |group| %>
-                      <% group_overview_page = Page.find(group.overview_page)%>
-                      <li><%= link_to group.name, page_path(group_overview_page) %></li>
+                      <li><%= link_to group.name, group %></li>
                     <% end %>
                   </ul>
                 <% end %>
@@ -210,7 +209,7 @@
                   <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                   <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
                   <% @other_groups.each do |group| %>
-                    <li><%= link_to group.name, page_path(Page.find(group.overview_page)) %></li>
+                    <li><%= link_to group.name, group %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -241,8 +240,7 @@
                 <li class="nav-header" style="color:white; background-color: #A1A0BB; text-shadow: 0 0px 0;">CCRO Working Groups</li>
                 <li><%= link_to 'Working Groups Overview', "/pages/23" %></li>
                 <% @groups.each do |group| %>
-                  <% group_overview_page = Page.find(group.overview_page)%>
-                  <li><%= link_to group.name, page_path(group_overview_page) %></li>
+                  <li><%= link_to group.name, group %></li>
                 <% end %>
               </ul>
 

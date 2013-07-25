@@ -58,7 +58,7 @@ class PostsController < ApplicationController
     end
 
     
-    @groups = Group.where("overview_page IS NOT NULL").order("created_at asc")
+    @groups = Group.where(active: true).order("created_at asc")
     @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position }
     @my_groups = []
     @other_groups = []
