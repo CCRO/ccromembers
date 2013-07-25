@@ -29,9 +29,9 @@ class GroupsController < ApplicationController
     message = "You do not have access to the working group <strong>'#{@group.name}'</strong> at this time. If you are interested in joining this group, please let us know."
     authorize! :read, @group, :message => message.html_safe
 
-    if @group.overview_page && Page.find(@group.overview_page).present?
+    unless @group.overview_page.nil?
       redirect_to Page.find(@group.overview_page)
-    elsif @group.posts.present?
+    else 
       redirect_to group_posts_path(@group)
     end
   end
