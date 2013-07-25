@@ -208,7 +208,7 @@ class Person < ActiveRecord::Base
   end
   
   def update_sticker
-    image = Image.new(1000, 360) {
+    image = Image.new(1000, 320) {
       self.background_color = "#f0f0f0"
     }
 
@@ -222,7 +222,7 @@ class Person < ActiveRecord::Base
     rescue 
       avatar = Magick::Image::read(File.open(Rails.root.join('app', 'assets', 'images', 'head.jpg')))[0] 
     else 
-      avatar.resize_to_fit!(240)
+      avatar.resize_to_fit!(200)
       image = image.composite(avatar, Magick::NorthWestGravity, 20, 20, Magick::OverCompositeOp)
     end
 
