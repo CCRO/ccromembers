@@ -11,6 +11,8 @@ class Company < ActiveRecord::Base
   belongs_to :primary_contact, :class_name => 'Person', :foreign_key => 'primary_person_id'
   belongs_to :billing_contact, :class_name => 'Person', :foreign_key => 'billing_person_id'
   
+  mount_uploader :logo_pic, LogoUploader
+
   before_save :check_contacts
   after_initialize :first_is_admin
   
