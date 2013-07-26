@@ -1,4 +1,3 @@
-        </form>
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
 <% if browser.ie7? %>
@@ -27,8 +26,8 @@
         <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"> CCRO Working Groups <i class="icon-caret-down" style="margin-left:5px;"></i></a>
           <ul class="dropdown-menu">
-            <% @group_pages.each do |p| %>
-              <li style="padding-right:0px;"><%= link_to p.title, p %></li>
+            <% Group.where(active: true).each do |g| %>
+              <li style="padding-right:0px;"><%= link_to g.name, g %></li>
             <% end %>
           </ul>
         </li>
@@ -72,10 +71,8 @@
           <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> CCRO Working Groups <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <% if @group_pages %>
-                <% @group_pages.each do |p| %>
-                  <li><%= link_to p.title, p %></li>
-                <% end %>
+              <% Group.where(active: true).each do |g| %>
+                <li style="padding-right:0px;"><%= link_to g.name, g %></li>
               <% end %>
             </ul>
           </li>
