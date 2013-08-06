@@ -36,6 +36,8 @@ class Ability
       end
     end
 
+
+
     can [:edit, :destroy, :publish], [Post, Document, Message, Page] do |object|
       object.owner_type == "Group" && (object.owner.memberships.where(:fuction => 'chair').map { |membership| membership.person }.include?(user) || object.owner.memberships.where(:fuction => 'coordinator').map { |membership| membership.person }.include?(user))
     end
@@ -170,6 +172,14 @@ class Ability
       can :create, [Post, Page]
       can [:edit,:destroy], [Post, Page]
       cannot :publish, [Post, Page]
+    end
+
+    can [:read], Survey do |object|
+      if object.owner.present? && object.owner_type == 'Group'
+        object.owner.people.include? user
+      else
+        false
+      end
     end
             
     can :manage, :all if user.admin?

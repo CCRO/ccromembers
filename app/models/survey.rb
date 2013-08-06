@@ -3,7 +3,7 @@ class Survey < ActiveRecord::Base
   has_many :questions, :dependent => :destroy, order: "position"
   
   belongs_to :author, :polymorphic => true
-  belongs_to :owner, :class_name => 'Person'
+  belongs_to :owner, :polymorphic => true
   
   default_scope :order => 'created_at'
   is_impressionable
