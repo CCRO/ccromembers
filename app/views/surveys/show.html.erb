@@ -37,7 +37,11 @@
       <% question_number = 0 %>
       <% if @section_id.nil? || @section_id.to_i == heading_number %>
         <div style="background-color:rgba(245, 245, 245, 0.33); padding-left: 15px; padding-top: 8px; margin-bottom: -11px;">
-          <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
+          <% if @section_id.nil? %>
+            <h1 class=""><%= "#{heading_number} #{q.prompt}" %> </h1>
+          <% else %>
+            <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
+          <% end %>
           <hr style="width: 101%; margin-left: -13px;">
         </div>
       <% end %>
