@@ -1,5 +1,5 @@
 @media print {
-  a, hr {
+  a, hr, .navbar, .subnav {
     display: none !important;
   }
 
@@ -8,15 +8,20 @@
   }
 
   .title {
-    margin-top: -130px;
+    margin-top: -200px;
     text-align: center;
     font-size: 150%;
     font-weight:bold;
   }
 
-  .section_header {
-    margin-top: -60px;
+  .asdf {
+    margin-top: -200px;
   }
+
+  .section_header { font-size: 110%; margin-bottom:40px; margin-top:0px; line-height: 110%;}
+  .question_prompt { font-size: 100%; margin-bottom:10px; margin-top:-30px; line-height: 110%;}
+  .sub_question_prompt { font-size: 90%; margin-bottom:3px; margin-top:0px;}
+  .radio, .checkbox { font-size: 80%; margin-bottom:1px; margin-top:-5px;}
 }
 
 body#surveys {
@@ -24,85 +29,222 @@ body#surveys {
   background-color: #f6f6f6;
 }
 
-header {
-  margin-top: 10px;
-  margin-bottom: 50px;
-}
-
-.radio, .checkbox, li {
-  margin-left:30px;
-  padding:5px;
-}
-
-textarea{
-  height:120px;
-}
-
-.delete_selector{
-  margin-left:10px;
-  opacity:0.05; 
-}
-
-.delete_selector:hover{
-  margin-left:10px;
-  opacity:1; 
-}
-
-ul {
-  list-style-type: none;
-}
-
-
-li.question:active  {
-  background: white;
-  width: 100%;
-  border: 1px solid lightGrey;
-  box-shadow: 1px 1px 3px gray;
-  font-weight: bold;
-  font-size: 110%;
-}
-
-li:hover .handle {
-  margin-left: -20px;
-  margin-top: 20px;
-  float: left;
-  display: inline-block;
-}
-
-li .handle {
-  display: none;
-}
-
-li.question {
-  margin-left: -30px;
-  padding-left: 30px;
-}
-
-
-li:hover i {
-  display: inline-block;
-}
-
-
-#adjinput{
-    max-width:600px !important;
-    min-width:40px;
-}
-
-label.save_error:after {
-  content: "Error saving!";
-  color: red;
-}
-
-div.page {
-    position: relative;
-    margin-top: 25px;
-    padding: 20px;
-    background-color: white;
+.survey_body {
+  .survey_header {
+    margin-top: -20px;
+    margin-left: 30px;
   }
+
+  .radio, .checkbox, li {
+    margin-left:30px;
+    padding:5px;
+  }
+
+  textarea{
+    height:120px;
+  }
+
+  .delete_selector{
+    margin-left:10px;
+    opacity:0.05; 
+  }
+
+  .delete_selector:hover{
+    margin-left:10px;
+    opacity:1; 
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+
+  li.question:active  {
+    background: white;
+    width: 100%;
+    border: 1px solid lightGrey;
+    box-shadow: 1px 1px 3px gray;
+    font-weight: bold;
+    font-size: 110%;
+  }
+
+  li:hover .handle {
+    margin-left: -20px;
+    margin-top: 20px;
+    float: left;
+    display: inline-block;
+  }
+
+  li .handle {
+    display: none;
+  }
+
+  li.question {
+    margin-left: -30px;
+    padding-left: 30px;
+  }
+
+
+  li:hover i {
+    display: inline-block;
+  }
+
+
+  #adjinput{
+      max-width:600px !important;
+      min-width:40px;
+  }
+
+  label.save_error:after {
+    content: "Error saving!";
+    color: red;
+  }
+
+  div.page {
+      position: relative;
+      margin-top: 25px;
+      padding: 20px;
+      background-color: white;
+    }
 
   div.page-shadow {
     background: url('../images/leaftshadow-900.png') no-repeat bottom;
     padding-bottom: 20px;
     padding-top: 10px; 
   }
+}
+
+
+
+.add_blog_css {
+
+    body#blog {
+      margin-top: 0px;
+      background-color: #f6f6f6;
+    }
+
+    body#blog header.fatty {
+      padding: 0px 20px;
+      margin-top: 0;
+      height: 540px;
+      background-color: 
+      #383838;
+      position: relative;
+    } 
+   
+    body#blog header.fatty #fatty_basket {
+      padding: 20px 0px;
+    } 
+
+    body#blog header.collapse {
+      height: 100px !important;
+    }
+
+    body#blog header.collapse div#header_expanded {
+      display: none;
+    }
+
+    body#blog #post_level_selector {
+      position: absolute;
+      top: 0px;
+      right: -110px;
+    }
+
+    body#blog #post_level_selector p {
+      font-weight: bold;
+      margin-bottom: 0px;
+      position: relative;
+      right: 18px;
+    }
+
+    body#blog .editor_selector{
+      position: absolute;
+      top: -35px;
+      right: 0px;
+    }
+    
+    body#blog #video {
+      box-shadow: 0px 0px 40px 0px #000000;
+      background-color: black;
+    }
+
+    body#blog header.fatty #nav_links li{
+      display: inline;
+      padding-right: 20px;
+    }
+    body#blog header.fatty #nav_links{
+      list-style: none;
+      font-weight: bold;
+      padding-top: 15px;
+    }
+
+    body#blog header.fatty #login_tools{
+      padding-top: 10px;
+    }
+
+    #header_expanded{
+      padding-top: 20px;
+    }
+    #login-subtext{
+      margin-top: -10px
+    }
+
+    body#blog header.fatty div#header_expanded div#header_promo {
+      line-height: 48px;
+    }
+
+    body#blog header.fatty div#header_expanded h1 {
+      color: #5DAFFA;
+      font-size: 42px;
+      line-height: 42px;
+      padding-top: 10px;
+    }
+
+    body#blog header.fatty div#header_expanded p {
+      color: #FFFFFF;
+      font-size: 46px;
+      line-height: 46px;
+      padding-top: 20px;
+      font-weight: bold;
+    }
+
+    body#blog header.fatty div#header_expanded a.btn {
+      font-weight: bold;
+    }
+    
+    div.page {
+      position: relative;
+      margin-top: 25px;
+      padding: 20px;
+      background-color: white;
+    }
+
+    .watermark-draft {
+      border: 2px solid #CA1313;
+    }
+
+    div.page-shadow {
+      background: url('../images/leaftshadow-900.png') no-repeat bottom;
+      padding-bottom: 20px;
+      padding-top: 10px; 
+    }
+
+    body#blog .page {
+      margin-top: 0 !important;
+    } 
+
+    body#blog .page .post_title {
+      max-width: 650px;
+    }
+
+    body#blog .page #post_management_controls{
+      float: right;
+    } 
+
+    body#blog .page-shadow {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      margin-bottom: 20px;
+    }
+
+}

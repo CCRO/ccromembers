@@ -10,22 +10,13 @@
 <% end %>
 <br>
 <div class="page">
-  <h1 class="title"><%= @survey.title %></h1>
-  
-  <br>
-  
   <% if @section_id.nil? || @section_id.to_i == 0 %>
-
-  <section class="center well offset1 span8">
-    <%= simple_format(@survey.blurb) %>
-  </section>
-
+    <section class="center well offset1 span8">
+      <%= simple_format(@survey.blurb) %>
+    </section>
   <% end %>
-  
-  <br style="clear:both;">
 
-  <hr>
-  <br style="clear:both;">
+  
   <% heading_number = 0 %>
   <% question_number = 0 %>
   <% sub_question_number = 0 %>
@@ -40,7 +31,7 @@
       <% if @section_id.nil? || @section_id.to_i == heading_number %>
         <div style="background-color:rgba(245, 245, 245, 0.33); padding-left: 15px; padding-top: 8px; margin-bottom: -11px;">
           <% if @section_id.nil? %>
-            <h1 class=""><%= "#{heading_number} #{q.prompt}" %> </h1>
+            <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
           <% else %>
             <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
           <% end %>
@@ -51,7 +42,7 @@
       <% if @section_id.nil? || @section_id.to_i == heading_number %>
         <% question_number = question_number + 1 %>
         <% sub_question_number = 0 %>
-        <h3 style="margin-left: 35px;"><%= "#{heading_number}.#{question_number} #{q.prompt}" %> </h3>
+        <h3 class="question_prompt" style="margin-left: 35px;"><%= "#{heading_number}.#{question_number} #{q.prompt}" %> </h3>
       <% end %>
     <% end %>
     
@@ -62,7 +53,7 @@
             <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
               <% if q.sub_question == true %>
                 <div style="margin-left:35px; margin-top:-40px">
-                  <h4><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
                   <% if q.possible_responses.present? %>
                     <% unless q.across == true %>
                       <% q.possible_responses.each do |k, v| %>
@@ -114,7 +105,7 @@
             <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
               <% if q.sub_question == true %>
                 <div style="margin-left:35px; margin-top:-40px">
-                  <h4><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
                   <% if q.possible_responses.present? %>
                     <% unless q.across == true  %>
                       <% q.possible_responses.each do |k, v| %>
@@ -176,7 +167,7 @@
           <% if q.response_type == 'singleline' %>
             <% if q.sub_question == true %>
               <div style="margin-left:35px; margin-top:-40px">
-                <h4><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
                 <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
                 <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
                   <%= f.text_field :text_response , :class => 'submittable span8' %>
@@ -193,7 +184,7 @@
           <% if q.response_type == 'multiline' %>
             <% if q.sub_question == true %>
               <div style="margin-left:35px; margin-top:-40px">
-                <h4><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
                 <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
                 <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
                   <%= f.text_area :text_response , :class => 'submittable span8' %>

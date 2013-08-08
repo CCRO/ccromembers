@@ -10,59 +10,50 @@
   <script src='http://www.google.com/jsapi'></script>
   <%= csrf_meta_tags %>
 </head>
-<body id="surveys">
+
 <!--Body content (BEGIN)-->
 <div class="container">
-  <div class="row">
-    <header class="span12">
-      <div class="pull-right">
-        <div class="btn-toolbar">
-          <div class="btn-group">
-             <% if current_user %>
-              <%= link_to current_user.name, current_user, :class => 'btn btn-large' %>
-              <%= link_to logout_path, :class => 'btn btn-large' do %>
-                <i class="icon-off"></i>
-              <% end %>
-            <% end %>
+  <div class="add_blog_css">
+    <% if current_user %>
+      <div style margin-bottom: 100px;>
+        <div style="margin-bottom: 100px;">
+          <%= render 'shared/nav' %>
+        </div>
+      </div>
+    <% else %>
+      <div margin-bottom:20px;>
+        <%= render 'shared/public_nav' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="survey_body">
+    <div class="row">
+      <div class="survey_header">
+        <h3 class="title"><%= @survey.title %></h3>
+      </div>
+    </div>
+       	<div class="row">
+          <div class="container asdf" style="padding-left: 30px;">
+            <div id="notices">
+        			<% flash.each do |key, msg| %>
+        	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+        	          <a class="close" data-dismiss="alert">×</a>
+        	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+        	        </div>
+        			<% end %>
+        		</div>  
+              <%= yield %>
           </div>
         </div>
+        <br><br>  
+        <footer>
+          &copy; 2012 CCRO
+        </footer>
       </div>
-      <% unless current_user %>
-        <div class="pull-right">
-        <%= form_tag  :sessions, :class => "form-inline" do %>
-          <%= text_field_tag :email, '', :class => "span2 input-small", :placeholder => "Email" %>
-          <%= password_field_tag :password, '', :class => "span2 input-small", :placeholder => "Password" %>
-          <%= submit_tag 'Sign in', :class => "btn", :placeholder => "Email" %>
-        <% end %>
-        
-        <% unless params[:controller] == 'signups' %>
-          <%= link_to "Learn about subscribing", signups_path, :class => 'pull-right' %><br>
-        <% end %>
-        <%= link_to "I need to reset my password", forgot_password_path, :class => 'pull-right' %>
-        </div>
-      <% end %>
-      <%= link_to image_tag(asset_path('ccro_long.png'), :width => '300'), surveys_path %>
-    </header>
-  </div>
-     	<div class="row">
-        <div class="container" style="padding-left: 30px;">
-          <div id="notices">
-      			<% flash.each do |key, msg| %>
-      	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
-      	          <a class="close" data-dismiss="alert">×</a>
-      	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
-      	        </div>
-      			<% end %>
-      		</div>
-              <%= yield %>
-        </div>
-      </div>
-      <br><br>  
-      <footer>
-        &copy; 2012 CCRO
-      </footer>
     </div>
   </div>
+
 </div>
   <div class="modal hide fade" id="modal-window">
     <div class="modal-header">
