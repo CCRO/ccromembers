@@ -20,6 +20,7 @@ class SurveysController < ApplicationController
   def show
     @survey = Survey.find(params[:id])
     @response = Response.new
+    @section_id = params[:section_id] if params[:section_id]
     
     authorize! :read, @survey
 

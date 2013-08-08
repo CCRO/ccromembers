@@ -1,3 +1,24 @@
+@media print {
+  a, hr {
+    display: none !important;
+  }
+
+  body {
+    margin-left : -50px;
+  }
+
+  .title {
+    margin-top: -130px;
+    text-align: center;
+    font-size: 150%;
+    font-weight:bold;
+  }
+
+  .section_header {
+    margin-top: -60px;
+  }
+}
+
 body#surveys {
   margin-top: 20px;
   background-color: #f6f6f6;
