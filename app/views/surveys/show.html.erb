@@ -1,16 +1,3 @@
-<% if @section_id %>
-  <% unless @section_id.to_i == 0 %>
-    <%= link_to "Previous Section", survey_section_path(@survey.id, @section_id.to_i - 1), class: "pull-left btn"%>
-  <% end %>
-  <% unless @section_id.to_i == @survey.questions.where(title: true).length %>
-    <%= link_to "Next Section", survey_section_path(@survey.id, @section_id.to_i + 1), class: "pull-right btn"%>
-  <% else %>
-    <%= link_to "To Beginning of Survey", survey_section_path(@survey.id, 0), class: "pull-right btn"%>
-  <% end %>
-<% end %>
-<br>
-
-
 <% if @section_id && @section_id.to_i == 0 %>
   <div class="page">
     <%= simple_format(@survey.blurb) %>

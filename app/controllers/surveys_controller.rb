@@ -21,8 +21,9 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @response = Response.new
     @section_id = params[:section_id] if params[:section_id]
-    if @section_id.to_i > @survey.questions.where(title: true).length
-      if @survey.questions.where(title: true).length > 0
+    @sections = @survey.questions.select {|q| q.title == true }
+    if @section_id.to_i > @sections.length
+      if @sections.length > 0
         @section_id = "0"
       else
         @section_id = nil

@@ -2,10 +2,27 @@
 
 <% if browser.ie7? %>
 
+<% if params[:controller] == 'surveys' && params[:action] == 'show' %>
+<div class="subnav subnav-fixed" style="height:60px;">
+<% else %>
 <div class="subnav subnav-fixed" style="padding-top:40px;">
+<% end %>
   <div class="subnav-inner">
     <div class="container">
     <ul class="nav nav-pills">
+      <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
+        <%= @survey.title %>
+        <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Sections <i class="icon-caret-down" style="margin-left:5px;"></i></a>
+          <ul class="dropdown-menu">
+            <% count = 0 %>
+            <% @sections.each do |s| %>
+              <% count = count + 1 %>
+              <li style="padding-right:0px;"><%= link_to s.prompt , survey_section_path(@survey.id, count) %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
 
       <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
@@ -39,44 +56,80 @@
         </form>
       <% end %>
     </ul>
+    
     </div>
   </div>
   </div>
 
 
 <% else %>
-
+<% if params[:controller] == 'surveys' && params[:action] == 'show' %>
+<div class="subnav subnav-fixed" style="margin-top:40px\9; height:60px;">
+<% else %>
 <div class="subnav subnav-fixed" style="margin-top:40px\9;">
+<% end %>
+
   <div class="subnav-inner">
     <div class="container">
       <ul class="nav nav-pills">
-        <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
-          <div class="navbar-text pull-left">
-            Directory: 
-          </div>
-          <li class="divider-vertical"></li>
-          <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
-          <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
-        <% end %>
+        
+          <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
+            <li><h3><%= link_to @survey.title, survey_section_path(@survey.id, 0) %></h3></li>
+            <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section: #{@section_id}" if @section_id && @section_id.to_i > 0 %> <i class="icon-caret-down" style="margin-left:5px;"></i></a>
+              <ul class="dropdown-menu">
+                <% count = 0 %>
+                <% @sections.each do |s| %>
+                  <% count = count + 1 %>
+                  <li style="padding-right:0px;"><%= link_to "Section: #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
 
-        <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' || params[:controller] == 'static' || params[:controller] == 'exceptions' || params[:controller] == 'memberships'%>
-          <div class="navbar-text pull-left">
-            Resource Center: 
-          </div>
-          <li class="divider-vertical"></li>
-          <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
-          <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
-          <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
+          <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
+            <div class="navbar-text pull-left">
+              Directory: 
+            </div>
+            <li class="divider-vertical"></li>
+            <li <%= 'class=active' if params[:controller] == 'people' %>><a href="/people">People</a></li>
+            <li <%= 'class=active' if params[:controller] == 'companies' %>><a href="/companies">Companies</a></li>
+          <% end %>
 
-          <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> CCRO Working Groups <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% Group.where(active: true).each do |g| %>
-                <li style="padding-right:0px;"><%= link_to g.name, g %></li>
+          <% if params[:controller] == 'articles' || params[:controller] == 'groups' || params[:controller] == 'tags' || params[:controller] == 'messages' || params[:controller] == 'documents' || params[:controller] == 'posts' || params[:controller] == 'pages' || (params[:controller] == 'reports' && params[:action] == 'dashboard') || params[:controller] == 'attachments' || params[:controller] == 'static' || params[:controller] == 'exceptions' || params[:controller] == 'memberships'%>
+            <div class="navbar-text pull-left">
+              Resource Center: 
+            </div>
+            <li class="divider-vertical"></li>
+            <li <%= 'class=active' if params[:controller] == 'posts' %>><%= link_to 'Articles', posts_path %>
+            <li <%= 'class=active' if params[:controller] == 'messages' %>><a href="/discussions">Discussions</a></li>
+            <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
+
+            <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> CCRO Working Groups <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <% Group.where(active: true).each do |g| %>
+                  <li style="padding-right:0px;"><%= link_to g.name, g %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        
+          <% if false %>
+          <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
+            <% if @section_id %>
+              <% unless @section_id.to_i == 0 %>
+                <li><%= link_to "Previous Section", survey_section_path(@survey.id, @section_id.to_i - 1), class: ""%></li>
               <% end %>
-            </ul>
-          </li>
-        <% end %>
+              <% unless @section_id.to_i == @survey.questions.where(title: true).length %>
+                <li><%= link_to "Next Section", survey_section_path(@survey.id, @section_id.to_i + 1), class: ""%></li>
+              <% else %>
+                <li><%= link_to "To Beginning of Survey", survey_section_path(@survey.id, 0), class: ""%></li>
+              <% end %>
+            <% end %>
+          <% end %>
+          <% end %>
+        
       </ul>
     </div>
   </div>
