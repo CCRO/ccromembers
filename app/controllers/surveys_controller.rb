@@ -22,7 +22,11 @@ class SurveysController < ApplicationController
     @response = Response.new
     @section_id = params[:section_id] if params[:section_id]
     if @section_id.to_i > @survey.questions.where(title: true).length
-      @section_id = "0"
+      if @survey.questions.where(title: true).length > 0
+        @section_id = "0"
+      else
+        @section_id = nil
+      end
     end
     
     authorize! :read, @survey

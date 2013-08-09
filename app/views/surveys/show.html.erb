@@ -9,203 +9,211 @@
   <% end %>
 <% end %>
 <br>
-<div class="page">
-  <% if @section_id.nil? || @section_id.to_i == 0 %>
-    <section class="center well offset1 span8">
-      <%= simple_format(@survey.blurb) %>
-    </section>
-  <% end %>
 
-  
-  <% heading_number = 0 %>
-  <% question_number = 0 %>
-  <% sub_question_number = 0 %>
 
-  <% @survey.questions.each do |q| %>
-    
-    <% if q.sub_question == true %>
-      <% sub_question_number = sub_question_number + 1 %>
-    <% elsif q.title == true %>
-      <% heading_number = heading_number + 1 %>
-      <% question_number = 0 %>
-      <% if @section_id.nil? || @section_id.to_i == heading_number %>
-        <div style="background-color:rgba(245, 245, 245, 0.33); padding-left: 15px; padding-top: 8px; margin-bottom: -11px;">
-          <% if @section_id.nil? %>
-            <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
-          <% else %>
-            <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
-          <% end %>
-          <hr style="width: 101%; margin-left: -13px;">
-        </div>
-      <% end %>
-    <% else %>
-      <% if @section_id.nil? || @section_id.to_i == heading_number %>
-        <% question_number = question_number + 1 %>
-        <% sub_question_number = 0 %>
-        <h3 class="question_prompt" style="margin-left: 35px;"><%= "#{heading_number}.#{question_number} #{q.prompt}" %> </h3>
-      <% end %>
+<% if @section_id && @section_id.to_i == 0 %>
+  <div class="page">
+    <%= simple_format(@survey.blurb) %>
+  </div>
+  <br style="clear:both;">
+<% else %>
+  <div class="page">
+    <% if @section_id.nil? %>
+      <div class="well span8 center offset1">
+        <%= simple_format(@survey.blurb) %>
+      </div>
+      <br style="clear:both;">
     <% end %>
     
-    <% if @section_id.nil? || @section_id.to_i == heading_number %>
-      <div style="margin-left: 35px;">
-        <% unless q.title == true %>
-          <% if q.response_type == 'radio' %>
-            <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-              <% if q.sub_question == true %>
-                <div style="margin-left:35px; margin-top:-40px">
-                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
-                  <% if q.possible_responses.present? %>
-                    <% unless q.across == true %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <%= f.label k, :class => 'radio' do %>
-                          <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
-                          <%= v %>
-                        <% end %>
-                      <% end %>
-                    <% else %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <p class="pull-left">
-                          <%= f.label k, :class => 'radio' do %>
-                            <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
-                            <%= v %>
-                          <% end %>
-                        </p>
-                      <% end %>
-                      <br style="clear:both;">
-                    <% end %>
-                  <% end %>
-                </div>
-                <% else %>
-                  <% if q.possible_responses.present? %>
-                    <% unless q.across == true %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <%= f.label k, :class => 'radio' do %>
-                          <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
-                          <%= v %>
-                        <% end %>
-                      <% end %>
-                    <% else %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <p class="pull-left">
-                          <%= f.label k, :class => 'radio' do %>
-                            <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
-                            <%= v %>
-                          <% end %>
-                        </p>
-                      <% end %>
-                      <br style="clear:both;">
-                    <% end %>
-                  <% end %>
-                <% end %>
+    <% heading_number = 0 %>
+    <% question_number = 0 %>
+    <% sub_question_number = 0 %>
+
+    <% @survey.questions.each do |q| %>
+      
+      <% if q.sub_question == true %>
+        <% sub_question_number = sub_question_number + 1 %>
+      <% elsif q.title == true %>
+        <% heading_number = heading_number + 1 %>
+        <% question_number = 0 %>
+        <% if @section_id.nil? || @section_id.to_i == heading_number %>
+          <div style="background-color:rgba(245, 245, 245, 0.33); padding-left: 15px; padding-top: 8px; margin-bottom: -11px;">
+            <% if @section_id.nil? %>
+              <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
+            <% else %>
+              <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
             <% end %>
-          <% end%>
-          
-          <% if q.response_type == 'checkbox' %>
-            <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-            <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-              <% if q.sub_question == true %>
-                <div style="margin-left:35px; margin-top:-40px">
-                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
-                  <% if q.possible_responses.present? %>
-                    <% unless q.across == true  %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <%= f.label k, :class => 'checkbox' do %>
-                          <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
-                            <% checked = true %>
-                          <% end %>
-                          <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
-                          <%= v %>
-                        <% end %>
-                      <% end %>
-                    <% else %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <p class="pull-left">
-                          <%= f.label k, :class => 'checkbox' do %>
-                            <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
-                              <% checked = true %>
-                            <% end %>
-                            <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+            <hr style="width: 101%; margin-left: -13px;">
+          </div>
+        <% end %>
+      <% else %>
+        <% if @section_id.nil? || @section_id.to_i == heading_number %>
+          <% question_number = question_number + 1 %>
+          <% sub_question_number = 0 %>
+          <h3 class="question_prompt" style="margin-left: 35px;"><%= "#{heading_number}.#{question_number} #{q.prompt}" %> </h3>
+        <% end %>
+      <% end %>
+      
+      <% if @section_id.nil? || @section_id.to_i == heading_number %>
+        <div style="margin-left: 35px;">
+          <% unless q.title == true %>
+            <% if q.response_type == 'radio' %>
+              <%= form_for [@survey,q, Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id)], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                <% if q.sub_question == true %>
+                  <div style="margin-left:35px; margin-top:-40px">
+                    <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                    <% if q.possible_responses.present? %>
+                      <% unless q.across == true %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <%= f.label k, :class => 'radio' do %>
+                            <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
                             <%= v %>
                           <% end %>
-                        </p>
+                        <% end %>
+                      <% else %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <p class="pull-left">
+                            <%= f.label k, :class => 'radio' do %>
+                              <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
+                              <%= v %>
+                            <% end %>
+                          </p>
+                        <% end %>
+                        <br style="clear:both;">
                       <% end %>
-                      <br style="clear:both;">
                     <% end %>
-                  <% end %>
-                </div>
-              <% else %>
-                <% if q.possible_responses.present? %>
-                    <% unless q.across == true  %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <%= f.label k, :class => 'checkbox' do %>
-                          <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
-                            <% checked = true %>
-                          <% end %>
-                          <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
-                          <%= v %>
-                        <% end %>
-                      <% end %>
-                    <% else %>
-                      <% q.possible_responses.each do |k, v| %>
-                        <p class="pull-left">
-                          <%= f.label k, :class => 'checkbox' do %>
-                            <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
-                              <% checked = true %>
-                            <% end %>
-                            <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                  </div>
+                  <% else %>
+                    <% if q.possible_responses.present? %>
+                      <% unless q.across == true %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <%= f.label k, :class => 'radio' do %>
+                            <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
                             <%= v %>
                           <% end %>
-                        </p>
+                        <% end %>
+                      <% else %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <p class="pull-left">
+                            <%= f.label k, :class => 'radio' do %>
+                              <%= f.radio_button 'selected_response', k, :class => 'submittable' %>
+                              <%= v %>
+                            <% end %>
+                          </p>
+                        <% end %>
+                        <br style="clear:both;">
                       <% end %>
-                      <br style="clear:both;">
                     <% end %>
                   <% end %>
               <% end %>
-            <% end %>
-          <% end%>
-          
-          <% if q.response_type == 'singleline' %>
-            <% if q.sub_question == true %>
-              <div style="margin-left:35px; margin-top:-40px">
-                <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+            <% end%>
+            
+            <% if q.response_type == 'checkbox' %>
+              <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+              <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                <% if q.sub_question == true %>
+                  <div style="margin-left:35px; margin-top:-40px">
+                    <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                    <% if q.possible_responses.present? %>
+                      <% unless q.across == true  %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <%= f.label k, :class => 'checkbox' do %>
+                            <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                              <% checked = true %>
+                            <% end %>
+                            <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                            <%= v %>
+                          <% end %>
+                        <% end %>
+                      <% else %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <p class="pull-left">
+                            <%= f.label k, :class => 'checkbox' do %>
+                              <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                                <% checked = true %>
+                              <% end %>
+                              <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                              <%= v %>
+                            <% end %>
+                          </p>
+                        <% end %>
+                        <br style="clear:both;">
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <% if q.possible_responses.present? %>
+                      <% unless q.across == true  %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <%= f.label k, :class => 'checkbox' do %>
+                            <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                              <% checked = true %>
+                            <% end %>
+                            <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                            <%= v %>
+                          <% end %>
+                        <% end %>
+                      <% else %>
+                        <% q.possible_responses.each do |k, v| %>
+                          <p class="pull-left">
+                            <%= f.label k, :class => 'checkbox' do %>
+                              <% if form_response.selected_responses && form_response.selected_responses[k.to_i] == 1 %>
+                                <% checked = true %>
+                              <% end %>
+                              <%= check_box_tag 'checked_responses[' + k + "]", "1", checked , :class => 'submittable' %>
+                              <%= v %>
+                            <% end %>
+                          </p>
+                        <% end %>
+                        <br style="clear:both;">
+                      <% end %>
+                    <% end %>
+                <% end %>
+              <% end %>
+            <% end%>
+            
+            <% if q.response_type == 'singleline' %>
+              <% if q.sub_question == true %>
+                <div style="margin-left:35px; margin-top:-40px">
+                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                  <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+                  <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                    <%= f.text_field :text_response , :class => 'submittable span8' %>
+                  <% end%>
+                </div>
+              <% else %>
                 <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
                 <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
                   <%= f.text_field :text_response , :class => 'submittable span8' %>
                 <% end%>
-              </div>
-            <% else %>
-              <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-              <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-                <%= f.text_field :text_response , :class => 'submittable span8' %>
-              <% end%>
+              <% end %>
             <% end %>
-          <% end %>
-          
-          <% if q.response_type == 'multiline' %>
-            <% if q.sub_question == true %>
-              <div style="margin-left:35px; margin-top:-40px">
-                <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+            
+            <% if q.response_type == 'multiline' %>
+              <% if q.sub_question == true %>
+                <div style="margin-left:35px; margin-top:-40px">
+                  <h4 class="sub_question_prompt"><%= "#{heading_number}.#{question_number}.#{sub_question_number} #{q.prompt}" %> </h4>
+                  <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
+                  <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
+                    <%= f.text_area :text_response , :class => 'submittable span8' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
                 <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
                   <%= f.text_area :text_response , :class => 'submittable span8' %>
                 <% end %>
-              </div>
-            <% else %>
-              <% form_response = Response.find_or_initialize_by_person_id_and_question_id(current_user,q.id) %>
-              <%= form_for [@survey,q, form_response], :html => { :id => "question_response_#{q.id}",:class => "form-horizontal"}, :remote => true do |f| %>
-                <%= f.text_area :text_response , :class => 'submittable span8' %>
               <% end %>
-            <% end %>
-          <% end%>
-         
-          <br>
-        <% end %>
-      </div>
+            <% end%>
+           
+            <br>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
 
-</div>
-
+  </div>
+<% end %>
 </br>
 
 <% if @section_id %>
