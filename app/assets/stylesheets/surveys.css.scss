@@ -1,4 +1,14 @@
+@media screen {
+  div.for_print {
+      display: none;
+  }
+}
 @media print {
+  div.for_print {
+      position: fixed;
+  }
+
+
   a, hr, .navbar, .subnav {
     display: none !important;
   }

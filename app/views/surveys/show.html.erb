@@ -1,3 +1,4 @@
+<div class="for_print"><%= "#{@survey.title} - #{current_user.company.name if current_user.company},  #{current_user.name}" %></div>
 <% if @section_id && @section_id.to_i == 0 %>
   <div class="page">
     <%= simple_format(@survey.blurb) %>
