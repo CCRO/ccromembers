@@ -5,7 +5,7 @@
 <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
 <div class="subnav subnav-fixed" style="height:60px;">
 <% else %>
-<div class="subnav subnav-fixed" style="padding-top:40px;">
+<div class="subnav subnav-fixed" style="padding-top:40px; margin-top:60px,">
 <% end %>
   <div class="subnav-inner">
     <div class="container">
@@ -26,14 +26,15 @@
               <% end %>
               <ul class="dropdown-menu">
                 <% count = 0 %>
-                <% if count == 0%>
-                  <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
-                <% else %>
-                  <% @sections.each do |s| %>
-                    <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
-                    <% count = count + 1 %>
-                  <% end %>
+                
+                <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+              
+                <% @sections.each do |s| %>
+                  <% count = count + 1 %>
+                  <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                  
                 <% end %>
+                
               </ul>
               <% end %>
             </li>
@@ -103,14 +104,15 @@
               <% end %>
               <ul class="dropdown-menu">
                 <% count = 0 %>
-                <% if count == 0%>
-                  <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
-                <% else %>
-                  <% @sections.each do |s| %>
-                    <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
-                    <% count = count + 1 %>
-                  <% end %>
+                
+                <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+              
+                <% @sections.each do |s| %>
+                  <% count = count + 1 %>
+                  <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                  
                 <% end %>
+                
               </ul>
               <% end %>
             </li>
