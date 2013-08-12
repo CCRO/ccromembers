@@ -10,19 +10,34 @@
   <div class="subnav-inner">
     <div class="container">
     <ul class="nav nav-pills">
+      
       <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
-        <%= @survey.title %>
-        <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Sections <i class="icon-caret-down" style="margin-left:5px;"></i></a>
-          <ul class="dropdown-menu">
-            <% count = 0 %>
-            <% @sections.each do |s| %>
-              <% count = count + 1 %>
-              <li style="padding-right:0px;"><%= link_to s.prompt , survey_section_path(@survey.id, count) %></li>
+            <% if @section_id %>
+              <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
+            <% else %>
+              <li><h3><%= "#{@survey.title}: " %></h3></li>
             <% end %>
-          </ul>
-        </li>
-      <% end %>
+            <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+              <% if @section_id %>
+                <% if @section_id.to_i == 0 %>
+              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% else %>
+              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% end %>
+              <ul class="dropdown-menu">
+                <% count = 0 %>
+                <% if count == 0%>
+                  <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+                <% else %>
+                  <% @sections.each do |s| %>
+                    <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                    <% count = count + 1 %>
+                  <% end %>
+                <% end %>
+              </ul>
+              <% end %>
+            </li>
+          <% end %>
 
       <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
@@ -74,27 +89,27 @@
       <ul class="nav nav-pills">
         
           <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
-          <% if @section_id %>
-            <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
-          <% else %>
-            <li><h3><%= "#{@survey.title}: " %></h3></li>
-          <% end %>
+            <% if @section_id %>
+              <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
+            <% else %>
+              <li><h3><%= "#{@survey.title}: " %></h3></li>
+            <% end %>
             <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
               <% if @section_id %>
-                <% if @section_id.to_i == 0%>
+                <% if @section_id.to_i == 0 %>
               <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
               <% else %>
               <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
               <% end %>
               <ul class="dropdown-menu">
                 <% count = 0 %>
-                <% @sections.each do |s| %>
-                  <% if count == 0%>
-                    <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
-                  <% else %>
+                <% if count == 0%>
+                  <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+                <% else %>
+                  <% @sections.each do |s| %>
                     <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                    <% count = count + 1 %>
                   <% end %>
-                  <% count = count + 1 %>
                 <% end %>
               </ul>
               <% end %>
