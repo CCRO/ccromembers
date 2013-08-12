@@ -22,6 +22,9 @@ class SurveysController < ApplicationController
     @response = Response.new
     @section_id = params[:section_id] if params[:section_id]
     @sections = @survey.questions.select {|q| q.title == true }
+    if @survey.force_sections == true && @section_id.nil?
+      @section_id = '0'
+    end
     if @section_id.to_i > @sections.length
       if @sections.length > 0
         @section_id = "0"

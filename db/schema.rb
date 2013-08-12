@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806173430) do
+ActiveRecord::Schema.define(:version => 20130812161638) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -389,13 +389,14 @@ ActiveRecord::Schema.define(:version => 20130806173430) do
     t.text     "discription"
     t.boolean  "published"
     t.datetime "published_at"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.text     "blurb"
-    t.boolean  "active",       :default => false
-    t.string   "level",        :default => "basic"
-    t.boolean  "archived",     :default => false
+    t.boolean  "active",         :default => false
+    t.string   "level",          :default => "basic"
+    t.boolean  "archived",       :default => false
     t.string   "owner_type"
+    t.boolean  "force_sections", :default => false
   end
 
   create_table "taggings", :force => true do |t|
