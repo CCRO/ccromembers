@@ -74,7 +74,7 @@
       <ul class="nav nav-pills">
         
           <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
-          <% if @section_id && @section_id.to_i > 0 %>
+          <% if @section_id %>
             <li><h3><%= link_to @survey.title, survey_section_path(@survey.id, 0) %></h3></li>
           <% else %>
             <li><h3><%= @survey.title %></h3></li>
