@@ -1,6 +1,6 @@
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
-<% if browser.ie7? %>
+<% if browser.ie7? || browser.ie8? %>
 
 <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
 <div class="subnav subnav-fixed" style="height:60px;">
@@ -75,18 +75,26 @@
         
           <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
           <% if @section_id %>
-            <li><h3><%= link_to @survey.title, survey_section_path(@survey.id, 0) %></h3></li>
+            <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
           <% else %>
-            <li><h3><%= @survey.title %></h3></li>
+            <li><h3><%= "#{@survey.title}: " %></h3></li>
           <% end %>
             <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-              <% if @section_id && @section_id.to_i > 0 %>
-              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section: #{@section_id}" %> <i class="icon-caret-down" style="margin-left:5px; margin-right:15px;"></i></a>
+              <% if @section_id %>
+                <% if @section_id.to_i == 0%>
+              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% else %>
+              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% end %>
               <ul class="dropdown-menu">
                 <% count = 0 %>
                 <% @sections.each do |s| %>
+                  <% if count == 0%>
+                    <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+                  <% else %>
+                    <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                  <% end %>
                   <% count = count + 1 %>
-                  <li style="padding-right:0px;"><%= link_to "Section: #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
                 <% end %>
               </ul>
               <% end %>
