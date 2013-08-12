@@ -26,9 +26,13 @@
         <% if @section_id.nil? || @section_id.to_i == heading_number %>
           <div style="background-color:rgba(245, 245, 245, 0.33); padding-left: 15px; padding-top: 8px; margin-bottom: -11px;">
             <% if @section_id.nil? %>
+              <a href="#" onclick="window.print();return false;" class="btn pull-right" style="margin-top: 15px; margin-right: 15px;"><i class="icon-print"></i> Print</a>
               <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
+
             <% else %>
+              <a href="#" onclick="window.print();return false;" class="btn pull-right" style="margin-top: 15px; margin-right: 15px;"><i class="icon-print"></i> Print</a>
               <h1 class="section_header"><%= "#{heading_number} #{q.prompt}" %> </h1>
+
             <% end %>
             <hr style="width: 101%; margin-left: -13px;">
           </div>
@@ -203,9 +207,11 @@
 <% end %>
 </br>
 
+<a href="#" onclick="window.print();return false;" class="btn pull-left" style="margin-right: 10px;"><i class="icon-print"></i> Print</a>
 <% if @section_id %>
   <% unless @section_id.to_i == 0 %>
     <%= link_to "Previous Section", survey_section_path(@survey.id, @section_id.to_i - 1), class: "pull-left btn"%>
+
   <% end %>
   <% unless @section_id.to_i == @survey.questions.where(title: true).length%>
     <%= link_to "Next Section", survey_section_path(@survey.id, @section_id.to_i + 1), class: "pull-right btn"%>
