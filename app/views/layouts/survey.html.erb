@@ -26,41 +26,37 @@
       </div>
     <% end %>
   </div>
-
-  <div class="survey_body">
-    
-       	<div class="row">
-          <div class="container asdf" style="padding-left: 30px;">
-            <div id="notices">
-        			<% flash.each do |key, msg| %>
-        	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
-        	          <a class="close" data-dismiss="alert">×</a>
-        	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
-        	        </div>
-        			<% end %>
-        		</div>  
-              <%= yield %>
-          </div>
-        </div>
-        <br><br>  
-        <footer>
-          &copy; 2012 CCRO
-        </footer>
+  <div class="survey_body">    
+    <div class="row">
+      <div class="container asdf" style="padding-left: 30px;">
+        <div id="notices">
+    			<% flash.each do |key, msg| %>
+  	    	  <div id="notice_<%= key %>" class="alert alert-<%= key %>">
+  	          <a class="close" data-dismiss="alert">×</a>
+  	          <strong><%=  key.to_s.capitalize %>:</strong> <%= msg %>
+  	        </div>
+    			<% end %>
+        </div> 
+        <%= yield %>
       </div>
     </div>
+    <br><br>  
+    <footer>
+      &copy; 2012 CCRO
+    </footer>
   </div>
-
 </div>
-  <div class="modal hide fade" id="modal-window">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>Loading...</h3>
-    </div>
-    <div class="modal-body center">
-        <%= image_tag "loading.gif" %>
-    </div>
-    <div class="modal-footer">&nbsp;</div>
+
+<div class="modal hide fade" id="modal-window">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Loading...</h3>
   </div>
+  <div class="modal-body center">
+      <%= image_tag "loading.gif" %>
+  </div>
+  <div class="modal-footer">&nbsp;</div>
+</div>
 
 <!--Body content (END)-->
 </body>
