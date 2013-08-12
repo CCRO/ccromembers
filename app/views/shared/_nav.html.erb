@@ -233,8 +233,9 @@
                   <li><%= link_to "CCRO on LinkedIn", 'http://www.linkedin.com/groups?home=&gid=2130494&trk=anet_ug_hm', target: "_blank" %></li>
                 </ul>
               </li>
+              <% unless browser.ie7? || browser.ie8? %>
               <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
-
+              <% end %>
             </ul>
             <% else %>
 
