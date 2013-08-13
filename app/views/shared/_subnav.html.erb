@@ -1,11 +1,15 @@
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
-<% if browser.ie7? %>
+<% if browser.ie? %>
 
 <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
 <div class="subnav subnav-fixed" style="height:60px;">
 <% else %>
-<div class="subnav subnav-fixed" style="padding-top:40px; margin-top:60px,">
+  <% if browser.ie7? || browser.ie8? %>
+    <div class="subnav subnav-fixed" style="padding-top:40px; margin-top:60px,">
+  <% else %>
+    <div class="subnav subnav-fixed" style="padding-top:0px; margin-top:60px,">
+  <% end %>
 <% end %>
   <div class="subnav-inner">
     <div class="container">
