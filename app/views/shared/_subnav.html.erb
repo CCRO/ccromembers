@@ -70,11 +70,11 @@
         </li>
         <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
       <% end %>
-      <% if false %>
-        <form class="subnav-search pull-right">
-          <input type="text" class="search-query" placeholder="Search">
-        </form>
-      <% end %>
+      <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
+
+    </ul>
+
+    <ul class="nav pull-right">
     </ul>
     
     </div>
@@ -148,6 +148,7 @@
                 <% end %>
               </ul>
             </li>
+            <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
           <% end %>
         
           <% if false %>

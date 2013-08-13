@@ -233,9 +233,6 @@
                   <li><%= link_to "CCRO on LinkedIn", 'http://www.linkedin.com/groups?home=&gid=2130494&trk=anet_ug_hm', target: "_blank" %></li>
                 </ul>
               </li>
-              <% unless browser.ie7? || browser.ie8? %>
-              <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
-              <% end %>
             </ul>
             <% else %>
 
@@ -333,10 +330,14 @@
 
 <% content_for :modal_settings do %>
   <div class="modal hide fade" id="modal-search">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>CCRO Search</h3>
+      </div>
     <div class="modal-body">
       <div class="well" style="text-align:center;">
       <form action="/search" class="">
-        Search: <input type="text" class="search-query" name="q" placeholder="Search">
+        <input type="text" class="search-query" name="q" placeholder="Search">
       </form>
     </div>
     </div>
