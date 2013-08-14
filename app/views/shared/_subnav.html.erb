@@ -16,33 +16,33 @@
     <ul class="nav nav-pills">
       
       <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
-            <% if @section_id %>
-              <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
-            <% else %>
-              <li><h3><%= "#{@survey.title}: " %></h3></li>
-            <% end %>
-            <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-              <% if @section_id %>
-                <% if @section_id.to_i == 0 %>
-              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
-              <% else %>
-              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
-              <% end %>
-              <ul class="dropdown-menu">
-                <% count = 0 %>
-                
-                <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
-              
-                <% @sections.each do |s| %>
-                  <% count = count + 1 %>
-                  <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
-                  
-                <% end %>
-                
-              </ul>
-              <% end %>
-            </li>
+        <% if @section_id %>
+          <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
+        <% else %>
+          <li><h3><%= "#{@survey.title}: " %></h3></li>
+        <% end %>
+        <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+          <% if @section_id %>
+            <% if @section_id.to_i == 0 %>
+          <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+          <% else %>
+          <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
           <% end %>
+          <ul class="dropdown-menu">
+            <% count = 0 %>
+            
+            <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+          
+            <% @sections.each do |s| %>
+              <% count = count + 1 %>
+              <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+              
+            <% end %>
+            
+          </ul>
+          <% end %>
+        </li>
+      <% end %>
 
       <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
@@ -69,8 +69,9 @@
           </ul>
         </li>
         <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
+        <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
       <% end %>
-      <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
+      
 
     </ul>
 
