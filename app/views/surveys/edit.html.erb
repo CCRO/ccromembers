@@ -38,6 +38,7 @@
     <h1><%= f.text_area :title, class: "redactor" %></h1>
     <%=  f.text_area :blurb, class: "redactor" %></br>
     Force Sections? <%=  f.check_box :force_sections %></br>
+    Company survey? <%=  f.check_box :company_survey %></br>
   </br>
     <%= f.submit "Update Survey Info", class: "btn" %>
   <% end %>
