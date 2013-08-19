@@ -4,7 +4,26 @@
     <div class="page span7">
       <%= simple_format(@survey.blurb) %>
     </div>
-    <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+    
+    <% if @reason %>
+      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+          
+          <% if @reason = "no company" %>
+            <span class="label label-warning">ALERT: </span> <%= "Please contact Danette Kuru (danette.kuru@ccromembers.org) so she can" %>
+          <% end %>
+
+          <% if @reason = "no primary person"%>
+            <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact to begin with this survey. Primary contacts are needed for to help administer and facilitate company surveys." %>
+          <% end %>
+
+          <% if @reason = "no membership"%>
+            <span class="label label-warning">ALERT: </span> <%= "Please contact #{current_user.company.primary_person.name} to be granted access to this company survey. You do not currently have access to give information here on behalf of #{current_user.company.name}." %>
+          <% end %>
+
+      </div>
+    <% end %>
+    
+    <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
       <h4>Current survey participants</h4>
       <table class="table">
         <% active_people = [] %>

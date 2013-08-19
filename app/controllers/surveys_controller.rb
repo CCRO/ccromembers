@@ -22,9 +22,30 @@ class SurveysController < ApplicationController
     @response = Response.new
     @section_id = params[:section_id] if params[:section_id]
     @sections = @survey.questions.select {|q| q.title == true }
+    
+    if @survey.company_survey == true
+      if current_user.company.present?
+        if current_user.company.primary_person_id.nil?
+          @section_id = '0'
+          @reason = "no primary person"
+        end
+      else
+        @section_id = '0'
+        @reason = "no company"
+      end
+
+      m = Membership.where(person_id: current_user.id, resource: "survey", resource_id: params[:id]).first
+      if m.nil?
+        @section_id = '0'
+        @reason = "no membership"
+      end
+    end
+      
     if @survey.force_sections == true && @section_id.nil?
       @section_id = '0'
     end
+
+    
     if @section_id.to_i > @sections.length
       if @sections.length > 0
         @section_id = "0"
@@ -110,6 +131,9 @@ class SurveysController < ApplicationController
   def update
     @survey = Survey.find(params[:id])
     authorize! :edit, @survey
+    if company_survey == true
+      force_sections == true
+    end
     @survey.update_attributes(params[:survey])
     redirect_to edit_survey_path(@survey)
   end
