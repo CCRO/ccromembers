@@ -1,7 +1,50 @@
 <div class="for_print"><%= "#{@survey.title} - #{current_user.company.name if current_user.company},  #{current_user.name}" %></div>
 <% if @section_id && @section_id.to_i == 0 %>
-  <div class="page">
-    <%= simple_format(@survey.blurb) %>
+  <div class="row">
+    <div class="page span7">
+      <%= simple_format(@survey.blurb) %>
+    </div>
+    <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+      <h4>Current survey participants</h4>
+      <table class="table">
+        <% active_people = [] %>
+        <% if current_user.company.primary_person %>
+          <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td></td></tr>
+          <% active_people << current_user.company.primary_person %>
+        <% end %>
+        <% current_user.company.people.each do |person| %>
+          <tr>
+            <% m = Membership.where(resource: "survey", person_id: person.id).first %>
+            <% if m %>
+              <td class="span3"><%= person.name %></td>
+              <td class="span1">
+                <% if current_user.admin? || current_user == current_user.company.primary_person %>
+                  <%= link_to "-", remove_person_survey_path(@survey, person_id: person.id), class: "btn btn-danger" %>
+                <% end %>
+              </td>
+              <% active_people << person %>
+            <% end %>
+          </tr>
+        <% end %>
+        
+      </table>
+    </div>
+    <% if current_user.admin? || current_user == current_user.company.primary_person %>
+      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+        <h4>Assign others to survey</h4>
+        <table class="table">
+          <% current_user.company.people.each do |person| %>
+          <tr>
+            <% unless active_people.include? person %>
+              <td class="span3"><%= person.name %></td>
+              <td class="span1"><%= link_to "+", assign_person_survey_path(@survey, person_id: person.id), class: "btn btn-success" %></td>
+            <% end %>
+          </tr>
+          <% end %>
+          
+        </table>
+      </div>
+    <% end %>
   </div>
   <br style="clear:both;">
 <% else %>

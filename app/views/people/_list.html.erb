@@ -7,7 +7,11 @@
     <th>Company <%= link_to(people_path(:sort => 'company')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Email <%= link_to(people_path(:sort => 'email')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
     <th>Mobile <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
-    <th>Browser <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <% if params[:controller] == "companies" && params[:action] == "show" %>
+      <th>Primary</th>
+    <% else %>
+      <th>Browser <%= link_to(people_path(:sort => 'mobile_phone')) do %> <i class="icon-resize-vertical"></i> <% end %></th>
+    <% end %>
     <th style="width:80px"></th>
   </tr>
   </thead>
@@ -19,7 +23,15 @@
       <td><%= link_to person.company.name, person.company if person.company %></td>
       <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
       <td><%= status_icon(person.mobile_phone.present?) %> <%= raw("<span class=\"badge badge-inverse\">PIN: #{person.pin_code}</span><br>") + " " + number_to_phone(person.mobile_phone)  %> <%= link_to('send instructions', send_mobile_activation_person_path(person)) unless person.mobile_phone.present? %></td>
-      <td><%= last_browser_info_for_person(person)  %></td>
+      <% if params[:controller] == "companies" && params[:action] == "show" %>
+        <% if person == person.company.primary_contact %>
+          <td><span class="badge badge-success" style="padding:5px;">Primary Contact</span></td>
+        <% else %>
+          <td><%= link_to 'Set As Primary Contact', set_as_primary_person_company_path(person.company, person_id: person.id), class: "btn btn-info" %></td>
+        <% end %>
+      <% else %>
+        <td><%= last_browser_info_for_person(person)  %></td>
+      <% end %>
       <td>
         <div class="btn-group">
           <%= button_to 'Edit', edit_person_path(person) %>

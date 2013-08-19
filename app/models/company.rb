@@ -16,6 +16,14 @@ class Company < ActiveRecord::Base
 
   before_save :check_contacts
   after_initialize :first_is_admin
+
+  def primary_person
+    unless self.primary_person_id.nil?
+      person = Person.find_by_id(self.primary_person_id)
+    else
+      person = nil
+    end
+  end
   
   def level
     if self.leadership?

@@ -49,6 +49,21 @@ class SurveysController < ApplicationController
     end
   end
 
+  def assign_person
+    Membership.create(person_id: params[:person_id], resource: "survey", resource_id: params[:id])
+    redirect_to :back
+  end
+
+  def remove_person
+    m = Membership.where(person_id: params[:person_id], resource: "survey", resource_id: params[:id]).first
+
+    if m 
+      m.destroy
+    end
+
+    redirect_to :back
+  end
+
   def intro
     @survey = Survey.find(params[:id])
   end

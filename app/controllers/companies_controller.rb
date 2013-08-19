@@ -32,6 +32,14 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def set_as_primary_person
+     @company = Company.find(params[:id])
+     @company.primary_person_id = params[:person_id].to_i
+     @company.save
+     redirect_to :back
+  end
+
+
   # GET /people/new
   # GET /people/new.json
   def new

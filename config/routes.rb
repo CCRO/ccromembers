@@ -263,6 +263,9 @@ Ccromembers::Application.routes.draw do
   end
 
   resources :companies do
+      member do
+        get :set_as_primary_person
+      end
       resources :subscriptions
   end
 
@@ -271,6 +274,8 @@ Ccromembers::Application.routes.draw do
       get :intro
       get :slide_show
       get :archive
+      get :assign_person
+      get :remove_person
     end
     resources :questions do
       resources :responses

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130815143832) do
+ActiveRecord::Schema.define(:version => 20130819144347) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -174,8 +174,10 @@ ActiveRecord::Schema.define(:version => 20130815143832) do
     t.integer  "group_id"
     t.integer  "person_id"
     t.string   "fuction"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "resource"
+    t.integer  "resource_id"
   end
 
   create_table "mercury_images", :force => true do |t|

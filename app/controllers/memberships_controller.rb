@@ -69,6 +69,10 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
+    membership = Membership.find(params[:id])
+    if membership.resource == "survey"
+      membership.destroy
+    end
     render :nothing => true
   end
 
