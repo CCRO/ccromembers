@@ -24,6 +24,12 @@ class SurveysController < ApplicationController
     @sections = @survey.questions.select {|q| q.title == true }
     
     if @survey.company_survey == true
+      m = Membership.where(person_id: current_user.id, resource: "survey", resource_id: params[:id]).first
+      if m.nil?
+        @section_id = '0'
+        @reason = "no membership"
+      end
+
       if current_user.company.present?
         if current_user.company.primary_person_id.nil?
           @section_id = '0'
@@ -32,12 +38,6 @@ class SurveysController < ApplicationController
       else
         @section_id = '0'
         @reason = "no company"
-      end
-
-      m = Membership.where(person_id: current_user.id, resource: "survey", resource_id: params[:id]).first
-      if m.nil?
-        @section_id = '0'
-        @reason = "no membership"
       end
     end
       
