@@ -26,8 +26,12 @@ class SurveysController < ApplicationController
     if @survey.company_survey == true
       m = Membership.where(person_id: current_user.id, resource: "survey", resource_id: params[:id]).first
       if m.nil?
-        @section_id = '0'
-        @reason = "no membership"
+        if current_user.company.primary_person_id.present? && current_user.id == current_user.company.primary_person_id
+          @reason = "primary"
+        else
+          @section_id = '0'
+          @reason = "no membership"
+        end
       end
 
       if current_user.company.present?

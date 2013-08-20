@@ -7,7 +7,32 @@
     
     <% if @reason %>
       <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
-          
+
+          <% if @reason == "primary" %>
+            <div class="accordion" id="accordion2">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    <span class="label label-info">INFO: </span> <%= "#{current_user.name}" %>
+                  </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse in">
+                  <div class="accordion-inner">
+                    <p>
+                      You have been set as the primary contact at <%= current_user.company.name %> for this survey.
+                    </p>
+                    <p>
+                      The 'Current survey participants' panel below shows the people from your company that have been given permission to access this survey on your companies behalf. If you would like to remove someone, other than yourself, from the list just click the red box adjacent their name.
+                    </p>
+                    <p>
+                      In the 'Assign others to survey' panel you will see a list of people who have registered with the CCRO and have been verified with your company. You may give them permission to access this survey on your companies behalf by clicking the green box adjacent their names."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          <% end %>
+
           <% if @reason == "no company" %>
             <span class="label label-warning">ALERT: </span> <%= "Please contact Danette Kuru (danette.kuru@ccromembers.org) so she can verify what company you are with." %>
           <% end %>
@@ -28,7 +53,7 @@
       <table class="table">
         <% active_people = [] %>
         <% if current_user.company.primary_person %>
-          <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td></td></tr>
+          <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td><span class="label label-info"><i class="icon-key"></i></span></td></tr>
           <% active_people << current_user.company.primary_person %>
         <% end %>
         <% current_user.company.people.each do |person| %>
