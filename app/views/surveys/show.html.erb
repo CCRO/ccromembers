@@ -34,7 +34,16 @@
           <% end %>
 
           <% if @reason == "no company" %>
-            <span class="label label-warning">ALERT: </span> <%= "Please contact Danette Kuru (danette.kuru@ccromembers.org) so she can verify what company you are with." %>
+            <span class="label label-warning">ALERT: </span> <%= "This is a company level survey and you are not currently assigned to a company in the CCRO system. Please let us know what company you are with by entering the company name in the field below. We will verify the information and update our records. For more help please contact Danette - danette.kuru@ccromembers.org"%>
+
+            <div style="margin-top:10px;">
+              <div style="text-align:center; margin-top:10px;">
+                <%= form_tag request_company_person_path(current_user, survey: @survey) do %>
+                  <%= text_field_tag :company, nil,  placeholder: "Your Companies Name" %><br>
+                  <%= submit_tag "Send", class: "btn" %>
+                <% end %>
+              </div>
+            </div>
           <% end %>
 
           <% if @reason == "no primary person"%>
@@ -48,46 +57,48 @@
       </div>
     <% end %>
     
-    <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
-      <h4>Current survey participants</h4>
-      <table class="table">
-        <% active_people = [] %>
-        <% if current_user.company.primary_person %>
-          <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td><span class="label label-info"><i class="icon-key"></i></span></td></tr>
-          <% active_people << current_user.company.primary_person %>
-        <% end %>
-        <% current_user.company.people.each do |person| %>
-          <tr>
-            <% m = Membership.where(resource: "survey", person_id: person.id).first %>
-            <% if m %>
-              <td class="span3"><%= person.name %></td>
-              <td class="span1">
-                <% if current_user.admin? || current_user == current_user.company.primary_person %>
-                  <%= link_to "-", remove_person_survey_path(@survey, person_id: person.id), class: "btn btn-danger" %>
-                <% end %>
-              </td>
-              <% active_people << person %>
-            <% end %>
-          </tr>
-        <% end %>
-        
-      </table>
-    </div>
-    <% if current_user.admin? || current_user == current_user.company.primary_person %>
-      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
-        <h4>Assign others to survey</h4>
+    <% unless @reason == "no company" %>
+      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <h4>Current survey participants</h4>
         <table class="table">
+          <% active_people = [] %>
+          <% if current_user.company.primary_person %>
+            <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td><span class="label label-info"><i class="icon-key"></i></span></td></tr>
+            <% active_people << current_user.company.primary_person %>
+          <% end %>
           <% current_user.company.people.each do |person| %>
-          <tr>
-            <% unless active_people.include? person %>
-              <td class="span3"><%= person.name %></td>
-              <td class="span1"><%= link_to "+", assign_person_survey_path(@survey, person_id: person.id), class: "btn btn-success" %></td>
-            <% end %>
-          </tr>
+            <tr>
+              <% m = Membership.where(resource: "survey", person_id: person.id).first %>
+              <% if m %>
+                <td class="span3"><%= person.name %></td>
+                <td class="span1">
+                  <% if current_user.admin? || current_user == current_user.company.primary_person %>
+                    <%= link_to "-", remove_person_survey_path(@survey, person_id: person.id), class: "btn btn-danger" %>
+                  <% end %>
+                </td>
+                <% active_people << person %>
+              <% end %>
+            </tr>
           <% end %>
           
         </table>
       </div>
+      <% if current_user.admin? || current_user == current_user.company.primary_person %>
+        <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+          <h4>Assign others to survey</h4>
+          <table class="table">
+            <% current_user.company.people.each do |person| %>
+            <tr>
+              <% unless active_people.include? person %>
+                <td class="span3"><%= person.name %></td>
+                <td class="span1"><%= link_to "+", assign_person_survey_path(@survey, person_id: person.id), class: "btn btn-success" %></td>
+              <% end %>
+            </tr>
+            <% end %>
+            
+          </table>
+        </div>
+      <% end %>
     <% end %>
   </div>
   <br style="clear:both;">

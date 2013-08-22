@@ -185,6 +185,38 @@ class PeopleController < ApplicationController
 
     redirect_to :back, :flash => {success: "Activation email resent to user."}
   end
+
+  def request_company
+    @person = Person.find(params[:id])
+    @company_name = params[:company]
+    @survey = Survey.find(params[:survey])
+
+    @person.request_company(@company_name, @survey)
+
+    redirect_to :back, :flash => {success: "Thankyou, we will follow up on your request shortly."}
+  end
+
+  def suggest_primary
+    @person = Person.find(params[:id])
+
+
+    redirect_to :back, :flash => {success: "Thankyou, we will follow up on your recomendation shortly."}
+  end 
+
+  def request_survey_access
+    @person = Person.find(params[:id])
+    primary = @person.comapny.primary_person
+
+
+    redirect_to :back, :flash => {success: "Your request has been sent to <%= primary.name %>"}
+  end 
+
+  def invite_user
+    @person = Person.find(params[:id])
+
+
+    redirect_to :back, :flash => {success: "Activation email resent to user."}
+  end  
  
   def send_mobile_activation
     @person = Person.find(params[:id])

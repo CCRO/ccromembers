@@ -34,7 +34,7 @@ class SurveysController < ApplicationController
         end
       end
 
-      if current_user.company.present?
+      if current_user.company.present? && current_user.company.name != ""
         if current_user.company.primary_person_id.nil?
           @section_id = '0'
           @reason = "no primary person"
@@ -75,15 +75,23 @@ class SurveysController < ApplicationController
   end
 
   def assign_person
+    @survey = Person.find(params[:id])
+    @person = Person.find(params[:person_id])
     Membership.create(person_id: params[:person_id], resource: "survey", resource_id: params[:id])
+
+    @person.access_granted(@survey)
+
     redirect_to :back
   end
 
   def remove_person
+    @survey = Person.find(params[:id])
+    @person = Person.find(params[:person_id])
     m = Membership.where(person_id: params[:person_id], resource: "survey", resource_id: params[:id]).first
 
     if m 
       m.destroy
+      @person.access_revoked(survey)
     end
 
     redirect_to :back

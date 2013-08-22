@@ -256,6 +256,15 @@ Ccromembers::Application.routes.draw do
       member do
         get :resend_activation
         get :send_mobile_activation
+        
+        post :request_company
+        get :suggest_primary
+        get :request_survey_access
+        get :access_granted
+        get :access_revoked
+        get :invite_user
+
+        get :request_company
         get :su
         get :sticker_image
       end

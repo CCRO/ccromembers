@@ -1,0 +1,5 @@
+Hello,
+
+<%= @person.company.primary_person.name %> has authorized you to access the CCRO survey '<%= link_to @survey.title, survey_url(@survey) %>' on behalf of <%= @person.company.name %>.
+
+<%= link_to "get started here", survey_url(@survey) %>

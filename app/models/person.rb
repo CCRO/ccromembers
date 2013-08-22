@@ -177,6 +177,30 @@ class Person < ActiveRecord::Base
     UserMailer.activation(self).deliver
   end
 
+  def request_company(company_name, survey)
+    UserMailer.request_company(self, company_name, survey).deliver
+  end
+
+  def suggest_primary(first, last, email)
+    UserMailer.suggest_primary(self, first, last, email).deliver
+  end
+
+  def request_survey_access(survey)
+    UserMailer.request_survey_access(self).deliver
+  end
+
+  def access_granted(survey) #self should have not been set to current_user but the person granted access
+    UserMailer.access_granted(self).deliver
+  end
+
+  def access_revoked(survey) #self should have not been set to current_user but the person revoked access
+    UserMailer.access_revoked(self).deliver
+  end
+
+  def invite_user(first, last, email)
+    UserMailer.invite_user(self, first, last, email).deliver
+  end
+
   def generate_token(column = :auth_token)
     begin
       self[column] = SecureRandom.urlsafe_base64
