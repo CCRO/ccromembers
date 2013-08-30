@@ -28,7 +28,7 @@ class UserMailer < ActionMailer::Base
     @company_name = company_name
     @survey = survey
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "Verify <%= @person.name %> to <%= company_name %>"
+    mail :to => 'joeylapetina@gmail.com', :subject => "Verify #{@person.name} to #{company_name}"
   end
 
   def suggest_primary(person, first, last, email)
@@ -37,14 +37,14 @@ class UserMailer < ActionMailer::Base
     @last = last
     @email = email
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "<%= @person.company.name %> needs primary contact <%= @person.name %> suggests <%= #{first} #{last}: #{email}%>"
+    mail :to => 'joeylapetina@gmail.com', :subject => "#{@person.company.name} needs primary contact. #{@person.name} suggests #{first} #{last}: #{email}"
   end
 
   def request_survey_access(person, survey)
     @person = person
     @survey = survey
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "<%= @person.name %> is requesting to access  the CCRO survey '<%= survey.title %>' on behalf <%= @person.company.name %>."
+    mail :to => 'joeylapetina@gmail.com', :subject => "#{@person.name} is requesting to access  the CCRO survey '#{survey.title}' on behalf #{@person.company.name}."
   end
 
   def access_granted(person, survey) #self should have not been set to current_user but the person granted access
@@ -67,7 +67,7 @@ class UserMailer < ActionMailer::Base
     @last = last
     @email = email
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "Verify <%= @person.name %> to <%= company_name %>"
+    mail :to => 'joeylapetina@gmail.com', :subject => "Verify #{@person.name} to #{company_name}"
   end
   
 end

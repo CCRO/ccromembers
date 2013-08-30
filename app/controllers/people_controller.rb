@@ -200,7 +200,11 @@ class PeopleController < ApplicationController
 
   def suggest_primary
     @person = Person.find(params[:id])
+    @first = params[:first]
+    @last = params[:last]
+    @email = params[:email]
 
+    @person.suggest_primary(@first, @last, @email)
 
     redirect_to :back, :flash => {success: "Thankyou, we will follow up on your recomendation shortly."}
   end 

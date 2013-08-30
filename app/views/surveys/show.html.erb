@@ -36,6 +36,9 @@
           <% if @reason == "no company" %>
             <span class="label label-warning">ALERT: </span> <%= "This is a company level survey and you are not currently assigned to a company in the CCRO system. Please let us know what company you are with by entering the company name in the field below. We will verify the information and update our records. For more help please contact Danette - danette.kuru@ccromembers.org"%>
 
+            <hr>
+
+            <h4 style="text-align:center;">Request company access</h4>
             <div style="margin-top:10px;">
               <div style="text-align:center; margin-top:10px;">
                 <%= form_tag request_company_person_path(current_user, survey: @survey) do %>
@@ -48,6 +51,20 @@
 
           <% if @reason == "no primary person"%>
             <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact to begin with this survey. Primary contacts are needed for to help administer and facilitate company surveys." %>
+
+            <hr>
+
+            <h4 style="text-align:center;">Suggest Point of Contact</h4>
+            <div style="margin-top:10px; margin-right:45px;">
+              <div style="text-align:right; margin-top:10px;">
+                <%= form_tag suggest_primary_person_path(current_user, survey: @survey) do %>
+                  First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
+                  Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
+                  Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
+                  <%= submit_tag "Send", class: "btn" %>
+                <% end %>
+              </div>
+            </div>
           <% end %>
 
           <% if @reason == "no membership"%>
@@ -57,7 +74,7 @@
       </div>
     <% end %>
     
-    <% unless @reason == "no company" %>
+    <% unless @reason == "no company" || @reason == "no primary person" %>
       <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
         <h4>Current survey participants</h4>
         <table class="table">

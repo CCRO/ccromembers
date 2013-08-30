@@ -258,7 +258,7 @@ Ccromembers::Application.routes.draw do
         get :send_mobile_activation
         
         post :request_company
-        get :suggest_primary
+        post :suggest_primary
         get :request_survey_access
         get :access_granted
         get :access_revoked
