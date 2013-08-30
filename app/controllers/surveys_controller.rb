@@ -75,7 +75,7 @@ class SurveysController < ApplicationController
   end
 
   def assign_person
-    @survey = Person.find(params[:id])
+    @survey = Survey.find(params[:id])
     @person = Person.find(params[:person_id])
     Membership.create(person_id: params[:person_id], resource: "survey", resource_id: params[:id])
 
@@ -85,13 +85,13 @@ class SurveysController < ApplicationController
   end
 
   def remove_person
-    @survey = Person.find(params[:id])
+    @survey = Survey.find(params[:id])
     @person = Person.find(params[:person_id])
     m = Membership.where(person_id: params[:person_id], resource: "survey", resource_id: params[:id]).first
 
     if m 
       m.destroy
-      @person.access_revoked(survey)
+      @person.access_revoked(@survey)
     end
 
     redirect_to :back

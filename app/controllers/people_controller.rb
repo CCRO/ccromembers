@@ -186,6 +186,8 @@ class PeopleController < ApplicationController
     redirect_to :back, :flash => {success: "Activation email resent to user."}
   end
 
+  #############################
+
   def request_company
     @person = Person.find(params[:id])
     @company_name = params[:company]
@@ -216,7 +218,9 @@ class PeopleController < ApplicationController
 
 
     redirect_to :back, :flash => {success: "Activation email resent to user."}
-  end  
+  end
+
+  ##################################  
  
   def send_mobile_activation
     @person = Person.find(params[:id])

@@ -186,15 +186,15 @@ class Person < ActiveRecord::Base
   end
 
   def request_survey_access(survey)
-    UserMailer.request_survey_access(self).deliver
+    UserMailer.request_survey_access(self, survey).deliver
   end
 
   def access_granted(survey) #self should have not been set to current_user but the person granted access
-    UserMailer.access_granted(self).deliver
+    UserMailer.access_granted(self, survey).deliver
   end
 
   def access_revoked(survey) #self should have not been set to current_user but the person revoked access
-    UserMailer.access_revoked(self).deliver
+    UserMailer.access_revoked(self, survey).deliver
   end
 
   def invite_user(first, last, email)
