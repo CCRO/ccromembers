@@ -15,6 +15,11 @@ class AttachmentsController < ApplicationController
 
     @attachments.delete_if { |attachment| attachment.archived? }
     @attachments = @attachments.keep_if { |a| a.archived == false }
+
+
+    @billboards = []
+    Billboard.all.each {|a| @billboards << a if a.active }
+      
   end
 
   def report
