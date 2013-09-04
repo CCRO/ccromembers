@@ -135,6 +135,21 @@
             <% end %>
             
           </table>
+
+          <hr>
+          
+          <h4 style="text-align:center;">Invite Person</h4>
+          <div style="margin-top:10px; margin-right:45px;">
+            <div style="text-align:right; margin-top:10px;">
+              <%= form_tag invite_user_person_path(current_user, survey: @survey) do %>
+                First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
+                Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
+                Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
+                <%= submit_tag "Send", class: "btn" %>
+              <% end %>
+            </div>
+          </div>
+
         </div>
       <% end %>
     <% end %>

@@ -213,15 +213,18 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     primary = @person.comapny.primary_person
 
-
     redirect_to :back, :flash => {success: "Your request has been sent to <%= primary.name %>"}
   end 
 
   def invite_user
     @person = Person.find(params[:id])
+    @first = params[:first]
+    @last = params[:last]
+    @email = params[:email]
 
+    @person.invite_user(@first, @last, @email)
 
-    redirect_to :back, :flash => {success: "Activation email resent to user."}
+    redirect_to :back, :flash => {success: "If #{@first} #{@last} is already in the CCRO system, we will add them to your company. Otherwise we will send them an invite."}
   end
 
   ##################################  

@@ -262,7 +262,7 @@ Ccromembers::Application.routes.draw do
         get :request_survey_access
         get :access_granted
         get :access_revoked
-        get :invite_user
+        post :invite_user
 
         get :request_company
         get :su

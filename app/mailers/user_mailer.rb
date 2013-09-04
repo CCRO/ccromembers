@@ -67,7 +67,7 @@ class UserMailer < ActionMailer::Base
     @last = last
     @email = email
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "Verify #{@person.name} to #{company_name}"
+    mail :to => 'joeylapetina@gmail.com', :subject => "#{@person.name} would like #{@first} #{@last} to be added to the company #{@person.company.name}"
   end
   
 end
