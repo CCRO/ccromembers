@@ -10,7 +10,12 @@
     <% if @reason %>
 
       <% if @gtg == true %>
-        <div class="span4" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;"> 
+        <% if browser.ie8? || browser.ie7? %>
+          <div class="span3" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+        <% else %>
+          <div class="span4" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+        <% end %>
+         
           
             <div class="" style="">
               <%= link_to "Start Survey", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info span4", style: "margin-left: -10px;" %>
@@ -18,9 +23,11 @@
           
         </div>
       <% end %>
-
-      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
-
+      <% if browser.ie8? || browser.ie7? %>
+        <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+      <% else %>
+        <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+      <% end %>
         <% if @reason == "primary" %>
           <div class="accordion" id="accordion2">
             <div class="accordion-group">
@@ -69,7 +76,7 @@
           
           <div style="margin-top:10px;">
             <div style="text-align:center; margin-top:10px;">
-              <%= link_to "I will be the Primary Contact", suggest_primary_person_path(current_user, survey: @survey, first: current_user.first_name, last: current_user.last_name, email: current_user.email), class: 'btn btn-large btn-info', method: 'post' %>
+              <%= link_to "I will be the primary contact", suggest_primary_person_path(current_user, survey: @survey, first: current_user.first_name, last: current_user.last_name, email: current_user.email), class: 'btn btn-large btn-info', method: 'post' %>
             </div>
           </div>
           
@@ -96,7 +103,12 @@
     <% end %>
     
     <% unless @reason == "no company" || @reason == "no primary person" %>
-      <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+      <% if browser.ie8? || browser.ie7? %>
+          <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% else %>
+          <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% end %>
+      
         <h4>Current survey participants</h4>
         <table class="table">
           <% active_people = [] %>
@@ -122,7 +134,12 @@
         </table>
       </div>
       <% if current_user.admin? || current_user == current_user.company.primary_person %>
-        <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+        <% if browser.ie8? || browser.ie7? %>
+          <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px;">
+        <% else %>
+          <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+        <% end %>
+        
           <h4>Assign others to survey</h4>
           <table class="table">
             <% current_user.company.people.each do |person| %>
