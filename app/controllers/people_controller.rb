@@ -193,9 +193,13 @@ class PeopleController < ApplicationController
     @company_name = params[:company]
     @survey = Survey.find(params[:survey])
 
-    @person.request_company(@company_name, @survey)
-
-    redirect_to :back, :flash => {success: "Thank you, we will follow up on your request shortly."}
+    if @survey.active == true
+      @person.request_company(@company_name, @survey)
+      redirect_to :back, :flash => {success: "Thank you, we will follow up on your request shortly."}
+    else
+      redirect_to :back, :flash => {success: "This survey is not active at this time so your request has not been sent."}
+    end
+    
   end
 
   def suggest_primary
@@ -203,10 +207,15 @@ class PeopleController < ApplicationController
     @first = params[:first]
     @last = params[:last]
     @email = params[:email]
+    @survey = Survey.find(params[:survey])
+    
+    if @survey.active == true
+      @person.suggest_primary(@first, @last, @email)
+      redirect_to :back, :flash => {success: "Thank you, we will follow up on your recommendation shortly."}
+    else
+      redirect_to :back, :flash => {success: "This survey is not active at this time so your suggestion has not been sent."}
+    end
 
-    @person.suggest_primary(@first, @last, @email)
-
-    redirect_to :back, :flash => {success: "Thank you, we will follow up on your recommendation shortly."}
   end 
 
   def request_survey_access
@@ -214,9 +223,13 @@ class PeopleController < ApplicationController
     @primary = @person.company.primary_person
     @survey = Survey.find(params[:survey])
 
-    @person.request_survey_access(@survey)
+    if @survey.active == true
+      @person.request_survey_access(@survey)
+      redirect_to :back, :flash => {success: "Your request has been sent to #{@primary.name}"}
+    else
+      redirect_to :back, :flash => {success: "This survey is not active so your request has not been sent."}
+    end
 
-    redirect_to :back, :flash => {success: "Your request has been sent to #{@primary.name}"}
   end 
 
   def invite_user
@@ -224,10 +237,14 @@ class PeopleController < ApplicationController
     @first = params[:first]
     @last = params[:last]
     @email = params[:email]
+    @survey = Survey.find(params[:survey])
 
-    @person.invite_user(@first, @last, @email)
-
-    redirect_to :back, :flash => {success: "If #{@first} #{@last} is already in the CCRO system, we will add them to your company. Otherwise we will send them an invite."}
+    if @survey.active == true
+      @person.invite_user(@first, @last, @email)
+      redirect_to :back, :flash => {success: "If #{@first} #{@last} is already in the CCRO system, we will add them to your company. Otherwise we will send them an invite."}
+    else
+      redirect_to :back, :flash => {success: "This survey is not active so your request has not been processed."}
+    end
   end
 
   ##################################  

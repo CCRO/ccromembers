@@ -151,8 +151,8 @@ class SurveysController < ApplicationController
   def update
     @survey = Survey.find(params[:id])
     authorize! :edit, @survey
-    if company_survey == true
-      force_sections == true
+    if @survey.company_survey == true
+      @survey.force_sections == true
     end
     @survey.update_attributes(params[:survey])
     redirect_to edit_survey_path(@survey)
