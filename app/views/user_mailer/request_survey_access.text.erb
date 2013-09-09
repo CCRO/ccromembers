@@ -1,5 +1,6 @@
 Hello,
 
-<%= @person.name %> is requesting to access the CCRO company survey '<%= @survey.title %>' on behalf of <%= @person.company %>. Right now you are assigned as primary contact for <%= @person.company %> with the CCRO. If you would like to authorize <%= @person.name %> to have access to the survey please follow the link below got quickly grant them access. 
+<%= @person.name %> is requesting to access the CCRO company survey '<%= @survey.title %>' on behalf of <%= @person.company.name %>. Right now you are assigned as primary contact for <%= @person.company.name %> with the CCRO. If you would like to authorize <%= @person.name %> to have access to the survey please follow the link below to quickly grant them access. 
 
-<%= link_to @survey.title, survey_url(@survey) %>
+You can grant them access here:
+<%= survey_url(@survey) %>

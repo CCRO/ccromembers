@@ -44,7 +44,7 @@ class UserMailer < ActionMailer::Base
     @person = person
     @survey = survey
 
-    mail :to => 'joeylapetina@gmail.com', :subject => "#{@person.name} is requesting to access  the CCRO survey '#{survey.title}' on behalf #{@person.company.name}."
+    mail :to => 'joeylapetina@gmail.com', :subject => "#{@person.name} is requesting to access the CCRO survey '#{@survey.title}' on behalf of #{@person.company.name}."
   end
 
   def access_granted(person, survey) #self should have not been set to current_user but the person granted access

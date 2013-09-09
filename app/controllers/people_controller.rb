@@ -195,7 +195,7 @@ class PeopleController < ApplicationController
 
     @person.request_company(@company_name, @survey)
 
-    redirect_to :back, :flash => {success: "Thankyou, we will follow up on your request shortly."}
+    redirect_to :back, :flash => {success: "Thank you, we will follow up on your request shortly."}
   end
 
   def suggest_primary
@@ -206,14 +206,17 @@ class PeopleController < ApplicationController
 
     @person.suggest_primary(@first, @last, @email)
 
-    redirect_to :back, :flash => {success: "Thankyou, we will follow up on your recomendation shortly."}
+    redirect_to :back, :flash => {success: "Thank you, we will follow up on your recommendation shortly."}
   end 
 
   def request_survey_access
     @person = Person.find(params[:id])
-    primary = @person.comapny.primary_person
+    @primary = @person.company.primary_person
+    @survey = Survey.find(params[:survey])
 
-    redirect_to :back, :flash => {success: "Your request has been sent to <%= primary.name %>"}
+    @person.request_survey_access(@survey)
+
+    redirect_to :back, :flash => {success: "Your request has been sent to #{@primary.name}"}
   end 
 
   def invite_user

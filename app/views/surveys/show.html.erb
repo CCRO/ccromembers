@@ -42,10 +42,10 @@
                     You have been set as the primary contact at <%= current_user.company.name %> for this survey.
                   </p>
                   <p>
-                    The 'Current survey participants' panel below shows the people from your company that have been given permission to access this survey on your companies behalf. If you would like to remove someone, other than yourself, from the list just click the red box adjacent their name.
+                    The 'Current survey participants' panel below shows the people from your company that have been given permission to access this survey on your company's behalf. If you would like to remove someone, other than yourself, from the list just click the red box adjacent their name.
                   </p>
                   <p>
-                    In the 'Assign others to survey' panel you will see a list of people who have registered with the CCRO and have been verified with your company. You may give them permission to access this survey on your companies behalf by clicking the green box adjacent their names.
+                    In the 'Assign others to survey' panel you will see a list of people who have registered with the CCRO and have been verified with your company. You may give them permission to access this survey on your company's behalf by clicking the green box adjacent their names.
                   </p>
                 </div>
               </div>
@@ -70,7 +70,7 @@
         <% end %>
 
         <% if @reason == "no primary person"%>
-          <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact to begin with this survey. Primary contacts are needed for to help administer and facilitate company surveys." %>
+          <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please suggest a primary contact below or contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact. Primary contacts are needed to help administer and facilitate company surveys." %>
 
           <hr>
           
@@ -96,7 +96,15 @@
         <% end %>
 
         <% if @reason == "no membership"%>
-          <span class="label label-warning">ALERT: </span> <%= "Please contact #{current_user.company.primary_person.name} to be granted access to this company survey. You do not currently have access to give information here on behalf of #{current_user.company.name}." %>
+          <span class="label label-warning">ALERT: </span> <%= "Please contact #{current_user.company.primary_person.name} to be granted access to this company survey. You do not currently have access to give information here on behalf of #{current_user.company.name}. If you click the button below we will send an email on your behalf to your company's primary contact requesting access to this survey." %>
+
+          <hr>
+          
+          <div style="margin-top:10px;">
+            <div style="text-align:center; margin-top:10px;">
+              <%= link_to "Request Access", request_survey_access_person_path(current_user,  survey: @survey), class: 'btn btn-large btn-info', method: 'post' %>
+            </div>
+          </div>
         <% end %>
 
       </div>
