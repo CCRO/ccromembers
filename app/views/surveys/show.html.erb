@@ -2,7 +2,7 @@
 <% if @section_id && @section_id.to_i == 0 %>
   <div class="row">
     <div class="page span7">
-      <%= simple_format(@survey.blurb) %>
+      <%= @survey.blurb.html_safe %>
     </div>
 
 
