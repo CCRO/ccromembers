@@ -1,184 +1,418 @@
 <div class="for_print"><%= "#{@survey.title} - #{current_user.company.name if current_user.company},  #{current_user.name}" %></div>
 <% if @section_id && @section_id.to_i == 0 %>
-  <div class="row">
-    <div class="page span7">
-      <%= @survey.blurb.html_safe %>
-    </div>
+  <% if @agreed == false %>
+    <div class="row">
+      <div class="page span7 pull-left">
+
+        <h1 style="text-align:center">COMMITTEE OF CHIEF RISK OFFICERS, INC.</h1>
+        <p style="text-align:center"><%= @survey.title %>
+          <a href="#0.1_annotation1">
+            <span><% "HPP" %></span>
+          </a>
+        </p>
+        <h4 style="text-align:center">
+          <span style="text-decoration:underline">Submission, Confidentiality, and Usage Agreement</span>
+        </h4>
+        <p>Thank you for participating in the SURVEY <a href="#0.1_annotation2"><span><% "HPP" %></span></a>(the 
+        “Survey”) hosted by the Committee of Chief Risk Officers, Inc. (“CCRO”), 
+        a Delaware non-stock corporation. Please read this Submission, Confidentiality, 
+        and Usage Agreement (the “Agreement”) carefully, as it contains 
+        the terms and conditions governing your participation in the Survey 
+        and the use of any data or information provided by you to CCRO regarding, 
+        referring, or relating to the Survey.</p>
+        <ol style="list-style:decimal">
+          <li style="margin-left:0pt;text-indent:0pt"><h1>DEFINITIONS</h1></li>
+        </ol>
+        <ul>
+        <ol style="list-style:lower-alpha">
+          <li style="margin-left:0pt">“Survey” 
+          means this SURVEY<a href="#0.1_annotation3"><span><% "HPP" %></span></a>.</li>
+          <li style="margin-left:0pt">“CCRO” 
+          means the Committee of Chief Risk Officers, Inc. (“CCRO”), a Delaware 
+          non-stock corporation.</li>
+          <li style="margin-left:0pt">The 
+          “Agreement” means this Submission, Confidentiality, and Usage Agreement.</li>
+          <li style="margin-left:0pt">“You,” 
+          “Your,” or “User” refers to you, the individual completing the 
+          Survey and indicating Your agreement to this Agreement below.</li>
+          <li style="margin-left:0pt">“Disclosing 
+          Party” means the person or entity on whose behalf You have been authorized 
+          to complete this Survey and on whose behalf you have full and complete 
+          authority to execute this Agreement.</li>
+          <li style="margin-left:0pt">“Confidential 
+          Information” shall mean all information of a business or technical 
+          nature, which by its nature or the circumstances of its disclosure should 
+          reasonably be presumed to be intended to be proprietary and held in 
+          confidence. Confidential Information may include, without limitation: 
+          (i) the names of any of the prior or present customers, or accounts, 
+          (ii) price lists for goods and services purchased or sold, (iii) the 
+          financial statements of other financial information, (iv) employment, 
+          payroll, and compensation information, or (v) the plans, trade secrets, 
+          marketing programs, designs, specifications or other data of any kind, 
+          nature or description. Confidential Information does not include information 
+          that: (i) is now, or hereafter becomes, through no act or failure to 
+          act on the part of CCRO, generally known or available to the public; 
+          (ii) can be shown to have been acquired by CCRO before receiving such 
+          information from the Disclosing Party and without restriction as to 
+          use or disclosure; (iii) is hereafter rightfully furnished to CCRO by 
+          a third party without restrictions as to use or disclosure, and the 
+          identity of said third party is known and documented by CCRO; (iv) CCRO 
+          can document was independently developed by or for it without use or 
+          reference to the Disclosing Party’s Confidential Information; (v) 
+          is disclosed with the prior written consent of the Disclosing Party; 
+          or (vi) is required to be disclosed pursuant to government regulation 
+          or court order, provided CCRO first gives notice of such requirement 
+          to the Disclosing Party and cooperates with the Disclosing Party, at 
+          the Disclosing Party’s expense, to protect such disclosure.</li>
+        </ol>
+        </ul>
+        <ol style="list-style:decimal" start="2">
+          <li style="margin-left:0pt;text-indent:0pt"><h1>PARTICIPATION IN THE SURVEY</h1></li>
+        </ol>
+        <p>To participate in the Survey, You agree, on behalf 
+        of the Disclosing Party, to provide certain information, including certain 
+        Confidential Information, regarding the energy industry and regarding 
+        the Disclosing Party. You specifically agree that you have been authorized 
+        by the Disclosing Party to provide the information, including the Confidential 
+        Information, requested by the Survey. You further acknowledge and agree 
+        that You have the right not to participate in the Survey. You further 
+        acknowledge and agree that the information You submit as part of the 
+        Survey is truthful and accurate to the best of Your knowledge and represents 
+        all responsive information reasonably accessible to the Disclosing Party. 
+        Specifically, You agree that You and the Disclosing Party will make 
+        reasonable efforts to ensure that data or information included in response 
+        to the Survey are accurate. </p>
+        <ol style="list-style:decimal" start="3">
+          <li style="margin-left:0pt;text-indent:0pt"><h1>USE AND DISCLOSURE OF INFORMATION</h1></li>
+        </ol>
+        <p>CCRO intends to use the information, including Confidential 
+        Information, submitted by You and other participants in the Survey to 
+        generate one or more reports that CCRO will make available to the Disclosing 
+        Party and to third parties for a separate fee. You agree and acknowledge 
+        that participation in the Survey does not entitle You or the Disclosing 
+        Party to obtain any reports prepared by CCRO based on the Survey without 
+        the payment of an additional fee, as yet to be determined. You agree 
+        and acknowledge, on behalf of the Disclosing Party, that You or the 
+        Disclosing Party receives a benefit from the preparation of reports 
+        by CCRO using data and information submitted by You in response to the 
+        Survey and that the mere availability of such reports for future purchase 
+        is sufficient, good and valuable consideration for the terms and conditions 
+        of this Agreement. Specifically, You acknowledge and agree that without 
+        participants in the Survey, such as You, CCRO would not be able to prepare 
+        such reports, the availability of which, You or the Disclosing Party 
+        values. </p>
+        <p>In the preparation of any reports using the information 
+        submitted by You in response to the Survey, CCRO agrees to render all 
+        Confidential Information submitted by You anonymous so that no third 
+        party will be able to identify the source of the Confidential Information. 
+        You agree and acknowledge that the method by which CCRO renders Confidential 
+        Information anonymous is to be determined solely by CCRO in its discretion. 
+        CCRO agrees not to disclose any Confidential Information that has not 
+        been rendered anonymous without the Disclosing Party’s prior written 
+        consent.</p>
+        <p>CCRO further agrees to permanently delete all Confidential 
+        Information not rendered anonymous within one (1) year after the publication 
+        of the final report resulting from the Survey, unless further preservation 
+        of the information is required by court order.</p>
+        <ol style="list-style:decimal" start="4">
+          <li style="margin-left:0pt;text-indent:0pt"><h1>INTELLECTUAL PROPERTY</h1></li>
+        </ol>
+        <p>All intellectual property rights in and to the Survey 
+        and any resulting reports are and shall be owned by CCRO, absolutely. 
+        Those rights include, but are not limited to, database rights, copyright, 
+        design rights (whether registered or unregistered), patents, trademarks 
+        (whether registered or unregistered) and other similar rights, wherever 
+        existing in the world, together with the right to apply for protection 
+        of the same. </p>
+        <ol style="list-style:decimal" start="5">
+          <li style="margin-left:0pt;text-indent:0pt"><h1>ADDITIONAL TERMS AND CONDITIONS</h1></li>
+        </ol>
+        <p>You hereby agree on behalf of the Disclosing Party 
+        that the Disclosing Party will defend, indemnify, and hold harmless 
+        CCRO and its principles, agents, employees, contractors, parents, subsidiaries, 
+        and affiliates, for any losses, costs, liabilities or expenses (including 
+        reasonable attorney’s fees and litigation costs) relating to or arising 
+        out of Your participation in the Survey, including, but not limited 
+        to (i) any breach of this Agreement by You or the Disclosing Party, 
+        (ii) any allegation that any information submitted by You infringes 
+        or otherwise violates the copyright, trademark, trade secret or other 
+        intellectual property or other rights of any third party, or (iii) any 
+        investigation initiated by any government authority regarding the information, 
+        including Confidential Information, submitted by You in response to 
+        the Survey. You further agree for yourself and on behalf of the Disclosing 
+        Party that in the event You or the Disclosing Party has a dispute with 
+        any other participant in the Survey, You and the Disclosing Party hereby 
+        release CCRO and its principles, agents, employees, contractors, parents, 
+        subsidiaries, and affiliates from any claims, demands and damages (actual 
+        and consequential) of every kind and nature, known and unknown, arising 
+        out of or in any way connected with such dispute.</p>
+        <p>You hereby acknowledge and agree on your behalf and 
+        on behalf of the Disclosing Party that CCRO makes no warranty of any 
+        kind, whether express, implied, or statutory, with respect to the functionality 
+        of the Survey or with respect to the contents of any reports prepared 
+        by CCRO based on the Survey.</p>
+        <p>This Agreement is governed by the laws of the State 
+        of Texas without regard to its conflict of law provisions. Any dispute 
+        arising out of this Agreement, shall be subject to the exclusive jurisdiction 
+        and of the state and federal courts sitting in Harris County, Texas. </p>
+        <p>This Agreement constitutes the complete and exclusive 
+        statement of agreement between You and CCRO with respect to the Survey 
+        and other subject matter herein and replaces and supersedes all prior 
+        written and oral agreements, including prior versions of this Agreement. 
+        Notwithstanding, other authorized agents<a name="0.1__GoBack"></a> of the Disclosing 
+        Party may executed separate agreements with CCRO with respect to the 
+        Survey, and those other such agreements are not affected by this Agreement.</p>
+        <p>You specifically acknowledge and agree that You, individually, 
+        have full authority to bind the Disclosing Party to the terms and conditions 
+        of this Agreement and that You, individually, have full authority and 
+        sufficient basis to render the acknowledgments of the Disclosing Party 
+        set forth above. </p>
+        <p>You and the Disclosing Party agree and acknowledge 
+        that by checking the box at the bottom of the electronic version of 
+        this Agreement and proceeding with the Survey, You, individually, and 
+        as an authorized agent for the Disclosing Party, are executing this 
+        Agreement and agreeing to be bound by its terms and conditions. </p>
 
 
-    
-    <% if @reason %>
 
-      <% if @gtg == true %>
-        <% if browser.ie8? || browser.ie7? %>
-          <div class="span3" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
-        <% else %>
-          <div class="span4" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
-        <% end %>
-         
-          
-            <div class="" style="">
-              <%= link_to "Start Survey", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info span4", style: "margin-left: -10px;" %>
-            </div>
-          
+        <p><a name="0.1_annotation1"></a>If the survey has a title, 
+        please insert here.</p>
+
+        <p><a name="0.1_annotation2"></a>Also include full name 
+        of survey here. </p>
+
+        <p><a name="0.1_annotation3"></a>Include full name of survey 
+        here.</p>
+
+
+
+
+        <div style="border-width:0pt 0pt 1pt 0pt;border-color:#ffffff #ffffff #000000 #ffffff;border-style:none none solid none;padding-bottom:1pt">
+        <p> </p>
         </div>
-      <% end %>
-      <% if browser.ie8? || browser.ie7? %>
-        <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
-      <% else %>
-        <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
-      <% end %>
-        <% if @reason == "primary" %>
-          <div class="accordion" id="accordion2">
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                  <span class="label label-info">INFO: </span> <%= "#{current_user.name}" %>
-                </a>
-              </div>
-              <div id="collapseOne" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                  <p>
-                    You have been set as the primary contact at <%= current_user.company.name %> for this survey.
-                  </p>
-                  <p>
-                    The 'Current survey participants' panel below shows the people from your company that have been given permission to access this survey on your company's behalf. If you would like to remove someone, other than yourself, from the list just click the red box adjacent their name.
-                  </p>
-                  <p>
-                    In the 'Assign others to survey' panel you will see a list of people who have registered with the CCRO and have been verified with your company. You may give them permission to access this survey on your company's behalf by clicking the green box adjacent their names.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> 
-        <% end %>
-
-        <% if @reason == "no company" %>
-          <span class="label label-warning">ALERT: </span> <%= "This is a company level survey and you are not currently assigned to a company in the CCRO system. Please let us know what company you are with by entering the company name in the field below. We will verify the information and update our records. For more help please contact Danette - danette.kuru@ccromembers.org"%>
-
-          <hr>
-
-          <h4 style="text-align:center;">Request company access</h4>
-          <div style="margin-top:10px;">
-            <div style="text-align:center; margin-top:10px;">
-              <%= form_tag request_company_person_path(current_user, survey: @survey) do %>
-                <%= text_field_tag :company, nil,  placeholder: "Your Companies Name" %><br>
-                <%= submit_tag "Send", class: "btn" %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-
-        <% if @reason == "no primary person"%>
-          <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please suggest a primary contact below or contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact. Primary contacts are needed to help administer and facilitate company surveys." %>
-
-          <hr>
-          
-          <div style="margin-top:10px;">
-            <div style="text-align:center; margin-top:10px;">
-              <%= link_to "I will be the primary contact", suggest_primary_person_path(current_user, survey: @survey, first: current_user.first_name, last: current_user.last_name, email: current_user.email), class: 'btn btn-large btn-info', method: 'post' %>
-            </div>
-          </div>
-          
-          <hr>
-          
-          <h4 style="text-align:center;">Suggest Primary Contact</h4>
-          <div style="margin-top:10px; margin-right:45px;">
-            <div style="text-align:right; margin-top:10px;">
-              <%= form_tag suggest_primary_person_path(current_user, survey: @survey) do %>
-                First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
-                Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
-                Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
-                <%= submit_tag "Send", class: "btn" %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-
-        <% if @reason == "no membership"%>
-          <span class="label label-warning">ALERT: </span> <%= "Please contact #{current_user.company.primary_person.name} to be granted access to this company survey. You do not currently have access to give information here on behalf of #{current_user.company.name}. If you click the button below we will send an email on your behalf to your company's primary contact requesting access to this survey." %>
-
-          <hr>
-          
-          <div style="margin-top:10px;">
-            <div style="text-align:center; margin-top:10px;">
-              <%= link_to "Request Access", request_survey_access_person_path(current_user,  survey: @survey), class: 'btn btn-large btn-info', method: 'post' %>
-            </div>
-          </div>
-        <% end %>
+        <p style="text-align:center">Submission, Confidentiality, 
+        and Usage Agreement - CCRO</p>
+        <p style="text-align:center">Page  of 3</p>
 
       </div>
-    <% end %>
-    
-    <% unless @reason == "no company" || @reason == "no primary person" %>
-      <% if browser.ie8? || browser.ie7? %>
+
+       <% if browser.ie8? || browser.ie7? %>
           <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
         <% else %>
           <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
         <% end %>
-      
-        <h4>Current survey participants</h4>
-        <table class="table">
-          <% active_people = [] %>
-          <% if current_user.company.primary_person %>
-            <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td><span class="label label-info"><i class="icon-key"></i></span></td></tr>
-            <% active_people << current_user.company.primary_person %>
-          <% end %>
-          <% current_user.company.people.each do |person| %>
-            <tr>
-              <% m = Membership.where(resource: "survey", person_id: person.id).first %>
-              <% if m %>
-                <td class="span3"><%= person.name %></td>
-                <td class="span1">
-                  <% if current_user.admin? || current_user == current_user.company.primary_person %>
-                    <%= link_to "-", remove_person_survey_path(@survey, person_id: person.id), class: "btn btn-danger" %>
-                  <% end %>
-                </td>
-                <% active_people << person %>
-              <% end %>
-            </tr>
-          <% end %>
-          
-        </table>
-      </div>
-      <% if current_user.admin? || current_user == current_user.company.primary_person %>
-        <% if browser.ie8? || browser.ie7? %>
-          <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px;">
-        <% else %>
-          <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
-        <% end %>
-        
-          <h4>Assign others to survey</h4>
-          <table class="table">
-            <% current_user.company.people.each do |person| %>
-            <tr>
-              <% unless active_people.include? person %>
-                <td class="span3"><%= person.name %></td>
-                <td class="span1"><%= link_to "+", assign_person_survey_path(@survey, person_id: person.id), class: "btn btn-success" %></td>
-              <% end %>
-            </tr>
-            <% end %>
-            
-          </table>
+          <p>
+            Thank you for your desire to participate in this survey. Please read the Submission, Confidentiality, and Usage Agreement, to the left, carefully, as it contains the terms and conditions governing your participation in the Survey and the use of any data or information provided by you to CCRO relating to the Survey. You can download the agreement by clicking the blue button below. </br></br>
 
-          <hr>
-          
-          <h4 style="text-align:center;">Invite Person</h4>
-          <div style="margin-top:10px; margin-right:45px;">
-            <div style="text-align:right; margin-top:10px;">
-              <%= form_tag invite_user_person_path(current_user, survey: @survey) do %>
-                First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
-                Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
-                Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
-                <%= submit_tag "Send", class: "btn" %>
-              <% end %>
-            </div>
+            When you are ready, click the green button below to start working with the survey.
+          </p>
+
+        </div>
+
+
+      <% ############ %>
+
+      <% if browser.ie8? || browser.ie7? %>
+        <div class="span3 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+      <% else %>
+        <div class="span4 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+      <% end %>
+        <div class="" style="">
+          <%= link_to "Download Agreement", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info btn-large span4", style: "margin-left:-39px;" %>
+        </div>
+      </div>
+
+      <% ############ %>
+
+      <% if browser.ie8? || browser.ie7? %>
+        <div class="span3 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+      <% else %>
+        <div class="span4 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+      <% end %>
+        <div class="" style="">
+          <%= link_to "I Agree", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-success btn-large span4", style: "margin-left:-39px;" %>
+        </div>
+      </div>
+
+  <% else %>
+    <div class="row">
+      <div class="page span7">
+        <%= @survey.blurb.html_safe %>
+      </div>
+
+      <% if @reason %>
+
+        <% if @gtg == true %>
+          <% if browser.ie8? || browser.ie7? %>
+            <div class="span3" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+          <% else %>
+            <div class="span4" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
+          <% end %>
+           
+            
+              <div class="" style="">
+                <%= link_to "Start Survey", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info span4", style: "margin-left: -10px;" %>
+              </div>
+            
           </div>
+        <% end %>
+        <% if browser.ie8? || browser.ie7? %>
+          <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% else %>
+          <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% end %>
+          <% if @reason == "primary" %>
+            <div class="accordion" id="accordion2">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    <span class="label label-info">INFO: </span> <%= "#{current_user.name}" %>
+                  </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse in">
+                  <div class="accordion-inner">
+                    <p>
+                      You have been set as the primary contact at <%= current_user.company.name %> for this survey.
+                    </p>
+                    <p>
+                      The 'Current survey participants' panel below shows the people from your company that have been given permission to access this survey on your company's behalf. If you would like to remove someone, other than yourself, from the list just click the red box adjacent their name.
+                    </p>
+                    <p>
+                      In the 'Assign others to survey' panel you will see a list of people who have registered with the CCRO and have been verified with your company. You may give them permission to access this survey on your company's behalf by clicking the green box adjacent their names.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          <% end %>
+
+          <% if @reason == "no company" %>
+            <span class="label label-warning">ALERT: </span> <%= "This is a company level survey and you are not currently assigned to a company in the CCRO system. Please let us know what company you are with by entering the company name in the field below. We will verify the information and update our records. For more help please contact Danette - danette.kuru@ccromembers.org"%>
+
+            <hr>
+
+            <h4 style="text-align:center;">Request company access</h4>
+            <div style="margin-top:10px;">
+              <div style="text-align:center; margin-top:10px;">
+                <%= form_tag request_company_person_path(current_user, survey: @survey) do %>
+                  <%= text_field_tag :company, nil,  placeholder: "Your Companies Name" %><br>
+                  <%= submit_tag "Send", class: "btn" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @reason == "no primary person"%>
+            <span class="label label-warning">ALERT: </span> <%= "#{current_user.company.name} currently has no primary contact on file. Please suggest a primary contact below or contact Danette Kuru (danette.kuru@ccromembers.org) to help setup a primary contact. Primary contacts are needed to help administer and facilitate company surveys." %>
+
+            <hr>
+            
+            <div style="margin-top:10px;">
+              <div style="text-align:center; margin-top:10px;">
+                <%= link_to "I will be the primary contact", suggest_primary_person_path(current_user, survey: @survey, first: current_user.first_name, last: current_user.last_name, email: current_user.email), class: 'btn btn-large btn-info', method: 'post' %>
+              </div>
+            </div>
+            
+            <hr>
+            
+            <h4 style="text-align:center;">Suggest Primary Contact</h4>
+            <div style="margin-top:10px; margin-right:45px;">
+              <div style="text-align:right; margin-top:10px;">
+                <%= form_tag suggest_primary_person_path(current_user, survey: @survey) do %>
+                  First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
+                  Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
+                  Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
+                  <%= submit_tag "Send", class: "btn" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @reason == "no membership"%>
+            <span class="label label-warning">ALERT: </span> <%= "Please contact #{current_user.company.primary_person.name} to be granted access to this company survey. You do not currently have access to give information here on behalf of #{current_user.company.name}. If you click the button below we will send an email on your behalf to your company's primary contact requesting access to this survey." %>
+
+            <hr>
+            
+            <div style="margin-top:10px;">
+              <div style="text-align:center; margin-top:10px;">
+                <%= link_to "Request Access", request_survey_access_person_path(current_user,  survey: @survey), class: 'btn btn-large btn-info', method: 'post' %>
+              </div>
+            </div>
+          <% end %>
 
         </div>
       <% end %>
-    <% end %>
-  </div>
+      
+      <% unless @reason == "no company" || @reason == "no primary person" %>
+        <% if browser.ie8? || browser.ie7? %>
+            <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+          <% else %>
+            <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+          <% end %>
+        
+          <h4>Current survey participants</h4>
+          <table class="table">
+            <% active_people = [] %>
+            <% if current_user.company.primary_person %>
+              <tr><td class="span3"><%= current_user.company.primary_person.name %></td><td><span class="label label-info"><i class="icon-key"></i></span></td></tr>
+              <% active_people << current_user.company.primary_person %>
+            <% end %>
+            <% current_user.company.people.each do |person| %>
+              <tr>
+                <% m = Membership.where(resource: "survey", person_id: person.id).first %>
+                <% if m %>
+                  <td class="span3"><%= person.name %></td>
+                  <td class="span1">
+                    <% if current_user.admin? || current_user == current_user.company.primary_person %>
+                      <%= link_to "-", remove_person_survey_path(@survey, person_id: person.id), class: "btn btn-danger" %>
+                    <% end %>
+                  </td>
+                  <% active_people << person %>
+                <% end %>
+              </tr>
+            <% end %>
+            
+          </table>
+        </div>
+        <% if current_user.admin? || current_user == current_user.company.primary_person %>
+          <% if browser.ie8? || browser.ie7? %>
+            <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px;">
+          <% else %>
+            <div class="well span4" style="position: relative; margin-top: 25px; padding: 20px;">
+          <% end %>
+          
+            <h4>Assign others to survey</h4>
+            <table class="table">
+              <% current_user.company.people.each do |person| %>
+              <tr>
+                <% unless active_people.include? person %>
+                  <td class="span3"><%= person.name %></td>
+                  <td class="span1"><%= link_to "+", assign_person_survey_path(@survey, person_id: person.id), class: "btn btn-success" %></td>
+                <% end %>
+              </tr>
+              <% end %>
+              
+            </table>
+
+            <hr>
+            
+            <h4 style="text-align:center;">Invite Person</h4>
+            <div style="margin-top:10px; margin-right:45px;">
+              <div style="text-align:right; margin-top:10px;">
+                <%= form_tag invite_user_person_path(current_user, survey: @survey) do %>
+                  First Name: <%= text_field_tag :first, nil,  placeholder: "First Name" %><br>
+                  Last Name: <%= text_field_tag :last, nil,  placeholder: "Last Name" %><br>
+                  Email: <%= text_field_tag :email, nil,  placeholder: "Email" %><br>
+                  <%= submit_tag "Send", class: "btn" %>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
   <br style="clear:both;">
 <% else %>
   <div class="page">

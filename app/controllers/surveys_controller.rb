@@ -23,7 +23,8 @@ class SurveysController < ApplicationController
     @section_id = params[:section_id] if params[:section_id]
     @sections = @survey.questions.select {|q| q.title == true }
     @gtg = true
-    
+    @agreed = false
+
     if @survey.company_survey == true
       @gtg = false
 
@@ -64,6 +65,10 @@ class SurveysController < ApplicationController
       else
         @section_id = nil
       end
+    end
+
+    if @agreed == false
+      @section_id = "0"
     end
     
     authorize! :read, @survey
