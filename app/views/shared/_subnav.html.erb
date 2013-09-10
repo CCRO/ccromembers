@@ -20,7 +20,11 @@
           <% if browser.ie8? || browser.ie7? %>
             <li><h4 style="margin-left:10px; margin-top:20px;"><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h4></li>
           <% else %>
-            <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
+            <% if @tablet == true %>
+              <li><h5><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h5></li>
+            <% else %>
+              <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
+            <% end %>
           <% end %>
           
         <% else %>

@@ -1,44 +1,63 @@
 <% @group_pages = Page.where(published: true).tagged_with("groups").sort! { |a,b| a.position <=> b.position } %>
 
-<% if browser.ie7? || browser.ie8? %>
+<% if browser.ie? %>
 
 <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
 <div class="subnav subnav-fixed" style="height:60px;">
 <% else %>
-<div class="subnav subnav-fixed" style="padding-top:40px; margin-top:60px,">
+  <% if browser.ie7? || browser.ie8? %>
+    <div class="subnav subnav-fixed" style="padding-top:40px; margin-top:60px,">
+  <% else %>
+    <div class="subnav subnav-fixed" style="padding-top:0px; margin-top:60px,">
+  <% end %>
 <% end %>
   <div class="subnav-inner">
     <div class="container">
     <ul class="nav nav-pills">
       
       <% if params[:controller] == 'surveys' && params[:action] == 'show' %>
-            <% if @section_id %>
-              <li><h3><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h3></li>
-            <% else %>
-              <li><h3><%= "#{@survey.title}: " %></h3></li>
-            <% end %>
-            <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
-              <% if @section_id %>
-                <% if @section_id.to_i == 0 %>
-              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
-              <% else %>
-              <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
-              <% end %>
-              <ul class="dropdown-menu">
-                <% count = 0 %>
-                
-                <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
-              
-                <% @sections.each do |s| %>
-                  <% count = count + 1 %>
-                  <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
-                  
-                <% end %>
-                
-              </ul>
-              <% end %>
-            </li>
+        <% if @section_id %>
+          <% if browser.ie8? || browser.ie7? %>
+            <li><h4 style="margin-left:10px; margin-top:20px;"><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h4></li>
+          <% else %>      
+            <li><h5><%= link_to "#{@survey.title}: ", survey_section_path(@survey.id, 0) %></h5></li>
           <% end %>
+          
+        <% else %>
+          <li><h3><%= "#{@survey.title}: " %></h3></li>
+        <% end %>
+        <li class="dropdown" <%= 'class=active' if params[:controller] == 'working_groups' %>>
+          <% if @section_id %>
+            <% if browser.ie8? || browser.ie7? %>
+              
+              <% if @section_id.to_i == 0 %>
+                <a style="margin-left:10px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><h4><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></h4></a>
+              <% else %>
+                <a style="margin-left:10px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><h4><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></h4></a>
+              <% end %>
+              
+            <% else %>
+              <% if @section_id.to_i == 0 %>
+                <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Survey Introduction" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% else %>
+                <a style="font-size: 26px; font-weight: bold; margin-top: 9px;" class="dropdown-toggle" data-toggle="dropdown" href="#"><%= "Section #{@section_id}" %> <i class="icon-caret-down" style="margin-left:10px; margin-right:15px;"></i></a>
+              <% end %>
+            <% end %>
+            <ul class="dropdown-menu">
+              <% count = 0 %>
+              
+              <li style="padding-right:0px;"><%= link_to "Survey Introduction" , survey_section_path(@survey.id, count) %></li>
+            
+              <% @sections.each do |s| %>
+                <% count = count + 1 %>
+                <li style="padding-right:0px;"><%= link_to "Section #{count} - #{s.prompt}" , survey_section_path(@survey.id, count) %></li>
+                
+              <% end %>
+              
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
 
       <% if params[:controller] == 'people' || params[:controller] == 'companies' || params[:controller] == 'subscriptions' %>
         <div class="navbar-text pull-left">
@@ -65,12 +84,13 @@
           </ul>
         </li>
         <li <%= 'class=active' if params[:controller] == 'attachments' %>><a href="/files">File Library</a></li>
+        <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
       <% end %>
-      <% if false %>
-        <form class="subnav-search pull-right">
-          <input type="text" class="search-query" placeholder="Search">
-        </form>
-      <% end %>
+      
+
+    </ul>
+
+    <ul class="nav pull-right">
     </ul>
     
     </div>
@@ -144,6 +164,7 @@
                 <% end %>
               </ul>
             </li>
+            <li><%= link_to "#modal-search", 'data-toggle' => "modal" do %><i class="icon-search"></i> Search <% end %></li>
           <% end %>
         
           <% if false %>

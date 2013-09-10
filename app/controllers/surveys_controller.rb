@@ -71,7 +71,8 @@ class SurveysController < ApplicationController
     if is_mobile_device?
       redirect_to intro_survey_path(@survey)
     elsif is_tablet_device?
-      redirect_to intro_survey_path(@survey)
+      @tablet = true
+      render :layout => '/layouts/survey.html.erb'
     else
 
       respond_to do |format|
