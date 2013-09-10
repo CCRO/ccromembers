@@ -193,7 +193,7 @@ class PeopleController < ApplicationController
     @company_name = params[:company]
     @survey = Survey.find(params[:survey])
 
-    if @survey.active == true || @survey.owner.people.include? current_user
+    if (@survey.active == true) || (@survey.owner.people.include? current_user)
       @person.request_company(@company_name, @survey)
       redirect_to :back, :flash => {success: "Thank you, we will follow up on your request shortly."}
     else
@@ -209,7 +209,7 @@ class PeopleController < ApplicationController
     @email = params[:email]
     @survey = Survey.find(params[:survey])
     
-    if @survey.active == true || @survey.owner.people.include? current_user
+    if (@survey.active == true) || (@survey.owner.people.include? current_user)
       @person.suggest_primary(@first, @last, @email)
       redirect_to :back, :flash => {success: "Thank you, we will follow up on your recommendation shortly."}
     else
@@ -223,7 +223,7 @@ class PeopleController < ApplicationController
     @primary = @person.company.primary_person
     @survey = Survey.find(params[:survey])
 
-    if @survey.active == true || @survey.owner.people.include? current_user
+    if (@survey.active == true) || (@survey.owner.people.include? current_user)
       @person.request_survey_access(@survey)
       redirect_to :back, :flash => {success: "Your request has been sent to #{@primary.name}"}
     else
@@ -239,7 +239,7 @@ class PeopleController < ApplicationController
     @email = params[:email]
     @survey = Survey.find(params[:survey])
 
-    if @survey.active == true || @survey.owner.people.include? current_user
+    if (@survey.active == true) || (@survey.owner.people.include? current_user)
       @person.invite_user(@first, @last, @email)
       redirect_to :back, :flash => {success: "If #{@first} #{@last} is already in the CCRO system, we will add them to your company. Otherwise we will send them an invite."}
     else
