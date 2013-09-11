@@ -44,7 +44,7 @@ window.addEventListener("load",function() {
 
       <% q = @question %>
 
-      <h2><%= q.prompt %> </h2>
+      <h2><%= q.prompt.html_safe %> </h2>
 
       <div style="padding-left:15px; padding-top:10px;">
         <% if @survey.company_survey == true %>

@@ -2,7 +2,7 @@
   <span class="handle">
     <i class="icon-move"></i>
   </span>
-  <h2><%= question.prompt %>
+  <h2><%= question.prompt.html_safe %>
     <br>
     <span class="delete_selector ">
       <%= link_to survey_question_path(question.survey, question), :remote => true, :rel => 'modal-question', 'data-controls-modal' =>  "modal-window", 'data-backdrop' => true, 'data-keyboard' => true, class: "btn btn-success" do %>

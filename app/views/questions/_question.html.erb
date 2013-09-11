@@ -1,6 +1,6 @@
 <% q = @question %>
 <% @survey = @question.survey %>
-<h2><%= q.prompt %> </h2>
+<h2><%= q.prompt.html_safe %> </h2>
 
 <% if @survey.company_survey == true %>
   <% if q.response_type == 'radio' %>
