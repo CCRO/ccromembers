@@ -55,13 +55,26 @@
     
   <br>
   <br>
-     
+<% heading_number = 0 %>
+<% question_number = 0 %>
+<% sub_question_number = 0 %>
+
 <ul id="questions" data-update-url="<%= sort_surveys_url %>">
-<% @survey.questions.order("position").each do |question| %> 
- <%= render :partial => 'questions/edit', :locals => {:question => question} %> 
+<% @survey.questions.order("position").each do |question| %>
+  <% if question.sub_question == true %>
+    <% sub_question_number = sub_question_number + 1 %>
+  <% elsif question.title == true %>
+    <% heading_number = heading_number + 1 %>
+    <% question_number = 0 %>
+  <% else %>
+    <% question_number = question_number + 1 %>
+    <% sub_question_number = 0 %>
+  <% end %>
+  <h4 style="margin-bottom: -15px;"><%= "#{heading_number}" %><%= ".#{question_number}" unless question_number == 0 %><%= ".#{sub_question_number}" unless sub_question_number == 0 %></h4> 
+  <%= render :partial => 'questions/edit', :locals => {:question => question} %> 
 <% end %> 
 </ul>  
-   
+
 <div id="add_question" class="add_question_form hide">
 <%= form_for [@survey, Question.new], :html => { :class =>"form-inline"}, :remote => true do |f| %>
   <%= f.hidden_field :response_type, :value => 'radio' %>

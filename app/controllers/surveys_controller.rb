@@ -23,12 +23,12 @@ class SurveysController < ApplicationController
     @section_id = params[:section_id] if params[:section_id]
     @sections = @survey.questions.select {|q| q.title == true }
     @gtg = true
-    @agreed = false
+    @agreed = Membership.where(person_id: current_user.id, fuction: "survey agreement", resource: "survey", resource_id: params[:id]).first.present?
 
     if @survey.company_survey == true
       @gtg = false
 
-      m = Membership.where(person_id: current_user.id, resource: "survey", resource_id: params[:id]).first
+      m = Membership.where(person_id: current_user.id, fuction: "survey access", resource: "survey", resource_id: params[:id]).first
       if m.nil?
         if current_user.company.primary_person_id.present? && current_user.id == current_user.company.primary_person_id
           @reason = "primary"
@@ -88,10 +88,20 @@ class SurveysController < ApplicationController
     end
   end
 
+  def sign_agreement
+    @survey = Survey.find(params[:id])
+    @person = Person.find(params[:person_id])
+    Membership.create(person_id: params[:person_id], fuction: "survey agreement", resource: "survey", resource_id: params[:id])
+
+    # @person.sign_agreement(@survey)
+
+    redirect_to :back
+  end
+
   def assign_person
     @survey = Survey.find(params[:id])
     @person = Person.find(params[:person_id])
-    Membership.create(person_id: params[:person_id], resource: "survey", resource_id: params[:id])
+    Membership.create(person_id: params[:person_id], fuction: "survey access", resource: "survey", resource_id: params[:id])
 
     @person.access_granted(@survey)
 
@@ -101,7 +111,7 @@ class SurveysController < ApplicationController
   def remove_person
     @survey = Survey.find(params[:id])
     @person = Person.find(params[:person_id])
-    m = Membership.where(person_id: params[:person_id], resource: "survey", resource_id: params[:id]).first
+    m = Membership.where(person_id: params[:person_id], fuction: "survey access", resource: "survey", resource_id: params[:id]).first
 
     if m 
       m.destroy

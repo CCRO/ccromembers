@@ -6,14 +6,11 @@
 
         <h1 style="text-align:center">COMMITTEE OF CHIEF RISK OFFICERS, INC.</h1>
         <p style="text-align:center"><%= @survey.title %>
-          <a href="#0.1_annotation1">
-            <span><% "HPP" %></span>
-          </a>
         </p>
         <h4 style="text-align:center">
           <span style="text-decoration:underline">Submission, Confidentiality, and Usage Agreement</span>
         </h4>
-        <p>Thank you for participating in the SURVEY <a href="#0.1_annotation2"><span><% "HPP" %></span></a>(the 
+        <p>Thank you for participating in the <%= @survey.title %>(the 
         “Survey”) hosted by the Committee of Chief Risk Officers, Inc. (“CCRO”), 
         a Delaware non-stock corporation. Please read this Submission, Confidentiality, 
         and Usage Agreement (the “Agreement”) carefully, as it contains 
@@ -26,7 +23,7 @@
         <ul>
         <ol style="list-style:lower-alpha">
           <li style="margin-left:0pt">“Survey” 
-          means this SURVEY<a href="#0.1_annotation3"><span><% "HPP" %></span></a>.</li>
+          means this <%= @survey.title %>.</li>
           <li style="margin-left:0pt">“CCRO” 
           means the Committee of Chief Risk Officers, Inc. (“CCRO”), a Delaware 
           non-stock corporation.</li>
@@ -174,25 +171,12 @@
         Agreement and agreeing to be bound by its terms and conditions. </p>
 
 
-
-        <p><a name="0.1_annotation1"></a>If the survey has a title, 
-        please insert here.</p>
-
-        <p><a name="0.1_annotation2"></a>Also include full name 
-        of survey here. </p>
-
-        <p><a name="0.1_annotation3"></a>Include full name of survey 
-        here.</p>
-
-
-
-
         <div style="border-width:0pt 0pt 1pt 0pt;border-color:#ffffff #ffffff #000000 #ffffff;border-style:none none solid none;padding-bottom:1pt">
         <p> </p>
         </div>
         <p style="text-align:center">Submission, Confidentiality, 
         and Usage Agreement - CCRO</p>
-        <p style="text-align:center">Page  of 3</p>
+        
 
       </div>
 
@@ -218,7 +202,7 @@
         <div class="span4 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
       <% end %>
         <div class="" style="">
-          <%= link_to "Download Agreement", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info btn-large span4", style: "margin-left:-39px;" %>
+          <%= link_to "Download Agreement", "https://s3.amazonaws.com/ccro.org/CCRORiskBenchmarkingSurveyAgreement.pdf", :target => "_blank", class: "btn btn-info btn-large span4", style: "margin-left:-39px;" %>
         </div>
       </div>
 
@@ -230,7 +214,7 @@
         <div class="span4 pull-right" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
       <% end %>
         <div class="" style="">
-          <%= link_to "I Agree", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-success btn-large span4", style: "margin-left:-39px;" %>
+          <%= link_to "I Agree", sign_agreement_survey_path(@survey, person_id: current_user.id), class: "btn btn-success btn-large span4", style: "margin-left:-39px;" %>
         </div>
       </div>
 
@@ -359,7 +343,7 @@
             <% end %>
             <% current_user.company.people.each do |person| %>
               <tr>
-                <% m = Membership.where(resource: "survey", person_id: person.id).first %>
+                <% m = Membership.where(resource: "survey", fuction: "survey access", person_id: person.id).first %>
                 <% if m %>
                   <td class="span3"><%= person.name %></td>
                   <td class="span1">

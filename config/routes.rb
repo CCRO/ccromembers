@@ -285,6 +285,7 @@ Ccromembers::Application.routes.draw do
       get :archive
       get :assign_person
       get :remove_person
+      get :sign_agreement
     end
     resources :questions do
       resources :responses
