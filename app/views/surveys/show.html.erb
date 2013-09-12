@@ -179,6 +179,16 @@
         
 
       </div>
+      <% unless current_user.company.nil? || current_user.company.name == "" %>
+        <% if browser.ie8? || browser.ie7? %>
+          <div class="well span3" style="text-align:center; position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% else %>
+          <div class="well span4" style="text-align:center; position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% end %>
+          <h5 style="margin-bottom: -20px; margin-top:-5px;">Respondent Company:</h5><br>
+          <h3 style="margin-bottom: -5px;"><%= "#{current_user.company.name}" %></h3>
+        </div>
+      <% end %>
 
        <% if browser.ie8? || browser.ie7? %>
           <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
@@ -224,9 +234,18 @@
         <%= @survey.blurb.html_safe %>
       </div>
 
-      <% if @reason %>
+      <% unless current_user.company.nil? || current_user.company.name == "" %>
+        <% if browser.ie8? || browser.ie7? %>
+          <div class="well span3" style="text-align:center; position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% else %>
+          <div class="well span4" style="text-align:center; position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
+        <% end %>
+          <h5 style="margin-bottom: -20px; margin-top:-5px;">Respondent Company:</h5><br>
+          <h3 style="margin-bottom: -5px;"><%= "#{current_user.company.name}" %></h3>
+        </div>
+      <% end %>
 
-        <% if @gtg == true %>
+      <% if @gtg == true %>
           <% if browser.ie8? || browser.ie7? %>
             <div class="span3" style="position: relative; margin-top: 5px; padding: 20px; margin-bottom:-35px;">
           <% else %>
@@ -234,12 +253,16 @@
           <% end %>
            
             
-              <div class="" style="">
-                <%= link_to "Start Survey", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info span4", style: "margin-left: -10px;" %>
-              </div>
+          <div class="" style="">
+            <%= link_to "Start Survey", survey_section_path(@survey.id, @section_id.to_i + 1), class: "btn btn-info span4", style: "margin-left: -10px;" %>
+          </div>
             
           </div>
         <% end %>
+
+      <% if @reason %>
+
+        
         <% if browser.ie8? || browser.ie7? %>
           <div class="well span3" style="position: relative; margin-top: 25px; padding: 20px; margin-bottom:-15px;">
         <% else %>

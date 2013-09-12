@@ -13,11 +13,9 @@
 
         <!-- Be sure to leave the brand out there if you want it shown -->
         <% if params[:action] == 'show' && params[:controller] == 'surveys' && @survey.company_survey == true %>
-          <% unless current_user.company.nil? || current_user.company.name == "" %>
-            <%= link_to "Respondent Company: #{current_user.company.name}", @survey, class: "brand", style: "color: white;" %>
-          <% else %>
-            <%= link_to "CCRO", :root, class: "brand", style: "color: white;" %>
-          <% end %>
+          <div id="logo" class="span2 pull-left" style="margin-top:8px; margin-bottom:5px; margin-left: 0px;">
+            <%= link_to image_tag(asset_path('ccro_long.png')), root_path %> 
+          </div>
         <% else %>
           <% if current_user.level == 'basic' %>
             <%= link_to "CCRO", posts_path, class: "brand", style: "color: white;" %>
