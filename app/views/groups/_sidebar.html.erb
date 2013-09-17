@@ -177,9 +177,9 @@
   <% end %>
 <% end %>
 
-<% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person } %>
-<% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person } %>
-<% @group_memberships = @group.memberships.all.map { |membership| membership.person } %>
+<% @co_chairs = @group.memberships.where(fuction: 'chair').map { |membership| membership.person unless membership.person.nil? } %>
+<% @coordinators = @group.memberships.where(fuction: 'coordinator').map { |membership| membership.person unless membership.person.nil? } %>
+<% @group_memberships = @group.memberships.all.map { |membership| membership.person unless membership.person.nil? } %>
 <% if (@co_chairs && @co_chairs.length > 0) || (@coordinators && @coordinators.length > 0) %>
   <div class="well">
     <ul class="nav nav-list" style="padding-left:0px;">
@@ -190,7 +190,7 @@
       <% end %>
       <% if @co_chairs && (@co_chairs.length > 0) %>
         <% @co_chairs.each do |person| %>
-          <% if person %>
+          <% unless person.nil? %>
             <%= link_to person do %>
               <div style="width:108%; margin-bottom:5px;"> 
                 <li><%= sticker_for(person) %></il>
@@ -206,7 +206,7 @@
       <% end %>
       <% if @coordinators && (@coordinators.length > 0) %>
         <% @coordinators.each do |person| %>
-          <% if person %>
+          <% unless person.nil? %>
             <%= link_to person do %>
               <div style="width:108%; margin-bottom:5px;">
                 <li><%= sticker_for(person)%></il>
@@ -228,7 +228,7 @@
       <% end %>
       <% if @group_memberships && (@group_memberships.length > 0) %>
         <% @group_memberships.each do |person| %>
-          <% if person %>
+          <% unless person.nil? %>
             <%= link_to person do %>
               <div style="width:108%; margin-bottom:5px;"> 
                 <li><%= sticker_for(person) %></il>
