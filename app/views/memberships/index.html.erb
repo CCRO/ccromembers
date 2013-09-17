@@ -15,7 +15,7 @@
 	<tbody>
 	<h2>Co-Chairs</h2>
 	<% @co_chairs.each do |person| %>
-		<% unless preson.nil? %>
+		<% unless person.nil? %>
 		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
 		<% end %>
@@ -26,7 +26,7 @@
 	<h2 style="padding-top:20px;">Coordinators</h2>
 		
 	<% @coordinators.each do |person| %>
-	<% unless preson.nil? %>
+	<% unless person.nil? %>
 		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
 		<% end %>
@@ -37,7 +37,7 @@
 	<h2 style="padding-top:20px; ">Participants</h2>
 		
 	<% @participants.each do |person| %>
-	<% unless preson.nil? %>
+	<% unless person.nil? %>
 		<%= link_to person do %>
 			<%= sticker_for(person, :class => 'sticker-columns', style: "margin-right:20px; margin-bottom:20px;") %>
 		<% end %>
