@@ -65,7 +65,6 @@
       <% pages_length = @pages.length %>
     <% end %>
 
-
     <% if @articles && @total_articles.length > 0 %>
       <% unless @article || @page || @message || params[:controller] == 'attachments' %>
         <li style="background-color: #E6E6E6;", class="active"><span class="badge pull-left" style="margin-top: 4px; margin-right: 5px;"><%= @total_articles.length %></span> <%= link_to group_posts_path(@group) do %> Blog posts <i class="icon-arrow-left"></i></li><% end %>

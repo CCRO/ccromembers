@@ -96,7 +96,11 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    redirect_to exceptions_accessdenied_path(), :alert => "The thing you are trying to get to does not seem to exist"
+    if current_user.admin?
+      redirect_to exceptions_accessdenied_path(), :alert => "The thing you are trying to get to does not seem to exist: #{exception}"
+    else
+      redirect_to exceptions_accessdenied_path(), :alert => "The thing you are trying to get to does not seem to exist"
+    end
   end
   
   rescue_from CanCan::AccessDenied do |exception|
