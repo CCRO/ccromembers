@@ -11,6 +11,14 @@ class ResponsesController < ApplicationController
     @response.person_id = current_user.id if current_user
     @response.company_id = current_user.company.id if current_user && current_user.company
     
+    if @response.question.survey.company_survey == true
+      old = Response.where(question_id: @response.question.id, company_id: current_user.company.id)
+      old.each {|r| r.destroy; }
+    else
+      old = Response.where(question_id: @response.question.id, person_id: current_user.id)
+      old.each {|r| r.destroy; }
+    end
+
     if @response.question.response_type == 'checkbox'
       selected_responses = Array.new
       @response.question.possible_responses.count.times { selected_responses.push(0) }
