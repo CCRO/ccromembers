@@ -166,9 +166,15 @@ class PeopleController < ApplicationController
   # DELETE /people/1.json
   def destroy
     @person = Person.find(params[:id])
-    @person.destroy
 
     authorize! :destroy, @person
+    
+    m = Membership.where(person_id: @person.id)
+    m.each {|m| m.destroy}
+
+    @person.destroy
+
+    
     
     respond_to do |format|
       format.html { redirect_to people_url }
