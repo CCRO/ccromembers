@@ -28,7 +28,7 @@ class UserMailer < ActionMailer::Base
     @company_name = company_name
     @survey = survey
 
-    mail from: @person.email, :to => 'admin@ccro.org', :subject => "Verify #{@person.name} to #{company_name}"
+    mail from: @person.email, :to => 'info@ccro.org', :subject => "Verify #{@person.name} to #{company_name}"
   end
 
   def suggest_primary(person, first, last, email)
@@ -37,7 +37,7 @@ class UserMailer < ActionMailer::Base
     @last = last
     @email = email
 
-    mail from: @person.email, :to => 'admin@ccro.org', :subject => "#{@person.company.name} needs primary contact. #{@person.name} suggests #{first} #{last}: #{email}"
+    mail from: @person.email, :to => 'info@ccro.org', :subject => "#{@person.company.name} needs primary contact. #{@person.name} suggests #{first} #{last}: #{email}"
   end
 
   def request_survey_access(person, survey)
@@ -67,7 +67,7 @@ class UserMailer < ActionMailer::Base
     @last = last
     @email = email
 
-    mail from: @person.email, :to => 'admin@ccro.org', :subject => "#{@person.name} would like #{@first} #{@last} to be added to the company #{@person.company.name}"
+    mail from: @person.email, :to => 'info@ccro.org', :subject => "#{@person.name} would like #{@first} #{@last} to be added to the company #{@person.company.name}"
   end
   
 end
