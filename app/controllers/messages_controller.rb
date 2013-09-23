@@ -165,25 +165,27 @@ class MessagesController < ApplicationController
     
     if params[:id]
       @message = Message.find(params[:id])
-    end
 
-    if @message.owner && @message.owner_type == 'Group'
-      @group = @message.owner
-      @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
-      @attachments = @group.attachments.select {|a| a.archived == false}
-      @messages = @group.messages
-      @group_document = @group.documents
-      @smart_list = @group.people
+      
+      if @message.owner && @message.owner_type == 'Group'
+        @group = @message.owner
+        @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
+        @attachments = @group.attachments.select {|a| a.archived == false}
+        @messages = @group.messages
+        @group_document = @group.documents
+        @smart_list = @group.people
 
-      if current_user && @group.leadership.include?(current_user)
-        @total_articles = @group.posts.order('updated_at DESC')
-        @articles = @total_articles.limit(3)
-      else
-        @total_articles = @group.posts.select {|p| p.hidden == false}
-        @total_articles = @total_articles.sort
-        @articles = @total_articles
+        if current_user && @group.leadership.include?(current_user)
+          @total_articles = @group.posts.order('updated_at DESC')
+          @articles = @total_articles.limit(3)
+        else
+          @total_articles = @group.posts.select {|p| p.hidden == false}
+          @total_articles = @total_articles.sort
+          @articles = @total_articles
+        end
       end
     end
+
   end
 
   def conditional_layout
