@@ -1,3 +1,4 @@
+<%= javascript_tag "var companies = #{ @companies.to_json };" %>
 <div class="row">
 	<div class="well span8 offset2">
     <% if current_user && current_user.admin? %>
@@ -34,6 +35,24 @@
           <%= f.text_field :last_name %>
         </div>
       </div>
+      <% if current_user && current_user.admin? %>
+        <div class="well">
+          <h4 style="margin-left:120px;">This area is available to Admins only</h4><br>
+          <div class="control-group">
+            <%= f.label :job_title, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :job_title %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <%= f.label :company_id, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :company_name, :value => (@person.company.name if @person.company), :placeholder => 'Company Name', :autocomplete => 'off', :class => 'typeahead' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
       <div class="control-group">
         <%= f.label :email, :class => 'control-label' %>
         <div class="controls">
@@ -64,4 +83,19 @@
   <% end %>
 	</div>
 </div>
-
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $('.typeahead').typeahead({source: companies});
+    console.log(companies);
+    $('.typeahead, ul.typeahead.dropdown > a').bind('keyup change focus blur mouseup', function() {
+      if(jQuery.inArray($(this).val(), companies) != -1) {
+        $(this).closest('.control-group').addClass('success').removeClass('error').children('p.help-block').text("Company found.")
+      } else {
+        $(this).closest('.control-group').addClass('error').removeClass('success').children('p.help-block').text("Company will be created.")
+      }
+      if($(this).val() == "") {
+        $(this).closest('.control-group').removeClass('error').removeClass('success').children('p.help-block').text("Contact support if you can't find your company listed.")
+      }
+    });
+    });
+</script>ß

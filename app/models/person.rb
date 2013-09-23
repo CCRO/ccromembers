@@ -51,7 +51,7 @@ class Person < ActiveRecord::Base
   before_validation :create_access_token
 
   attr_accessor :company_name, :send_welcome
-  attr_accessible :first_name, :last_name, :email,:company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio, :bio_pic
+  attr_accessible :first_name, :last_name, :email, :job_title, :company, :company_id, :highrise_id, :password, :password_confirmation, :access_token, :company_name, :send_welcome, :avatar, :avatar_cache, :bio, :bio_pic
 
   validates_uniqueness_of :email
   
@@ -140,7 +140,9 @@ class Person < ActiveRecord::Base
   end
   
   def title
-    if self.highrise_id.present?
+    if self.job_title.present?
+      title = self.job_title
+    elsif self.highrise_id.present?
       title = Highrise::Person.find(self.highrise_id).title
     end
   end
