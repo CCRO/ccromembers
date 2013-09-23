@@ -95,7 +95,11 @@
                           <li><%= link_to edit_message_path(@message) do %><i class="icon-comment"></i> Edit this discussion<% end %></li>
                         <% end %>
                         <li><%= link_to "#modal-message-settings", 'data-toggle' => "modal" do %><i class="icon-comment"></i> Discussion settings<% end %></li>
-                        <li><%= link_to archive_message_path(@message) do %><i class="icon-comment"></i> Archive this discussion<% end %></li>
+                        <% if @message.archived == false %>
+                          <li><%= link_to archive_message_path(@message) do %><i class="icon-comment"></i> Archive this discussion<% end %></li>
+                        <% else %>
+                          <li><%= link_to unarchive_message_path(@message) do %><i class="icon-comment"></i> Unarchive this discussion<% end %></li>
+                        <% end %>
 
                         <li class="divider"></li>
                       <% end %>

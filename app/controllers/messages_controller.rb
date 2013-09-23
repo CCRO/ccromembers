@@ -166,7 +166,7 @@ class MessagesController < ApplicationController
     if params[:id]
       @message = Message.find(params[:id])
 
-      
+
       if @message.owner && @message.owner_type == 'Group'
         @group = @message.owner
         @pages = @group.pages.sort! { |a,b| a.position <=> b.position }
@@ -200,7 +200,7 @@ class MessagesController < ApplicationController
 
     @message.archive
 
-    redirect_to message
+    redirect_to messages_path
   end
 
   def unarchive
@@ -211,6 +211,6 @@ class MessagesController < ApplicationController
 
     @message.unarchive
 
-    redirect_to message
+    redirect_to messages_path
   end
 end
