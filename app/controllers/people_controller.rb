@@ -24,6 +24,31 @@ class PeopleController < ApplicationController
       end
     end
 
+    if current_user && current_user.admin?
+      if params[:as_member] == "true"
+        @as_member = true
+      else
+        @as_member = false
+      end
+
+      if params[:as_public] == "true"
+        @as_public = true
+      else
+        @as_public = false
+      end
+
+      if params[:primary_contacts] == "true"
+        list = Company.select {|c| c.primary_contact.present?}
+        @primary_contacts = []
+
+        list.each do |c|
+          @primary_contacts << Person.find(c.primary_contact)
+        end
+      end
+    end
+
+
+
     respond_to do |format|
       format.mobile {render :layout => '/layouts/blank.html.erb'}
       format.tablet {render :layout => '/layouts/blank.html.erb'}

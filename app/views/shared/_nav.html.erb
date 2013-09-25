@@ -51,10 +51,18 @@
                         <li class="divider"></li>
                       <% end %>
                     <% end %>
-                    <li><%= link_to "Home", :root %></li>
-                     <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
-                     <% if current_user and current_user.admin? %>
+                    <% if params[:action] == 'index' && params[:controller] == 'people'%>
+                      <li><%= link_to people_path(primary_contacts: true) do %> View Only Primary Contacts<% end %></li>
+                      <li><%= link_to people_path(as_member: true) do %> View Directory As Member<% end %></li>
+                      <li><%= link_to people_path(as_public: true) do %> View Directory As Public<% end %></li>
                       <li class="divider"></li>
+                    <% end %>
+                    <li><%= link_to "Home", :root %></li>
+                    <li><%= link_to 'change Back to my account', su_person_path(session[:user_id]) if session[:su_user_id] %></li>
+                    <% if current_user and current_user.admin? %>
+                      <li class="divider"></li>
+
+                      
                       
                       <% if @page %>
                         <li><a href="#"><strong>Admin options for the page: <%= @page.title.html_safe %></strong></a></li>
@@ -194,11 +202,22 @@
                         </ul>
                       </li>
                       <li class="dropdown-submenu">
+                        <%= link_to people_path do %>
+                          <i class="icon-user"></i> People
+                        <% end %>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to new_person_path do %> New person <% end %></li>
+                          <li class="divider"></li>
+                          <li><%= link_to people_path(primary_contacts: true) do %> View Only Primary Contacts<% end %></li>
+                          <li><%= link_to people_path(as_member: true) do %> View Directory As Member<% end %></li>
+                          <li><%= link_to people_path(as_public: true) do %> View Directory As Public<% end %></li>
+                        </ul>
+                      </li>
+                      <li class="dropdown-submenu">
                         <%= link_to '#' do %>
                           <i class="icon-wrench"></i> Other tools
                         <% end %>
                         <ul class="dropdown-menu">
-                          <li><%= link_to new_person_path do %><i class="icon-user"></i> New person <% end %></li>
                           <li><%= link_to messages_path do %><i class="icon-comment"></i> Discussions <% end %></li>
                           <li><%= link_to tags_path do %><i class="icon-tags"></i> Tag maker <% end %></li>
                         </ul>

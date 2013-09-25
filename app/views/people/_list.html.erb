@@ -1,4 +1,4 @@
-<% if current_user && current_user.admin? %>
+<% if current_user && current_user.admin? && @as_public == false && @as_member == false %>
   <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -16,8 +16,44 @@
     </tr>
     </thead>
     <tbody>
-    <% @people.each do |person| %>
-      <tr>
+      <% if params[:primary_contacts] == "true" %>
+        <% @primary_contacts.each do |person| %>
+          <tr>
+            <td><%= link_to edit_person_path(person), class: "tiny_pic" do %><div style="width:50px; padding-right:10px" class="pull-left"><%= avatar_for person %></div><% end %><%= status_icon(person.highrise_id.present?) %> <%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %><%= content_tag(:span, person.role, :class => "label label-important pull-right") if person.role %></td>
+            <td><%= person.level if person.level %></td>
+            <td><%= link_to person.company.name, person.company if person.company %></td>
+            <td><%= status_icon(person.verified?) %> <%= person.email %> <%= link_to('resend email', resend_activation_person_path(person)) unless person.verified? %></td>
+            <td><%= status_icon(person.mobile_phone.present?) %> <%= raw("<span class=\"badge badge-inverse\">PIN: #{person.pin_code}</span><br>") + " " + number_to_phone(person.mobile_phone)  %> <%= link_to('send instructions', send_mobile_activation_person_path(person)) unless person.mobile_phone.present? %></td>
+            <% if params[:controller] == "companies" && params[:action] == "show" %>
+              <% if person == person.company.primary_contact %>
+                <td><span class="badge badge-success" style="padding:5px;">Primary Contact</span></td>
+              <% else %>
+                <td><%= link_to 'Set As Primary Contact', set_as_primary_person_company_path(person.company, person_id: person.id), class: "btn btn-info" %></td>
+              <% end %>
+            <% else %>
+              <td><%= last_browser_info_for_person(person)  %></td>
+            <% end %>
+            <td>
+              <div class="btn-group">
+                <%= button_to 'Edit', edit_person_path(person) %>
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'View in Highrise', highrise_url(person) unless person.highrise_id.blank? %></li>
+                  <% unless person.highrise_id.blank? %>
+                    <li class="divider"></li>
+                  <% end %>
+                  <li><%= link_to 'Login as user', su_person_path(person) if can? :su, person %></li>
+                  <li><%= link_to 'Delete', person, confirm: 'Are you sure?', method: :delete %></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <% @people.each do |person| %>
+          <tr>
         <td><%= link_to edit_person_path(person), class: "tiny_pic" do %><div style="width:50px; padding-right:10px" class="pull-left"><%= avatar_for person %></div><% end %><%= status_icon(person.highrise_id.present?) %> <%= link_to person.name, person %> <% if person.primary_contact? %><span class="label pull-right">Primary</span><% end %><% if person.billing_contact? %><span class="label pull-right">Billing</span><% end %><%= content_tag(:span, person.role, :class => "label label-important pull-right") if person.role %></td>
         <td><%= person.level if person.level %></td>
         <td><%= link_to person.company.name, person.company if person.company %></td>
@@ -48,8 +84,9 @@
             </ul>
           </div>
         </td>
-      </tr>
-    <% end %>
+          </tr>
+        <% end %>
+      <% end %>
     </tbody>
   </table>
 <% else %>
@@ -66,7 +103,9 @@
             <strong><%= person.company.name %></strong><br>
           <% end %>
           <% if current_user && current_user.committee? %>
-          <%= person.email %>
+            <% unless @as_member == false %>
+              <%= person.email %>
+            <% end %>
           <% end %>
         </div>
       <% end %>

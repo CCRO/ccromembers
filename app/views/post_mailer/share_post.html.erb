@@ -43,7 +43,7 @@
       <tr>
         <td width="10%">
         </td>
-        <td id="post_body" class="page drop-shadow lifted mercury-region" width="80%" height="100%" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
+        <td id="post_body" class="page drop-shadow lifted mercury-region" style="background-color:white; padding-top:20px; padding-left:20px; padding-right:20px; padding-bottom:100px;">
           <% if @short_message.length >= 10 %>
             <p><%= @short_message.html_safe %></p>
             <br>
@@ -51,9 +51,9 @@
           <% end %>
           <h1 style="font-size: 30px; line-height: 36px;"><%= link_to @post.title.html_safe, "http://ccro.org/posts/#{@post.id}", style: "text-decoration:none;" %></h1>
           
-          < div class="email" >
+          <div class="email" >
           <%= @post.body.split('[---MORE---]').first.html_safe + " ..." %><b><%= link_to 'continued', "http://ccro.org/posts/#{@post.id}" %></b>
-          < /div >
+          </div >
         </td>
         <td width="10%">
         </td>
