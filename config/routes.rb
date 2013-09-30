@@ -208,6 +208,7 @@ Ccromembers::Application.routes.draw do
     match 'summit_page' => 'pages#index', :defaults => { filter: 'summit' }, as: 'summit_pages'
     match 'shared_page/:token' => 'pages#show', as: 'shared_page'
     match 'surveys/:id/section/:section_id' => 'surveys#show', as: 'survey_section'
+    match 'summit2013' => 'posts#show', :defaults => { :id => 248 }
 
   
     root :to => 'posts#index'
