@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       session[:warning_closed] = false
       # user.browser_info = {name: browser.name, platform: browser.platform.to_s}
-      user.save
+      # user.save
       redirect_back_or_default root_url
     else
       flash.now.alert = t(:login_invalid)
