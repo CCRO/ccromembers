@@ -54,6 +54,12 @@ class SurveysController < ApplicationController
       end
     end
       
+    if @survey.company_survey == false || @survey.company_survey.blank?
+      @agreed = true
+      @gtg = true
+    end
+
+
     if @survey.force_sections == true && @section_id.nil?
       @section_id = '0'
     end
@@ -72,6 +78,8 @@ class SurveysController < ApplicationController
     end
     
     authorize! :read, @survey
+    
+
 
     if is_mobile_device?
       redirect_to intro_survey_path(@survey)
