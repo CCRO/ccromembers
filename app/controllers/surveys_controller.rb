@@ -92,6 +92,9 @@ class SurveysController < ApplicationController
         
         format.html
         format.js
+        format.csv do
+          send_data @survey.responses.as_csv
+        end
       end
     end
   end
