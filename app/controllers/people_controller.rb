@@ -233,6 +233,21 @@ class PeopleController < ApplicationController
     
   end
 
+  def make_primary
+    @person = Person.find(params[:id])
+    if @person.company.present?
+      company = @person.company
+      company.primary_person_id = @person.id
+      if company.save
+        redirect_to :back, :flash => {success: "Primary contact for #{company.name} is set to #{@person.name}."}
+      else
+        redirect_to :back, :flash => {error: "Error saving company."}
+      end
+    else
+      redirect_to :back, :flash => {error: "#{@person.name} is not part of a company. Cannot set to primary contact."}
+    end
+  end
+
   def suggest_primary
     @person = Person.find(params[:id])
     @first = params[:first]

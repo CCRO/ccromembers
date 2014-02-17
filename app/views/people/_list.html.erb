@@ -79,6 +79,7 @@
               <% unless person.highrise_id.blank? %>
   				      <li class="divider"></li>
   			      <% end %>
+                  <li><%= link_to 'Make primary contact', make_primary_person_path(person) if can? :manage, person %></li>
               <li><%= link_to 'Login as user', su_person_path(person) if can? :su, person %></li>
               <li><%= link_to 'Delete', person, confirm: 'Are you sure?', method: :delete %></li>
             </ul>

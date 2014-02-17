@@ -260,6 +260,7 @@ Ccromembers::Application.routes.draw do
         
         post :request_company
         post :suggest_primary
+        get :make_primary
         post :request_survey_access
         get :access_granted
         get :access_revoked
