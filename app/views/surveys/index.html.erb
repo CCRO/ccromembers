@@ -66,6 +66,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><%= link_to 'Report', report_survey_path(survey) %></li>
+                  <li><%= link_to 'Export CSV', survey_path(survey, :format => 'csv') %></li>
                   <li><%= link_to 'Archive', archive_survey_path(survey) %></li>
                 </ul>
               </div>
