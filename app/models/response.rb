@@ -40,9 +40,9 @@ class Response < ActiveRecord::Base
             answer << [self.question.possible_responses["#{key}"], val]
         end
       elsif text_response
-        answer = ['Text Response', self.text_response]
+        answer = [['Text Response', self.text_response]]
       else
-        answer = [self.question.possible_responses["#{selected_response}"], 1]
+        answer = [[self.question.possible_responses["#{selected_response}"], 1]]
       end
       return answer
     end
