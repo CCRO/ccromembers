@@ -32,5 +32,19 @@ class Response < ActiveRecord::Base
       return answer
     end
   end
-  
+  def summary2
+    if question.present?
+      if selected_responses
+        answer = Array.new
+        self.selected_responses.each_with_index do |val, key| 
+            answer << [self.question.possible_responses["#{key}"], val]
+        end
+      elsif text_response
+        answer = ['Text Response', self.text_response]
+      else
+        answer = [self.question.possible_responses["#{selected_response}"], 1]
+      end
+      return answer
+    end
+  end  
 end

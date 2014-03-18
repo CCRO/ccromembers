@@ -12,7 +12,16 @@ class Survey < ActiveRecord::Base
   
   validates_presence_of :title
   
-
+  def to_csv
+    CSV.generate do |csv|
+      csv << ["Qnumber", "Question", "Respondent", "ResponseOption", "Answer"]
+      responses.each do |item|
+        item.summary2.each do |response|
+          csv << [item.question.id, item.question.prompt,item.person.company.name, response[0], response[1]]
+        end
+      end
+    end
+  end
   
   private 
   
