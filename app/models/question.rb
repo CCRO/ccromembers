@@ -21,4 +21,13 @@ class Question < ActiveRecord::Base
       nil
     end
   end
+
+  def parent
+    p = position
+    begin
+      p = p - 1
+      q = Question.where(survey_id: survey_id, position: p).first
+    end while q.sub_question
+    return q
+  end
 end
